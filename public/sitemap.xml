@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- PRIMARY PAGES                                              -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+
+  <!-- Homepage -->
+  <url>
+    <loc>https://beunec.co</loc>
+    <lastmod>2026-02-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://beunec.co/assets/beunec-logo-transparent-blacktext.png</image:loc>
+      <image:title>Beunec – The Future of Work Orchestrator</image:title>
+    </image:image>
+  </url>
+
+  <!-- Cloud Platform -->
+  <url>
+    <loc>https://beunec.co/cloud-platform</loc>
+    <lastmod>2026-02-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://beunec.co/assets/Beunec%20Cloud%20Hero%20Section%20Graphic%20Art.png</image:loc>
+      <image:title>Beunec Cloud Platform</image:title>
+    </image:image>
+  </url>
+
+  <!-- Plans & Pricing -->
+  <url>
+    <loc>https://beunec.co/bcp-plans-pricing</loc>
+    <lastmod>2026-02-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- PRODUCT & DOCUMENTATION                                    -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+
+  <!-- Documentation -->
+  <url>
+    <loc>https://beunec.co/bcp-documentation</loc>
+    <lastmod>2026-02-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- COMPANY & GOVERNANCE                                       -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+
+  <!-- Company -->
+  <url>
+    <loc>https://beunec.co/company</loc>
+    <lastmod>2026-02-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Governance -->
+  <url>
+    <loc>https://beunec.co/governance</loc>
+    <lastmod>2026-02-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- RESOURCES & BLOG                                           -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+
+  <!-- Resources Hub (lists all articles) -->
+  <url>
+    <loc>https://beunec.co/resources</loc>
+    <lastmod>2026-02-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!--
+    Individual articles live at /resources/<slug>.
+    These are generated dynamically from the Substack RSS feed.
+    For full coverage, consider generating this sitemap at build time
+    or via an API route that fetches current slugs.
+  -->
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- PROGRAMS – STUDENTS                                        -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+
+  <!-- Student Offer Landing -->
+  <url>
+    <loc>https://beunec.co/student-offer</loc>
+    <lastmod>2026-02-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Beunec Cloud Pro for College Students -->
+  <url>
+    <loc>https://beunec.co/beunec-cloud-pro-for-college-students</loc>
+    <lastmod>2026-02-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- BCP for College Students Application Form -->
+  <url>
+    <loc>https://beunec.co/beunec-cloud-pro-for-college-students-application-form</loc>
+    <lastmod>2026-02-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- PROGRAMS – SOLO FOUNDERS                                   -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+
+  <!-- BCP for Solo Founder Grants Program -->
+  <url>
+    <loc>https://beunec.co/cloud-platform-for-solo-founder-grants-program</loc>
+    <lastmod>2026-02-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- BCP for Solo Founder Grants Application Form -->
+  <url>
+    <loc>https://beunec.co/bcp-for-solo-founder-grants-program-application-form</loc>
+    <lastmod>2026-02-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- LEGAL                                                      -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+
+  <!-- Privacy Policy -->
+  <url>
+    <loc>https://beunec.co/privacy-policy</loc>
+    <lastmod>2026-02-25</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+  </url>
+
+  <!-- Terms of Use -->
+  <url>
+    <loc>https://beunec.co/terms-of-use</loc>
+    <lastmod>2026-02-25</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+  </url>
+
+  <!-- Data Readiness Policy -->
+  <url>
+    <loc>https://beunec.co/data-readiness-policy</loc>
+    <lastmod>2026-02-25</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+  </url>
+
+</urlset>
