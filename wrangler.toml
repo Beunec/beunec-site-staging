@@ -13,4 +13,3 @@ command = "npx opennextjs-cloudflare build"
 
 [assets]
 directory = ".open-next/assets"
-binding = "ASSETS"
