@@ -1,15 +1,8 @@
 # yaml-language-server: $schema=./node_modules/wrangler/config-schema.json
 
 name = "beunec-site"
-main = ".open-next/worker.js"
 compatibility_date = "2026-02-25"
 compatibility_flags = ["nodejs_compat"]
 
-# Cloudflare Pages build configuration
+# Cloudflare Pages build output
 pages_build_output_dir = ".open-next/assets"
-
-[build]
-command = "npx opennextjs-cloudflare build"
-
-[assets]
-directory = ".open-next/assets"
