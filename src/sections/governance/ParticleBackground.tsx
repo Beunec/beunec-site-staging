@@ -17,11 +17,11 @@ interface Particle {
 }
 
 const COLORS = [
-    '#00477d', // Beunec Navy Blue
-    '#ffd38c', // Golden Yellow
-    '#a9cbb7', // Fern Green
-    '#d4a373', // Soft Clay
-    '#1e293b', // Midnight Slate
+    '#6b7a6e', // Sage Mist
+    '#7a8b99', // Muted Slate
+    '#e6e2d8', // Soft Parchment
+    '#252823', // Basalt Flare
+    '#dfd9ce', // Muted Clay
 ];
 
 export const ParticleBackground: React.FC = () => {

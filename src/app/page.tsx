@@ -3,27 +3,21 @@
 import { Header } from "@/sections/Header";
 import { Hero } from "@/sections/home/Hero";
 import { VisionMission } from "@/sections/home/VisionMission";
-import { CoreSolutions } from "@/sections/home/CoreSolutions";
-import { BCPProduct } from "@/sections/home/BCPProduct";
-import { Stats } from "@/sections/home/Stats";
-import { Programs } from "@/sections/home/Programs";
-import { Definitions } from "@/sections/home/Definitions";
+import { LatestReleases } from "@/sections/home/LatestReleases";
 import { Footer } from "@/sections/Footer";
+import { HomeAmbientAudio } from "@/components/home/HomeAmbientAudio";
 
 export default function Home() {
     return (
-        <div className="min-h-screen bg-background text-foreground">
+        <div className="baap-page min-h-screen">
             <Header />
             <main>
                 <Hero />
                 <VisionMission />
-                <CoreSolutions />
-                <BCPProduct />
-                <Stats />
-                <Programs />
-                <Definitions />
+                <LatestReleases />
             </main>
             <Footer />
+            <HomeAmbientAudio />
         </div>
     );
 }

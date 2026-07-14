@@ -8,6 +8,7 @@ import { Footer } from "@/sections/Footer";
 import { Button } from "@/components/ui/button";
 import { Calendar, User, ArrowRight, Loader2 } from "lucide-react";
 import { ParticleBackground } from "@/sections/governance/ParticleBackground";
+import { SUBSTACK_API_URL, generateSlug } from "@/lib/substack";
 
 interface SubstackPost {
     title: string;
@@ -36,28 +37,16 @@ const getPostImage = (post: SubstackPost) => {
     return match ? match[1] : null;
 };
 
-// Generate slug from title
-const generateSlug = (title: string) => {
-    return title
-        .toLowerCase()
-        .replace(/[^a-z0-9]+/g, '-')
-        .replace(/(^-|-$)/g, '')
-        .slice(0, 80);
-};
-
 export default function ResourcesPage() {
     const [posts, setPosts] = useState<SubstackPost[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const router = useRouter();
 
-    const rssUrl = "https://beunec.substack.com/feed";
-    const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`;
-
     useEffect(() => {
         window.scrollTo(0, 0);
 
-        fetch(apiUrl)
+        fetch(SUBSTACK_API_URL)
             .then((res) => {
                 if (!res.ok) throw new Error("Failed to fetch posts");
                 return res.json();
@@ -76,10 +65,10 @@ export default function ResourcesPage() {
             .finally(() => {
                 setIsLoading(false);
             });
-    }, [apiUrl]);
+    }, []);
 
     return (
-        <div className="min-h-screen bg-background text-foreground">
+        <div className="baap-page min-h-screen">
             <Header />
 
             <main className="pt-24 lg:pt-32 pb-24">
@@ -90,7 +79,7 @@ export default function ResourcesPage() {
                         <motion.span
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
-                            className="px-3 py-1 rounded-full bg-beunec-blue/10 text-beunec-blue text-xs font-bold uppercase tracking-widest mb-4 inline-block dark:text-[#D3D3D3]"
+                            className="px-3 py-1 rounded-full bg-beunec-blue/10 text-beunec-blue text-xs font-bold uppercase tracking-widest mb-4 inline-block"
                         >
                             The Beunec Journal
                         </motion.span>
@@ -121,7 +110,7 @@ export default function ResourcesPage() {
                             <p className="text-muted-foreground animate-pulse">Fetching latest papers...</p>
                         </div>
                     ) : error ? (
-                        <div className="text-center py-32 bg-slate-50 dark:bg-slate-900/50 rounded-3xl border border-dashed border-border">
+                        <div className="text-center py-32 bg-container rounded-3xl border border-dashed border-border">
                             <p className="text-red-500 mb-6">{error}</p>
                             <Button
                                 variant="outline"
@@ -160,7 +149,7 @@ export default function ResourcesPage() {
                                                 <img src="/assets/beunec-logo-transparent-blacktext.png" className="w-12 h-auto opacity-20" alt="Beunec" />
                                             </div>
                                         )}
-                                        <div className="absolute top-4 right-4 bg-white/90 dark:bg-slate-950/90 backdrop-blur p-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity">
+                                        <div className="absolute top-4 right-4 bg-container/90 backdrop-blur p-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity">
                                             <ArrowRight className="w-4 h-4 text-beunec-blue" />
                                         </div>
                                     </div>
@@ -182,7 +171,7 @@ export default function ResourcesPage() {
                                             </div>
                                         </div>
 
-                                        <h2 className="text-xl font-bold mb-3 group-hover:text-beunec-blue transition-colors line-clamp-2 dark:text-[#D3D3D3]">
+                                        <h2 className="text-xl font-bold mb-3 group-hover:text-beunec-blue transition-colors line-clamp-2">
                                             {post.title}
                                         </h2>
 
@@ -191,7 +180,7 @@ export default function ResourcesPage() {
                                             dangerouslySetInnerHTML={{ __html: post.description.replace(/<[^>]*>?/gm, '').slice(0, 150) + '...' }}
                                         />
 
-                                        <div className="mt-auto flex items-center text-sm font-semibold text-beunec-blue dark:text-[#D3D3D3]">
+                                        <div className="mt-auto flex items-center text-sm font-semibold text-beunec-blue">
                                             Read full article
                                             <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
                                         </div>
@@ -207,19 +196,19 @@ export default function ResourcesPage() {
                     <motion.div
                         initial={{ opacity: 0, scale: 0.95 }}
                         whileInView={{ opacity: 1, scale: 1 }}
-                        className="max-w-4xl mx-auto p-8 md:p-12 rounded-[2.5rem] bg-slate-900 text-white text-center relative overflow-hidden"
+                        className="max-w-4xl mx-auto p-8 md:p-12 rounded-[2.5rem] baap-container text-foreground text-center relative overflow-hidden"
                     >
                         <div className="absolute inset-0 bg-beunec-blue/10 pointer-events-none" />
                         <h2 className="text-2xl md:text-4xl font-serif mb-6 relative z-10">
                             Never miss a breakthrough.
                         </h2>
-                        <p className="text-slate-400 mb-8 max-w-lg mx-auto relative z-10">
+                        <p className="text-muted-foreground mb-8 max-w-lg mx-auto relative z-10">
                             Join 1,000+ professionals of all levels and students receiving our weekly insights. Directly to your inbox.
                         </p>
                         <div className="relative z-10">
                             <Button
                                 asChild
-                                className="bg-white text-slate-950 hover:bg-slate-100 px-8 py-6 rounded-xl text-lg font-bold"
+                                className="bg-beunec-sage text-primary-foreground hover:opacity-90 px-8 py-6 rounded-xl text-lg font-bold transition-colors duration-200"
                             >
                                 <a href="https://beunec.substack.com" target="_blank" rel="noopener noreferrer">
                                     Subscribe to Substack

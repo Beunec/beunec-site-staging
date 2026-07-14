@@ -21,12 +21,12 @@ const CursorParticles: React.FC = () => {
   const state = useRef({ angle: 0 });
 
   const COLORS = [
-    "#00477d",
-    "#0066b3",
-    "#003355",
-    "#f8fafc",
-    "#0f172a",
-    "#00A6FF",
+    "#6b7a6e",
+    "#7a8b99",
+    "#5a685d",
+    "#e6e2d8",
+    "#141512",
+    "#252823",
   ];
 
   const COUNT = 14; // between 10-20

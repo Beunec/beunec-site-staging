@@ -59,9 +59,9 @@ export function CoreSolutions() {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={isInView ? { opacity: 1, scale: 1 } : {}}
             transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-beunec-blue/10 text-beunec-blue text-sm font-medium mb-6 dark:text-[#D3D3D3]"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-beunec-blue/10 text-beunec-blue text-sm font-medium mb-6"
           >
-            <Network className="w-4 h-4 dark:text-[#D3D3D3]" />
+            <Network className="w-4 h-4" />
             Core Solutions
           </motion.div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-6">
@@ -88,8 +88,8 @@ export function CoreSolutions() {
                 className={`relative h-full p-8 rounded-2xl bg-gradient-to-br ${solution.color} border border-white/20 dark:border-white/10 backdrop-blur-sm overflow-hidden transition-all duration-500 hover:shadow-calm-lg hover:-translate-y-1`}
               >
                 <center>
-                  <div className="w-14 h-14 rounded-xl bg-white/80 dark:bg-white/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                    <solution.icon className="w-7 h-7 text-beunec-blue dark:text-[#a9cbb7]" />
+                  <div className="w-14 h-14 rounded-xl bg-media-blank flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                    <solution.icon className="w-7 h-7 text-beunec-blue" />
                   </div>
 
                   {/* Content */}

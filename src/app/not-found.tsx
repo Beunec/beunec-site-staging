@@ -3,7 +3,8 @@
 import React, { useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Home, BookOpen, Briefcase, Users, FileText, ArrowRight, Rocket, GraduationCap } from "lucide-react";
+import { Home, LayoutGrid, BookOpen, Users, ArrowRight } from "lucide-react";
+import { HomeAmbientAudio } from "@/components/home/HomeAmbientAudio";
 
 /* ─── Particle system (adapted from governance ParticleBackground) ─── */
 
@@ -22,12 +23,12 @@ interface Particle {
 }
 
 const COLORS = [
-    "#00477d",
-    "#0066b3",
-    "#003355",
-    "#ffd38c",
-    "#a9cbb7",
-    "#d4a373",
+    "#6b7a6e",
+    "#7a8b99",
+    "#e6e2d8",
+    "#252823",
+    "#dfd9ce",
+    "#141512",
 ];
 
 function createParticle(x: number, y: number, isStatic = false): Particle {
@@ -187,32 +188,28 @@ const FullscreenParticles: React.FC = () => {
 
 const NAV_ITEMS = [
     { label: "Home", href: "/", icon: Home },
-    { label: "Cloud Platform", href: "/cloud-platform", icon: Rocket },
-    { label: "Pricing", href: "/bcp-plans-pricing", icon: FileText },
+    { label: "Aselius Platform", href: "/aselius-platform", icon: LayoutGrid },
     { label: "Resources", href: "/resources", icon: BookOpen },
     { label: "Company", href: "/company", icon: Users },
-    { label: "Governance", href: "/governance", icon: Briefcase },
-    { label: "BCP for Students", href: "/cloud-platform-for-college-students", icon: GraduationCap },
-    { label: "Documentation", href: "/bcp-documentation", icon: FileText },
 ];
 
 /* ─── 404 Page ─── */
 
 export default function NotFound() {
     return (
-        <div className="relative min-h-screen bg-slate-950 text-white overflow-hidden flex flex-col items-center justify-center selection:bg-beunec-blue/30">
+        <div className="relative min-h-screen baap-page overflow-hidden flex flex-col items-center justify-center selection:bg-beunec-sage/30">
             {/* Particle Background */}
             <FullscreenParticles />
 
             {/* Gradient overlays for depth */}
-            <div className="absolute inset-0 z-[1] pointer-events-none bg-gradient-to-b from-slate-950/70 via-transparent to-slate-950/90" />
-            <div className="absolute inset-0 z-[1] pointer-events-none bg-[radial-gradient(ellipse_at_center,transparent_30%,rgba(0,0,0,0.6))]" />
+            <div className="absolute inset-0 z-[1] pointer-events-none bg-gradient-to-b from-background/70 via-transparent to-background/90" />
+            <div className="absolute inset-0 z-[1] pointer-events-none bg-[radial-gradient(ellipse_at_center,transparent_30%,color-mix(in_srgb,var(--bg-global)_60%,transparent))]" />
 
             {/* Content */}
             <div className="relative z-10 w-full max-w-3xl mx-auto px-6 py-16 flex flex-col items-center text-center">
                 {/* Logo */}
                 <motion.img
-                    src="/assets/favicon.ico"
+                    src="/assets/beunec-logo.png"
                     alt="Beunec"
                     className="w-14 h-14 rounded-2xl shadow-lg mb-10"
                     initial={{ opacity: 0, scale: 0.5 }}
@@ -222,7 +219,7 @@ export default function NotFound() {
 
                 {/* 404 number */}
                 <motion.h1
-                    className="text-[10rem] md:text-[14rem] font-black leading-none tracking-tighter bg-gradient-to-b from-white via-white/80 to-white/10 bg-clip-text text-transparent select-none"
+                    className="text-[10rem] md:text-[14rem] font-black leading-none tracking-tighter text-foreground/90 select-none"
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: 0.1 }}
@@ -232,7 +229,7 @@ export default function NotFound() {
 
                 {/* Subtitle */}
                 <motion.p
-                    className="text-lg md:text-xl text-slate-400 max-w-md mx-auto -mt-4 mb-4"
+                    className="text-lg md:text-xl text-muted-foreground max-w-md mx-auto -mt-4 mb-4"
                     initial={{ opacity: 0, y: 15 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.25 }}
@@ -240,7 +237,7 @@ export default function NotFound() {
                     This page has drifted beyond the orchestration layer.
                 </motion.p>
                 <motion.p
-                    className="text-sm text-slate-500 mb-12"
+                    className="text-sm text-muted-foreground/70 mb-12"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.5, delay: 0.35 }}
@@ -259,10 +256,10 @@ export default function NotFound() {
                         <Link
                             key={href}
                             href={href}
-                            className="group flex flex-col items-center gap-2 p-4 rounded-2xl border border-white/[0.06] bg-white/[0.03] backdrop-blur-sm hover:bg-white/[0.08] hover:border-beunec-blue/30 transition-all duration-200"
+                            className="group flex flex-col items-center gap-2 p-4 rounded-2xl border border-border baap-interactive"
                         >
-                            <Icon className="w-5 h-5 text-slate-400 group-hover:text-beunec-blue transition-colors" />
-                            <span className="text-xs font-medium text-slate-300 group-hover:text-white transition-colors">{label}</span>
+                            <Icon className="w-5 h-5 text-muted-foreground group-hover:text-accent-sage transition-colors duration-200" />
+                            <span className="text-xs font-medium text-muted-foreground group-hover:text-foreground transition-colors duration-200">{label}</span>
                         </Link>
                     ))}
                 </motion.div>
@@ -275,7 +272,7 @@ export default function NotFound() {
                 >
                     <Link
                         href="/"
-                        className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-beunec-blue text-white font-semibold text-sm hover:bg-beunec-blue/90 transition-all hover:scale-105 shadow-lg shadow-beunec-blue/20"
+                        className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-beunec-sage text-primary-foreground font-semibold text-sm hover:opacity-90 transition-all duration-200"
                     >
                         Go to Home
                         <ArrowRight className="w-4 h-4" />
@@ -285,10 +282,12 @@ export default function NotFound() {
 
             {/* Bottom branding */}
             <div className="absolute bottom-6 z-10 text-center">
-                <p className="text-[11px] text-slate-600">
+                <p className="text-[11px] text-muted-foreground">
                     © {new Date().getFullYear()} Beunec Technologies, Inc.
                 </p>
             </div>
+
+            <HomeAmbientAudio />
         </div>
     );
 }

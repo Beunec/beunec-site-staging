@@ -1,94 +1,234 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono&display=swap');
 
+/* tailwind-ignore-start */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+/* tailwind-ignore-end */
 
 @layer base {
+  /*
+   * BAAP 1.2.0 — Warm Technical Minimalism
+   * Raw brand DNA (hex) + HSL bridges for Tailwind `hsl(var(--*))` consumers.
+   */
   :root {
-    --background: 210 40% 98%;
-    --foreground: 222 47% 11%;
-    --card: 0 0% 100%;
-    --card-foreground: 222 47% 11%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222 47% 11%;
-    --primary: 207 100% 25%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 210 40% 96%;
-    --secondary-foreground: 222 47% 11%;
-    --muted: 210 40% 96%;
-    --muted-foreground: 215 16% 47%;
-    --accent: 207 100% 25%;
-    --accent-foreground: 0 0% 100%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 214 32% 91%;
-    --input: 214 32% 91%;
-    --ring: 207 100% 25%;
-    --radius: 0.625rem;
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 207 100% 25%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 210 40% 96%;
-    --sidebar-accent-foreground: 222 47% 11%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 207 100% 25%;
+    /* [BAAP-SCOPE: UNIVERSAL_ACCENTS] */
+    --accent-sage: #6b7a6e;
+    --accent-slate: #7a8b99;
+
+    /* Alias tokens (docs / non-tailwind consumers) */
+    --bg-light: #f1eee6;
+    --text-light: #141512;
+    --container-light: #eae6db;
+    --hover-light: #e0d9ca;
+    --media-light: #dfd9ce;
+
+    --bg-dark: #141512;
+    --text-dark: #e6e2d8;
+    --container-dark: #1c1e1a;
+    --hover-dark: #252823;
+    --media-dark: #222420;
+
+    /* [THEME-STATE: LIGHT_MODE] */
+    --bg-global: #f1eee6;
+    --text-primary: #141512;
+    --bg-container: #eae6db;
+    --state-hover: #e0d9ca;
+    --media-blank: #dfd9ce;
+
+    /* HSL bridge → shadcn / Tailwind semantic roles */
+    --background: 45 28% 92%;       /* --bg-global */
+    --foreground: 80 8% 8%;         /* --text-primary */
+    --card: 44 26% 89%;             /* --bg-container */
+    --card-foreground: 80 8% 8%;
+    --popover: 44 26% 89%;
+    --popover-foreground: 80 8% 8%;
+    --primary: 132 7% 45%;          /* --accent-sage */
+    --primary-foreground: 45 28% 92%;
+    --secondary: 41 27% 84%;        /* --state-hover */
+    --secondary-foreground: 80 8% 8%;
+    --muted: 39 21% 84%;            /* --media-blank */
+    --muted-foreground: 80 6% 32%;
+    --accent: 207 13% 54%;          /* --accent-slate */
+    --accent-foreground: 45 28% 92%;
+    --destructive: 0 55% 42%;
+    --destructive-foreground: 45 28% 92%;
+    --border: 41 18% 78%;
+    --input: 41 18% 78%;
+    --ring: 132 7% 45%;
+    --radius: 0.5rem;
+
+    --sidebar-background: 45 28% 92%;
+    --sidebar-foreground: 80 8% 8%;
+    --sidebar-primary: 132 7% 45%;
+    --sidebar-primary-foreground: 45 28% 92%;
+    --sidebar-accent: 41 27% 84%;
+    --sidebar-accent-foreground: 80 8% 8%;
+    --sidebar-border: 41 18% 78%;
+    --sidebar-ring: 132 7% 45%;
   }
 
   .dark {
-    --background: 222 47% 6%;
-    --foreground: 210 40% 98%;
-    --card: 222 47% 8%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222 47% 8%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 207 100% 35%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 222 47% 12%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 222 47% 12%;
-    --muted-foreground: 215 20% 65%;
-    --accent: 207 100% 35%;
-    --accent-foreground: 0 0% 100%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 222 47% 15%;
-    --input: 222 47% 15%;
-    --ring: 207 100% 35%;
-    --sidebar-background: 222 47% 6%;
-    --sidebar-foreground: 210 40% 98%;
-    --sidebar-primary: 207 100% 35%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 222 47% 12%;
-    --sidebar-accent-foreground: 210 40% 98%;
-    --sidebar-border: 222 47% 15%;
-    --sidebar-ring: 207 100% 35%;
+    /* [THEME-STATE: DARK_MODE] */
+    --bg-global: #141512;
+    --text-primary: #e6e2d8;
+    --bg-container: #1c1e1a;
+    --state-hover: #252823;
+    --media-blank: #222420;
+
+    --background: 80 8% 8%;         /* --bg-global */
+    --foreground: 43 22% 87%;       /* --text-primary */
+    --card: 90 7% 11%;              /* --bg-container */
+    --card-foreground: 43 22% 87%;
+    --popover: 90 7% 11%;
+    --popover-foreground: 43 22% 87%;
+    --primary: 132 7% 45%;
+    --primary-foreground: 43 22% 87%;
+    --secondary: 96 7% 15%;         /* --state-hover */
+    --secondary-foreground: 43 22% 87%;
+    --muted: 90 6% 13%;             /* --media-blank */
+    --muted-foreground: 43 12% 62%;
+    --accent: 207 13% 54%;
+    --accent-foreground: 43 22% 87%;
+    --destructive: 0 45% 38%;
+    --destructive-foreground: 43 22% 87%;
+    --border: 90 5% 18%;
+    --input: 90 5% 18%;
+    --ring: 132 7% 45%;
+
+    --sidebar-background: 80 8% 8%;
+    --sidebar-foreground: 43 22% 87%;
+    --sidebar-primary: 132 7% 45%;
+    --sidebar-primary-foreground: 43 22% 87%;
+    --sidebar-accent: 96 7% 15%;
+    --sidebar-accent-foreground: 43 22% 87%;
+    --sidebar-border: 90 5% 18%;
+    --sidebar-ring: 132 7% 45%;
   }
 }
 
 @layer base {
   * {
-    @apply border-border;
+    border-color: hsl(var(--border));
+    scrollbar-width: thin;
+    scrollbar-color: var(--state-hover) var(--bg-container);
+  }
+  *::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  *::-webkit-scrollbar-track {
+    background: var(--bg-container);
+  }
+  *::-webkit-scrollbar-thumb {
+    background: var(--state-hover);
+    border-radius: 999px;
+    border: 2px solid var(--bg-container);
+  }
+  *::-webkit-scrollbar-thumb:hover {
+    background: color-mix(in srgb, var(--accent-sage) 55%, var(--state-hover));
+  }
+  *::-webkit-scrollbar-corner {
+    background: var(--bg-container);
   }
   html {
     scroll-behavior: smooth;
   }
   body {
-    @apply bg-background text-foreground font-sans antialiased;
+    background-color: var(--bg-global);
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+}
+
+@layer components {
+  /* BAAP structural wrappers — semantic mapping examples */
+  .baap-page {
+    background-color: var(--bg-global);
+    color: var(--text-primary);
+  }
+
+  .baap-container {
+    background-color: var(--bg-container);
+    color: var(--text-primary);
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  .baap-interactive {
+    background-color: var(--bg-container);
+    color: var(--text-primary);
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+  .baap-interactive:hover,
+  .baap-interactive:focus-within,
+  .baap-interactive[data-state="open"],
+  .baap-interactive[aria-selected="true"] {
+    background-color: var(--state-hover);
+  }
+
+  .baap-media {
+    background-color: var(--media-blank);
   }
 }
 
 @layer utilities {
+  .bg-global {
+    background-color: var(--bg-global);
+  }
+  .bg-container {
+    background-color: var(--bg-container);
+  }
+  .bg-state-hover {
+    background-color: var(--state-hover);
+  }
+  .bg-media-blank {
+    background-color: var(--media-blank);
+  }
+  .text-primary-token {
+    color: var(--text-primary);
+  }
+  .text-accent-sage {
+    color: var(--accent-sage);
+  }
+  .text-accent-slate {
+    color: var(--accent-slate);
+  }
+  .bg-accent-sage {
+    background-color: var(--accent-sage);
+  }
+  .bg-accent-slate {
+    background-color: var(--accent-slate);
+  }
+
   .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-beunec-blue to-beunec-blue-light;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    background-image: linear-gradient(to right, var(--accent-sage), var(--accent-slate));
   }
-  
+
   .glass {
-    @apply bg-white/80 dark:bg-black/50 backdrop-blur-xl border border-white/20 dark:border-white/10;
+    background-color: color-mix(in srgb, var(--bg-container) 88%, transparent);
+    backdrop-filter: blur(24px);
+    border: 1px solid color-mix(in srgb, var(--text-primary) 8%, transparent);
   }
-  
+
   .glass-card {
-    @apply bg-white/60 dark:bg-white/5 backdrop-blur-md border border-white/30 dark:border-white/10 rounded-xl;
+    background-color: color-mix(in srgb, var(--bg-container) 72%, transparent);
+    backdrop-filter: blur(12px);
+    border: 1px solid color-mix(in srgb, var(--text-primary) 8%, transparent);
+    border-radius: 0.75rem;
+  }
+
+  /* Doc markdown lists — custom bullets for ul, numbers for ol */
+  .doc-markdown .doc-md-ul .doc-md-li {
+    display: flex;
+    gap: 0.75rem;
+  }
+  .doc-markdown .doc-md-ol .doc-md-li-dot {
+    display: none;
   }
 }

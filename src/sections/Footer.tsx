@@ -15,39 +15,27 @@ import {
 } from "lucide-react";
 
 const footerLinks = {
-  resources: {
-    title: "Resources",
+  research: {
+    title: "Research",
     links: [
+      { label: "Rivine", href: "/rivine-experimental-project" },
+      { label: "Brolostack", href: "/brolostack-project" },
       { label: "Resources Hub", href: "/resources" },
-      { label: "Governance", href: "/governance" },
-      { label: "Our Frameworks", href: "#" },
-      { label: "BCP Use Cases", href: "#" },
     ],
   },
-  programs: {
-    title: "Programs",
+  platform: {
+    title: "Platform",
     links: [
-      { label: "Beunec Campus Leaders", href: "#" },
-      { label: "BCP for Solo Founders Grants", href: "/cloud-platform-for-solo-founder-grants-program" },
-      { label: "BCP for College Students", href: "/beunec-cloud-pro-for-college-students" },
+      { label: "Aselius", href: "/aselius-platform" },
+      { label: "Principles", href: "/principles" },
     ],
   },
   company: {
     title: "Company",
     links: [
       { label: "About", href: "/company" },
-      { label: "Brand", href: "#" },
-      { label: "2050 Vision & Agenda", href: "#" },
-      { label: "Partners", href: "#" },
-    ],
-  },
-  platform: {
-    title: "Cloud Platform",
-    links: [
-      { label: "Overview", href: "/cloud-platform" },
-      { label: "Documentation", href: "/bcp-documentation" },
-      { label: "Grant Programs", href: "#" },
-      { label: "Plans & Pricing", href: "/bcp-plans-pricing" },
+      { label: "Research Philosophy", href: "/research-philosophy" },
+      { label: "Agentic Infrastructure", href: "/agentic-infrastructure" },
     ],
   },
 };
@@ -76,7 +64,7 @@ export function Footer() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="mb-16 p-8 lg:p-12 rounded-2xl bg-gradient-to-br from-beunec-blue/10 to-beunec-blue/5 border border-beunec-blue/20"
+          className="mb-16 p-8 lg:p-12 rounded-2xl baap-container"
         >
           <div className="grid lg:grid-cols-2 gap-8 items-center">
             <div>
@@ -94,10 +82,10 @@ export function Footer() {
                 <Input
                   type="email"
                   placeholder="Enter your email"
-                  className="pl-10 h-12 bg-white dark:bg-slate-900 border-border"
+                  className="pl-10 h-12 bg-media-blank border-border"
                 />
               </div>
-              <Button className="h-12 px-6 bg-beunec-blue hover:bg-beunec-blue-dark text-white">
+              <Button className="h-12 px-6 bg-beunec-sage hover:opacity-90 text-primary-foreground transition-colors duration-200">
                 Subscribe
                 <ArrowRight className="ml-2 w-4 h-4" />
               </Button>
@@ -122,8 +110,8 @@ export function Footer() {
               />
             </a>
             <p className="text-muted-foreground mb-6 max-w-sm">
-              Redefining how people, agents, and intelligent systems collaborate
-              seamlessly. Shaping the Future of Work.
+              Beunec Technologies Inc. is a research and deployment organization focused on
+              understanding, developing, and actualizing Agentic Infrastructure.
             </p>
             {/* Social Links */}
             <div className="flex items-center gap-3">

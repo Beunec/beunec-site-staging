@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 
 export function ThemeToggle() {
   const [mounted, setMounted] = useState(false);
-  const { theme, setTheme } = useTheme();
+  const { resolvedTheme, setTheme } = useTheme();
 
   useEffect(() => {
     setMounted(true);
@@ -26,18 +26,20 @@ export function ThemeToggle() {
     );
   }
 
+  const isDark = resolvedTheme === "dark";
+
   return (
     <Button
       variant="ghost"
       size="icon"
-      onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-      className="w-9 h-9 rounded-full hover:bg-muted transition-colors duration-200"
-      aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+      onClick={() => setTheme(isDark ? "light" : "dark")}
+      className="w-9 h-9 rounded-full hover:bg-secondary transition-colors duration-200"
+      aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
     >
-      {theme === "dark" ? (
-        <Sun className="h-4 w-4 text-amber-400 transition-transform duration-200 rotate-0 scale-100" />
+      {isDark ? (
+        <Sun className="h-4 w-4 text-accent-slate transition-transform duration-200" />
       ) : (
-        <Moon className="h-4 w-4 text-beunec-blue transition-transform duration-200 rotate-0 scale-100" />
+        <Moon className="h-4 w-4 text-accent-sage transition-transform duration-200" />
       )}
     </Button>
   );

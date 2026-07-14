@@ -17,11 +17,11 @@ interface DustParticle {
 }
 
 const COLORS = [
-    '#FFFFFF', // Pure White
-    '#93C5FD', // Light Blue (Beunec Blue Tint)
-    '#FDE047', // Soft Yellow (Dust/Star light)
-    '#F8FBFF', // Off White
-    '#E0F2FE', // Very Light Blue
+    '#E6E2D8', // Soft Parchment
+    '#6B7A6E', // Sage Mist
+    '#7A8B99', // Muted Slate
+    '#DFD9CE', // Muted Clay
+    '#252823', // Basalt Flare
 ];
 
 export const HomeParticleBackground: React.FC = () => {

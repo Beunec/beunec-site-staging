@@ -56,11 +56,23 @@ export default {
           ring: "hsl(var(--sidebar-ring))",
         },
         beunec: {
-          blue: "#00477d",
-          "blue-light": "#0066b3",
-          "blue-dark": "#003355",
-          calm: "#f8fafc",
-          "calm-dark": "#0f172a",
+          /* ponytail: map legacy beunec-* utilities onto BAAP accents so existing classnames pick up Warm Technical without a full classname sweep */
+          blue: "#6b7a6e",
+          "blue-light": "#7a8b99",
+          "blue-dark": "#5a685d",
+          calm: "#f1eee6",
+          "calm-dark": "#141512",
+          sage: "#6b7a6e",
+          slate: "#7a8b99",
+        },
+        baap: {
+          global: "var(--bg-global)",
+          container: "var(--bg-container)",
+          hover: "var(--state-hover)",
+          media: "var(--media-blank)",
+          text: "var(--text-primary)",
+          sage: "var(--accent-sage)",
+          slate: "var(--accent-slate)",
         },
       },
       borderRadius: {

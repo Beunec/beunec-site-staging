@@ -4,10 +4,9 @@ import { useEffect } from "react";
 import { motion } from "framer-motion";
 import { Header } from "@/sections/Header";
 import { Footer } from "@/sections/Footer";
-import { Button } from "@/components/ui/button";
-import { ArrowRight, CheckCircle2 } from "lucide-react";
-import { ParticleBackground } from "@/sections/governance/ParticleBackground";
 import Link from "next/link";
+import { CheckCircle2, ArrowRight } from "lucide-react";
+import { ParticleBackground } from "@/sections/governance/ParticleBackground";
 
 export default function CompanyPage() {
     useEffect(() => {
@@ -15,74 +14,116 @@ export default function CompanyPage() {
     }, []);
 
     return (
-        <div className="min-h-screen bg-background">
+        <div className="baap-page min-h-screen">
             <Header />
 
             <main className="pt-20">
-                {/* Section 1: Hero */}
+                {/* Section 1: Hero — identity & what we are not */}
                 <section className="relative py-20 overflow-hidden">
                     <ParticleBackground />
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                        <div className="text-center mb-16">
-                            <motion.h1
-                                initial={{ opacity: 0, y: 20 }}
+                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-end mb-14 md:mb-16">
+                            <div className="lg:col-span-7 text-center lg:text-left">
+                                <motion.p
+                                    initial={{ opacity: 0, y: 12 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    className="font-mono text-[11px] uppercase tracking-[0.18em] text-accent-slate mb-6"
+                                >
+                                    Who We Are
+                                </motion.p>
+                                <motion.h1
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: 0.05 }}
+                                    className="text-3xl md:text-4xl md:text-[2.0rem] md:text-[2.75rem] leading-[1.05] tracking-tight text-foreground font-extrabold"
+                                >
+                                    Understanding, developing, &amp; actualizing{" "}
+                                    <span className="underline underline-offset-[0.12em] decoration-2 decoration-[color:var(--accent-sage)]">
+                                        Agentic Infrastructure
+                                    </span>
+                                </motion.h1>
+                            </div>
+                            <motion.p
+                                initial={{ opacity: 0, y: 16 }}
                                 animate={{ opacity: 1, y: 0 }}
-                                className="text-4xl md:text-6xl font-serif text-foreground mb-6"
+                                transition={{ delay: 0.1 }}
+                                className="lg:col-span-5 text-lg md:text-xl leading-relaxed text-muted-foreground max-w-xl mx-auto lg:mx-0 lg:ml-auto lg:mb-1 text-center lg:text-left"
+                                style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
                             >
-                                Redefining Productivity Through <br /> Intelligent Awareness
-                            </motion.h1>
-                            <motion.div
-                                initial={{ opacity: 0, scale: 0.95 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                transition={{ delay: 0.2 }}
-                                className="relative rounded-2xl overflow-hidden shadow-2xl max-w-5xl mx-auto"
-                            >
-                                <img
-                                    src="/assets/open-space-office.avif"
-                                    alt="Beunec Office"
-                                    className="w-full h-auto object-cover"
-                                />
-                            </motion.div>
+                                Beunec is a research and deployment organization. We study how agentic systems are built, governed, and brought into the world, not as a product line, but as infrastructure.
+                            </motion.p>
                         </div>
 
-                        <div className="max-w-3xl mx-auto">
-                            <h2 className="text-2xl font-medium text-foreground mb-6">Who we are</h2>
-                            <p className="text-muted-foreground text-lg leading-relaxed mb-8">
-                                Beunec is a research and deployment company, founded in 2024 in New Jersey, focused on shaping the future of work for professionals, startups, and SMEs. We build cloud-based, privacy-first, data-readiness, and security-driven systems that transform fragmented digital workflows into a unified, intelligent ecosystem where humans and AI collaborate seamlessly; we are the system orchestrator for the intelligence age.
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ delay: 0.18 }}
+                            className="relative rounded-2xl overflow-hidden shadow-2xl max-w-5xl mx-auto mb-14"
+                        >
+                            <img
+                                src="/assets/open-space-office.avif"
+                                alt="Beunec office"
+                                className="w-full h-auto object-cover"
+                            />
+                        </motion.div>
+
+                        <motion.div
+                            initial={{ opacity: 0, y: 16 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.26 }}
+                            className="max-w-3xl mx-auto space-y-6 text-center"
+                        >
+                            <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
+                                We are not defined solely as a software company, an AI company, or a conventional research lab. Product launches, market cycles, and commercialization are not our reason for being.
                             </p>
-                            <Button asChild className="bg-beunec-blue hover:bg-beunec-blue-dark text-white rounded-lg px-8 py-6 text-lg">
-                                <Link href="/cloud-platform">
-                                    See our Solution
-                                    <ArrowRight className="ml-2 w-5 h-5" />
-                                </Link>
-                            </Button>
-                        </div>
+                            <Link
+                                href="/agentic-infrastructure"
+                                className="inline-flex items-center gap-2 text-sm font-medium text-accent-sage hover:text-foreground transition-colors"
+                            >
+                                What we mean by Agentic Infrastructure
+                                <ArrowRight className="w-4 h-4" />
+                            </Link>
+                        </motion.div>
                     </div>
                 </section>
 
-                {/* Section 2: 2050 Vision & Agenda */}
-                <section className="py-24 bg-slate-50 dark:bg-slate-900/50">
+                {/* Section 2: Solution Agent — fundamental responsibility */}
+                <section className="py-24 bg-container">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div className="grid lg:grid-cols-2 gap-16 items-center">
                             <motion.div
                                 initial={{ opacity: 0, x: -30 }}
                                 whileInView={{ opacity: 1, x: 0 }}
                                 viewport={{ once: true }}
+                                className="space-y-8"
                             >
-                                <span className="text-beunec-blue font-semibold tracking-widest uppercase text-sm mb-4 block dark:text-[#D3D3D3]">
-                                    Our 2050 Vision & Agenda
-                                </span>
-                                <h2 className="text-3xl md:text-4xl font-serif text-foreground mb-8">
-                                    Immersive Intelligent Work Future
-                                </h2>
-                                <div className="space-y-6">
+                                <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-accent-slate">
+                                    Our approach
+                                </p>
+                                <p className="text-lg md:text-lg text-muted-foreground leading-relaxed">
+                                    Our work starts with a deeper obligation: to understand unstable systems, move toward conditions others overlook or avoid, and build solutions that make those systems more stable, useful, and governed.
+                                </p>
+                                <div>
+                                    <h2 className="text-lg md:text-lg font-extrabold text-foreground tracking-tight mb-4">
+                                        We call this being a{" "}
+                                        <span className="underline underline-offset-[0.12em] decoration-2 decoration-[color:var(--accent-sage)]">
+                                            Solution Agent
+                                        </span>
+                                        .
+                                    </h2>
                                     <p className="text-muted-foreground leading-relaxed">
-                                        Beunec's 2050 Vision is to create a world where humans, AI, and humanoid systems work together seamlessly across physical and digital spaces, transforming how organizations train, hire, and operate. Its Four Pillars: A unified Beunec identity layer, humanoid-ready workflows, autonomous agentic ecosystems that handle daily work, and governance by design so trust, privacy, and compliance are built into every interaction.
-                                    </p>
-                                    <p className="text-muted-foreground leading-relaxed">
-                                        Beunec's Agenda is to move from 2024 vision and system architecture readiness into 2025-2026 full Beunec Cloud and ID activation, reach 2027-2030 early humanoid-agent integration and education toolkits, expand 2035-2040 into cross-industry workforce simulation and global governance ecosystems, and by 2050 have humanoid systems fully mainstreamed into workflows worldwide.
+                                        A problem solver answers a named problem. A Solution Agent goes further, recognizing what was missed, asking why instability endures, and committing to the research, invention, development, and deployment required for lasting stability.
                                     </p>
                                 </div>
+                                <blockquote
+                                    className="rounded-2xl border border-border px-3 py-3 text-foreground text-base sm:text-md leading-relaxed font-medium"
+                                    style={{
+                                        background:
+                                            "linear-gradient(135deg, rgba(107,122,110,0.12), rgba(122,139,153,0.08))",
+                                    }}
+                                >
+                                    Drawn toward unstable systems, not to exploit disorder, but to understand it and help make it stable.
+                                </blockquote>
                             </motion.div>
                             <motion.div
                                 initial={{ opacity: 0, scale: 0.9 }}
@@ -90,14 +131,6 @@ export default function CompanyPage() {
                                 viewport={{ once: true }}
                                 className="relative rounded-2xl overflow-hidden shadow-xl aspect-[4/3]"
                             >
-                                {/* I'll use a placeholder or generic team image if specific vision image isn't named, 
-                    but the user referred to the uploaded screenshot which shows a meeting. 
-                    Since they didn't provide a path for this specific vision image in text, 
-                    I'll use are-you-human-humanoid.avif or similar if available, or just skip if not specified.
-                    Actually, the prompt says "new page and its sections" and provides media for other sections.
-                    I will use a placeholder for this one if no asset is provided, but wait, 
-                    Image 2 in the screenshots is for this section.
-                */}
                                 <img
                                     src="/assets/mbmforumgrouppic.avif"
                                     alt="Beunec Vision"
@@ -108,7 +141,7 @@ export default function CompanyPage() {
                     </div>
                 </section>
 
-                {/* Section 3: Built on Purpose */}
+                {/* Section 3: Duty to people — integrity close */}
                 <section className="py-24">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div className="grid lg:grid-cols-2 gap-16 items-center">
@@ -128,27 +161,171 @@ export default function CompanyPage() {
                                 initial={{ opacity: 0, x: 30 }}
                                 whileInView={{ opacity: 1, x: 0 }}
                                 viewport={{ once: true }}
-                                className="order-1 lg:order-2"
+                                className="order-1 lg:order-2 space-y-8"
                             >
-                                <h2 className="text-3xl md:text-4xl font-serif text-foreground mb-6">
-                                    Built on Purpose. Designed for Evolution.
+                                <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-accent-slate">
+                                    What guides us
+                                </p>
+                                <h2 className="text-3xl md:text-4xl font-extrabold text-foreground tracking-tight leading-[1.1]">
+                                    Our duty is first to people.
                                 </h2>
-                                <p className="text-muted-foreground text-lg mb-8">
-                                    We were founded in 2023 and incorporated in 2024 with a main goal: "to ensure individuals, teams & enterprises are prepared to thrive in a future workforce built on AGI, humanoids, and agentic systems." We believe in scalable, ethical technology that reimagines how work is done from operations to collaboration.
+                                <div className="space-y-5 text-muted-foreground text-base sm:text-lg leading-relaxed">
+                                    <p>
+                                        Not to machines, markets, fame, or power. Technology earns its place when development respects human capability, human existence, and the environments where people live and work.
+                                    </p>
+                                    <p>
+                                        We do not need to be the loudest organization in the room. We let the integrity, discipline, and real-world utility of our work speak for itself.
+                                    </p>
+                                </div>
+                                <p
+                                    className="text-2xl md:text-3xl text-foreground font-extrabold tracking-tight pt-2"
+                                    style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
+                                >
+                                    We are Beunec.
                                 </p>
                             </motion.div>
                         </div>
                     </div>
                 </section>
 
-                {/* Section 4: Video Background */}
+                {/* Section 4: Defensible value */}
+                <section className="py-24 bg-container">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            className="max-w-3xl mb-14"
+                        >
+                            <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-accent-slate mb-6">
+                                Value
+                            </p>
+                            <h2 className="text-3xl md:text-4xl font-extrabold text-foreground tracking-tight leading-[1.1] mb-6">
+                                Where defensible value can develop
+                            </h2>
+                            <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
+                                We do not assume that a proprietary name, framework, or prompt automatically creates a competitive moat. Defensibility must be demonstrated through implementation, performance, integration, accumulated knowledge, and sustained real-world use.
+                            </p>
+                        </motion.div>
+
+                        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {[
+                                {
+                                    title: "Runtime and hardware integration",
+                                    body: "Deep ties to execution environments, operating systems, enterprise infrastructure, edge devices, and hardware are harder to reproduce than an API-level wrapper.",
+                                },
+                                {
+                                    title: "Specialized context and professional knowledge",
+                                    body: "Datasets and instructions from qualified professionals can sharpen specialized agents; when backed by governance, consent, quality control, and evaluation.",
+                                },
+                                {
+                                    title: "Reliable execution patterns",
+                                    body: "Validated task graphs, recovery procedures, escalation rules, and domain workflows can become durable operational knowledge over time.",
+                                },
+                                {
+                                    title: "Memory and institutional context",
+                                    body: "A governed context fabric grows more useful as it learns policies, terminology, workflows, and operating boundaries, balanced with portability, privacy, and organizational data ownership.",
+                                },
+                                {
+                                    title: "Cost-to-performance efficiency",
+                                    body: "Efficiency is defensible only with reproducible benchmarks: whether orchestration and context methods reduce unnecessary activation, token use, latency, and failure without sacrificing quality.",
+                                },
+                                {
+                                    title: "Governance embedded in execution",
+                                    body: "Governance matters when it shows up in system behavior; permissions, execution boundaries, approval checkpoints, immutable records, and human escalation, not only in policy documents.",
+                                },
+                            ].map((item, i) => (
+                                <motion.div
+                                    key={item.title}
+                                    initial={{ opacity: 0, y: 16 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true }}
+                                    transition={{ delay: i * 0.05 }}
+                                    className="rounded-2xl border border-border bg-global p-6 space-y-3"
+                                >
+                                    <h3 className="text-base font-semibold text-foreground leading-snug">
+                                        {item.title}
+                                    </h3>
+                                    <p className="text-sm text-muted-foreground leading-relaxed">
+                                        {item.body}
+                                    </p>
+                                </motion.div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+
+                {/* Section 5: Our commitment */}
+                <section className="py-24">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div className="grid lg:grid-cols-2 gap-16 items-start">
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                className="space-y-8"
+                            >
+                                <div>
+                                    <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-accent-slate mb-6">
+                                        Commitment
+                                    </p>
+                                    <h2 className="text-3xl md:text-4xl font-extrabold text-foreground tracking-tight leading-[1.1] mb-6">
+                                        How we hold ourselves accountable
+                                    </h2>
+                                    <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
+                                        Our work in Agentic Infrastructure is an ongoing research and deployment effort. Some areas are active development priorities; others are longer-term research directions. We distinguish between what has been conceptualized, experimentally validated, deployed, and independently verified.
+                                    </p>
+                                </div>
+                                <blockquote
+                                    className="rounded-2xl border border-border px-6 py-5 text-foreground text-base sm:text-lg leading-relaxed font-medium"
+                                    style={{
+                                        background:
+                                            "linear-gradient(135deg, rgba(107,122,110,0.12), rgba(122,139,153,0.08))",
+                                    }}
+                                >
+                                    We will not treat ambition as evidence.
+                                </blockquote>
+                            </motion.div>
+
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: 0.1 }}
+                                className="rounded-2xl border border-border bg-container p-8"
+                            >
+                                <p className="text-sm font-medium text-foreground mb-6">
+                                    As our work develops, we intend to:
+                                </p>
+                                <ul className="space-y-4">
+                                    {[
+                                        "Publish research and technical documentation where appropriate",
+                                        "Clearly distinguish hypotheses from validated findings",
+                                        "Document limitations and unsuccessful experiments",
+                                        "Measure performance under real-world conditions",
+                                        "Create pathways for professional and institutional review",
+                                        "Preserve human responsibility throughout autonomous execution",
+                                        "Pursue commercialization only when it supports, not compromises, the integrity of the work",
+                                    ].map((item) => (
+                                        <li key={item} className="flex items-start gap-3 text-sm text-muted-foreground leading-relaxed">
+                                            <CheckCircle2 className="w-4 h-4 text-accent-sage mt-0.5 shrink-0" />
+                                            <span>{item}</span>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </motion.div>
+                        </div>
+                    </div>
+                </section>
+
+                {/* Section 6: Video Background */}
                 <section className="py-24 bg-background overflow-hidden relative">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
-                            className="relative h-[500px] md:h-[600px] rounded-[40px] overflow-hidden flex items-center justify-center bg-slate-900 group"
+                            className="relative h-[500px] md:h-[600px] rounded-[40px] overflow-hidden flex items-center justify-center baap-media group"
                         >
                             <video
                                 autoPlay
@@ -177,7 +354,7 @@ export default function CompanyPage() {
                     </div>
                 </section>
 
-                {/* Section 5: Core Definition */}
+                {/* Section 7: Core Definition */}
                 <section className="py-24">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div className="mb-20">
@@ -185,23 +362,23 @@ export default function CompanyPage() {
                             <div className="grid lg:grid-cols-2 gap-12">
                                 <div className="space-y-8">
                                     <div>
-                                        <h3 className="text-xl font-semibold text-beunec-blue mb-4 flex items-center gap-2 dark:text-[#D3D3D3]">
-                                            Beunec® = Bone + Unique + C
+                                        <h3 className="text-xl font-semibold text-beunec-blue mb-4 flex items-center gap-2">
+                                            Beunec® = Bene + Unique + C
                                         </h3>
                                         <ul className="space-y-2 text-muted-foreground">
-                                            <li>• "Bene" — Latin for goodness, integrity</li>
-                                            <li>• "Unique" — Singular in design, purpose, and identity</li>
-                                            <li>• "C" — Code, Consciousness, Company</li>
+                                            <li>• "Bene": Latin for goodness, integrity</li>
+                                            <li>• "Unique" - Singular in design, purpose, and identity</li>
+                                            <li>Code, Consciousness, Company</li>
                                         </ul>
                                     </div>
                                     <div>
-                                        <h3 className="text-xl font-semibold text-beunec-blue mb-4 dark:text-[#D3D3D3]">Definition Strip:</h3>
+                                        <h3 className="text-xl font-semibold text-beunec-blue mb-4">Definition Strip:</h3>
                                         <p className="italic text-muted-foreground">
-                                            "Beunec®: means an entity that embodies excellence, uniqueness, and technological innovation in delivering future-ready business solutions."
+                                            "Beunec®: means an entity that embodies excellence, uniqueness, integrity, and technological innovation in delivering future-ready, stable, and governed solutions."
                                         </p>
                                     </div>
                                     <div>
-                                        <h3 className="text-xl font-semibold text-beunec-blue mb-4 dark:text-[#D3D3D3]">What We Do:</h3>
+                                        <h3 className="text-xl font-semibold text-beunec-blue mb-4">What We Do:</h3>
                                         <ul className="space-y-3">
                                             {[
                                                 "Build agent-governed cloud platforms",
@@ -209,13 +386,13 @@ export default function CompanyPage() {
                                                 "Engineer Immersive, ID-verified digital experiences"
                                             ].map((item) => (
                                                 <li key={item} className="flex items-start gap-3 text-muted-foreground">
-                                                    <CheckCircle2 className="w-5 h-5 text-beunec-blue mt-0.5 shrink-0 dark:text-[#D3D3D3]" />
+                                                    <CheckCircle2 className="w-5 h-5 text-beunec-blue mt-0.5 shrink-0" />
                                                     <span>{item}</span>
                                                 </li>
                                             ))}
                                         </ul>
                                     </div>
-                                    <div className="flex gap-12 text-sm text-muted-foreground pt-4 dark:text-[#D3D3D3]">
+                                    <div className="flex gap-12 text-sm text-muted-foreground pt-4">
                                         <div>
                                             <strong>Company Type:</strong> Private | NJ | March, 2024
                                         </div>
@@ -224,7 +401,7 @@ export default function CompanyPage() {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="relative rounded-2xl overflow-hidden shadow-inner bg-slate-100 dark:bg-slate-800">
+                                <div className="relative rounded-2xl overflow-hidden shadow-inner bg-media-blank">
                                     <img
                                         src="/assets/abstractcontourmapdesign.avif"
                                         alt="Beunec Identity Map"
@@ -236,8 +413,8 @@ export default function CompanyPage() {
                     </div>
                 </section>
 
-                {/* Section 6: Brand Elements */}
-                <section className="py-24 bg-slate-50 dark:bg-slate-900/50">
+                {/* Section 8: Brand Elements */}
+                <section className="py-24 bg-container">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div className="grid lg:grid-cols-2 gap-16 items-start">
                             <div className="space-y-12">
@@ -245,23 +422,23 @@ export default function CompanyPage() {
                                     <h2 className="text-3xl font-serif text-foreground mb-8">Brand Elements & Visual Language</h2>
                                     <div className="space-y-8">
                                         <div>
-                                            <h4 className="font-bold text-beunec-blue uppercase tracking-wider text-sm mb-4 dark:text-[#D3D3D3]">Typography:</h4>
+                                            <h4 className="font-bold text-beunec-blue uppercase tracking-wider text-sm mb-4">Typography:</h4>
                                             <ul className="space-y-2 text-muted-foreground">
                                                 <li>• Titles: EB Garamond, Forum, Philosopher</li>
                                                 <li>• Body: Inter, Source Serif Pro</li>
                                             </ul>
                                         </div>
                                         <div>
-                                            <h4 className="font-bold text-beunec-blue uppercase tracking-wider text-sm mb-4 dark:text-[#D3D3D3]">Primary Palette:</h4>
+                                            <h4 className="font-bold text-beunec-blue uppercase tracking-wider text-sm mb-4">Primary Palette:</h4>
                                             <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
 
                                                 {[
-                                                    { name: "Beunec Navy Blue", hex: "#00477d", desc: "Trust & Intelligence" },
-                                                    { name: "Off-white", hex: "#e7ecef", desc: "Clarity & Simplicity" },
-                                                    { name: "Golden Yellow", hex: "#ffd38c", desc: "Warmth & Purpose" },
-                                                    { name: "Fern Green", hex: "#a9cbb7", desc: "Growth & Harmony" },
-                                                    { name: "Midnight Slate", hex: "#1e293b", desc: "Authority & Precision" },
-                                                    { name: "Soft Clay", hex: "#d4a373", desc: "Organic & Grounded" },
+                                                    { name: "Alabaster Cream", hex: "#F1EEE6", desc: "Light canvas" },
+                                                    { name: "Ink Charcoal", hex: "#141512", desc: "Authority & focus" },
+                                                    { name: "Warm Stone", hex: "#EAE6DB", desc: "Containers & panels" },
+                                                    { name: "Sage Mist", hex: "#6B7A6E", desc: "Infrastructure accent" },
+                                                    { name: "Muted Slate", hex: "#7A8B99", desc: "Research accent" },
+                                                    { name: "Soft Parchment", hex: "#E6E2D8", desc: "Dark-mode text" },
                                                 ].map((color) => (
 
                                                     <div key={color.name} className="flex flex-col gap-2">
@@ -278,24 +455,24 @@ export default function CompanyPage() {
                                             </div>
                                         </div>
                                         <div>
-                                            <h4 className="font-bold text-beunec-blue uppercase tracking-wider text-sm mb-4 dark:text-[#D3D3D3]">Style Ethos:</h4>
+                                            <h4 className="font-bold text-beunec-blue uppercase tracking-wider text-sm mb-4">Style Ethos:</h4>
                                             <ul className="space-y-2 text-muted-foreground">
-                                                <li>• Minimalist, Mindful, Agentically Intelligent</li>
-                                                <li>• Aesthetic rooted in digital elegance and ancient clarity</li>
+                                                <li>• Minimalist, Warm Technical, Brutalist structure</li>
+                                                <li>• Depth via container contrast, not neon borders or glow</li>
                                             </ul>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div>
-                                    <h4 className="font-bold text-beunec-blue uppercase tracking-wider text-sm mb-6 dark:text-[#D3D3D3]">Logo Usage & Brand Protection</h4>
+                                    <h4 className="font-bold text-beunec-blue uppercase tracking-wider text-sm mb-6">Logo Usage & Brand Protection</h4>
                                     <ul className="space-y-4 text-sm text-muted-foreground">
                                         <li>• Logos: Full logo, symbol-only, monochrome version</li>
                                         <li>• Usage Guidelines:
                                             <ul className="pl-4 mt-2 space-y-1">
                                                 <li>- Clear margin rules</li>
                                                 <li>- No distortions, shadow overlays, or unauthorized recoloring</li>
-                                                <li>- Trademark: Beunec® — registered & protected</li>
+                                                <li>- Trademark: Beunec® - registered & protected</li>
                                             </ul>
                                         </li>
                                     </ul>
@@ -311,23 +488,23 @@ export default function CompanyPage() {
                                     <img src="/assets/balloonoververdanthills.avif" alt="Brand Vision" className="w-full h-full object-cover" />
                                 </motion.div>
                                 <div className="grid grid-cols-2 gap-4">
-                                    <div className="bg-white p-8 rounded-xl shadow-sm border border-border flex items-center justify-center">
+                                    <div className="bg-global p-8 rounded-xl border border-border flex items-center justify-center">
                                         <img src="/assets/beunec-logo-transparent-blacktext.png" alt="Beunec Logo Black" className="h-10 w-auto" />
                                     </div>
-                                    <div className="bg-slate-900 p-8 rounded-xl shadow-sm border border-border flex items-center justify-center">
+                                    <div className="p-8 rounded-xl border border-border flex items-center justify-center" style={{ backgroundColor: "var(--bg-dark)" }}>
                                         <img src="/assets/beunec-logo-transparent-whitetext.png" alt="Beunec Logo White" className="h-10 w-auto" />
                                     </div>
-                                    <div className="bg-white p-8 rounded-xl shadow-sm border border-border flex items-center justify-center">
+                                    <div className="bg-container p-8 rounded-xl border border-border flex items-center justify-center">
                                         <img src="/assets/Beunec_logo_black.png" alt="Beunec Logo Full Black" className="h-10 w-auto" />
                                     </div>
-                                    <div className="bg-beunec-blue/5 p-8 rounded-xl shadow-sm border border-border flex items-center justify-center">
+                                    <div className="bg-media-blank p-8 rounded-xl border border-border flex items-center justify-center">
                                         <img src="/assets/beunec-logo.png" alt="Beunec Logo Standard" className="h-10 w-auto" />
                                     </div>
-                                    <div className="bg-white p-8 rounded-xl shadow-sm border border-border flex items-center justify-center">
-                                        <img src="/assets/beunec-cloud-logo-icon.png" alt="Beunec Cloud Icon" className="h-10 w-auto" />
+                                    <div className="bg-global p-8 rounded-xl border border-border flex items-center justify-center">
+                                        <img src="/assets/aselius-logo-icon.png" alt="Aselius Logo Icon" className="h-10 w-auto" />
                                     </div>
-                                    <div className="bg-slate-950 p-8 rounded-xl shadow-sm border border-border flex items-center justify-center text-white">
-                                        <img src="/assets/beunec-cloud-logo-transparent.png" alt="Beunec Cloud Transparent" className="h-10 w-auto" />
+                                    <div className="p-8 rounded-xl border border-border flex items-center justify-center text-foreground" style={{ backgroundColor: "var(--bg-dark)" }}>
+                                        <img src="/assets/aselius-logo-text.png" alt="Aselius Logo and Text" className="h-10 w-auto" />
                                     </div>
                                 </div>
                             </div>

@@ -13,34 +13,38 @@ export const viewport: Viewport = {
     initialScale: 1,
     maximumScale: 5,
     themeColor: [
-        { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-        { media: "(prefers-color-scheme: dark)", color: "#000000" },
+        { media: "(prefers-color-scheme: light)", color: "#F1EEE6" },
+        { media: "(prefers-color-scheme: dark)", color: "#141512" },
     ],
 };
 
 export const metadata: Metadata = {
     // Basic SEO
     title: {
-        default: "Beunec | The Future of Work Orchestrator",
+        default: "Beunec | Agentic Infrastructure & the Aselius Platform",
         template: "%s | Beunec",
     },
-    description: "Redefining how people, agents, and intelligent systems collaborate seamlessly. Shaping the Future of Work.",
+    description:
+        "Beunec is a research and deployment organization building Agentic Infrastructure. Aselius, our SaaS platform, runs governed agentic work through specialized Rivine engines — research, code, documents, and creative — with every result inspectable, editable, and yours to export.",
     keywords: [
-        "AI System Orchestrator",
-        "Artificial Intelligence",
-        "Enterprise Cloud",
-        "Multi-Agent Systems",
-        "Humanoid Systems",
-        "Scalable Cloud",
-        "Toggle Tax",
-        "Zero-Knowledge Workspace",
-        "SaaS Integration",
-        "AI Productivity",
-        "Enterprise AI",
-        "Workflow Automation",
-        "AI Agents",
-        "Business Intelligence",
-        "Cloud Platform",
+        "Beunec",
+        "Beunec Technologies",
+        "Agentic Infrastructure",
+        "Aselius",
+        "Aselius Platform",
+        "Rivine",
+        "Rivine engines",
+        "agentic AI",
+        "AI agents",
+        "agentic workspace",
+        "multi-agent orchestration",
+        "governed AI",
+        "human-in-the-loop AI",
+        "AI research and deployment",
+        "Solution Agent",
+        "agentic engines",
+        "AI deliverables",
+        "enterprise AI agents",
     ],
     authors: [{ name: "Beunec Technologies, Inc.", url: "https://beunec.co" }],
     creator: "Beunec Technologies, Inc.",
@@ -72,23 +76,17 @@ export const metadata: Metadata = {
     
     // Open Graph for Social Sharing
     openGraph: {
-        title: "Beunec | The Future of Work Orchestrator for Specialist Professionals",
-        description: "Redefining how people, agents, and intelligent systems collaborate seamlessly. Shaping the Future of Work.",
+        title: "Beunec | Agentic Infrastructure & the Aselius Platform",
+        description:
+            "A research and deployment organization building Agentic Infrastructure. Aselius runs governed agentic work through specialized Rivine engines — research, code, documents, and creative — with inspectable, exportable deliverables.",
         url: "https://beunec.co",
         siteName: "Beunec",
         images: [
             {
                 url: "https://beunec.co/assets/beunec-logo-transparent-blacktext.png",
-                width: 1200,
-                height: 630,
-                alt: "Beunec - The Future of Work Orchestrator",
-                type: "image/png",
-            },
-            {
-                url: "https://beunec.co/assets/Beunec Cloud Hero Section Graphic Art.png",
-                width: 1200,
-                height: 630,
-                alt: "Beunec Cloud Platform",
+                width: 1605,
+                height: 442,
+                alt: "Beunec — Agentic Infrastructure",
                 type: "image/png",
             },
         ],
@@ -99,29 +97,22 @@ export const metadata: Metadata = {
     // Twitter Card
     twitter: {
         card: "summary_large_image",
-        title: "Beunec | The AI System Orchestrator for Specialist Professionals",
-        description: "Eliminate the Toggle Tax with Beunec's secure, zero-knowledge workspace that unifies fragmented SaaS tools.",
+        title: "Beunec | Agentic Infrastructure & the Aselius Platform",
+        description:
+            "Governed agentic work through specialized Rivine engines — research, code, documents, and creative. Every result inspectable, editable, and yours to export.",
         images: ["https://beunec.co/assets/beunec-logo-transparent-blacktext.png"],
-        creator: "@beunec",
-        site: "@beunec",
+        creator: "@beunecofficial",
+        site: "@beunecofficial",
     },
     
     // Icons & App Manifest
     icons: {
         icon: [
-            { url: "/assets/favicon.ico", sizes: "48x48" },
-            { url: "/assets/favicon.ico", sizes: "192x192", type: "image/png" },
+            { url: "/assets/beunec-logo.png", sizes: "any", type: "image/png" },
         ],
-        shortcut: "/assets/favicon.ico",
+        shortcut: "/assets/beunec-logo.png",
         apple: [
-            { url: "/assets/favicon.ico", sizes: "180x180", type: "image/png" },
-        ],
-        other: [
-            {
-                rel: "mask-icon",
-                url: "/assets/favicon.ico",
-                color: "#000000",
-            },
+            { url: "/assets/beunec-logo.png", sizes: "180x180", type: "image/png" },
         ],
     },
     manifest: "/site.webmanifest",
@@ -131,17 +122,6 @@ export const metadata: Metadata = {
         capable: true,
         title: "Beunec",
         statusBarStyle: "black-translucent",
-    },
-    
-    // Verification - ADD YOUR VERIFICATION CODES HERE
-    verification: {
-        google: "YOUR_GOOGLE_SEARCH_CONSOLE_VERIFICATION_CODE",
-        yandex: "YOUR_YANDEX_VERIFICATION_CODE",
-        yahoo: "YOUR_YAHOO_VERIFICATION_CODE",
-        other: {
-            "msvalidate.01": "YOUR_BING_WEBMASTER_VERIFICATION_CODE",
-            "facebook-domain-verification": "YOUR_FACEBOOK_DOMAIN_VERIFICATION",
-        },
     },
     
     // Category
@@ -159,7 +139,7 @@ export const metadata: Metadata = {
         "apple-mobile-web-app-capable": "yes",
         "mobile-web-app-capable": "yes",
         "format-detection": "telephone=no",
-        "msapplication-TileColor": "#000000",
+        "msapplication-TileColor": "#141512",
         "msapplication-config": "/browserconfig.xml",
     },
 };
@@ -175,15 +155,16 @@ export default function RootLayout({
         "@graph": [
             {
                 "@type": "Organization",
-                "@id": "https://beunec.co/company",
+                "@id": "https://beunec.co/#organization",
                 "name": "Beunec Technologies, Inc.",
                 "alternateName": "Beunec",
                 "url": "https://beunec.co",
+                "description": "A research and deployment organization focused on understanding, developing, and actualizing Agentic Infrastructure.",
                 "logo": {
                     "@type": "ImageObject",
-                    "url": "https://beunec.co/assets/beunec-logo-transparent-blacktext.png",
-                    "width": 512,
-                    "height": 512,
+                    "url": "https://beunec.co/assets/beunec-logo.png",
+                    "width": 800,
+                    "height": 800,
                 },
                 "sameAs": [
                     "https://twitter.com/beunecofficial",
@@ -203,30 +184,30 @@ export default function RootLayout({
                 "@id": "https://beunec.co/#website",
                 "url": "https://beunec.co",
                 "name": "Beunec",
-                "description": "The Future of Work Orchestrator for Specialist Professionals",
+                "description": "Agentic Infrastructure research and deployment, and the Aselius platform.",
                 "publisher": {
                     "@id": "https://beunec.co/company",
-                },
-                "potentialAction": {
-                    "@type": "SearchAction",
-                    "target": {
-                        "@type": "EntryPoint",
-                        "urlTemplate": "https://beunec.co/search?q={search_term_string}",
-                    },
-                    "query-input": "required name=search_term_string",
                 },
             },
             {
                 "@type": "SoftwareApplication",
-                "name": "Beunec Cloud Platform",
+                "@id": "https://beunec.co/aselius-platform#software",
+                "name": "Aselius Platform",
+                "url": "https://beunec.co/aselius-platform",
                 "applicationCategory": "BusinessApplication",
                 "operatingSystem": "Web",
-                "offers": {
-                    "@type": "Offer",
-                    "price": "0",
-                    "priceCurrency": "USD",
+                "description": "Aselius is Beunec's governed agentic workspace, where specialized Rivine engines research, code, draft, and create — producing inspectable, editable, and exportable deliverables.",
+                "releaseDate": "2026-07-18",
+                "publisher": {
+                    "@id": "https://beunec.co/company",
                 },
-                "description": "AI system orchestrator that eliminates the Toggle Tax through a secure, zero-knowledge workspace.",
+                "offers": {
+                    "@type": "AggregateOffer",
+                    "priceCurrency": "USD",
+                    "lowPrice": "0",
+                    "highPrice": "30",
+                    "offerCount": "3",
+                },
             },
         ],
     };

@@ -6,7 +6,7 @@ import { Footer } from "@/sections/Footer";
 
 export default function PrivacyPolicyPage() {
     return (
-        <div className="min-h-screen bg-background text-foreground">
+        <div className="baap-page min-h-screen">
             <Header />
 
             <main className="pt-32 pb-24 px-4 sm:px-6 lg:px-8">
@@ -24,7 +24,7 @@ export default function PrivacyPolicyPage() {
                             <p>Last Updated: August 01, 2025</p>
                         </div>
 
-                        <div className="prose prose-slate dark:prose-invert max-w-none space-y-8 text-slate-700 dark:text-slate-300">
+                        <div className="prose prose-slate dark:prose-invert max-w-none space-y-8 text-muted-foreground">
                             <section>
                                 <h2 className="text-2xl font-bold text-foreground mb-4">1. Introduction</h2>
                                 <p>This Privacy Policy outlines how Beunec Technologies, Inc. ("Beunec," "we," "us," or "our") collects, uses, stores, and protects your data in connection with your use of the Beunec Cloud platform ("Platform"). As a New Jersey-based corporation, we are committed to a privacy-first approach, ensuring the confidentiality and security of your information in compliance with the New Jersey Data Privacy Act (NJDPA) and other applicable federal and international laws.</p>

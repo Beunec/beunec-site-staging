@@ -6,7 +6,7 @@ import { Footer } from "@/sections/Footer";
 
 export default function TermsOfUsePage() {
     return (
-        <div className="min-h-screen bg-background text-foreground">
+        <div className="baap-page min-h-screen">
             <Header />
 
             <main className="pt-32 pb-24 px-4 sm:px-6 lg:px-8">
@@ -24,7 +24,7 @@ export default function TermsOfUsePage() {
                             <p>Last Updated: August 01, 2025</p>
                         </div>
 
-                        <div className="prose prose-slate dark:prose-invert max-w-none space-y-8 text-slate-700 dark:text-slate-300">
+                        <div className="prose prose-slate dark:prose-invert max-w-none space-y-8 text-muted-foreground">
                             <section>
                                 <h2 className="text-2xl font-bold text-foreground mb-4">1. Introduction</h2>
                                 <p>Welcome to Beunec Cloud, an innovative, privacy-first, AI-powered productivity platform offered by Beunec Technologies, Inc., a corporation registered in New Jersey, USA. This Platform unifies digital workplace tools to enhance collaboration, increase productivity, and ensure strict data privacy for professionals, teams, and students. The 'Beunec' name is a registered trademark with the USPTO (registration pending, 2025), and all associated intellectual property is owned by Beunec Technologies, Inc.</p>
