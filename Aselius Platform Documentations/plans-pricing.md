@@ -37,7 +37,7 @@
 | **Messaging** | Yes | Yes | Yes |
 | **Support** | Community | Standard priority | 24/7 priority |
 | **Dedicated account manager** | - | - | Yes |
-| **Custom CloudHandle** | - | Yes | Yes |
+| **Custom CloudHandle domain alias** | - | - | Yes |
 
 ---
 
@@ -50,7 +50,9 @@ Start with the full platform shell: Workspace (Taskspace, Governance, Connector)
 For users who rely on Rivine daily: **full engine access**, included sandbox runtimes, **Alpha + Bravo** mediators, **5 free credits/month**, **10 GB** storage, and **10 workspace uploads/day**. Standard priority support.
 
 ### Essential - $30/month
-For high-volume research and team workflows: **15 free credits/month**, all mediator modes (**Alpha, Bravo, Charlie**), **30 GB** storage, **20 uploads/day**, **24/7 priority support**, and a **dedicated account manager**.
+For high-volume research and team workflows: **15 free credits/month**, all mediator modes (**Alpha, Bravo, Charlie**), **30 GB** storage, **20 uploads/day**, **24/7 priority support**, a **dedicated account manager**, and **CloudHandle customization**. 
+
+**CloudHandle customization** (Essential only): Set a custom **display name** and optional **domain alias** for your public identity across the platform. Your real CloudHandle remains the technical identity (never changes), but you can surface a readable name (`Dr. Sarah Chen` instead of `user-84729`) and a branded alias (e.g., `sarah.your-company.com` for enterprise users). This is a display-only personalization; permissions and workspace access remain anchored to your CloudHandle. You can change your display name anytime, but domain aliases have a **3-day cooldown** between changes to prevent account-takeover chaining.
 
 ---
 
@@ -73,12 +75,12 @@ For high-volume research and team workflows: **15 free credits/month**, all medi
 
 | Engine | Minimum credits |
 |--------|-----------------|
-| Rivine Chat | $2.00 |
+| Rivine TaskForce | $2.00 |
 | Rivine Cicero | $5.00 |
-| Rivine Creative | $5.00 |
+| Rivine Creative | Coming soon |
 | Rivine Research | $10.00 |
 | Rivine Code | $20.00 |
 
 ---
 
-*Credits are shared across Workspace agentic usage. Share limits: 1–500 credits per transfer via CloudHandle.*
+*Credits are shared across Workspace agentic usage. Share limits: 1–500 credits per transfer via CloudHandle. Usage includes a 20% Rivine Infrastructure fee on top of LLM provider cost.* 

@@ -44,3 +44,7 @@ Thumbs.db
 
 # Vercel
 .vercel/
+
+# Internal-only (not for public site or public repo)
+Beunec Docs/rivine agentic engines/00_reai_cocoon_analysis_framework.md
+DOCUMENTATION_SUMMARY.md

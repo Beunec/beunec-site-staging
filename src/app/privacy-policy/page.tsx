@@ -120,7 +120,7 @@ export default function PrivacyPolicyPage() {
                             </section>
 
                             <section>
-                                <h2 className="text-2xl font-bold text-foreground mb-4">9. Solutions Provided by You—Notice to End Users</h2>
+                                <h2 className="text-2xl font-bold text-foreground mb-4">9. Solutions Provided by You: Notice to End Users</h2>
                                 <p>This policy applies to all users of the Platform. Organizational or enterprise users are responsible for ensuring their use of the Platform and any data they submit complies with their internal privacy policies and any legal obligations they may have.</p>
                             </section>
 

@@ -188,7 +188,9 @@ sequenceDiagram
     API-->>App: Message delivered via WebSocket
 ```
 
-Files are **not embedded in the message database as blobs**. They live in **private object storage**; downloads use **time-limited presigned URLs**.
+Files are **not embedded in the message database as blobs**. They live in **private object storage** (AWS S3, AES-256 encrypted, bucket-key enabled); downloads use **time-limited presigned URLs** regenerated on each request. 
+
+**Storage infrastructure note:** As of August 2026, message attachments are stored in the `aselius-platform-messaging-prod` bucket (region us-east-2), a dedicated secure bucket with bucket-versioning and lifecycle rules. Older attachments uploaded before this date to a legacy bucket are no longer accessible (that credential was not valid and cannot be recovered). New uploads go to the production bucket with full encryption and access controls.
 
 ### 7.2 Limits and types (Messages)
 
@@ -233,6 +235,8 @@ Beunec does not publish internal parsing algorithms, model names, or conversion 
 | **Rate limiting** | API and upload throttles to reduce abuse |
 
 **Mute notifications** is currently a **client-side preference** (browser storage), not a server policy.
+
+For the full platform security model, encryption posture, and vulnerability reporting, see the [Security Disclosure](/aselius-platform/docs/security-disclosure).
 
 ---
 

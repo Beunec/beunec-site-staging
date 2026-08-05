@@ -299,7 +299,7 @@ export function Header() {
 					<DialogHeader>
 						<DialogTitle className="text-foreground">Try Aselius</DialogTitle>
 						<DialogDescription className="text-muted-foreground text-base pt-2">
-							Coming Soon on July 18, 2026
+							Coming Soon on August 10, 2026
 						</DialogDescription>
 					</DialogHeader>
 				</DialogContent>

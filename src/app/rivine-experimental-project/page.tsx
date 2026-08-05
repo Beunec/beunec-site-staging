@@ -5,7 +5,7 @@ import { DocAudioPlayer } from "@/components/docs/DocAudioPlayer";
 export const metadata: Metadata = {
   title: "Rivine Experimental Project",
   description:
-    "An architecture for reliable, long-horizon agentic systems — Beunec’s Rivine orchestration and reasoning research.",
+    "An architecture for reliable, long-horizon agentic systems: Beunec’s Rivine orchestration and reasoning research.",
 };
 
 export default function RivineExperimentalProjectPage() {

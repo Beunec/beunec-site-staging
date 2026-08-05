@@ -365,6 +365,8 @@ sequenceDiagram
 
 **What we don’t disclose:** Internal model vendors, prompt templates, parser routing tables, or infrastructure credentials.
 
+For the full platform security model, encryption, and vulnerability reporting, see the [Security Disclosure](/aselius-platform/docs/security-disclosure).
+
 ---
 
 ## 13. Quick Start (Non-Technical Users)

@@ -29,7 +29,7 @@ import { Header } from "@/sections/Header";
 import { Footer } from "@/sections/Footer";
 import { ParticleBackground } from "@/sections/governance/ParticleBackground";
 
-const LAUNCH_DATE = "July 18, 2026";
+const LAUNCH_DATE = "August 10, 2026";
 const DOCS = "/aselius-platform/docs";
 
 const AUDIENCE = [
@@ -44,12 +44,12 @@ const DIFFERENTIATORS = [
   {
     icon: Layers,
     title: "Specialized engines, not one model",
-    body: "Chat, Research, Code, Cicero, and Creative are each a governed runtime with their own tools, verification, and sandbox, not one chat model wearing hats.",
+    body: "TaskForce, Research, Code, and Cicero are each a governed Rivine runtime with its own specialties, tools, and verification; not one chat model wearing hats. Creative is coming soon.",
   },
   {
     icon: FileDown,
     title: "You leave with deliverables",
-    body: "Documents, code previews, research reports, and media land in Assets. Edit in the Preview Panel and export to Markdown, PDF, DOCX, or HTML.",
+    body: "Documents, code previews, and research reports land in Assets. Edit in the Preview Panel and export to Markdown, PDF, DOCX, or HTML when available.",
   },
   {
     icon: ShieldCheck,
@@ -59,12 +59,12 @@ const DIFFERENTIATORS = [
   {
     icon: Eye,
     title: "Routing you can see",
-    body: "Every turn shows which engine and specialty handled it, with agent notes and citations, transparent by default, not an opaque black box.",
+    body: "You see which engine and specialty handled the turn, with agent notes and HITL checkpoints, and citations when grounded sources are enabled.",
   },
   {
     icon: Lock,
     title: "Governed and scoped",
-    body: "Per-workspace governance rules shape behavior, and connectors expose only the access you authorize, credentials are never globally handed to agents.",
+    body: "Per-workspace governance rules shape AI behavior. Connectors expose only the access you authorize; credentials are never handed to agents globally.",
   },
   {
     icon: GitBranch,
@@ -74,18 +74,18 @@ const DIFFERENTIATORS = [
 ];
 
 const ENGINES = [
-  { icon: MessageSquare, name: "Rivine Chat", tagline: "Action-oriented professional dialogue", href: `${DOCS}/rivine-chat` },
-  { icon: Microscope, name: "Rivine Research", tagline: "Source-grounded research → PDF or spreadsheet", href: `${DOCS}/rivine-research` },
-  { icon: Code2, name: "Rivine Code", tagline: "Build, debug, and preview software in a sandbox", href: `${DOCS}/rivine-code` },
-  { icon: Scale, name: "Rivine Cicero", tagline: "Legal drafting, review, and policy work", href: `${DOCS}/rivine-cicero` },
-  { icon: Palette, name: "Rivine Creative", tagline: "Image, video, and audio creation and editing", href: `${DOCS}/rivine-creative` },
+  { icon: MessageSquare, name: "Rivine TaskForce", tagline: "Action-oriented professional work with connected apps and specialties", href: `${DOCS}/rivine-taskforce` },
+  { icon: Microscope, name: "Rivine Research", tagline: "Source-grounded research → Markdown, PDF, or spreadsheet", href: `${DOCS}/rivine-research` },
+  { icon: Code2, name: "Rivine Code", tagline: "Build, debug, and deliver working projects with in-browser preview", href: `${DOCS}/rivine-code` },
+  { icon: Scale, name: "Rivine Cicero", tagline: "Legal drafting and review under guardrails; assistive, not legal advice", href: `${DOCS}/rivine-cicero` },
+  { icon: Palette, name: "Rivine Creative", tagline: "Image, video, and audio creation and editing", href: `${DOCS}/rivine-creative`, soon: true },
 ];
 
 const FLOW = [
   { icon: MessageSquare, label: "Your intent" },
   { icon: Wand2, label: "Mediator routes" },
   { icon: Layers, label: "Rivine engine" },
-  { icon: Lock, label: "Secure sandbox" },
+  { icon: Lock, label: "Isolated execution" },
   { icon: FileText, label: "Deliverable + snapshot" },
   { icon: Eye, label: "Preview & export" },
 ];
@@ -94,42 +94,42 @@ const APPS = [
   {
     icon: LayoutGrid,
     title: "Aselius Workspace",
-    body: "The agentic task environment: Taskspace conversation, engines, previews, and governance in one surface.",
+    body: "The agentic task environment: Taskspace, engines, Preview Panel, governance, and connectors in one surface.",
     href: `${DOCS}/workspace`,
   },
   {
     icon: FolderOpen,
     title: "Manage Files",
-    body: "Markdown-first storage that converts uploads into readable, AI-ready knowledge you can organize and query.",
+    body: "Markdown-first storage: convert uploads into readable, AI-ready knowledge you can organize, share, and query.",
     href: `${DOCS}/manage-files`,
   },
   {
     icon: MessageSquare,
     title: "Messages",
-    body: "Secure direct and group messaging with channels, attachments, and real-time delivery for your team.",
+    body: "Secure DMs and group messaging with channels, attachments, and real-time delivery: human collaboration, not AI chat.",
     href: `${DOCS}/messages`,
   },
   {
     icon: Users,
     title: "Manage Teams",
-    body: "Organizations, roles, and personal connections so people and AI-assisted workspaces live in one platform.",
+    body: "Organizations, roles, and personal connections so people and workspaces live under one account model.",
     href: `${DOCS}/manage-teams`,
   },
 ];
 
 const COMPARISON = [
-  { dim: "Architecture", them: "A chat layer over one model", us: "Specialized Rivine engines with verification + HITL" },
-  { dim: "Outputs", them: "Copy-paste out of the chat", us: "Assets + Preview Panel: edit, export, reopen" },
-  { dim: "Continuity", them: "Session-based chat", us: "Persistent Taskspaces with assets + config" },
-  { dim: "Coding", them: "IDE autocomplete", us: "Rivine Code sandbox with in-browser preview" },
-  { dim: "Transparency", them: "Opaque routing", us: "Visible engine, agent notes, HITL checkpoints" },
+  { dim: "Architecture", them: "Often a chat layer over one model", us: "Rivine runtime with specialized engines, verification, and HITL" },
+  { dim: "Outputs", them: "Copy-paste out of the chat", us: "Assets + Preview Panel: edit, export, reopen from snapshots" },
+  { dim: "Continuity", them: "Session-based chat", us: "Persistent Taskspaces with assets and governed configuration" },
+  { dim: "Coding", them: "IDE assistant or codegen", us: "Rivine Code with in-browser preview, not just autocomplete" },
+  { dim: "Transparency", them: "Opaque routing", us: "Visible engine/specialty choice, agent notes, HITL checkpoints" },
 ];
 
 function SkeletonBar({ w }: { w: string }) {
   return <div className="h-2 rounded" style={{ width: w, background: "var(--accent-slate)", opacity: 0.22 }} />;
 }
 
-/** Live vector mock of Aselius Workspace — theme-aware, no raster image. */
+/** Live vector mock of Aselius Workspace: theme-aware, no raster image. */
 function WorkspaceArtifact() {
   const rail = [
     { Icon: LayoutGrid, active: true },
@@ -293,9 +293,9 @@ export default function AseliusPlatformPage() {
                   className="mt-6 text-lg md:text-xl leading-relaxed text-muted-foreground max-w-xl"
                   style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
                 >
-                  Aselius runs research, code, documents, and creative through specialized Rivine
-                  engines. Every result is previewable, editable, and yours to export, governed, and
-                  never just a chat reply.
+                  Aselius runs research, code, legal drafting, and professional work through specialized
+                  Rivine engines. Every result is previewable, editable, and yours to export: governed,
+                  and never just a chat reply.
                 </motion.p>
 
                 <motion.div
@@ -410,7 +410,7 @@ export default function AseliusPlatformPage() {
                 </h2>
                 <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
                   Each engine is a governed runtime with its own specialties, tools, and verification,
-                  or let the Mediator route for you.
+                  or pin an engine, or let Auto / the Mediator route for you.
                 </p>
               </div>
               <Link
@@ -433,8 +433,13 @@ export default function AseliusPlatformPage() {
                       <engine.icon className="w-5 h-5 text-accent-sage" />
                     </span>
                     <div className="min-w-0">
-                      <div className="flex items-center gap-1.5">
+                      <div className="flex items-center gap-1.5 flex-wrap">
                         <h3 className="text-base font-semibold text-foreground">{engine.name}</h3>
+                        {"soon" in engine && engine.soon && (
+                          <span className="rounded-full border border-border px-2 py-0.5 text-[10px] font-medium text-muted-foreground">
+                            Coming soon
+                          </span>
+                        )}
                         <ArrowUpRight className="w-3.5 h-3.5 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-accent-sage" />
                       </div>
                       <p className="text-sm text-muted-foreground leading-relaxed mt-1">{engine.tagline}</p>
@@ -479,8 +484,9 @@ export default function AseliusPlatformPage() {
                 Say what you need. Review what you get.
               </h2>
               <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
-                You describe the outcome. Aselius routes, executes in an isolated environment, and
-                returns an inspectable deliverable, you stay in control the whole way.
+                You describe the outcome. The Mediator routes (or you pin an engine), work runs in an
+                isolated environment, and a deliverable lands as a snapshot you can preview and export;
+                you stay in control the whole way.
               </p>
             </motion.div>
 
@@ -494,7 +500,6 @@ export default function AseliusPlatformPage() {
                     transition={{ delay: i * 0.06 }}
                     className="flex items-center gap-2.5 rounded-xl border border-border bg-global px-4 py-3"
                   >
-                    <span className="font-mono text-[10px] text-accent-slate">{`0${i + 1}`}</span>
                     <step.icon className="w-4 h-4 text-accent-sage" />
                     <span className="text-sm font-medium text-foreground whitespace-nowrap">{step.label}</span>
                   </motion.div>
@@ -563,8 +568,8 @@ export default function AseliusPlatformPage() {
                 Already using Claude, Copilot, or Gemini?
               </h2>
               <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
-                We will not claim features we have not shipped. Here is how Aselius is built
-                differently for teams that need production-grade output.
+                We will not claim features we have not shipped. Here is how Aselius Workspace is built
+                differently for teams that need production-grade deliverables.
               </p>
             </motion.div>
 
@@ -605,8 +610,8 @@ export default function AseliusPlatformPage() {
 
             <div className="mt-8 flex flex-col sm:flex-row sm:items-center gap-3">
               <p className="text-sm text-muted-foreground">
-                Not here to replace your IDE, counsel, or brokerage, here to run governed agentic work
-                and leave with deliverables.
+                Not here to replace your IDE, legal counsel, or brokerage stack; here to run governed
+                agentic work and leave with deliverables.
               </p>
               <Link
                 href={`${DOCS}/comparison`}
@@ -639,8 +644,9 @@ export default function AseliusPlatformPage() {
                   Read the docs before launch
                 </h2>
                 <p className="text-base sm:text-lg text-muted-foreground leading-relaxed mb-8">
-                  Base, Pro, and Essential plans open with governed Rivine engine access, workspace
-                  storage, messaging, and team features. Explore exactly how it works today.
+                  Base (free), Pro ($10/mo), and Essential ($30/mo) include Workspace, messaging, and
+                  teams. Base has limited Rivine access; Pro and Essential unlock full engines. Explore
+                  exactly how it works in the docs today.
                 </p>
 
                 <div className="flex flex-wrap items-center justify-center gap-2.5 mb-8">

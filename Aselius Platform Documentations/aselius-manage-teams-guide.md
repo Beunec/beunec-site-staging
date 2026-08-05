@@ -186,7 +186,7 @@ Beunec does not publish internal key management or model architecture in public 
 | **Identity binding** | Actions are tied to your authenticated **CloudHandle**, not anonymous sessions |
 | **Deletion scope** | Owner-initiated org delete removes org data and linked messaging artifacts |
 
-For message content encryption and file storage details, see the **Messages** documentation.
+For message content encryption and file storage details, see the **Messages** documentation. For the full platform security model, see the [Security Disclosure](/aselius-platform/docs/security-disclosure).
 
 ---
 

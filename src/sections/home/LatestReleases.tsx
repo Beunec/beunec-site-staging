@@ -15,17 +15,17 @@ const releases = [
   {
     title: "Introducing Aselius Platform",
     body: "The Workspace application on the Aselius platform is the first place this architecture is available for direct use today. Beunec's roadmap, ahead of July 2027, is to expose each Rivine agentic engine through dedicated API infrastructure for enterprise, government, and developer use.",
-    date: "July 18, 2026",
+    date: "August 10, 2026",
     category: "Coming Soon",
     href: "/aselius-platform",
     cta: "View Aselius →",
   },
   {
     title: "Announcing Rivine Agentic Engines",
-    body: "Awareness and artificial experience are not an engine unto themselves. They sit under Chat, Research, Cicero, Code, and Creative the way the graph runtime already does: shared, always on, and not a substitute for the internal design of any one product.",
+    body: "Awareness and artificial experience are not an engine unto themselves. They sit under TaskForce, Research, Cicero, Code, and Creative the way the graph runtime already does: shared, always on, and not a substitute for the internal design of any one product.",
     date: "2026",
     category: "Announcements",
-    href: "/aselius-platform/docs/rivine-research",
+    href: "/aselius-platform/docs/rivine-taskforce",
     cta: "Explore engines →",
   },
 ];

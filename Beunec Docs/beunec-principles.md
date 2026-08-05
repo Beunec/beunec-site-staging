@@ -47,7 +47,7 @@ When employees are expected to meet demanding goals but are denied practical too
 
 Providing governed and useful alternatives is therefore not simply an employee benefit. It is an essential part of responsible AI adoption.
 
-> Governance must make responsible behavior possible—not merely punish irresponsible behavior after it occurs.
+> Governance must make responsible behavior possible, not merely punish irresponsible behavior after it occurs.
 
 ##  Principle 4: AI Governance Requires Adoption Maturity
 

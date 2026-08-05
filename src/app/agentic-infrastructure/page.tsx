@@ -5,7 +5,7 @@ import { DocAudioPlayer } from "@/components/docs/DocAudioPlayer";
 export const metadata: Metadata = {
   title: "Agentic Infrastructure",
   description:
-    "Beunec’s definition of Agentic Infrastructure — the physical, virtual, operational, and human foundation for dependable autonomous systems.",
+    "Beunec’s definition of Agentic Infrastructure: the physical, virtual, operational, and human foundation for dependable autonomous systems.",
 };
 
 export default function AgenticInfrastructurePage() {

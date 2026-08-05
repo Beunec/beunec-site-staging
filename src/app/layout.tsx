@@ -25,7 +25,7 @@ export const metadata: Metadata = {
         template: "%s | Beunec",
     },
     description:
-        "Beunec is a research and deployment organization building Agentic Infrastructure. Aselius, our SaaS platform, runs governed agentic work through specialized Rivine engines — research, code, documents, and creative — with every result inspectable, editable, and yours to export.",
+        "Beunec is a research and deployment organization building Agentic Infrastructure. Aselius, our SaaS platform, runs governed agentic work through specialized Rivine engines (research, code, documents, and creative), with every result inspectable, editable, and yours to export.",
     keywords: [
         "Beunec",
         "Beunec Technologies",
@@ -78,7 +78,7 @@ export const metadata: Metadata = {
     openGraph: {
         title: "Beunec | Agentic Infrastructure & the Aselius Platform",
         description:
-            "A research and deployment organization building Agentic Infrastructure. Aselius runs governed agentic work through specialized Rivine engines — research, code, documents, and creative — with inspectable, exportable deliverables.",
+            "A research and deployment organization building Agentic Infrastructure. Aselius runs governed agentic work through specialized Rivine engines (research, code, documents, and creative), with inspectable, exportable deliverables.",
         url: "https://beunec.co",
         siteName: "Beunec",
         images: [
@@ -86,7 +86,7 @@ export const metadata: Metadata = {
                 url: "https://beunec.co/assets/beunec-logo-transparent-blacktext.png",
                 width: 1605,
                 height: 442,
-                alt: "Beunec — Agentic Infrastructure",
+                alt: "Beunec: Agentic Infrastructure",
                 type: "image/png",
             },
         ],
@@ -99,7 +99,7 @@ export const metadata: Metadata = {
         card: "summary_large_image",
         title: "Beunec | Agentic Infrastructure & the Aselius Platform",
         description:
-            "Governed agentic work through specialized Rivine engines — research, code, documents, and creative. Every result inspectable, editable, and yours to export.",
+            "Governed agentic work through specialized Rivine engines: research, code, documents, and creative. Every result inspectable, editable, and yours to export.",
         images: ["https://beunec.co/assets/beunec-logo-transparent-blacktext.png"],
         creator: "@beunecofficial",
         site: "@beunecofficial",
@@ -196,8 +196,8 @@ export default function RootLayout({
                 "url": "https://beunec.co/aselius-platform",
                 "applicationCategory": "BusinessApplication",
                 "operatingSystem": "Web",
-                "description": "Aselius is Beunec's governed agentic workspace, where specialized Rivine engines research, code, draft, and create — producing inspectable, editable, and exportable deliverables.",
-                "releaseDate": "2026-07-18",
+                "description": "Aselius is Beunec's governed agentic workspace, where specialized Rivine engines research, code, draft, and create, producing inspectable, editable, and exportable deliverables.",
+                "releaseDate": "2026-08-10",
                 "publisher": {
                     "@id": "https://beunec.co/company",
                 },

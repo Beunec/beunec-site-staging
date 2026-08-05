@@ -104,7 +104,7 @@ These numbers are **internal**, machine-and-harness dependent, and not third-par
 
 ### 2.4 How this relates to Rivine’s engines without being their playbooks
 
-Awareness and artificial experience are not an engine unto themselves. They sit under Chat, Research, Cicero, Code, and Creative the way the graph runtime already does: shared, always on, and not a substitute for the internal design of any one product. The graph engine that executes staged node graphs was already live; this work did not reinvent that runtime. It made sure the membrane and the experience loop were attached to real producers and real consumers of state, instead of to files that nothing imported.
+Awareness and artificial experience are not an engine unto themselves. They sit under TaskForce, Research, Cicero, Code, and Creative the way the graph runtime already does: shared, always on, and not a substitute for the internal design of any one product. The graph engine that executes staged node graphs was already live; this work did not reinvent that runtime. It made sure the membrane and the experience loop were attached to real producers and real consumers of state, instead of to files that nothing imported.
 
 We are not describing, in this section, how any particular internal role inside an engine decides to call another. That remains out of scope for this publication, by design. What we are claiming is narrower: every live reasoning pass now carries the alignment membrane, and every turn that actually produced delegated outcomes now has a path for those outcomes to become durable, queryable experience rather than evaporating when the response is sent.
 

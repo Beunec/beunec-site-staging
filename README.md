@@ -1,6 +1,6 @@
 # Beunec
 
-Website for **Beunec Technologies, Inc.** — a research and deployment organization building Agentic Infrastructure — and the **Aselius** platform, powered by the **Rivine** agentic engines.
+Website for **Beunec Technologies, Inc.**: a research and deployment organization building Agentic Infrastructure, and the **Aselius** platform, powered by the **Rivine** agentic engines.
 
 Built with Next.js (App Router) and Tailwind CSS, shipped as a fully static site.
 
@@ -21,7 +21,7 @@ npm run build
 
 `next.config.js` uses `output: "export"`, so the build emits a fully static site to `out/`.
 
-## Deploy — Cloudflare Pages
+## Deploy: Cloudflare Pages
 
 - **Build command:** `npm run build`
 - **Build output directory:** `out`

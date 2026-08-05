@@ -242,7 +242,7 @@ export default function NotFound() {
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.5, delay: 0.35 }}
                 >
-                    Don&apos;t worry — let&apos;s get you back on track.
+                    Don&apos;t worry; let&apos;s get you back on track.
                 </motion.p>
 
                 {/* Navigation Grid */}

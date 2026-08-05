@@ -61,12 +61,19 @@ export const ASELIUS_DOCS: AseliusDoc[] = [
     blurb: "How Aselius compares with other enterprise AI agent platforms.",
   },
   {
-    slug: "rivine-chat",
-    title: "Rivine Chat",
-    file: "rivine_chat.md",
+    slug: "security-disclosure",
+    title: "Security Disclosure",
+    file: "SECURITY_DISCLOSURE.md",
+    group: "Platform",
+    blurb: "Security model, data handling, encryption, and vulnerability reporting for Aselius.",
+  },
+  {
+    slug: "rivine-taskforce",
+    title: "Rivine TaskForce",
+    file: "rivine_taskforce.md",
     group: "Rivine Engines",
     dir: ENGINES_DIR,
-    blurb: "General-purpose reasoning engine running a single continuous RE-AI loop.",
+    blurb: "Action-oriented professional work: connected apps, specialties, and deliverables, not generative chat.",
   },
   {
     slug: "rivine-research",
