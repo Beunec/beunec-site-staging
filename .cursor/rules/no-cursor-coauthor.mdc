@@ -1,0 +1,12 @@
+---
+description: Never leave Cursor Co-authored-by trailers on git commits
+alwaysApply: true
+---
+
+# No Cursor co-author trailers
+
+When creating or amending git commits for this repo:
+
+- Do not leave `Co-authored-by: Cursor <cursoragent@cursor.com>` (or any Cursor/agent co-author trailer) on the commit message.
+- After `git commit` or `git commit --amend`, inspect `git log -1 --format='%B'`. If a Cursor co-author trailer is present, strip it with a message filter (do not use `--no-verify` unless the user asked).
+- If that commit is already on `beunec/main`, force-push with `--force-with-lease` only as needed to remove the trailer. The user has required this cleanup on every push.
