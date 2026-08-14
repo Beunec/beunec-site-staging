@@ -12,13 +12,8 @@ import {
 	DropdownMenuItem,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-	Dialog,
-	DialogContent,
-	DialogDescription,
-	DialogHeader,
-	DialogTitle,
-} from "@/components/ui/dialog";
+
+const ASELIUS_APP = "https://aselius.beunec.com";
 
 const researchLinks = [
 	{ label: "Rivine", href: "/rivine-experimental-project" },
@@ -29,6 +24,7 @@ const companyLinks = [
 	{ label: "About", href: "/company" },
 	{ label: "Research Philosophy", href: "/research-philosophy" },
 	{ label: "Agentic Infrastructure", href: "/agentic-infrastructure" },
+	{ label: "Akinnawo Logic V2", href: "/akinnawo-logic-v2" },
 ];
 
 const navDropdownTriggerClass =
@@ -113,7 +109,6 @@ function HoverNavDropdown({
 export function Header() {
 	const [isScrolled, setIsScrolled] = useState(false);
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-	const [comingSoonOpen, setComingSoonOpen] = useState(false);
 	const [mobileResearchOpen, setMobileResearchOpen] = useState(false);
 	const [mobileCompanyOpen, setMobileCompanyOpen] = useState(false);
 
@@ -171,7 +166,7 @@ export function Header() {
 							<HoverNavDropdown
 								label="Company"
 								links={companyLinks}
-								contentClassName="min-w-[14rem]"
+								contentClassName="min-w-[16rem]"
 							/>
 
 							<Link
@@ -187,9 +182,9 @@ export function Header() {
 							<Button
 								size="sm"
 								className="hidden sm:inline-flex bg-beunec-sage hover:opacity-90 text-primary-foreground text-sm font-medium px-4 transition-colors duration-200"
-								onClick={() => setComingSoonOpen(true)}
+								asChild
 							>
-								Try Aselius
+								<a href={ASELIUS_APP}>Try Aselius</a>
 							</Button>
 							<Button
 								variant="ghost"
@@ -280,12 +275,11 @@ export function Header() {
 								<div className="pt-4 mt-2 border-t border-border">
 									<Button
 										className="w-full justify-center bg-beunec-sage hover:opacity-90 text-primary-foreground"
-										onClick={() => {
-											setIsMobileMenuOpen(false);
-											setComingSoonOpen(true);
-										}}
+										asChild
 									>
-										Try Aselius
+										<a href={ASELIUS_APP} onClick={() => setIsMobileMenuOpen(false)}>
+											Try Aselius
+										</a>
 									</Button>
 								</div>
 							</nav>
@@ -293,17 +287,6 @@ export function Header() {
 					)}
 				</AnimatePresence>
 			</header>
-
-			<Dialog open={comingSoonOpen} onOpenChange={setComingSoonOpen}>
-				<DialogContent className="baap-container border-border sm:max-w-md">
-					<DialogHeader>
-						<DialogTitle className="text-foreground">Try Aselius</DialogTitle>
-						<DialogDescription className="text-muted-foreground text-base pt-2">
-							Coming Soon on August 10, 2026
-						</DialogDescription>
-					</DialogHeader>
-				</DialogContent>
-			</Dialog>
 		</>
 	);
 }

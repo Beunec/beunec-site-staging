@@ -501,10 +501,10 @@ export default function CompanyPage() {
                                         <img src="/assets/beunec-logo.png" alt="Beunec Logo Standard" className="h-10 w-auto" />
                                     </div>
                                     <div className="bg-global p-8 rounded-xl border border-border flex items-center justify-center">
-                                        <img src="/assets/aselius-logo-icon.png" alt="Aselius Logo Icon" className="h-10 w-auto" />
+                                        <img src="/assets/aselius-logo-icon.png" alt="Aselius Logo Icon" className="h-16 sm:h-20 w-auto" />
                                     </div>
                                     <div className="p-8 rounded-xl border border-border flex items-center justify-center text-foreground" style={{ backgroundColor: "var(--bg-dark)" }}>
-                                        <img src="/assets/aselius-logo-text.png" alt="Aselius Logo and Text" className="h-10 w-auto" />
+                                        <img src="/assets/aselius-logo-text.png" alt="Aselius Logo and Text" className="h-12 sm:h-16 w-auto max-w-full" />
                                     </div>
                                 </div>
                             </div>

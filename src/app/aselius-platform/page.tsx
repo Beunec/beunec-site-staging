@@ -23,13 +23,12 @@ import {
   ShieldCheck,
   TrendingUp,
   Users,
-  Wand2,
 } from "lucide-react";
 import { Header } from "@/sections/Header";
 import { Footer } from "@/sections/Footer";
 import { ParticleBackground } from "@/sections/governance/ParticleBackground";
 
-const LAUNCH_DATE = "August 10, 2026";
+const ASELIUS_APP = "https://aselius.beunec.com";
 const DOCS = "/aselius-platform/docs";
 
 const AUDIENCE = [
@@ -83,7 +82,6 @@ const ENGINES = [
 
 const FLOW = [
   { icon: MessageSquare, label: "Your intent" },
-  { icon: Wand2, label: "Mediator routes" },
   { icon: Layers, label: "Rivine engine" },
   { icon: Lock, label: "Isolated execution" },
   { icon: FileText, label: "Deliverable + snapshot" },
@@ -270,7 +268,7 @@ export default function AseliusPlatformPage() {
                   className="inline-flex items-center gap-2 rounded-full border border-border bg-global/80 backdrop-blur-sm px-4 py-1.5 mb-6"
                 >
                   <Calendar className="w-3.5 h-3.5 text-accent-sage" />
-                  <span className="text-xs font-medium text-foreground">Coming soon · {LAUNCH_DATE}</span>
+                  <span className="text-xs font-medium text-foreground">Now live · aselius.beunec.com</span>
                 </motion.div>
 
                 <motion.h1
@@ -304,18 +302,18 @@ export default function AseliusPlatformPage() {
                   transition={{ delay: 0.16 }}
                   className="mt-8 flex flex-col sm:flex-row items-start sm:items-center gap-4"
                 >
-                  <Link
-                    href={DOCS}
+                  <a
+                    href={ASELIUS_APP}
                     className="inline-flex items-center gap-2 rounded-full bg-[#141512] dark:bg-[#e6e2d8] text-[#e6e2d8] dark:text-[#141512] text-sm font-medium px-5 py-2.5 hover:opacity-90 transition-opacity"
                   >
-                    Read the documentation
+                    Open Aselius
                     <ArrowRight className="w-4 h-4" />
-                  </Link>
+                  </a>
                   <Link
-                    href={`${DOCS}/workspace`}
+                    href={DOCS}
                     className="inline-flex items-center gap-2 text-sm font-medium text-accent-sage hover:text-foreground transition-colors"
                   >
-                    See how Workspace works
+                    Read the documentation
                     <ArrowRight className="w-4 h-4" />
                   </Link>
                 </motion.div>
@@ -484,9 +482,8 @@ export default function AseliusPlatformPage() {
                 Say what you need. Review what you get.
               </h2>
               <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
-                You describe the outcome. The Mediator routes (or you pin an engine), work runs in an
-                isolated environment, and a deliverable lands as a snapshot you can preview and export;
-                you stay in control the whole way.
+                You describe the outcome. Work runs in an isolated environment, and a deliverable
+                lands as a snapshot you can preview and export; you stay in control the whole way.
               </p>
             </motion.div>
 
@@ -624,7 +621,7 @@ export default function AseliusPlatformPage() {
           </div>
         </section>
 
-        {/* CTA / coming soon */}
+        {/* CTA */}
         <section className="py-20 md:py-28">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="rounded-3xl border border-border overflow-hidden relative">
@@ -638,15 +635,14 @@ export default function AseliusPlatformPage() {
               <div className="relative px-6 py-16 md:px-16 md:py-20 text-center max-w-3xl mx-auto">
                 <div className="inline-flex items-center gap-2 rounded-full border border-border bg-global/80 backdrop-blur-sm px-4 py-1.5 mb-6">
                   <Calendar className="w-3.5 h-3.5 text-accent-sage" />
-                  <span className="text-xs font-medium text-foreground">Deploys {LAUNCH_DATE}</span>
+                  <span className="text-xs font-medium text-foreground">Live at aselius.beunec.com</span>
                 </div>
                 <h2 className="text-3xl md:text-4xl font-extrabold text-foreground tracking-tight leading-[1.1] mb-5">
-                  Read the docs before launch
+                  Open Aselius
                 </h2>
                 <p className="text-base sm:text-lg text-muted-foreground leading-relaxed mb-8">
                   Base (free), Pro ($10/mo), and Essential ($30/mo) include Workspace, messaging, and
-                  teams. Base has limited Rivine access; Pro and Essential unlock full engines. Explore
-                  exactly how it works in the docs today.
+                  teams. Base has limited Rivine access; Pro and Essential unlock full engines.
                 </p>
 
                 <div className="flex flex-wrap items-center justify-center gap-2.5 mb-8">
@@ -658,13 +654,13 @@ export default function AseliusPlatformPage() {
                 </div>
 
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                  <Link
-                    href={DOCS}
+                  <a
+                    href={ASELIUS_APP}
                     className="inline-flex items-center gap-2 rounded-full bg-[#141512] dark:bg-[#e6e2d8] text-[#e6e2d8] dark:text-[#141512] text-sm font-medium px-5 py-2.5 hover:opacity-90 transition-opacity"
                   >
-                    Read the documentation
+                    Try Aselius
                     <ArrowRight className="w-4 h-4" />
-                  </Link>
+                  </a>
                   <Link
                     href={`${DOCS}/plans-pricing`}
                     className="inline-flex items-center gap-2 text-sm font-medium text-accent-sage hover:text-foreground transition-colors"

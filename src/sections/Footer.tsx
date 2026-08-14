@@ -36,6 +36,7 @@ const footerLinks = {
       { label: "About", href: "/company" },
       { label: "Research Philosophy", href: "/research-philosophy" },
       { label: "Agentic Infrastructure", href: "/agentic-infrastructure" },
+      { label: "Akinnawo Logic V2", href: "/akinnawo-logic-v2" },
     ],
   },
 };

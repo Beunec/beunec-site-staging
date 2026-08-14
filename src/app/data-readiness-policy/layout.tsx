@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
     title: "Data Readiness Policy | Beunec",
-    description: "Data readiness policy for Beunec Technologies, Inc. and the Beunec Cloud Platform.",
+    description:
+        "Data Readiness Policy for Beunec Technologies, Inc., the Aselius Platform, and all Beunec Services, including research and development offerings.",
 };
 
 export default function DataReadinessLayout({

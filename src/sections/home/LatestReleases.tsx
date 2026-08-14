@@ -16,7 +16,7 @@ const releases = [
     title: "Introducing Aselius Platform",
     body: "The Workspace application on the Aselius platform is the first place this architecture is available for direct use today. Beunec's roadmap, ahead of July 2027, is to expose each Rivine agentic engine through dedicated API infrastructure for enterprise, government, and developer use.",
     date: "August 10, 2026",
-    category: "Coming Soon",
+    category: "Platform",
     href: "/aselius-platform",
     cta: "View Aselius →",
   },
