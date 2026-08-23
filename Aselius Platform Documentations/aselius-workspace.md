@@ -456,7 +456,7 @@ Uploaded files are converted to a **markdown-first** representation for AI groun
 | Max file size              | 200 MB                               |
 | Max files per message      | 10                                   |
 | Max files per batch upload | 10                                   |
-| Daily uploads              | 3 (Base) / 10 (Pro) / 20 (Essential) |
+| Daily uploads              | 15 (Base) / 30 (Pro) / 40 (Essential) |
 
 
 

@@ -641,12 +641,12 @@ export default function AseliusPlatformPage() {
                   Open Aselius
                 </h2>
                 <p className="text-base sm:text-lg text-muted-foreground leading-relaxed mb-8">
-                  Base (free), Pro ($10/mo), and Essential ($30/mo) include Workspace, messaging, and
+                  Base (free), Pro ($20/mo), and Essential ($40/mo) include Workspace, messaging, and
                   teams. Base has limited Rivine access; Pro and Essential unlock full engines.
                 </p>
 
                 <div className="flex flex-wrap items-center justify-center gap-2.5 mb-8">
-                  {["Base · Free", "Pro · $10/mo", "Essential · $30/mo"].map((p) => (
+                  {["Base · Free", "Pro · $20/mo", "Essential · $40/mo"].map((p) => (
                     <span key={p} className="rounded-full border border-border bg-global px-3.5 py-1.5 text-sm text-muted-foreground">
                       {p}
                     </span>

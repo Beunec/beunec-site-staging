@@ -47,4 +47,6 @@ Thumbs.db
 
 # Internal-only (not for public site or public repo)
 Beunec Docs/rivine agentic engines/00_reai_cocoon_analysis_framework.md
+Beunec Docs/rivine agentic engines/*.pdf
+Beunec Docs/rivine agentic engines/*.html
 DOCUMENTATION_SUMMARY.md
