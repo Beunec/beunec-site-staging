@@ -107,6 +107,22 @@ export const ASELIUS_DOCS: AseliusDoc[] = [
     dir: ENGINES_DIR,
     blurb: "Image, video, and supporting media, reviewed on visual quality.",
   },
+  {
+    slug: "artificial-experience",
+    title: "Artificial Experience",
+    file: "Artificial Experience.md",
+    group: "Rivine Platform",
+    dir: ENGINES_DIR,
+    blurb: "Workspace memory of facts, outcomes, and reusable work so engines reuse what already succeeded.",
+  },
+  {
+    slug: "context-extender",
+    title: "Context Extender",
+    file: "Context_Extender.md",
+    group: "Rivine Platform",
+    dir: ENGINES_DIR,
+    blurb: "Retrieval under a cap so engines operate over large corpora without sending millions of tokens per call.",
+  },
 ];
 
 export function getAseliusDoc(slug: string): AseliusDoc | undefined {

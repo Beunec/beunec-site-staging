@@ -114,6 +114,18 @@
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
+  <url>
+    <loc>https://beunec.co/aselius-platform/docs/artificial-experience</loc>
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://beunec.co/aselius-platform/docs/context-extender</loc>
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
 
   <!-- ═══════════════════════════════════════════════════════════ -->
   <!-- COMPANY & RESEARCH                                          -->
