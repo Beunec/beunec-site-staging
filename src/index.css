@@ -231,4 +231,12 @@
   .doc-markdown .doc-md-ol .doc-md-li-dot {
     display: none;
   }
+
+  /* Code blocks are always on a dark surface, so give text selection inside
+     them a legible highlight instead of the browser's default. */
+  pre ::selection,
+  pre::selection {
+    background-color: rgba(230, 226, 216, 0.25);
+    color: #e6e2d8;
+  }
 }

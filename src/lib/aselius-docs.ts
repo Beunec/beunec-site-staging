@@ -123,6 +123,14 @@ export const ASELIUS_DOCS: AseliusDoc[] = [
     dir: ENGINES_DIR,
     blurb: "Retrieval under a cap so engines operate over large corpora without sending millions of tokens per call.",
   },
+  {
+    slug: "rivine-code-cli",
+    title: "Rivine Code CLI",
+    file: "rivine-code_cli.md",
+    group: "Rivine Platform",
+    dir: ENGINES_DIR,
+    blurb: "Rivine Code in your terminal: local files, streaming commands, and permission modes.",
+  },
 ];
 
 export function getAseliusDoc(slug: string): AseliusDoc | undefined {

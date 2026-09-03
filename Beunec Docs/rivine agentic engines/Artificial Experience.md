@@ -228,7 +228,7 @@ Keep these two products straight. They sit next to each other. They are not the 
 | Superpower | Skip paid work; raise consistency | Operate over a huge corpus with a small prompt |
 | Failure if confused | You cache a write and lie | You stuff millions of tokens into one call and pay for mush |
 
-Read [Context_Extender.md](./Context_Extender.md) for the overflow path.
+Read [Context Extender](/aselius-platform/docs/context-extender) for the overflow path.
 
 ---
 

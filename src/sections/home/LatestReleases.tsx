@@ -5,6 +5,14 @@ import Link from "next/link";
 
 const releases = [
   {
+    title: "Rivine Code CLI",
+    body: "Rivine Code, in your terminal. The engine still runs on Beunec's infrastructure, but the files it reads and writes are the ones already on your disk, in the directory you started it in, open in your editor, tracked by your git. Nothing is uploaded.",
+    date: "August 2026",
+    category: "Release",
+    href: "/aselius-platform/docs/rivine-code-cli",
+    cta: "Read the CLI docs →",
+  },
+  {
     title: "Rivine Experimental Project",
     body: "Rivine is Beunec's answer to that gap: an orchestration and reasoning architecture built specifically for agentic work that has to survive contact with reality, flaky APIs, ambiguous instructions, multi-hour tasks, and stakes high enough that a wrong answer costs more than a slow one.",
     date: "2026",

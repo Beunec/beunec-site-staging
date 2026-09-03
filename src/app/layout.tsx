@@ -4,7 +4,6 @@ import Script from "next/script";
 import "@/index.css";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { ClientSideProtection } from "@/components/providers/ClientSideProtection";
-import CursorParticles from "@/components/ui/CursorParticles";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -223,7 +222,6 @@ export default function RootLayout({
                 />
                 <ClientSideProtection>
                     <ThemeProvider>
-                        <CursorParticles />
                         {children}
                     </ThemeProvider>
                 </ClientSideProtection>

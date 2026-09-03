@@ -2,6 +2,7 @@
 
 import type { Components } from "react-markdown";
 import type { ReactElement, ReactNode } from "react";
+import Link from "next/link";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { MermaidBlock } from "@/components/docs/MermaidBlock";
@@ -138,11 +139,21 @@ const components: Components = {
   ),
   a: ({ href, children }) => {
     const external = Boolean(href?.startsWith("http"));
+    const className =
+      "text-accent-slate underline underline-offset-4 hover:text-accent-sage transition-colors";
+    const style = { textDecorationColor: "rgba(122,139,153,0.4)" };
+    if (href && !external) {
+      return (
+        <Link href={href} className={className} style={style}>
+          {children}
+        </Link>
+      );
+    }
     return (
       <a
         href={href}
-        className="text-accent-slate underline underline-offset-4 hover:text-accent-sage transition-colors"
-        style={{ textDecorationColor: "rgba(122,139,153,0.4)" }}
+        className={className}
+        style={style}
         {...(external
           ? { target: "_blank", rel: "noopener noreferrer" }
           : {})}
@@ -153,7 +164,7 @@ const components: Components = {
   },
   hr: () => <hr className="my-12 border-border" />,
   code: ({ className, children }) => {
-    const isBlock = Boolean(className);
+    const isBlock = Boolean(className) || nodeText(children).includes("\n");
     if (isBlock) {
       return (
         <code className={`${className ?? ""} font-mono text-sm text-[#e6e2d8]`}>
@@ -173,7 +184,7 @@ const components: Components = {
       return <MermaidBlock chart={nodeText(kid.props.children)} />;
     }
     return (
-      <pre className="my-6 overflow-x-auto rounded-2xl border border-border bg-[#141512] p-5 text-sm leading-relaxed">
+      <pre className="my-6 overflow-x-auto rounded-2xl border border-border bg-[#1c1e1a] dark:bg-[#141512] p-5 text-sm leading-relaxed">
         {children}
       </pre>
     );
@@ -199,6 +210,23 @@ const components: Components = {
   tr: ({ children }) => (
     <tr className="even:bg-container/50">{children}</tr>
   ),
+  img: ({ src, alt }) => {
+    const label = alt ?? "";
+    const isDark = /\(dark\)\s*$/i.test(label);
+    const isLight = /\(light\)\s*$/i.test(label);
+    const themeClass = isDark
+      ? "hidden dark:block"
+      : isLight
+        ? "block dark:hidden"
+        : "";
+    return (
+      <img
+        src={typeof src === "string" ? src : undefined}
+        alt={label.replace(/\s*\((dark|light)\)\s*$/i, "")}
+        className={`my-8 w-full rounded-2xl border border-border ${themeClass}`}
+      />
+    );
+  },
 };
 
 type DocMarkdownProps = {

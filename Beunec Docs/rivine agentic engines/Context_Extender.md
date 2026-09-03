@@ -184,7 +184,7 @@ Research *is* large context: sources, extracts, prior memos.
 | “Update the memo” forgets the original citations | Digest + retrieved spans keep the spine of the memo addressable |
 
 **Daily:** “Same topic, new angle, don’t lose the primary sources.”  
-AE may skip re-fetching a stable source (see [Artificial Experience](./Artificial%20Experience.md)). The extender makes sure that source can still **enter the prompt** when the thread is already huge.
+AE may skip re-fetching a stable source (see [Artificial Experience](/aselius-platform/docs/artificial-experience)). The extender makes sure that source can still **enter the prompt** when the thread is already huge.
 
 ### Rivine Cicero: matters run longer than sessions
 
