@@ -188,7 +188,7 @@ flowchart LR
 
 
 
-**Rivine Cicero** is the legal and policy workbench for real-world drafting and review with use-case expertise (contract review, legal drafting, immigration, corporate, employment, international relations, policy drafting). It runs jurisdiction-first, evidence-linked workflows with conservative language: confirm governing law and facts, spot issues, draft or memo, then escalate high-risk or unclear matters to human/licensed review. It's research-and-draft support under guardrails, not a substitute for a licensed attorney or international relations diplomat.
+**Rivine Cicero** is the legal and policy workbench for real-world drafting and review with use-case expertise (contract review, legal drafting, immigration, corporate, employment, international relations, patent compliance, M&A due diligence, policy drafting). It runs jurisdiction-first, evidence-linked workflows with conservative language: confirm governing law and facts, spot issues, draft or memo, then escalate high-risk or unclear matters to human/licensed review. It's research-and-draft support under guardrails, not a substitute for a licensed attorney or international relations diplomat.
 
 ```mermaid
 flowchart LR
@@ -202,7 +202,7 @@ flowchart LR
 
 
 
-**Rivine Code** is the build-first software engineering engine: programming, debugging, security guardrails, and delivery of working projects, not plans or command lists. Through Rivine Notes (Next.js, Python, hybrid stacks, HTML/CSS/JS, Vue, mobile, backends, databases, and more) it implements in real files, installs/runs when possible, verifies the result, and keeps changes surgical and reversible, with live preview/sandbox where available and downloadable projects otherwise.
+**Rivine Code** is the build-first software engineering engine: programming, debugging, security guardrails, and delivery of working projects, not plans or command lists. Pick a **Mode**, Frontend Only, Backend Only, Full Stack, Plan/Ask Only, or Security Scan/Fix, so the engine only touches what the task actually needs, and a **Rate**, Manual to review changes as they land or Bypass to apply them as it works. It implements in real files, installs/runs when possible, verifies the result, and keeps changes surgical and reversible, with live preview/sandbox where available and downloadable projects otherwise.
 
 ```mermaid
 flowchart LR
@@ -247,8 +247,8 @@ Most engines require a **specialty** before you send a message. Specialties acti
 | ------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
 | Rivine TaskForce                | Chat, Excalidraw, Mermaid, HTML STEM, HTML 3D, YouTube learning packs, Code Execution                                             |
 | Rivine Research                 | PDF, Spreadsheet                                                                                                                  |
-| Rivine Code                     | Next.js, Python, Next.js + Python (hybrid), HTML/CSS/JS, Vue, Svelte, Flutter, Swift, Kotlin, Node.js, Go, Java, Rust, C#/.NET, PHP, Ruby, SQL Database, MongoDB, Redis, GraphQL, Next.js + FastAPI + PostgreSQL, React + Node.js + MongoDB, Vue + Django + PostgreSQL, Next.js + Supabase, React + Firebase, and any other language or stack |
-| Rivine Cicero                   | Contract Review, Legal Drafting, Immigration Law, International Relations, Corporate Law, Employment Law, Policy and Law Drafting |
+| Rivine Code                     | Frontend Only, Backend Only, Full Stack, Plan/Ask Only, Security Scan/Fix, each paired with a Manual or Bypass rate for how changes apply |
+| Rivine Cicero                   | Contract Review, Legal Drafting, Corporate Law, Employment Law, Immigration Law, International Relations, Patent Compliance, M&A Due Diligence, Policy and Law Drafting, General |
 | Rivine Creative *(coming soon)* | Image Generation, Image Editing, Video Generation, Video Editing, Audio Generation                                                |
 
 
@@ -590,30 +590,17 @@ Workspace owners/operators can share from the Preview Panel **Share** tab (when 
 
 We do not publish exact model names, routing tables, or parsing strategies, that is proprietary Beunec infrastructure. Here is what matters for trust and quality.
 
-### 1. Orchestration runtime (RE-AI graph)
+### 1. Orchestration runtime
 
-A **graph-based runtime** coordinates each turn:
-
-```mermaid
-flowchart LR
-    MED["Mediator"] --> ENG["Engine"]
-    ENG --> SUB["Optional cold-path sub-agents"]
-    SUB --> DEL["Deliverable"]
-    ENG --> DEL
-```
-
-
+Rivine's runtime coordinates each turn from your message to a finished deliverable:
 
 - State persists across steps and supports **human-in-the-loop pauses** (approval, clarification, escalation)
 - Long tasks can resume without losing thread context
 - Pay-per-token usage is metered per call
 
-
-
 ### 2. Reasoning framework (REA / REI / REAI)
 
 Engines use one of three **tool-calling reasoning patterns**, chosen by task type:
-
 
 | Pattern  | Orientation               | Typical engines  |
 | -------- | ------------------------- | ---------------- |
@@ -621,34 +608,17 @@ Engines use one of three **tool-calling reasoning patterns**, chosen by task typ
 | **REI**  | Implementation-first      | Code             |
 | **REAI** | Analysis + implementation | TaskForce        |
 
+Each turn plans, calls the tools it needs, verifies the result, and only then terminates with a structured answer, rather than trailing off into prose once it feels roughly done.
 
-Each loop: plan → call tools → verify → terminate with a structured answer. Models are nudged to finish via a `final_answer` contract rather than trailing prose.
+### 3. Isolation and recovery
 
-```mermaid
-flowchart LR
-    P["Plan"] --> T["Call tools"]
-    T --> V["Verify"]
-    V -->|"Not done"| P
-    V -->|"Done"| F["final_answer contract"]
-```
-
-
-
-
-
-### 3. Harness engineering ("brain and hands")
-
-Beunec separates **decision-making** from **execution**:
-
-- The **orchestrator** plans and delegates
-- **Sandboxes and tools** run in isolated, ephemeral execution environments (dedicated per code session; scoped tool access for research/legal)
-- If execution fails, the harness can **retry or adapt** without wiping conversation memory, similar in spirit to resilient agent harnesses in the industry, tuned for Rivine's multi-engine layout
+Every engine's tool calls, sandboxed code execution, scoped research and connector calls, run in isolated, ephemeral environments (dedicated per Code session), never sharing state with another user's task. If a step fails, the runtime can retry or adapt without wiping the conversation's memory of what already happened.
 
 For Research and legal work, downstream formatters (PDF/Sheets) **do not** re-run open web research, they work from the lead agent's grounded output, controlling cost and drift.
 
 ### 4. Verification
 
-- **Deterministic checks** where possible (schemas, tests, linters on the Code cold path)
+- **Deterministic checks** where possible (schemas, tests, linters on Rivine Code's build/verify step)
 - **Inferential self-checks** via agent instructions and escalation tags
 - **Grounded citations** for factual engines
 - Repeated failure or high-risk actions can escalate to **you** (HITL)
@@ -722,10 +692,10 @@ Every agent, sub-agent, and tool-facing model receives a **standardized instruct
 **AI-powered today**
 
 - Mediator routing
-- All Rivine agentic engines and their sub-agents
+- All Rivine agentic engines, and Research's downstream PDF/Sheets formatting step
 - Grounded research and citation assembly
 - Surgical document/code revisions via follow-up prompts
-- Rivine Code sandbox execution and cold-path delivery (APST, coder, CI/CD steps where enabled)
+- Rivine Code sandbox execution, build, and verification
 - Creative media generation pipelines (coming soon)
 
 **Not AI-powered today (may evolve)**

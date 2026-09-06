@@ -30,7 +30,7 @@ const releases = [
   },
   {
     title: "Announcing Rivine Agentic Engines",
-    body: "Awareness and artificial experience are not an engine unto themselves. They sit under TaskForce, Research, Cicero, Code, and Creative the way the graph runtime already does: shared, always on, and not a substitute for the internal design of any one product.",
+    body: "Awareness and artificial experience are not an engine unto themselves. They sit under TaskForce, Research, Cicero, Code, and Creative the way the orchestration runtime already does: shared, always on, and not a substitute for the internal design of any one product.",
     date: "2026",
     category: "Announcements",
     href: "/aselius-platform/docs/rivine-taskforce",
@@ -42,9 +42,18 @@ export function LatestReleases() {
   return (
     <section className="w-full border-t border-border">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20 md:py-28">
-        <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-accent-slate mb-10">
-          Latest releases
-        </p>
+        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10">
+          <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-accent-slate">
+            Latest releases
+          </p>
+          <Link
+            href="/aselius-platform/docs"
+            className="inline-flex items-center gap-1.5 text-sm font-medium text-accent-sage hover:text-foreground transition-colors"
+          >
+            Read Aselius Docs
+            <span aria-hidden="true">→</span>
+          </Link>
+        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {releases.map((r, i) => (

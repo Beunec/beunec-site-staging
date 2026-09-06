@@ -2,82 +2,67 @@
 
 ## What it does (plain language)
 
-Rivine Code builds real, working software, not a plan or a list of commands. Describe what you need in any stack (Next.js, Python, Vue, HTML, Flutter, Go, and dozens more), and it writes the actual files, installs and runs them when possible, checks that the result works, and gives you a live preview in the browser or a downloadable project. Changes stay surgical: fixing one thing doesn't mean regenerating the whole project.
+Rivine Code builds real, working software, not a plan or a list of commands. Describe what you need, and it writes the actual files, installs and runs them when possible, checks that the result works, and gives you a live preview in the browser or a downloadable project. Changes stay surgical: fixing one thing doesn't mean regenerating the whole project.
 
-## How it works (for technical readers)
+```mermaid
+flowchart LR
+    A[Describe what you need] --> B[Pick a Mode + Rate]
+    B --> C[Real files written]
+    C --> D[Installed & run]
+    D --> E[Verified]
+    E --> F[Live preview or download]
+```
 
-Rivine Code is the most operationally complex of the Rivine engines, because it's the only one that mutates a real, persistent working environment rather than producing a document. It runs the same **Cocoon Analysis** lifecycle every Rivine engine runs: a lead orchestrating stage owns Formation through Metamorphosis, plans and delegates, but deliberately never writes or executes code itself. Emergence delegates all mutation to concern-scoped work paths, spawned only when the frozen contract genuinely requires them.
+*Figure: what happens between your request and a working result.*
+
+## How you work with it
+
+Every Rivine Code turn starts with two choices, both visible in the toolbar before you send a message.
+
+**Mode** decides what kind of work runs:
+
+| Mode | What it's for |
+|---|---|
+| **Frontend Only** | UI, styling, client-side logic; leaves your backend and infrastructure alone |
+| **Backend Only** | APIs, services, data layer; leaves your UI alone |
+| **Full Stack** | A build that genuinely spans both, end to end |
+| **Plan / Ask Only** | Read your code and answer, propose an approach, or review, without writing anything |
+| **Security Scan / Fix** | Finds and fixes real vulnerabilities in the code you already have |
+
+**Rate** decides how changes get applied:
+
+| Rate | What happens |
+|---|---|
+| **Manual** | Each meaningful change is shown to you before it lands, so you stay in control of what touches your project |
+| **Bypass** | Changes apply as the engine works, for when you want speed over a review step on every edit |
 
 ```mermaid
 flowchart TD
-    Req([Engineering request]) --> Orch[Lead orchestrating stage, plans only]
-    Orch --> Freeze[Freeze shared contracts]
-    Freeze --> Spawns{How much delegated work?}
-    Spawns -->|Narrow task| One[Minimum delegation]
-    Spawns -->|Multi-concern| Many[Parallel delegation, only as needed]
-    One --> Work[Mutate working environment]
-    Many --> Work
-    Work --> Val{Validation}
-    Val -->|Issue found| Heal[Bounded repair pass]
-    Heal --> Work
-    Val -->|Clean| Preview[Live preview when applicable]
-    Preview --> Persist[Project persisted to Assets]
-    Persist --> Ship([Runnable / deployable result])
-
-    Orch -.->|Does not write or execute code| Ban[Non-mutation rule]
+    A[Your request] --> B[Mode]
+    B --> B1[Frontend Only]
+    B --> B2[Backend Only]
+    B --> B3[Full Stack]
+    B --> B4[Plan / Ask Only]
+    B --> B5[Security Scan / Fix]
+    B1 --> C[Rate]
+    B2 --> C
+    B3 --> C
+    B5 --> C
+    B4 --> D[Read / answer / review only]
+    C --> C1[Manual: review before apply]
+    C --> C2[Bypass: apply as it works]
+    C1 --> E[Write only what Mode allows]
+    C2 --> E
+    E --> F[Verify, then preview or download]
 ```
 
+*Figure: Mode scopes what can change; Rate scopes how changes land.*
 
-
-*Figure: Code pipeline shape: plan → freeze contracts → delegated mutation → validate → optional heal → preview → persist.*
-
-```mermaid
-sequenceDiagram
-    actor User
-    participant Orch as Orchestrating stage
-    participant Work as Delegated work
-    participant Env as Working environment
-    participant Gate as Validation
-
-    User->>Orch: Fully specified build request
-    Orch->>Orch: Plan + choose minimum delegation
-    Orch->>Work: Hand off with frozen contracts
-    Work->>Env: Mutate environment
-    Work-->>Orch: Outcomes
-    Orch->>Gate: Post-work checks
-    alt Checks fail once
-        Gate-->>Work: Bounded repair
-        Work->>Env: Fix pass
-        Work-->>Gate: Re-check
-    end
-    Gate-->>User: Preview + persisted project asset when ready
-```
-
-
-
-Two disciplines make this safe rather than chaotic. The first is a frozen-contract mechanism: before delegated work runs in parallel, the interfaces that must not be silently redefined (API shapes, type definitions, event contracts) are captured and handed to every concurrent path as shared, immutable ground truth, so two paths cannot quietly diverge on what a shared interface looks like. The second is validation that runs after that work finishes and before anything reaches you, plus a bounded self-heal loop that can send work back for one repair pass if validation finds something wrong, rather than either shipping a broken result or failing the whole task outright.
-
-The entire working project tree, minus dependency and build folders, is persisted as a code project asset once the turn completes, so it survives past the live session and is available in your Assets library, not only as a snapshot in the conversation.
-
-```text
-  Request ──▶ Orchestrating stage (plan) ──▶ Freeze contracts
-                         │                         │
-                         │                 ┌───────┴───────┐
-                         │                 ▼               ▼
-                         │          Delegated path   Delegated path …
-                         │                 │               │
-                         │                 └───────┬───────┘
-                         │                         ▼
-                         │                  Validation ──▶ heal? ──▶ Preview ──▶ Persist to Assets
-                         │
-                         └── ✕ no direct code write / exec by the orchestrator
-```
-
-
+Picking a narrow Mode isn't a limitation, it's what keeps a "fix the login bug" request from touching your database schema. The engine only has access to what the Mode says the task needs.
 
 ## Why this matters for high-stakes work
 
-Software that "looks right" but silently breaks a shared contract is a production incident waiting to happen. Freezing contracts before parallel work runs, and validating before anything ships, is what keeps a fast build from becoming a fragile one, whether the "user" is a solo founder shipping an MVP or an engineering team integrating a generated service into an existing production stack.
+Software that "looks right" but silently breaks something else is a production incident waiting to happen. Rivine Code verifies its own output, installing dependencies, running the project, checking the result, before it hands anything back to you, whether the "user" is a solo founder shipping an MVP or an engineering team integrating a generated service into an existing production stack.
 
 ## Who uses Rivine Code
 
@@ -87,13 +72,10 @@ Software that "looks right" but silently breaks a shared contract is a productio
 - **Research organizations**: simulation pipelines and data-processing tools, benchmarked against existing implementations.
 - **University post-graduates**: data-analysis scripts and research tooling prototypes.
 
-
-
 ## Real-world prompt examples
 
-
 | Persona                   | Example real-world prompt                                                                                                                                      |
-| ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Startup team              | "Build a Next.js + Supabase landing page with waitlist signup and email capture, and show me a live preview."                                                  |
 | Software engineering team | "Debug this failing FastAPI endpoint using the attached traceback and fix it in place."                                                                        |
 | University post-graduate  | "Build a Python script to clean and merge these three CSV datasets for my thesis analysis."                                                                    |
@@ -105,4 +87,6 @@ Software that "looks right" but silently breaks a shared contract is a productio
 | Research organization     | "Build a Rust service that runs our simulation pipeline faster than our current Python implementation, and benchmark both."                                    |
 | Software engineering team | "Migrate this legacy PHP/Laravel service to a Next.js + FastAPI + PostgreSQL stack, keep the API contract identical, and verify with the existing test suite." |
 
+## Also available: the terminal
 
+Rivine Code runs the same engine as a CLI you can drop into any local project, working on the files already on your disk instead of a workspace sandbox. See the [Rivine Code CLI](/aselius-platform/docs/rivine-code-cli) guide.

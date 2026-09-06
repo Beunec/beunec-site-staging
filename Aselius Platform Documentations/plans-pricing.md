@@ -83,4 +83,4 @@ For high-volume research and team workflows: **15 free credits/month**, all medi
 
 ---
 
-*Credits are shared across Workspace agentic usage. Share limits: 1–500 credits per transfer via CloudHandle. Usage includes a 20% Rivine Infrastructure fee on top of LLM provider cost.* 
+*Credits are shared across Workspace agentic usage. Share limits: 1-500 credits per transfer via CloudHandle. Usage includes a 20% Rivine Infrastructure fee on top of LLM provider cost.* 

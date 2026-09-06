@@ -59,7 +59,7 @@ Beunec’s Agentic Infrastructure research is organized as a modular system rath
 | --- |
 | 1. Cloud, Server, Edge, and Compute Infrastructure |
 | 2. AI, LLM, and SLM Foundation Layers |
-| 3. Rivine™ Orchestration and Task-Graph Runtime |
+| 3. Rivine™ Orchestration Runtime |
 | 4. REA / REI / RE-AI™ Reasoning and Execution Frameworks |
 | 5. Agentic Annotations and System-Prompt-as-a-Skill |
 | 6. App Connectors, Database APIs, and Context Protocols |
@@ -84,7 +84,7 @@ Our long-term interest includes infrastructure that can operate across:
 
 *Hardware integration is a long-range research direction, not a claim that every capability described has already been deployed.*
 
-## # 2. Rivine™ Orchestration and Task-Graph Runtime
+## # 2. Rivine™ Orchestration Runtime
 
 Rivine™ is Beunec’s research direction for orchestrating agentic work.
 

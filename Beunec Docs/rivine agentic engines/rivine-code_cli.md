@@ -18,6 +18,22 @@ it out of that box: the engine still runs on Beunec's infrastructure, but the
 files it reads and writes are **the ones already on your disk**, in the
 directory you started it in, open in your editor, tracked by your git.
 
+```mermaid
+flowchart LR
+    subgraph Web["Aselius web"]
+      W1[Taskspace] --> W2[Remote sandbox files]
+      W2 --> W3[Rivine Code engine]
+    end
+    subgraph CLI["Terminal client"]
+      C1[Your local disk] --> C2[This CLI]
+      C2 -->|one file at a time| C3[Rivine Code engine]
+      C3 --> C2
+      C2 --> C1
+    end
+```
+
+*Figure: same engine; web works in a sandbox, CLI works on the files already on your machine.*
+
 Nothing is uploaded. There is no "attach your repo" step and no sync. The
 engine asks for a file, this client reads it, and the answer goes back: one
 file at a time, only the ones it actually opens. A 40,000-file monorepo costs
@@ -27,8 +43,9 @@ nothing to start working in, because nothing is copied anywhere.
 
 - Reads, writes and edits files in your working directory
 - Runs commands: your shell, your PATH, your nvm/pyenv shims
-- Delegates to the same sub-agent lanes as the web engine: frontend, backend,
-  integration, security review, CI/CD, deploy
+- Runs the same five Modes as the web engine, Frontend Only, Backend Only,
+  Full Stack, Plan/Ask Only, and Security Scan/Fix, so a narrow request stays
+  scoped to what it actually needs
 - Asks you a question when a decision is genuinely yours to make
 - Keeps a per-project memory in `.rivine/`, so tomorrow's session knows what
   yesterday's did
@@ -58,6 +75,10 @@ cost more per turn than not having one.
 
 ## Permission modes
 
+These are a different thing from `-m`/`--mode` above: that flag picks which
+**agent** runs (frontend, backend, and so on); this section is about what the
+CLI will do **without asking you first**, regardless of which agent you picked.
+
 The engine runs on our servers. The decision about what happens to your machine
 is made **here**, on your machine, before anything runs, never on our servers.
 
@@ -68,9 +89,25 @@ is made **here**, on your machine, before anything runs, never on our servers.
 | `acceptEdits` | Writes inside the project. Still asks before commands | `3`, `/accept`, `-m acceptEdits`, Shift+Tab |
 | `bypass` | No prompts *inside this project*. Still cannot leave the directory | `4`, `/mode`, `--bypass` |
 
-The first interactive session asks how Rivine should work here (`1`–`4`).
+The first interactive session asks how Rivine should work here (`1`-`4`).
 Enter keeps **Accept edits**. `--plan`, `-m …`, and `--bypass` skip the
 question because you already answered it.
+
+```mermaid
+flowchart TD
+    A[Engine requests an action] --> B{Permission mode}
+    B -->|plan| C[Reads / read-only shell]
+    B -->|default| D[Ask before writes and other commands]
+    B -->|acceptEdits| E[Writes in project without asking]
+    B -->|bypass| F[No prompts inside this project]
+    C --> G[Still on your machine]
+    D --> G
+    E --> G
+    F --> G
+    G --> H[Outside project / credentials / hard-to-undo still gated]
+```
+
+*Figure: the engine runs remotely; permission decisions stay local, before anything runs.*
 
 Shift+Tab cycles plan → default → accept edits. **`bypass` is not in that
 cycle**: you cannot land on it by pressing a key once too often. `/mode`
@@ -104,6 +141,8 @@ rivine "add tests for auth.ts"  one prompt, then exit
 rivine -p "..."                 the same, explicitly
 rivine --plan                   start read-only
 rivine -C ../other-project      run against a different directory
+rivine -m backend               run in a specific Mode: frontend | backend | fullstack | simple | security
+rivine --rate bypass            how edits apply: manual (review) | bypass (apply as it works)
 
 rivine login                    sign in (opens your browser)
 rivine login --device           sign in on a machine with no browser

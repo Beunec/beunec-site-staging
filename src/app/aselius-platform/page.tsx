@@ -75,9 +75,21 @@ const DIFFERENTIATORS = [
 const ENGINES = [
   { icon: MessageSquare, name: "Rivine TaskForce", tagline: "Action-oriented professional work with connected apps and specialties", href: `${DOCS}/rivine-taskforce` },
   { icon: Microscope, name: "Rivine Research", tagline: "Source-grounded research → Markdown, PDF, or spreadsheet", href: `${DOCS}/rivine-research` },
-  { icon: Code2, name: "Rivine Code", tagline: "Build, debug, and deliver working projects with in-browser preview", href: `${DOCS}/rivine-code` },
+  {
+    icon: Code2,
+    name: "Rivine Code",
+    tagline: "Build, debug, and deliver working projects with in-browser preview",
+    href: `${DOCS}/rivine-code`,
+    also: { label: "Also available as a terminal client", href: `${DOCS}/rivine-code-cli` },
+  },
   { icon: Scale, name: "Rivine Cicero", tagline: "Legal drafting and review under guardrails; assistive, not legal advice", href: `${DOCS}/rivine-cicero` },
   { icon: Palette, name: "Rivine Creative", tagline: "Image, video, and audio creation and editing", href: `${DOCS}/rivine-creative`, soon: true },
+];
+
+const RIVINE_PLATFORM = [
+  { name: "Artificial Experience", blurb: "Reuse what already worked in your workspace", href: `${DOCS}/artificial-experience` },
+  { name: "Context Extender", blurb: "Operate over large corpora without flooding the model", href: `${DOCS}/context-extender` },
+  { name: "Rivine Code CLI", blurb: "Same Code engine, on the files already on your disk", href: `${DOCS}/rivine-code-cli` },
 ];
 
 const FLOW = [
@@ -423,26 +435,33 @@ export default function AseliusPlatformPage() {
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {ENGINES.map((engine, i) => (
                 <motion.div key={engine.name} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: (i % 3) * 0.06 }}>
-                  <Link
-                    href={engine.href}
-                    className="group flex h-full items-start gap-4 rounded-2xl border border-border bg-container p-5 transition-colors hover:border-accent-sage/60"
-                  >
-                    <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-border bg-global">
-                      <engine.icon className="w-5 h-5 text-accent-sage" />
-                    </span>
-                    <div className="min-w-0">
-                      <div className="flex items-center gap-1.5 flex-wrap">
-                        <h3 className="text-base font-semibold text-foreground">{engine.name}</h3>
-                        {"soon" in engine && engine.soon && (
-                          <span className="rounded-full border border-border px-2 py-0.5 text-[10px] font-medium text-muted-foreground">
-                            Coming soon
-                          </span>
-                        )}
-                        <ArrowUpRight className="w-3.5 h-3.5 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-accent-sage" />
+                  <div className="group flex h-full flex-col rounded-2xl border border-border bg-container p-5 transition-colors hover:border-accent-sage/60">
+                    <Link href={engine.href} className="flex items-start gap-4 min-w-0">
+                      <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-border bg-global">
+                        <engine.icon className="w-5 h-5 text-accent-sage" />
+                      </span>
+                      <div className="min-w-0">
+                        <div className="flex items-center gap-1.5 flex-wrap">
+                          <h3 className="text-base font-semibold text-foreground">{engine.name}</h3>
+                          {"soon" in engine && engine.soon && (
+                            <span className="rounded-full border border-border px-2 py-0.5 text-[10px] font-medium text-muted-foreground">
+                              Coming soon
+                            </span>
+                          )}
+                          <ArrowUpRight className="w-3.5 h-3.5 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-accent-sage" />
+                        </div>
+                        <p className="text-sm text-muted-foreground leading-relaxed mt-1">{engine.tagline}</p>
                       </div>
-                      <p className="text-sm text-muted-foreground leading-relaxed mt-1">{engine.tagline}</p>
-                    </div>
-                  </Link>
+                    </Link>
+                    {"also" in engine && engine.also && (
+                      <Link
+                        href={engine.also.href}
+                        className="mt-3 ml-14 text-xs text-accent-sage hover:underline underline-offset-2"
+                      >
+                        {engine.also.label}
+                      </Link>
+                    )}
+                  </div>
                 </motion.div>
               ))}
 
@@ -461,6 +480,34 @@ export default function AseliusPlatformPage() {
                     Financial research and quantitative analysis
                   </p>
                 </div>
+              </div>
+            </div>
+
+            <div className="mt-10 rounded-2xl border border-border bg-container/60 p-6 md:p-7">
+              <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-5">
+                <div>
+                  <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-accent-slate mb-2">
+                    Rivine Platform
+                  </p>
+                  <p className="text-sm sm:text-base text-muted-foreground leading-relaxed max-w-2xl">
+                    Memory, context, and the terminal client that sit under the engines.
+                  </p>
+                </div>
+              </div>
+              <div className="grid sm:grid-cols-3 gap-3">
+                {RIVINE_PLATFORM.map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className="group rounded-xl border border-border bg-global px-4 py-3 transition-colors hover:border-accent-sage/60"
+                  >
+                    <div className="flex items-center justify-between gap-2">
+                      <h3 className="text-sm font-semibold text-foreground">{item.name}</h3>
+                      <ArrowUpRight className="w-3.5 h-3.5 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-accent-sage" />
+                    </div>
+                    <p className="text-xs text-muted-foreground leading-relaxed mt-1">{item.blurb}</p>
+                  </Link>
+                ))}
               </div>
             </div>
           </div>

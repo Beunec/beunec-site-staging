@@ -2,49 +2,56 @@
 
 ## What it does (plain language)
 
-Rivine Cicero handles legal and policy drafting and review: contracts, NDAs, employment terms, immigration questions, corporate documents, and cross-border/policy matters. It confirms the governing law and the facts first, drafts conservatively, and, when a matter is genuinely high-risk or the facts are missing, says so plainly and routes to human or licensed review instead of guessing. It is research-and-draft support under guardrails, not a substitute for a licensed attorney or diplomat.
+Rivine Cicero handles legal and policy drafting and review: contracts, NDAs, employment terms, immigration questions, corporate documents, patents, M&A due diligence, and cross-border/policy matters. It confirms the governing law and the facts first, drafts conservatively, and, when a matter is genuinely high-risk or the facts are missing, says so plainly and routes to human or licensed review instead of guessing. It is research-and-draft support under guardrails, not a substitute for a licensed attorney or diplomat.
 
-## How it works (for technical readers)
+```mermaid
+flowchart LR
+    A[Legal or policy matter] --> B[Pick a specialty]
+    B --> C[Confirm governing law + facts]
+    C --> D{Sufficient?}
+    D -->|No| E[Tells you plainly what's missing]
+    D -->|Yes| F[Drafts the memo]
+    F --> G{High-risk or unclear?}
+    G -->|Yes| H[Escalates to human / licensed review]
+    G -->|No| I[Deliverable in Preview]
+```
 
-Cicero is Rivine's legal-domain engine, and the clearest illustration of conditional delegation in the **Cocoon Analysis** lifecycle every Rivine engine runs. A principal coordinating stage owns Formation through Metamorphosis, the only stage that produces the final, user-facing memo, and deconstructs an incoming legal matter to decide, case by case, whether additional domain-specific work is genuinely implicated by the matter's readiness gate, not automatically triggered. Only work the matter actually requires is engaged; the rest of the engine's capacity stays idle. The rule that matters: **delegation is conditional on the matter, not automatic.**
+*Figure: Cicero never guesses past a gap, it names it.*
+
+## How you work with it
+
+Pick a specialty before you send your matter, and one dedicated legal specialist handles the whole thing, start to finish, in a single pass:
+
+| Specialty | Covers |
+|---|---|
+| **Contract Review** / **Legal Drafting** | Reviewing or drafting contracts, NDAs, and commercial agreements |
+| **Corporate Law** | Governance, entity formation, and compliance |
+| **Employment Law** | Offer letters, employment terms, and workplace policy |
+| **Immigration Law** | Visa, sponsorship, and status questions |
+| **International Relations** | Cross-border and multi-jurisdiction matters |
+| **Patent Compliance** | Patent and prior-art questions |
+| **M&A Due Diligence** | Deal-related document review |
+| **Policy and Law Drafting** / **General** | Cross-cutting or multi-domain matters that don't fit one specialty |
+
+Not sure which one fits? The general specialty handles the full breadth of practice areas and will tell you plainly if your matter needs a narrower specialist.
 
 ```mermaid
 flowchart TD
-    M([Legal matter]) --> P[Principal coordinating stage]
-    P --> Q{Scope and facts sufficient?}
-    Q -->|No| Ask[Say plainly what's missing]
-    Ask --> U([Clarification from you / counsel])
-    Q -->|Yes| D{Additional domain work needed?}
-    D -->|No| Memo[Principal drafts the memo]
-    D -->|Yes, only what's implicated| Dom[Domain-specific work, scope varies]
-    Dom --> Syn{Domain output usable?}
-    Syn -->|Gap / synthesis failure| HITL[Name the gap → human review]
-    Syn -->|Ready| Memo
-    Memo --> Out([Legal memo])
-    HITL --> Out
+    A[Your matter] --> B[Specialty]
+    B --> C[Confirm law + facts]
+    C --> D{Matter fully specified?}
+    D -->|No| E[Short gap statement]
+    D -->|Yes| F{Complexity}
+    F -->|Narrow| G[Focused memo]
+    F -->|Multi-jurisdiction / high stakes| H[Long detailed memo]
+    E --> I[Ask for what is missing]
+    G --> J[Preview]
+    H --> J
 ```
 
-*Figure: Cicero shape: one memo owner; domain-specific work is conditional; gaps escalate instead of being padded over.*
+*Figure: length follows the matter; underspecified work stays short and honest.*
 
-```text
-                 ┌──────────────────────────────┐
-                 │ Principal (memo owner only)  │
-                 └──────────────┬───────────────┘
-                                │
-              ┌─────────────────┼─────────────────┐
-              ▼                 ▼                 ▼
-        Insufficient      Sufficient +       Sufficient +
-        facts → ask       no extra work      domain-specific
-                                              work (conditional)
-                                │                 │
-                                └────────┬────────┘
-                                         ▼
-                              Memo / human review if gap
-```
-
-Two properties matter more than the delegation mechanics themselves. First, **output length is calibrated to genuine scope and confidence, not a fixed target.** A real multi-jurisdiction matter legitimately produces a long, detailed memo, the length real law-firm work of that kind actually requires. But when a matter is underspecified, missing the jurisdiction, missing a key fact the analysis depends on, the correct output is a short, honest statement of what's missing and a request for it, not a long document padded to look thorough.
-
-Second, when domain analysis genuinely fails, a real synthesis error, not just a low-confidence answer, Cicero does not silently absorb that failure into a memo that looks complete. It says so explicitly and routes to human review, naming what could not be completed. A legal memo that hides a gap is worse than one that admits it.
+**Output length matches the matter, not a fixed target.** A real multi-jurisdiction question legitimately produces a long, detailed memo, the length real law-firm work of that kind actually requires. But when a matter is underspecified, missing the jurisdiction, missing a fact the analysis depends on, the correct output is a short, honest statement of what's missing and a request for it, not a document padded to look thorough.
 
 ## Why this matters for high-stakes work
 
