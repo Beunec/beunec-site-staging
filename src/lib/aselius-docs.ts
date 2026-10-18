@@ -149,7 +149,7 @@ export const ASELIUS_DOCS: AseliusDoc[] = [
     file: "rivine_assist.md",
     group: "Rivine Engines",
     dir: ENGINES_DIR,
-    blurb: "Surgical follow-up edits on a document already open in Preview — not a full engine turn.",
+    blurb: "Surgical follow-up edits on a document already open in Preview, without a full engine turn.",
   },
   {
     slug: "rivine-browse",

@@ -32,7 +32,7 @@ It is adjacent to, but distinct from, several known phenomena:
 | Known phenomenon | What it describes | Why IFC is different |
 | --- | --- | --- |
 | Context rot / long-context degradation | Quality falls as context grows | IFC is about *what* accumulates (the system's own failure text), not how much; it appears in short contexts too |
-| Context poisoning | A wrong fact or hallucination enters context and is reused | In IFC the injected text is *true* ("the call failed") — it is harmful because it is about the platform, not the task |
+| Context poisoning | A wrong fact or hallucination enters context and is reused | In IFC the injected text is *true* ("the call failed"); it is harmful because it is about the platform, not the task |
 | Self-conditioning on errors | A model's own earlier mistakes raise its later error rate | IFC's residue is mostly written by the *runtime*, not the model, and it crosses model boundaries through failover |
 | Context collapse (ACE) | Iterative rewriting of a context erodes its detail | IFC is additive, not erosive: nothing is lost; noise is added |
 | Retry storms / cascading failure (distributed systems) | Retries amplify load on a failing dependency | IFC amplifies *semantic* load on the model, not request load on the provider |

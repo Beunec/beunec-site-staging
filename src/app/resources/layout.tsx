@@ -10,9 +10,9 @@ export const metadata: Metadata = {
         siteName: "Beunec",
         images: [
             {
-                url: "/assets/social-share.png",
-                width: 1200,
-                height: 630,
+                url: "/assets/beunec-logo-transparent-blacktext.png",
+                width: 1605,
+                height: 442,
                 alt: "Beunec Resources",
             },
         ],

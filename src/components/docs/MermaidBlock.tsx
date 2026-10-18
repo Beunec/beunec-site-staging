@@ -35,11 +35,11 @@ function readPalette(): BaapPalette {
     s.getPropertyValue(name).trim() || fallback;
   const dark = document.documentElement.classList.contains("dark");
   return {
-    bg: g("--bg-global", dark ? "#141512" : "#f1eee6"),
-    text: g("--text-primary", dark ? "#e6e2d8" : "#141512"),
-    container: g("--bg-container", dark ? "#1c1e1a" : "#eae6db"),
-    hover: g("--state-hover", dark ? "#252823" : "#e0d9ca"),
-    media: g("--media-blank", dark ? "#222420" : "#dfd9ce"),
+    bg: g("--bg-global", dark ? "#111111" : "#f4f4f0"),
+    text: g("--text-primary", dark ? "#e8eaed" : "#1a1a1a"),
+    container: g("--bg-container", dark ? "#151515" : "#ffffff"),
+    hover: g("--state-hover", dark ? "#202020" : "#ededeb"),
+    media: g("--media-blank", dark ? "#1d1d1d" : "#e6e6e6"),
     sage: g("--accent-sage", "#6b7a6e"),
     slate: g("--accent-slate", "#7a8b99"),
     border: dark ? "rgba(230,226,216,0.16)" : "rgba(20,21,18,0.12)",
@@ -101,7 +101,7 @@ function themeCss(p: BaapPalette) {
 }
 
 function stripHardcodedStyles(source: string) {
-  // Let BAAP theme win — drop author `style Node fill:#...` lines
+  // Let BAAP theme win: drop author `style Node fill:#...` lines
   return source
     .split("\n")
     .filter((line) => !/^\s*style\s+\w+\s+fill:/i.test(line.trim()))
@@ -197,7 +197,7 @@ function DiagramShell({
   );
 }
 
-/** Client-only mermaid render — BAAP themed, zoom + fullscreen. */
+/** Client-only mermaid render, BAAP themed, zoom + fullscreen. */
 export function MermaidBlock({ chart }: MermaidBlockProps) {
   const hostRef = useRef<HTMLDivElement>(null);
   const fullscreenHostRef = useRef<HTMLDivElement>(null);

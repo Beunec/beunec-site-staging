@@ -13,7 +13,7 @@ type DocAudioPlayerProps = {
   label: string;
 };
 
-/** Narrated doc page — autoplay on load; bottom-left play/pause control. */
+/** Narrated doc page: autoplay on load; bottom-left play/pause control. */
 export function DocAudioPlayer({ slug, label }: DocAudioPlayerProps) {
   const src = getDocAudioSrc(slug);
   const audioRef = useRef<HTMLAudioElement | null>(null);

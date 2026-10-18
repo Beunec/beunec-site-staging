@@ -16,6 +16,31 @@ export default function AseliusDocsIndex() {
         below, or use the menu to switch between documents.
       </p>
       
+      <Link
+        href="/aselius-platform#story"
+        className="group mb-12 flex flex-col gap-5 overflow-hidden rounded-2xl border border-border bg-container p-4 transition-colors hover:border-accent-sage/60 sm:flex-row sm:items-center"
+      >
+        <img
+          src="/media/aselius-story-poster.webp"
+          alt=""
+          width={1280}
+          height={720}
+          loading="lazy"
+          className="aspect-video w-full rounded-xl border border-border object-cover sm:w-64"
+        />
+        <span className="min-w-0">
+          <span className="block font-mono text-[11px] uppercase tracking-[0.18em] text-accent-slate">
+            New to Aselius? Start here
+          </span>
+          <span className="mt-2 block text-lg font-semibold text-foreground">
+            Watch the Aselius story: what it is, where everything lives, and where else the engines work
+          </span>
+          <span className="mt-2 inline-flex items-center gap-1.5 text-sm font-medium text-accent-sage">
+            Under two minutes, captioned <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+          </span>
+        </span>
+      </Link>
+
       <div className="space-y-12">
         {groupAseliusDocs().map(({ group, items }) => (
           <section key={group}>

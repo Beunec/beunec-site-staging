@@ -4,7 +4,7 @@ export const SUBSTACK_API_URL = `https://api.rss2json.com/v1/api.json?rss_url=${
   SUBSTACK_FEED_URL,
 )}`;
 
-/** URL slug from a post title — must match everywhere so links resolve. */
+/** URL slug from a post title. Must match everywhere so links resolve. */
 export function generateSlug(title: string): string {
   return title
     .toLowerCase()

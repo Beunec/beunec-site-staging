@@ -2,7 +2,7 @@
 
 **Aselius Workspace · engine key `rivine_confluence`**
 
-Confluence answers forecasting and scenario questions about a specific country — population, maternal mortality against an SDG target, life expectancy, growth, inflation, debt — with three agents and one rule: **models choose the evidence; code computes the numbers.**
+Confluence answers forecasting and scenario questions about a specific country (population, maternal mortality against an SDG target, life expectancy, growth, inflation, debt) with three agents and one rule: **models choose the evidence; code computes the numbers.**
 
 - **Lumo** grounds the historical baseline through the SAGE-Commons UN Data Commons engine.
 - **Goto** cross-checks it against eight statistical publishers outside that graph.
@@ -17,8 +17,8 @@ Every projected figure, interval, target gap and cross-publisher comparison is p
 The first live runs used the design of the original JavaScript reference, in which the model derives the projection itself. It was mostly right, and wrong where it matters: DeepSeek at `xhigh` wrote 237,527,782 × 1.026⁵ = **270.7M** (correct: 270.06M) and published a "low" case above its own central case. For output that a central bank or statistical office may use as a baseline, one wrong digit is a defect. So:
 
 1. Every retrieval tool **registers** what it fetched in the turn's evidence ledger and returns a `series_id`.
-2. The computation tools (`project_series`, `target_gap`, `apply_scenarios`, `compare_series`) read the series back **by id** — the model never re-types a number.
-3. The ledger — inputs, fitted equations, results — is appended to Lumo's and Goto's markdown and to Uno's dashboard **by code**. Where a narrative and the ledger differ, the ledger is the record, and each deliverable says so.
+2. The computation tools (`project_series`, `target_gap`, `apply_scenarios`, `compare_series`) read the series back **by id**; the model never re-types a number.
+3. The ledger (inputs, fitted equations, results) is appended to Lumo's and Goto's markdown and to Uno's dashboard **by code**. Where a narrative and the ledger differ, the ledger is the record, and each deliverable says so.
 
 ## The projection engine (`rivine_confluence/projection.py`)
 
@@ -36,11 +36,11 @@ Pure Python, no numerical dependencies, identical on every host. Validated again
 | Scenarios | The model states each assumption (a rate and why); code computes the path. Labelled ASSUMPTION_DRIVEN. |
 | Comparison | Cross-publisher agreement on overlapping years. |
 
-### Reconciliation — by rule
+### Reconciliation, by rule
 
-Projections are grouped by (metric, target year). Before comparing, rows reported in a different unit scale are rescaled onto the scale most of the group shares, and the rescale is disclosed (IMF WEO reports population in **millions**, everyone else in persons — without this, a units difference reads as a 100% disagreement). The group is **DIVERGENT** when two or more 95% intervals share no common overlap, when a projection without an interval falls outside the common interval of those that have one, or — if none has an interval — when central values spread more than 5%. Otherwise it is **within range**.
+Projections are grouped by (metric, target year). Before comparing, rows reported in a different unit scale are rescaled onto the scale most of the group shares, and the rescale is disclosed (IMF WEO reports population in **millions**, everyone else in persons; without this, a units difference reads as a 100% disagreement). The group is **DIVERGENT** when two or more 95% intervals share no common overlap, when a projection without an interval falls outside the common interval of those that have one, or (if none has an interval) when central values spread more than 5%. Otherwise it is **within range**.
 
-### Publisher audit — by rule
+### Publisher audit, by rule
 
 Each source gets a status computed by fixed rules, never by a model:
 
@@ -50,16 +50,16 @@ Each source gets a status computed by fixed rules, never by a model:
 | **NEEDS_REVIEW** | Fewer than 5 historical values; latest historical value more than 5 years old; a different unit scale from the other publishers of the metric; or more than 5% away from them in the latest common year. |
 | **PASS** | None of the above. A publisher's official projection variant (e.g. WPP Low-fertility, 95% bounds) has no history by design and is a PASS used as a comparator. |
 
-Also reported: sources whose numbers are **identical** to another publisher's (one origin behind several portals — not independent confirmation; live, World Bank, UN WPP and the UN graph report the same Nigeria population to 2e-9), and re-publishers (OWID, Data Commons). A source that simply holds nothing for the question is `NOT_COVERED`, not a failure.
+Also reported: sources whose numbers are **identical** to another publisher's (one origin behind several portals, not independent confirmation; live, World Bank, UN WPP and the UN graph report the same Nigeria population to 2e-9), and re-publishers (OWID, Data Commons). A source that simply holds nothing for the question is `NOT_COVERED`, not a failure.
 
 ## Two vocabularies
 
-SAGE-Commons' verdicts — CORROBORATED, CONTESTED, SINGLE_SOURCE, INCOMPARABLE, NO_EVIDENCE, NEEDS_REVIEW, PASS, FAIL — come from a hash-pinned, model-free comparator. A model writing one as its own conclusion would counterfeit it. The guard (`reserved_vocabulary.py`) is precise, not blunt:
+SAGE-Commons' verdicts (CORROBORATED, CONTESTED, SINGLE_SOURCE, INCOMPARABLE, NO_EVIDENCE, NEEDS_REVIEW, PASS, FAIL) come from a hash-pinned, model-free comparator. A model writing one as its own conclusion would counterfeit it. The guard (`reserved_vocabulary.py`) is precise, not blunt:
 
-- a verdict the engine actually returned this turn is a quotation — kept;
-- FAIL/FAILED beside retrieval wording is a retrieval status — kept;
-- PASS / NEEDS_REVIEW / FAIL that the code audit produced this turn — kept in Uno's dashboard;
-- anything else — redacted.
+- a verdict the engine actually returned this turn is a quotation: kept;
+- FAIL/FAILED beside retrieval wording is a retrieval status: kept;
+- PASS / NEEDS_REVIEW / FAIL that the code audit produced this turn: kept in Uno's dashboard;
+- anything else: redacted.
 
 The JavaScript reference used a blunt regex that also rewrote genuine engine quotes and "retrieval FAILED"; that was found live and replaced.
 
@@ -69,7 +69,7 @@ The JavaScript reference used a blunt regex that also rewrote genuine engine quo
 | --- | --- | --- | --- |
 | Lumo | DeepSeek V4.1 Flash | high | SAGE-Commons engine (`resolve_indicator`, `ground_claim`, `analyze_trend`, `check_coverage`), `un_data_commons_supplement`, computation tools |
 | Goto | DeepSeek V4.1 Flash | high | World Bank, WHO GHO, UNSD SDG, OWID, UNDP HDR, IMF WEO, UN WPP 2024, Google Data Commons, HDX, UN location lookup, computation tools |
-| Uno | GLM 5.3 Flash | medium | none — its evidence is the two scenarios and the ledger |
+| Uno | GLM 5.3 Flash | medium | none; its evidence is the two scenarios and the ledger |
 
 Each falls back to Grok 4.7 → GPT-5.6 Terra → Muse Spark 1.3. Pricing: DeepSeek V4.1 Flash $0.22 / $0.007 cached / $0.66 per 1M tokens; GLM 5.3 Flash $0.15 / $0.03 / $0.50. Each agent bills under its own role (`sub_agent_scope`), and all three fold into the `rivine_confluence` group in Observability.
 
@@ -77,7 +77,7 @@ Each falls back to Grok 4.7 → GPT-5.6 Terra → Muse Spark 1.3. Pricing: DeepS
 
 ### Lumo and Data Commons
 
-Google Data Commons does not serve the UN Data Commons `undata/…` namespace, but it does hold UN SDG-portal series (`sdg/…`, provenance `unstats.un.org`) that parallel SAGE's `undata/sdg/…` ids. Lumo's `un_data_commons_supplement` keeps **only facets whose provenance is a UN-system domain** (un.org, who.int, unicef.org, unfpa.org, …); World Bank and IMF facets are excluded — those are Goto's. It is required when `analyze_trend` returns no series or the engine reports a single independent origin, and optional otherwise; it is often an older vintage than the engine (the audit flags that). Goto's `google_data_commons` keeps every facet and names the original publisher behind each. The API key travels in the `X-API-Key` header, never the URL, so it can never appear in provenance, model context or a deliverable.
+Google Data Commons does not serve the UN Data Commons `undata/…` namespace, but it does hold UN SDG-portal series (`sdg/…`, provenance `unstats.un.org`) that parallel SAGE's `undata/sdg/…` ids. Lumo's `un_data_commons_supplement` keeps **only facets whose provenance is a UN-system domain** (un.org, who.int, unicef.org, unfpa.org, …); World Bank and IMF facets are excluded; those are Goto's. It is required when `analyze_trend` returns no series or the engine reports a single independent origin, and optional otherwise; it is often an older vintage than the engine (the audit flags that). Goto's `google_data_commons` keeps every facet and names the original publisher behind each. The API key travels in the `X-API-Key` header, never the URL, so it can never appear in provenance, model context or a deliverable.
 
 ## Sources, as implemented
 
@@ -132,14 +132,14 @@ Every run: all three deliverables produced; every projected central value appear
 
 Earlier runs, and what they fixed: 765 s ending in a false 12-minute "unresolved entity" pause (entity gate exemption); 352 s with model-typed arithmetic errors (deterministic engine); a false 100% divergence from mixed units (scale-aware reconciliation); model-invented PASS/FAIL badges (deterministic audit).
 
-Unit tests: `tests/test_rivine_confluence.py` (29) — math against closed forms and the textbook interval formula, t-quantiles, history/projection separation, structural breaks, reconciliation and audit rules, unit rescaling, the vocabulary guard, the ISO3 column match, experience reuse re-registering series, the stage hand-off and resume, the time bound, and orchestration. Full backend suite: 1605 passed, 0 failed.
+Unit tests: `tests/test_rivine_confluence.py` (29): math against closed forms and the textbook interval formula, t-quantiles, history/projection separation, structural breaks, reconciliation and audit rules, unit rescaling, the vocabulary guard, the ISO3 column match, experience reuse re-registering series, the stage hand-off and resume, the time bound, and orchestration. Full backend suite: 1605 passed, 0 failed.
 
 ## Configuration
 
 | Variable | Default | Meaning |
 | --- | --- | --- |
-| `DATACOMMONS_API_KEY` | — | Google Data Commons (Goto; Lumo's UN-only supplement). Absent → `NOT_CONFIGURED`, reported plainly. |
-| `UN_POP_DIV_TOKEN` | — | UN WPP data endpoint (bearer). Absent → `NOT_CONFIGURED`. |
+| `DATACOMMONS_API_KEY` | none | Google Data Commons (Goto; Lumo's UN-only supplement). Absent → `NOT_CONFIGURED`, reported plainly. |
+| `UN_POP_DIV_TOKEN` | none | UN WPP data endpoint (bearer). Absent → `NOT_CONFIGURED`. |
 | `RIVINE_CONFLUENCE_SYNTHESIS_RESERVE_SECONDS` | `300` | Uno's time reserve (see Long-horizon). |
 | `RIVINE_CONFLUENCE_REUSE_TTL_HOURS` | `12` | Artificial Experience reuse window for retrieved series. |
 | `RIVINE_CONFLUENCE_MCP_URL` | `https://sagecommon.soculink.com/mcp` | SAGE-Commons engine. |

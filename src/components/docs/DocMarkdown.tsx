@@ -1,5 +1,3 @@
-"use client";
-
 import type { Components } from "react-markdown";
 import type { ReactElement, ReactNode } from "react";
 import Link from "next/link";
@@ -68,7 +66,7 @@ const components: Components = {
         >
           <span
             className="shrink-0 mt-0.5 inline-flex h-8 min-w-8 items-center justify-center rounded-full text-xs font-bold px-2"
-            style={{ background: accent.chip, color: "#f5f2ec" }}
+            style={{ background: accent.chip, color: "#f4f4f0" }}
           >
             {accent.num}
           </span>
@@ -167,7 +165,7 @@ const components: Components = {
     const isBlock = Boolean(className) || nodeText(children).includes("\n");
     if (isBlock) {
       return (
-        <code className={`${className ?? ""} font-mono text-sm text-[#e6e2d8]`}>
+        <code className={`${className ?? ""} font-mono text-sm text-[color:var(--on-ink)]`}>
           {children}
         </code>
       );
@@ -184,7 +182,7 @@ const components: Components = {
       return <MermaidBlock chart={nodeText(kid.props.children)} />;
     }
     return (
-      <pre className="my-6 overflow-x-auto rounded-2xl border border-border bg-[#1c1e1a] dark:bg-[#141512] p-5 text-sm leading-relaxed">
+      <pre className="my-6 overflow-x-auto rounded-2xl border border-border bg-[color:var(--surface-ink)] dark:bg-[color:var(--surface-ink-deep)] p-5 text-sm leading-relaxed">
         {children}
       </pre>
     );
@@ -234,7 +232,7 @@ type DocMarkdownProps = {
   className?: string;
 };
 
-/** Colorful BAAP-styled markdown — feed any Beunec Docs .md string. */
+/** Colorful BAAP-styled markdown. Feed any Beunec Docs .md string. */
 export function DocMarkdown({ content, className }: DocMarkdownProps) {
   return (
     <article className={["doc-markdown", className].filter(Boolean).join(" ")}>

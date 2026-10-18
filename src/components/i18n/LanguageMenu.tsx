@@ -34,8 +34,15 @@ export function LanguageMenu({ mobile = false }: { mobile?: boolean }) {
     const onClick = (e: MouseEvent) => {
       if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
     };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
     document.addEventListener("mousedown", onClick);
-    return () => document.removeEventListener("mousedown", onClick);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onClick);
+      document.removeEventListener("keydown", onKey);
+    };
   }, [open]);
 
   const filtered = PAGE_LANGUAGE_LABELS.filter((l) =>
@@ -52,7 +59,7 @@ export function LanguageMenu({ mobile = false }: { mobile?: boolean }) {
         className={`inline-flex items-center gap-1.5 rounded-lg border border-border px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground hover:bg-secondary ${mobile ? "w-full justify-between" : ""}`}
       >
         <Globe2 className="h-4 w-4" aria-hidden />
-        <span>{current}</span>
+        <span className={mobile ? "" : "max-w-[5.5rem] truncate"}>{current}</span>
       </button>
       {open && (
         <div

@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono&display=swap');
-
 /* tailwind-ignore-start */
 @tailwind base;
 @tailwind components;
@@ -8,16 +6,20 @@
 
 @layer base {
   /*
-   * BAAP 1.2.0 — Warm Technical Minimalism
-   * Raw brand DNA (hex) + HSL bridges for Tailwind `hsl(var(--*))` consumers.
+   * BAAP 1.2.0: canvas (light) and charcoal (dark).
+   * This block is the single source of truth for every color on the site:
+   * raw hex tokens for CSS and inline styles, HSL bridges for Tailwind's
+   * `hsl(var(--*))` roles. Matches the Aselius platform and
+   * preview.aselius.beunec.com.
    */
   :root {
+    color-scheme: light;
+
     /* [BAAP-SCOPE: UNIVERSAL_ACCENTS] */
     --accent-sage: #6b7a6e;
     --accent-slate: #7a8b99;
 
-    /* Alias tokens (docs / non-tailwind consumers) — canvas/charcoal neutrals,
-       matching the Aselius platform and preview.aselius.beunec.com exactly. */
+    /* Fixed aliases (docs / non-tailwind consumers) */
     --bg-light: #f4f4f0;
     --text-light: #1a1a1a;
     --container-light: #ffffff;
@@ -30,12 +32,20 @@
     --hover-dark: #202020;
     --media-dark: #1d1d1d;
 
-    /* [THEME-STATE: LIGHT_MODE] — canvas */
+    /* [THEME-STATE: LIGHT_MODE] canvas */
     --bg-global: #f4f4f0;
     --text-primary: #1a1a1a;
+    --text-muted: #5c6370;
     --bg-container: #ffffff;
     --state-hover: #ededeb;
     --media-blank: #e6e6e6;
+    --hairline: rgba(26, 26, 26, 0.1);
+    --shadow-soft: 0 24px 60px -24px rgba(17, 17, 17, 0.18);
+
+    /* Code blocks and the home mind map stay on charcoal in both themes */
+    --surface-ink: #151515;
+    --surface-ink-deep: #111111;
+    --on-ink: #e8eaed;
 
     /* HSL bridge → shadcn / Tailwind semantic roles */
     --background: 60 15% 95%;       /* --bg-global (#f4f4f0 canvas) */
@@ -46,16 +56,16 @@
     --popover-foreground: 0 0% 10%;
     --primary: 132 7% 45%;          /* --accent-sage */
     --primary-foreground: 60 15% 95%;
-    --secondary: 60 9% 93%;         /* --state-hover */
+    --secondary: 60 5% 93%;         /* --state-hover (#ededeb) */
     --secondary-foreground: 0 0% 10%;
     --muted: 0 0% 90%;              /* --media-blank */
-    --muted-foreground: 217 11% 40%;
+    --muted-foreground: 219 10% 40%;
     --accent: 207 13% 54%;          /* --accent-slate */
     --accent-foreground: 60 15% 95%;
     --destructive: 0 55% 42%;
     --destructive-foreground: 60 15% 95%;
-    --border: 0 0% 90%;
-    --input: 0 0% 90%;
+    --border: 0 0% 88%;
+    --input: 0 0% 88%;
     --ring: 132 7% 45%;
     --radius: 0.5rem;
 
@@ -63,20 +73,24 @@
     --sidebar-foreground: 0 0% 10%;
     --sidebar-primary: 132 7% 45%;
     --sidebar-primary-foreground: 60 15% 95%;
-    --sidebar-accent: 60 9% 93%;
+    --sidebar-accent: 60 5% 93%;
     --sidebar-accent-foreground: 0 0% 10%;
-    --sidebar-border: 0 0% 90%;
+    --sidebar-border: 0 0% 88%;
     --sidebar-ring: 132 7% 45%;
   }
 
   .dark {
-    /* [THEME-STATE: DARK_MODE] — charcoal, matching the Aselius platform and
-       preview.aselius.beunec.com exactly. */
+    color-scheme: dark;
+
+    /* [THEME-STATE: DARK_MODE] charcoal */
     --bg-global: #111111;
     --text-primary: #e8eaed;
+    --text-muted: #a3a3a3;
     --bg-container: #151515;
     --state-hover: #202020;
     --media-blank: #1d1d1d;
+    --hairline: rgba(232, 234, 237, 0.1);
+    --shadow-soft: 0 24px 60px -24px rgba(0, 0, 0, 0.6);
 
     --background: 0 0% 7%;          /* --bg-global (#111111 charcoal) */
     --foreground: 216 12% 92%;      /* --text-primary (#e8eaed) */
@@ -86,7 +100,7 @@
     --popover-foreground: 216 12% 92%;
     --primary: 132 7% 45%;
     --primary-foreground: 216 12% 92%;
-    --secondary: 0 0% 13%;          /* --state-hover */
+    --secondary: 0 0% 13%;          /* --state-hover (#202020) */
     --secondary-foreground: 216 12% 92%;
     --muted: 0 0% 11%;              /* --media-blank */
     --muted-foreground: 0 0% 64%;
@@ -139,15 +153,17 @@
   body {
     background-color: var(--bg-global);
     color: var(--text-primary);
-    font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     transition: background-color 0.2s ease, color 0.2s ease;
   }
+  ::selection {
+    background-color: color-mix(in srgb, var(--accent-sage) 30%, transparent);
+  }
 }
 
 @layer components {
-  /* BAAP structural wrappers — semantic mapping examples */
+  /* BAAP structural wrappers */
   .baap-page {
     background-color: var(--bg-global);
     color: var(--text-primary);
@@ -174,35 +190,32 @@
   .baap-media {
     background-color: var(--media-blank);
   }
+
+  /* The one high-contrast pill CTA: ink on canvas, canvas on charcoal */
+  .btn-ink {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-radius: 9999px;
+    background-color: var(--text-primary);
+    color: var(--bg-global);
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    font-weight: 500;
+    padding: 0.625rem 1.25rem;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+  .btn-ink:hover {
+    opacity: 0.9;
+  }
+  .btn-ink:active {
+    transform: scale(0.98);
+  }
 }
 
 @layer utilities {
-  .bg-global {
-    background-color: var(--bg-global);
-  }
-  .bg-container {
-    background-color: var(--bg-container);
-  }
-  .bg-state-hover {
-    background-color: var(--state-hover);
-  }
-  .bg-media-blank {
-    background-color: var(--media-blank);
-  }
   .text-primary-token {
     color: var(--text-primary);
-  }
-  .text-accent-sage {
-    color: var(--accent-sage);
-  }
-  .text-accent-slate {
-    color: var(--accent-slate);
-  }
-  .bg-accent-sage {
-    background-color: var(--accent-sage);
-  }
-  .bg-accent-slate {
-    background-color: var(--accent-slate);
   }
 
   .text-gradient {
@@ -215,17 +228,17 @@
   .glass {
     background-color: color-mix(in srgb, var(--bg-container) 88%, transparent);
     backdrop-filter: blur(24px);
-    border: 1px solid color-mix(in srgb, var(--text-primary) 8%, transparent);
+    border: 1px solid var(--hairline);
   }
 
   .glass-card {
     background-color: color-mix(in srgb, var(--bg-container) 72%, transparent);
     backdrop-filter: blur(12px);
-    border: 1px solid color-mix(in srgb, var(--text-primary) 8%, transparent);
+    border: 1px solid var(--hairline);
     border-radius: 0.75rem;
   }
 
-  /* Doc markdown lists — custom bullets for ul, numbers for ol */
+  /* Doc markdown lists: custom bullets for ul, numbers for ol */
   .doc-markdown .doc-md-ul .doc-md-li {
     display: flex;
     gap: 0.75rem;
@@ -234,11 +247,358 @@
     display: none;
   }
 
-  /* Code blocks are always on a dark surface, so give text selection inside
-     them a legible highlight instead of the browser's default. */
+  /* Code blocks are always on a charcoal surface, so give text selection
+     inside them a legible highlight instead of the browser's default. */
   pre ::selection,
   pre::selection {
-    background-color: rgba(230, 226, 216, 0.25);
-    color: #e6e2d8;
+    background-color: rgba(232, 234, 237, 0.25);
+    color: var(--on-ink);
+  }
+}
+
+/*
+ * Google Website Translator: the page is translated, but none of Google's own
+ * chrome is ever shown. The language menu in the header is the only control.
+ * Covers the legacy banner iframe, the newer VIpgJd-* banner, the hover
+ * tooltip/balloon, the text highlight, and the `top: 40px` Google sets on body.
+ */
+.goog-te-banner-frame,
+iframe.goog-te-banner-frame,
+.skiptranslate > iframe,
+body > .skiptranslate,
+#goog-gt-tt,
+#goog-gt-vt,
+.goog-te-balloon-frame,
+.goog-tooltip,
+.goog-te-spinner-pos,
+.VIpgJd-ZVi9od-ORHb-OEVmcd,
+.VIpgJd-ZVi9od-aZ2wEe-wOHMyf,
+.VIpgJd-ZVi9od-l4eHX-hSRGPd,
+.VIpgJd-yAWNEb-L7lbkb {
+  display: none !important;
+  visibility: hidden !important;
+}
+html,
+body {
+  top: 0 !important;
+}
+body.translated-ltr,
+body.translated-rtl {
+  margin-top: 0 !important;
+}
+.goog-text-highlight,
+.VIpgJd-yAWNEb-VIpgJd-fmcmS-sn54Q {
+  background: none !important;
+  box-shadow: none !important;
+  border: 0 !important;
+}
+#google_translate_element,
+.goog-te-gadget {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+  clip: rect(0 0 0 0) !important;
+}
+
+/*
+ * Motion layer. Rules for everything below:
+ *  - Content is visible by default. Nothing here hides server-rendered copy
+ *    unless JavaScript has already run (MotionRuntime adds .rv-pending only to
+ *    elements that start below the fold).
+ *  - Scroll effects animate only transform and opacity, so scrolling stays on
+ *    the compositor. (The headline underline animates its background once, on load.)
+ *  - Scroll-linked effects use native scroll timelines behind @supports;
+ *    browsers without them (Firefox today) keep the static layout.
+ *  - prefers-reduced-motion turns every effect off.
+ */
+:root {
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-cine: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+[data-reveal].rv-pending {
+  opacity: 0;
+  transform: translate3d(0, var(--rv-y, 28px), 0);
+}
+[data-reveal="fade"].rv-pending {
+  transform: none;
+}
+[data-reveal="scale"].rv-pending {
+  transform: scale(0.94);
+}
+[data-reveal="left"].rv-pending {
+  transform: translate3d(-32px, 0, 0);
+}
+[data-reveal="right"].rv-pending {
+  transform: translate3d(32px, 0, 0);
+}
+[data-reveal].rv-in {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.8s var(--ease-cine),
+    transform 0.95s var(--ease-out-expo);
+  transition-delay: calc(var(--rv-i, 0) * 80ms);
+}
+
+/* Kinetic headline: each word rises out of its own mask on first paint. Pure
+   CSS so it never waits for hydration; the words start partly visible, so the
+   heading is readable from the first frame and settles in under a second. */
+.kt-head .kt-w {
+  display: inline-block;
+  overflow: clip;
+  vertical-align: bottom;
+  padding-block: 0.06em 0.12em;
+  margin-block: -0.06em -0.12em;
+}
+.kt-head .kt-w > span {
+  display: inline-block;
+  animation: kt-rise 0.95s var(--ease-out-expo) both;
+  animation-delay: calc(var(--i, 0) * 65ms + 60ms);
+}
+.kt-head .kt-em {
+  /* The underline is a background so it can wrap with the phrase on narrow screens */
+  background-image: linear-gradient(var(--accent-sage), var(--accent-sage));
+  background-repeat: no-repeat;
+  background-position: 0 92%;
+  background-size: 100% 0.07em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  animation: kt-draw 0.9s var(--ease-out-expo) both;
+  animation-delay: var(--em-delay, 0.7s);
+}
+@keyframes kt-rise {
+  from {
+    transform: translate3d(0, 55%, 0);
+    opacity: 0.35;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+@keyframes kt-draw {
+  from {
+    background-size: 0% 0.07em;
+  }
+  to {
+    background-size: 100% 0.07em;
+  }
+}
+
+/* Soft entrance for supporting hero copy, also CSS-only */
+.kt-fade {
+  animation: kt-fade-up 0.9s var(--ease-cine) both;
+  animation-delay: var(--d, 0.35s);
+}
+@keyframes kt-fade-up {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 14px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Scroll-linked, compositor-only effects (Chromium 115+, Safari 26+) */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    /* Camera push-in: a screenshot frame tilts up and settles flat */
+    .sd-rise {
+      animation: sd-rise linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 45%;
+    }
+    @keyframes sd-rise {
+      from {
+        transform: perspective(1400px) rotateX(16deg) translate3d(0, 60px, 0) scale(0.92);
+        opacity: 0.4;
+      }
+      to {
+        transform: none;
+        opacity: 1;
+      }
+    }
+
+    /* Depth parallax for layered media */
+    .sd-drift {
+      animation: sd-drift linear both;
+      animation-timeline: view();
+      animation-range: cover 0% cover 100%;
+    }
+    @keyframes sd-drift {
+      from {
+        transform: translate3d(0, var(--drift, 40px), 0);
+      }
+      to {
+        transform: translate3d(0, calc(var(--drift, 40px) * -1), 0);
+      }
+    }
+
+    /* Slow zoom on a hero-scale frame as it crosses the viewport */
+    .sd-zoom {
+      animation: sd-zoom linear both;
+      animation-timeline: view();
+      animation-range: entry 10% exit 10%;
+    }
+    @keyframes sd-zoom {
+      from {
+        transform: scale(1.08);
+      }
+      to {
+        transform: scale(1);
+      }
+    }
+
+    /* Reading highlight: a statement inks itself in as it is scrolled through */
+    .sd-ink {
+      background-image: linear-gradient(
+        90deg,
+        var(--text-primary) 0 50%,
+        color-mix(in srgb, var(--text-primary) 22%, transparent) 50% 100%
+      );
+      background-size: 200% 100%;
+      background-repeat: no-repeat;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: sd-ink linear both;
+      animation-timeline: view();
+      animation-range: cover 15% cover 55%;
+    }
+    @keyframes sd-ink {
+      from {
+        background-position-x: 100%;
+      }
+      to {
+        background-position-x: 0%;
+      }
+    }
+
+    /* Page progress hairline */
+    .sd-progress {
+      transform-origin: left center;
+      animation: sd-progress linear both;
+      animation-timeline: scroll(root block);
+    }
+    @keyframes sd-progress {
+      from {
+        transform: scaleX(0);
+      }
+      to {
+        transform: scaleX(1);
+      }
+    }
+  }
+}
+
+@supports not (animation-timeline: view()) {
+  .sd-progress {
+    display: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .sd-ink {
+    color: CanvasText !important;
+    background: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  [data-reveal].rv-pending,
+  [data-reveal].rv-in {
+    opacity: 1 !important;
+    transform: none !important;
+    clip-path: none !important;
+    transition: none !important;
+  }
+  .kt-head .kt-w > span,
+  .kt-head .kt-em,
+  .kt-fade {
+    animation: none !important;
+  }
+  .sd-progress {
+    display: none;
+  }
+}
+
+/* Interactive screenshot frame (TiltFrame) */
+.tilt-frame {
+  perspective: 1200px;
+}
+.tilt-frame__inner {
+  position: relative;
+  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transform-style: preserve-3d;
+  transition: transform 0.6s var(--ease-out-expo);
+}
+.tilt-frame[data-tilt="on"] .tilt-frame__inner {
+  transition: transform 0.12s linear;
+}
+.tilt-frame__sheen {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  opacity: 0;
+  background: radial-gradient(
+    circle at var(--gx, 50%) var(--gy, 50%),
+    rgba(255, 255, 255, 0.22),
+    transparent 55%
+  );
+  transition: opacity 0.4s ease;
+}
+.tilt-frame[data-tilt="on"] .tilt-frame__sheen {
+  opacity: 1;
+}
+
+/* Platform tour progress and copy change */
+@keyframes tour-progress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+.tour-copy {
+  animation: kt-fade-up 0.6s var(--ease-cine) both;
+}
+
+/* Ken Burns drift for frames inside the story player and tour */
+@keyframes kb-drift {
+  from {
+    transform: scale(1.04) translate3d(-1%, -1%, 0);
+  }
+  to {
+    transform: scale(1.1) translate3d(1%, 1%, 0);
+  }
+}
+.kb-drift {
+  animation: kb-drift 9s ease-in-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tilt-frame__inner {
+    transform: none !important;
+  }
+  .kb-drift,
+  .tour-copy {
+    animation: none !important;
+  }
+}
+
+@media print {
+  [data-reveal].rv-pending {
+    opacity: 1 !important;
+    transform: none !important;
+    clip-path: none !important;
   }
 }

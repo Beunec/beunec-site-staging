@@ -174,7 +174,7 @@ export function applyPageLanguage(label: string) {
 
 /**
  * Beunec-Site is a static export (no server route to read a visitor's
- * country from), so there is no automatic country default here — only the
+ * country from), so there is no automatic country default here, only the
  * visitor's own choice, which this returns so the loader knows whether to
  * fetch Google's script at all.
  */

@@ -1,6 +1,3 @@
-"use client";
-
-import { motion } from "framer-motion";
 import { Header } from "@/sections/Header";
 import { Footer } from "@/sections/Footer";
 
@@ -11,11 +8,8 @@ export default function PrivacyPolicyPage() {
 
             <main className="pt-32 pb-24 px-4 sm:px-6 lg:px-8">
                 <div className="max-w-4xl mx-auto">
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5 }}
-                    >
+                    <div className="kt-fade"
+                     style={{ ["--d" as string]: "0s" }}>
                         <h1 className="text-4xl md:text-5xl font-serif mb-4">Privacy Policy</h1>
                         <div className="flex flex-col gap-1 text-muted-foreground mb-12 pb-8 border-b border-border">
                             <p className="font-medium">Beunec Technologies, Inc.</p>
@@ -73,7 +67,7 @@ export default function PrivacyPolicyPage() {
                                         <li><strong>Access Controls:</strong> Access to user data is strictly limited to authorized personnel on a need-to-know basis through role-based access controls. Authentication for Aselius is provided via Auth0. Multi-factor authentication (MFA) is available to users; Beunec may require MFA for certain privileged internal access.</li>
                                         <li><strong>Monitoring:</strong> We employ monitoring and threat detection and conduct security reviews, which may include third-party assessments, to prevent and respond to security incidents.</li>
                                         <li><strong>Secure Storage:</strong> Your data is stored on cloud infrastructure provided by subprocessors such as Amazon Web Services, Auth0, and other vendors bound by written terms. Beunec does not claim that all communications are end-to-end encrypted in a manner that prevents Beunec from providing the Service; encryption models vary by feature and are described more fully in the Aselius Security Disclosure for that product.</li>
-                                        <li><strong>What we keep, and what we hash:</strong> Sign-in credentials are handled by Auth0 and are not stored by Beunec in plain form. A code that protects a published link is one-way hashed (so Beunec itself cannot read it back) before it is stored, and the key used to open a protected page is encrypted at rest. We keep what the Service needs to run and to bill correctly — your account, workspace, and usage records — and we do not keep a readable copy of a security credential that only you should be able to present.</li>
+                                        <li><strong>What we keep, and what we hash:</strong> Sign-in credentials are handled by Auth0 and are not stored by Beunec in plain form. A code that protects a published link is one-way hashed (so Beunec itself cannot read it back) before it is stored, and the key used to open a protected page is encrypted at rest. We keep what the Service needs to run and to bill correctly (your account, workspace, and usage records), and we do not keep a readable copy of a security credential that only you should be able to present.</li>
                                     </ul>
                                     <p>These measures are designed to comply with N.J.S.A. 56:8-161 et seq. and other applicable federal and state regulations, safeguarding the Aselius Platform, other Beunec Services, and user data. No method of transmission or storage is completely secure, and we cannot guarantee absolute security.</p>
                                 </div>
@@ -204,7 +198,7 @@ export default function PrivacyPolicyPage() {
                                 </div>
                             </section>
                         </div>
-                    </motion.div>
+                    </div>
                 </div>
             </main>
 

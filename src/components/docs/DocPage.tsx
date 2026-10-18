@@ -8,7 +8,7 @@ type DocPageProps = {
   eyebrow: string;
 };
 
-/** Shell for markdown doc routes — edit Beunec Docs/*.md, not React. */
+/** Shell for markdown doc routes. Edit Beunec Docs/*.md, not React. */
 export function DocPage({ file, eyebrow }: DocPageProps) {
   const markdown = readBeunecDoc(file);
 

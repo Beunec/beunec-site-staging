@@ -121,7 +121,7 @@ When an engine finishes meaningful work, a **snapshot card** appears in the conv
 | ------------------------------------- | ---------------------------------------------------- |
 | Markdown document                     | Opens in the built-in editor (rendered + editable)   |
 | HTML report / deck                    | Renders in the HTML preview; export when available   |
-| Image / video (Creative, coming soon) | Opens media preview from stored asset URL            |
+| Image / video (Creative)              | Opens media preview from stored asset URL            |
 | Code (Rivine Code)                    | Opens sandbox preview, see Rivine Code section below |
 
 
@@ -149,17 +149,16 @@ We do **not** disclose specific third-party model IDs, routing tables, or intern
 ### Available engines (today)
 
 
-| Engine               | Best for                                                                                            | Deliverable                                                     | Minimum credits to select |
+| Engine               | Best for                                                                                            | Deliverable                                                     | Start floor (every plan) |
 | -------------------- | --------------------------------------------------------------------------------------------------- | --------------------------------------------------------------- | ------------------------- |
-| **Auto**             | Platform routes to the best engine                                                                  | -                                                               | None                      |
 | **Rivine TaskForce** | Action-oriented professional work: connected apps, diagrams, interactive docs, verified computation | Markdown, inline HTML, diagrams, spreadsheets, computed results | $2.00                     |
-| **Rivine Research**  | Source-grounded, high-reliability research across domains                                           | Markdown → PDF or spreadsheet HTML                              | $10.00                    |
-| **Rivine Code**      | Software engineering, debugging, security review, working delivered projects                        | Sandbox code + live preview (also CLI)                          | $20.00                    |
-| **Rivine Cicero**    | Legal drafting, review, and policy work                                                             | Markdown legal memo                                             | $5.00                     |
-| **Rivine Confluence**| Country forecasting and scenarios; models choose evidence, code computes numbers                    | Markdown + interactive dashboard                                | See plans                 |
-| **Rivine Assist**    | Surgical follow-up edits on a document already open in Preview                                      | In-place Markdown / HTML / code edits                           | Low (follow-up)           |
-| **Rivine Browse**    | Tasks in your real browser tabs and signed-in sessions                                              | Side panel + optional engine handoff                            | See Browse site           |
-| **Rivine Creative**  | Image, video and audio generation and surgical editing — seven media agents                         | PNG / video / audio media                                       | Live                      |
+| **Rivine Research**  | Source-grounded, high-reliability research across domains                                           | Markdown → PDF or spreadsheet HTML                              | $5.00                     |
+| **Rivine Code**      | Software engineering, debugging, security review, working delivered projects                        | Sandbox code + live preview (also CLI)                          | $10.00                    |
+| **Rivine Cicero**    | Legal drafting, review, and policy work                                                             | Markdown legal memo                                             | $3.00                     |
+| **Rivine Confluence**| Country forecasting and scenarios; models choose evidence, code computes numbers                    | Markdown + interactive dashboard                                | $5.00                     |
+| **Rivine Assist**    | Surgical follow-up edits on a document already open in Preview                                      | In-place Markdown / HTML / code edits                           | $1.00                     |
+| **Rivine Browse**    | Tasks in your real browser tabs and signed-in sessions                                              | Side panel + optional engine handoff                            | $2.00                     |
+| **Rivine Creative**  | Image, video and audio generation and surgical editing, by seven media agents                         | PNG / video / audio media                                       | $3.00                      |
 
 
 > **Not available yet:** Rivine Agentic Engines as a public API, and several connector/import integrations (see below). Rivine FIDA is deprecated and removed from the product surface.
@@ -217,7 +216,7 @@ flowchart LR
 
 
 
-**Rivine Creative** *(coming soon)* will be Aselius's engine for interactive image, video, and audio creation and editing, generating and refining visual and media deliverables directly in the workspace. It is not yet available; select **Auto** or another engine in the meantime.
+**Rivine Creative** is Aselius's engine for image, video, and audio creation and editing: seven modes, each its own agent, that hand you a finished media file you can preview, download, or publish. See [Rivine Creative](/aselius-platform/docs/rivine-creative).
 
 > Rivine, Rivine TaskForce, Rivine Research, Rivine Cicero, Rivine Code, and Rivine Creative are **closed-source, proprietary Beunec technology**. What we disclose here is *what each engine does and produces*, not how it works internally. Workspace is where you use them, not where their internals are exposed.
 
@@ -232,8 +231,10 @@ flowchart TD
     Q -->|"Source-grounded research"| R["Rivine Research"]
     Q -->|"Build or debug software"| CO["Rivine Code"]
     Q -->|"Legal drafting or review"| CI["Rivine Cicero"]
-    Q -->|"Images, video, audio"| CR["Rivine Creative (coming soon)"]
-    Q -->|"Not sure"| A["Auto · platform routes for you"]
+    Q -->|"Images, video, audio"| CR["Rivine Creative"]
+    Q -->|"Country forecasts and scenarios"| CF["Rivine Confluence"]
+    Q -->|"Edit a document open in Preview"| AS["Rivine Assist"]
+    Q -->|"Work in my own browser tabs"| BR["Rivine Browse"]
 ```
 
 
@@ -251,7 +252,7 @@ Most engines require a **specialty** before you send a message. Specialties acti
 | Rivine Research                 | PDF, Spreadsheet                                                                                                                  |
 | Rivine Code                     | Frontend Only, Backend Only, Full Stack, Plan/Ask Only, Security Scan/Fix, each paired with a Manual or Bypass rate for how changes apply |
 | Rivine Cicero                   | Contract Review, Legal Drafting, Corporate Law, Employment Law, Immigration Law, International Relations, Patent Compliance, M&A Due Diligence, Policy and Law Drafting, General |
-| Rivine Creative *(coming soon)* | Image Generation, Image Editing, Video Generation, Video Editing, Audio Generation                                                |
+| Rivine Creative                 | Image Generation, Image Editing, Video Generation, Video Editing, Audio Generation                                                |
 
 
 If a specialty is required and not selected, send is blocked until you choose one in the Space UI.
@@ -674,7 +675,7 @@ Every agent, sub-agent, and tool-facing model receives a **standardized instruct
 - Grounded research and citation assembly
 - Surgical document/code revisions via follow-up prompts
 - Rivine Code sandbox execution, build, and verification
-- Creative media generation pipelines (coming soon)
+- Rivine Creative media generation and editing
 
 **Not AI-powered today (may evolve)**
 

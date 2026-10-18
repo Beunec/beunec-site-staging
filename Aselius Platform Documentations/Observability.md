@@ -2,7 +2,7 @@
 
 **Aselius Platform · live today**
 
-Observability is the measurement layer of the Rivine runtime. It records what every engine turn actually did — success and failure, tokens, cost, latency, Artificial Experience activity — and serves that record to you without exposing conversation content.
+Observability is the measurement layer of the Rivine runtime. It records what every engine turn actually did (success and failure, tokens, cost, latency, Artificial Experience activity) and serves that record to you without exposing conversation content.
 
 ## What you see
 
@@ -10,7 +10,7 @@ Observability is the measurement layer of the Rivine runtime. It records what ev
 - Artificial Experience activity (kinds of events, not a black box)
 - Tool and service activity where it applies to your workspace
 
-What you do **not** see (by design): raw provider/model ids that belong to Beunec’s operations view, and **never** conversation content — none is stored in the observability tables.
+What you do **not** see (by design): raw provider/model ids that belong to Beunec’s operations view, and **never** conversation content: none is stored in the observability tables.
 
 ## Why it exists
 

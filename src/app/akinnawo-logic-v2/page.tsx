@@ -97,7 +97,7 @@ export default function AkinnawoLogicPage() {
             <div className="mt-8 flex flex-wrap gap-3">
               <a
                 href="#purchase"
-                className="inline-flex items-center gap-2 rounded-full bg-[#141512] dark:bg-[#e6e2d8] text-[#e6e2d8] dark:text-[#141512] text-sm font-medium px-5 py-2.5 hover:opacity-90 transition-opacity"
+                className="btn-ink"
               >
                 Purchase research
                 <ArrowRight className="w-4 h-4" />
@@ -260,7 +260,7 @@ export default function AkinnawoLogicPage() {
                 {agreed ? (
                   <a
                     href={stripeCheckoutUrl}
-                    className="inline-flex items-center gap-2 rounded-full bg-[#141512] dark:bg-[#e6e2d8] text-[#e6e2d8] dark:text-[#141512] text-sm font-medium px-5 py-2.5 hover:opacity-90 transition-opacity"
+                    className="btn-ink"
                   >
                     Purchase Research &amp; Fund Open Source
                     <ArrowRight className="w-4 h-4" />

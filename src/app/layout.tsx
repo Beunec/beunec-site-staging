@@ -1,12 +1,12 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
-import Script from "next/script";
 import "@/index.css";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { ClientSideProtection } from "@/components/providers/ClientSideProtection";
 import { GoogleTranslateLoader } from "@/components/i18n/GoogleTranslateLoader";
+import { MotionRuntime } from "@/components/motion/MotionRuntime";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin"], display: "swap", variable: "--font-inter" });
 
 export const viewport: Viewport = {
     width: "device-width",
@@ -205,7 +205,7 @@ export default function RootLayout({
                     "@type": "AggregateOffer",
                     "priceCurrency": "USD",
                     "lowPrice": "0",
-                    "highPrice": "30",
+                    "highPrice": "40",
                     "offerCount": "3",
                 },
             },
@@ -214,17 +214,17 @@ export default function RootLayout({
 
     return (
         <html lang="en" suppressHydrationWarning>
-            <body className={inter.className} suppressHydrationWarning>
-                <Script
-                    id="json-ld-structured-data"
+            <body className={`${inter.variable} ${inter.className}`} suppressHydrationWarning>
+                {/* Plain script tag so crawlers read the structured data from the HTML itself */}
+                <script
                     type="application/ld+json"
-                    strategy="afterInteractive"
                     dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
                 />
                 <ClientSideProtection>
                     <ThemeProvider>
                         {children}
                         <GoogleTranslateLoader />
+                        <MotionRuntime />
                     </ThemeProvider>
                 </ClientSideProtection>
             </body>

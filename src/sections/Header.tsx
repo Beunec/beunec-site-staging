@@ -115,7 +115,8 @@ export function Header() {
 
 	useEffect(() => {
 		const handleScroll = () => setIsScrolled(window.scrollY > 20);
-		window.addEventListener("scroll", handleScroll);
+		handleScroll();
+		window.addEventListener("scroll", handleScroll, { passive: true });
 		return () => window.removeEventListener("scroll", handleScroll);
 	}, []);
 
@@ -132,12 +133,17 @@ export function Header() {
 					<div className="flex items-center justify-between h-16 lg:h-20">
 						<Link href="/" className="flex items-center gap-2 group">
 							<img
-								src="/assets/beunec-logo-transparent-blacktext.png"
+								src="/assets/beunec-logo-black.webp"
+								width={349}
+								height={96}
 								alt="Beunec"
 								className="h-8 w-auto transition-transform duration-300 group-hover:scale-105 dark:hidden"
 							/>
 							<img
-								src="/assets/beunec-logo-transparent-whitetext.png"
+								src="/assets/beunec-logo-white.webp"
+								width={341}
+								height={96}
+								loading="lazy"
 								alt="Beunec"
 								className="h-8 w-auto transition-transform duration-300 group-hover:scale-105 hidden dark:block"
 							/>
@@ -200,6 +206,12 @@ export function Header() {
 						</div>
 					</div>
 				</div>
+
+				{/* Reading progress: a native scroll timeline, so it costs no JavaScript */}
+				<div
+					aria-hidden="true"
+					className="sd-progress pointer-events-none absolute inset-x-0 bottom-0 h-px bg-accent-sage/70"
+				/>
 
 				<AnimatePresence>
 					{isMobileMenuOpen && (

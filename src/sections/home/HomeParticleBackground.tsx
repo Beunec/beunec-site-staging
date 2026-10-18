@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef } from 'react';
+import { startVisibleLoop } from '@/lib/visible-loop';
 
 interface DustParticle {
     x: number;
@@ -17,11 +18,11 @@ interface DustParticle {
 }
 
 const COLORS = [
-    '#E6E2D8', // Soft Parchment
-    '#6B7A6E', // Sage Mist
-    '#7A8B99', // Muted Slate
-    '#DFD9CE', // Muted Clay
-    '#252823', // Basalt Flare
+    '#e8eaed', // charcoal text
+    '#6b7a6e', // accent sage
+    '#7a8b99', // accent slate
+    '#c9cbc4', // canvas mid-tone
+    '#202020', // charcoal hover
 ];
 
 export const HomeParticleBackground: React.FC = () => {
@@ -155,18 +156,17 @@ export const HomeParticleBackground: React.FC = () => {
                     initParticles(w, h);
                 }
             }
+            loop.redraw();
         };
 
-        resize();
         window.addEventListener('resize', resize);
 
-        let frameId: number;
-        const loop = () => {
+        // Runs only while the canvas is on screen and the tab is visible.
+        const loop = startVisibleLoop(canvas, () => {
             update(w, h);
             render(ctx, w, h);
-            frameId = requestAnimationFrame(loop);
-        };
-        loop();
+        });
+        resize();
 
         const onMouseMove = (e: MouseEvent) => {
             const rect = canvas.getBoundingClientRect();
@@ -181,7 +181,7 @@ export const HomeParticleBackground: React.FC = () => {
                 x, y, active: true, velocity: vel, lastX: x, lastY: y
             };
 
-            if (vel > 2) {
+            if (vel > 2 && loop.running()) {
                 const count = Math.min(Math.floor(vel / 0.6), 18);
                 for (let i = 0; i < count; i++) {
                     particlesRef.current.push(createParticle(x, y, false));
@@ -199,7 +199,7 @@ export const HomeParticleBackground: React.FC = () => {
         return () => {
             window.removeEventListener('resize', resize);
             window.removeEventListener('mousemove', onMouseMove);
-            cancelAnimationFrame(frameId);
+            loop.stop();
         };
     }, []);
 

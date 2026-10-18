@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect } from "react";
-import { motion } from "framer-motion";
 import { Header } from "@/sections/Header";
 import { Footer } from "@/sections/Footer";
 import Link from "next/link";
@@ -18,60 +17,50 @@ export default function CompanyPage() {
             <Header />
 
             <main className="pt-20">
-                {/* Section 1: Hero — identity & what we are not */}
+                {/* Section 1: Hero: identity & what we are not */}
                 <section className="relative py-20 overflow-hidden">
                     <ParticleBackground />
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-end mb-14 md:mb-16">
                             <div className="lg:col-span-7 text-center lg:text-left">
-                                <motion.p
-                                    initial={{ opacity: 0, y: 12 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    className="font-mono text-[11px] uppercase tracking-[0.18em] text-accent-slate mb-6"
+                                <p
+                                    className="kt-fade font-mono text-[11px] uppercase tracking-[0.18em] text-accent-slate mb-6"
+                                    style={{ ["--d" as string]: "0s" }}
                                 >
                                     Who We Are
-                                </motion.p>
-                                <motion.h1
-                                    initial={{ opacity: 0, y: 20 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ delay: 0.05 }}
-                                    className="text-3xl md:text-4xl md:text-[2.0rem] md:text-[2.75rem] leading-[1.05] tracking-tight text-foreground font-extrabold"
+                                </p>
+                                <h1
+                                    className="kt-fade text-3xl md:text-4xl md:text-[2.0rem] md:text-[2.75rem] leading-[1.05] tracking-tight text-foreground font-extrabold"
+                                    style={{ ["--d" as string]: "0.05s" }}
                                 >
                                     Understanding, developing, &amp; actualizing{" "}
                                     <span className="underline underline-offset-[0.12em] decoration-2 decoration-[color:var(--accent-sage)]">
                                         Agentic Infrastructure
                                     </span>
-                                </motion.h1>
+                                </h1>
                             </div>
-                            <motion.p
-                                initial={{ opacity: 0, y: 16 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.1 }}
-                                className="lg:col-span-5 text-lg md:text-xl leading-relaxed text-muted-foreground max-w-xl mx-auto lg:mx-0 lg:ml-auto lg:mb-1 text-center lg:text-left"
-                                style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
+                            <p
+                                className="kt-fade lg:col-span-5 text-lg md:text-xl leading-relaxed text-muted-foreground max-w-xl mx-auto lg:mx-0 lg:ml-auto lg:mb-1 text-center lg:text-left"
+                                style={{ fontFamily: "Georgia, 'Times New Roman', serif", ["--d" as string]: "0.1s" }}
                             >
                                 Beunec is a research and deployment organization. We study how agentic systems are built, governed, and brought into the world, not as a product line, but as infrastructure.
-                            </motion.p>
+                            </p>
                         </div>
 
-                        <motion.div
-                            initial={{ opacity: 0, scale: 0.95 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            transition={{ delay: 0.18 }}
-                            className="relative rounded-2xl overflow-hidden shadow-2xl max-w-5xl mx-auto mb-14"
+                        <div
+                            className="kt-fade relative rounded-2xl overflow-hidden shadow-2xl max-w-5xl mx-auto mb-14"
+                            style={{ ["--d" as string]: "0.18s" }}
                         >
                             <img
                                 src="/assets/open-space-office.avif"
                                 alt="Beunec office"
                                 className="w-full h-auto object-cover"
                             />
-                        </motion.div>
+                        </div>
 
-                        <motion.div
-                            initial={{ opacity: 0, y: 16 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.26 }}
-                            className="max-w-3xl mx-auto space-y-6 text-center"
+                        <div
+                            className="kt-fade max-w-3xl mx-auto space-y-6 text-center"
+                            style={{ ["--d" as string]: "0.26s" }}
                         >
                             <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
                                 We are not defined solely as a software company, an AI company, or a conventional research lab. Product launches, market cycles, and commercialization are not our reason for being.
@@ -83,20 +72,16 @@ export default function CompanyPage() {
                                 What we mean by Agentic Infrastructure
                                 <ArrowRight className="w-4 h-4" />
                             </Link>
-                        </motion.div>
+                        </div>
                     </div>
                 </section>
 
-                {/* Section 2: Solution Agent — fundamental responsibility */}
+                {/* Section 2: Solution Agent: fundamental responsibility */}
                 <section className="py-24 bg-container">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div className="grid lg:grid-cols-2 gap-16 items-center">
-                            <motion.div
-                                initial={{ opacity: 0, x: -30 }}
-                                whileInView={{ opacity: 1, x: 0 }}
-                                viewport={{ once: true }}
-                                className="space-y-8"
-                            >
+                            <div data-reveal
+                                className="space-y-8">
                                 <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-accent-slate">
                                     Our approach
                                 </p>
@@ -124,45 +109,33 @@ export default function CompanyPage() {
                                 >
                                     Drawn toward unstable systems, not to exploit disorder, but to understand it and help make it stable.
                                 </blockquote>
-                            </motion.div>
-                            <motion.div
-                                initial={{ opacity: 0, scale: 0.9 }}
-                                whileInView={{ opacity: 1, scale: 1 }}
-                                viewport={{ once: true }}
-                                className="relative rounded-2xl overflow-hidden shadow-xl aspect-[4/3]"
-                            >
+                            </div>
+                            <div data-reveal
+                                className="relative rounded-2xl overflow-hidden shadow-xl aspect-[4/3]">
                                 <img
                                     src="/assets/mbmforumgrouppic.avif"
                                     alt="Beunec Vision"
                                     className="w-full h-full object-cover"
                                 />
-                            </motion.div>
+                            </div>
                         </div>
                     </div>
                 </section>
 
-                {/* Section 3: Duty to people — integrity close */}
+                {/* Section 3: Duty to people: integrity close */}
                 <section className="py-24">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div className="grid lg:grid-cols-2 gap-16 items-center">
-                            <motion.div
-                                initial={{ opacity: 0, scale: 0.9 }}
-                                whileInView={{ opacity: 1, scale: 1 }}
-                                viewport={{ once: true }}
-                                className="order-2 lg:order-1 rounded-2xl overflow-hidden shadow-lg"
-                            >
+                            <div data-reveal
+                                className="order-2 lg:order-1 rounded-2xl overflow-hidden shadow-lg">
                                 <img
                                     src="/assets/beunec-mbm-forum.avif"
                                     alt="Beunec Mission"
                                     className="w-full h-auto"
                                 />
-                            </motion.div>
-                            <motion.div
-                                initial={{ opacity: 0, x: 30 }}
-                                whileInView={{ opacity: 1, x: 0 }}
-                                viewport={{ once: true }}
-                                className="order-1 lg:order-2 space-y-8"
-                            >
+                            </div>
+                            <div data-reveal
+                                className="order-1 lg:order-2 space-y-8">
                                 <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-accent-slate">
                                     What guides us
                                 </p>
@@ -183,7 +156,7 @@ export default function CompanyPage() {
                                 >
                                     We are Beunec.
                                 </p>
-                            </motion.div>
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -191,12 +164,8 @@ export default function CompanyPage() {
                 {/* Section 4: Defensible value */}
                 <section className="py-24 bg-container">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            className="max-w-3xl mb-14"
-                        >
+                        <div data-reveal
+                            className="max-w-3xl mb-14">
                             <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-accent-slate mb-6">
                                 Value
                             </p>
@@ -206,7 +175,7 @@ export default function CompanyPage() {
                             <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
                                 We do not assume that a proprietary name, framework, or prompt automatically creates a competitive moat. Defensibility must be demonstrated through implementation, performance, integration, accumulated knowledge, and sustained real-world use.
                             </p>
-                        </motion.div>
+                        </div>
 
                         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
                             {[
@@ -235,21 +204,16 @@ export default function CompanyPage() {
                                     body: "Governance matters when it shows up in system behavior; permissions, execution boundaries, approval checkpoints, immutable records, and human escalation, not only in policy documents.",
                                 },
                             ].map((item, i) => (
-                                <motion.div
+                                <div data-reveal style={{ ["--rv-i" as string]: Math.round((i * 0.05) / 0.08) }}
                                     key={item.title}
-                                    initial={{ opacity: 0, y: 16 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: true }}
-                                    transition={{ delay: i * 0.05 }}
-                                    className="rounded-2xl border border-border bg-global p-6 space-y-3"
-                                >
+                                    className="rounded-2xl border border-border bg-global p-6 space-y-3">
                                     <h3 className="text-base font-semibold text-foreground leading-snug">
                                         {item.title}
                                     </h3>
                                     <p className="text-sm text-muted-foreground leading-relaxed">
                                         {item.body}
                                     </p>
-                                </motion.div>
+                                </div>
                             ))}
                         </div>
                     </div>
@@ -259,12 +223,8 @@ export default function CompanyPage() {
                 <section className="py-24">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div className="grid lg:grid-cols-2 gap-16 items-start">
-                            <motion.div
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                className="space-y-8"
-                            >
+                            <div data-reveal
+                                className="space-y-8">
                                 <div>
                                     <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-accent-slate mb-6">
                                         Commitment
@@ -285,15 +245,10 @@ export default function CompanyPage() {
                                 >
                                     We will not treat ambition as evidence.
                                 </blockquote>
-                            </motion.div>
+                            </div>
 
-                            <motion.div
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ delay: 0.1 }}
-                                className="rounded-2xl border border-border bg-container p-8"
-                            >
+                            <div data-reveal style={{ ["--rv-i" as string]: 1 }}
+                                className="rounded-2xl border border-border bg-container p-8">
                                 <p className="text-sm font-medium text-foreground mb-6">
                                     As our work develops, we intend to:
                                 </p>
@@ -313,7 +268,7 @@ export default function CompanyPage() {
                                         </li>
                                     ))}
                                 </ul>
-                            </motion.div>
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -321,12 +276,8 @@ export default function CompanyPage() {
                 {/* Section 6: Video Background */}
                 <section className="py-24 bg-background overflow-hidden relative">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            className="relative h-[500px] md:h-[600px] rounded-[40px] overflow-hidden flex items-center justify-center baap-media group"
-                        >
+                        <div data-reveal
+                            className="relative h-[500px] md:h-[600px] rounded-[40px] overflow-hidden flex items-center justify-center baap-media group">
                             <video
                                 autoPlay
                                 loop
@@ -341,16 +292,12 @@ export default function CompanyPage() {
                             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-black/60" />
 
                             <div className="relative z-10 max-w-4xl mx-auto px-4 text-center">
-                                <motion.h2
-                                    initial={{ opacity: 0, scale: 0.95 }}
-                                    whileInView={{ opacity: 1, scale: 1 }}
-                                    transition={{ delay: 0.2 }}
-                                    className="text-4xl md:text-6xl font-serif text-white mb-0"
-                                >
+                                <h2 data-reveal style={{ ["--rv-i" as string]: 2 }}
+                                    className="text-4xl md:text-6xl font-serif text-white mb-0">
                                     Shaping the Future <br className="hidden md:block" /> of Human-AI Collaboration
-                                </motion.h2>
+                                </h2>
                             </div>
-                        </motion.div>
+                        </div>
                     </div>
                 </section>
 
@@ -433,18 +380,22 @@ export default function CompanyPage() {
                                             <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
 
                                                 {[
-                                                    { name: "Alabaster Cream", hex: "#F1EEE6", desc: "Light canvas" },
-                                                    { name: "Ink Charcoal", hex: "#141512", desc: "Authority & focus" },
-                                                    { name: "Warm Stone", hex: "#EAE6DB", desc: "Containers & panels" },
+                                                    { name: "Canvas", hex: "#F4F4F0", desc: "Light background" },
+                                                    { name: "Charcoal", hex: "#111111", desc: "Dark background" },
+                                                    { name: "Container", hex: "#FFFFFF / #151515", desc: "Panels, light and dark" },
                                                     { name: "Sage Mist", hex: "#6B7A6E", desc: "Infrastructure accent" },
                                                     { name: "Muted Slate", hex: "#7A8B99", desc: "Research accent" },
-                                                    { name: "Soft Parchment", hex: "#E6E2D8", desc: "Dark-mode text" },
+                                                    { name: "Ink and Mist", hex: "#1A1A1A / #E8EAED", desc: "Text, light and dark" },
                                                 ].map((color) => (
 
                                                     <div key={color.name} className="flex flex-col gap-2">
                                                         <div
                                                             className="w-full h-12 rounded-md shadow-sm border border-black/5"
-                                                            style={{ backgroundColor: color.hex }}
+                                                            style={{
+                                                                background: color.hex.includes("/")
+                                                                    ? `linear-gradient(90deg, ${color.hex.split(" / ")[0]} 50%, ${color.hex.split(" / ")[1]} 50%)`
+                                                                    : color.hex,
+                                                            }}
                                                         />
                                                         <div className="text-xs">
                                                             <div className="font-bold">{color.name}</div>
@@ -480,13 +431,10 @@ export default function CompanyPage() {
                             </div>
 
                             <div className="space-y-8">
-                                <motion.div
-                                    initial={{ opacity: 0, scale: 0.95 }}
-                                    whileInView={{ opacity: 1, scale: 1 }}
-                                    className="rounded-2xl overflow-hidden shadow-lg aspect-[16/10]"
-                                >
+                                <div data-reveal
+                                    className="rounded-2xl overflow-hidden shadow-lg aspect-[16/10]">
                                     <img src="/assets/balloonoververdanthills.avif" alt="Brand Vision" className="w-full h-full object-cover" />
-                                </motion.div>
+                                </div>
                                 <div className="grid grid-cols-2 gap-4">
                                     <div className="bg-global p-8 rounded-xl border border-border flex items-center justify-center">
                                         <img src="/assets/beunec-logo-transparent-blacktext.png" alt="Beunec Logo Black" className="h-10 w-auto" />
@@ -501,10 +449,10 @@ export default function CompanyPage() {
                                         <img src="/assets/beunec-logo.png" alt="Beunec Logo Standard" className="h-10 w-auto" />
                                     </div>
                                     <div className="bg-global p-8 rounded-xl border border-border flex items-center justify-center">
-                                        <img src="/assets/aselius-logo-icon.png" alt="Aselius Logo Icon" className="h-16 sm:h-20 w-auto" />
+                                        <img src="/assets/aselius-logo-icon.webp" width={320} height={320} loading="lazy" alt="Aselius Logo Icon" className="h-16 sm:h-20 w-auto" />
                                     </div>
                                     <div className="p-8 rounded-xl border border-border flex items-center justify-center text-foreground" style={{ backgroundColor: "var(--bg-dark)" }}>
-                                        <img src="/assets/aselius-logo-text.png" alt="Aselius Logo and Text" className="h-12 sm:h-16 w-auto max-w-full" />
+                                        <img src="/assets/aselius-logo-text.webp" width={640} height={228} loading="lazy" alt="Aselius Logo and Text" className="h-12 sm:h-16 w-auto max-w-full" />
                                     </div>
                                 </div>
                             </div>

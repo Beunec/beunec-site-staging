@@ -50,3 +50,7 @@ Beunec Docs/rivine agentic engines/00_reai_cocoon_analysis_framework.md
 Beunec Docs/rivine agentic engines/*.pdf
 Beunec Docs/rivine agentic engines/*.html
 DOCUMENTATION_SUMMARY.md
+
+# motion-studio render scratch
+motion-studio/out/
+motion-studio/out-poster.png
