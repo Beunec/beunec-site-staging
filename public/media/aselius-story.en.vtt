@@ -1,69 +1,77 @@
 WEBVTT
 
 1
-00:00:00.300 --> 00:00:04.650
+00:00:00.650 --> 00:00:05.500
 Most AI gives you a reply. Aselius gives you the work.
 
 2
-00:00:04.700 --> 00:00:10.250
-Aselius is an agentic workspace, run by specialized Rivine engines. They research, build, draft and create. Every result is a real file you can inspect, edit and export.
+00:00:06.800 --> 00:00:16.050
+Aselius is agentic infrastructure software, run by specialized Rivine engines. Every result is a real file you can inspect, edit and export.
 
 3
-00:00:10.300 --> 00:00:17.650
-Everything lives in one sidebar: workspaces and their taskspaces, Connector, Selius, Automations, Observability, Credits and Manage Teams.
+00:00:17.350 --> 00:00:23.800
+Everything lives in one sidebar: your workspaces, Connector, Selius, Automations, Observability, Credits and Manage Teams.
 
 4
-00:00:17.700 --> 00:00:25.050
+00:00:25.100 --> 00:00:33.150
 Inside a workspace, Taskspace is where work happens: the conversation on the left, the Preview Panel on the right.
 
 5
-00:00:25.100 --> 00:00:32.050
+00:00:34.450 --> 00:00:44.900
 Choose the Rivine engine for the job: TaskForce, Research, Code, Cicero, Creative, Confluence, Assist or Browse. The engine you pick is the engine that runs.
 
 6
-00:00:32.100 --> 00:00:37.250
-Set the engine and its specialty in the input bar, then send. Or start from an Agent Note that already has both.
+00:00:46.200 --> 00:00:53.850
+Set the engine and its specialty, then send. Or start from an Agent Note that already has both.
 
 7
-00:00:37.300 --> 00:00:43.050
+00:00:55.150 --> 00:01:02.000
 Every step shows as it happens. Stop it any time; the trail stays with the thread.
 
 8
-00:00:43.100 --> 00:00:48.050
+00:01:03.300 --> 00:01:10.150
 Before it acts in your apps, you approve the exact action. Nothing runs until you do.
 
 9
-00:00:48.100 --> 00:00:52.650
-If it needs you, it asks one question and waits for your answer.
+00:01:11.450 --> 00:01:15.900
+If it needs you, it asks one question and waits.
 
 10
-00:00:52.700 --> 00:00:58.450
-One turn, a whole launch kit: documents, data, media and the app, each one a real file.
+00:01:17.200 --> 00:01:24.450
+One turn. A whole launch kit: documents, data, media and the app, each one a real file.
 
 11
-00:00:58.500 --> 00:01:03.850
+00:01:25.750 --> 00:01:33.000
 Open any file exactly as generated: Word as pages, Excel as a grid, decks slide by slide.
 
 12
-00:01:03.900 --> 00:01:09.250
-Ask Rivine Assist for a follow-up edit, then save, publish or export.
+00:01:34.300 --> 00:01:38.350
+Edit with Rivine Assist. Then save, publish or export.
 
 13
-00:01:09.300 --> 00:01:14.650
+00:01:39.650 --> 00:01:46.500
 Publish a snapshot with its own access code. Later edits stay private until you update it.
 
 14
-00:01:14.700 --> 00:01:20.650
-preview.aselius.beunec.com opens it on any device, with no sign-in, exactly as generated and with a Download button.
+00:01:47.800 --> 00:01:53.850
+It opens on any device. No sign-in. Exactly as generated, with a Download button.
 
 15
-00:01:20.700 --> 00:01:26.050
-Automations run Research, TaskForce, Cicero and Confluence on a schedule, even with your computer off.
+00:01:55.150 --> 00:01:59.600
+Automations run on a schedule, even with your computer off.
 
 16
-00:01:26.100 --> 00:01:32.450
-The same engines, wherever you work: the Aselius web app, Rivine Browse in your own tabs, the Rivine Code CLI, Aselius MCP, Telegram, Discord and WhatsApp, and Selius by voice. One prepaid wallet across every surface.
+00:02:00.900 --> 00:02:11.750
+Use Aselius from any AI app. Connect Claude, Cursor or ChatGPT to Aselius MCP at workspace.beunec.com/mcp.
 
 17
-00:01:32.500 --> 00:01:38.150
-Aselius. aselius.beunec.com. Documentation at beunec.co/aselius-platform/docs.
+00:02:13.050 --> 00:02:25.100
+The same engines, wherever you work: the web app, Rivine Browse, the Rivine Code CLI, Aselius MCP, your chat apps, and Selius by voice. One wallet across every surface.
+
+18
+00:02:26.400 --> 00:02:34.050
+Not another Claude Cowork, ChatGPT Work or Kimi Work. Specialized engines, real deliverables, and you stay in control.
+
+19
+00:02:35.350 --> 00:02:39.800
+Aselius. Agentic infrastructure software, at aselius.beunec.com.

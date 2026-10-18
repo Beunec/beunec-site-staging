@@ -86,26 +86,29 @@ if (musicFile) {
   if (voice) {
     filters.push(`[voice]asplit=2[vmix][vkey]`);
     filters.push(`[music][vkey]sidechaincompress=threshold=0.03:ratio=8:attack=20:release=400[ducked]`);
-    filters.push(`[vmix][ducked]amix=inputs=2:normalize=0,alimiter=limit=0.95[mix]`);
+    filters.push(`[vmix][ducked]amix=inputs=2:normalize=0,alimiter=limit=0.95[premix]`);
   } else {
-    filters.push(`[music]alimiter=limit=0.95[mix]`);
+    filters.push(`[music]alimiter=limit=0.95[premix]`);
   }
-  mix = "[mix]";
+  mix = "[premix]";
 }
+// The soundtrack always runs exactly as long as the picture.
+filters.push(`${mix}apad,atrim=0:${duration}[final]`);
+mix = "[final]";
 
 const tmp = video.replace(/\.mp4$/, ".tmp.mp4");
 execFileSync("ffmpeg", [
   "-y", "-loglevel", "error", ...inputs,
   "-filter_complex", filters.join(";"),
   "-map", "0:v", "-map", mix,
-  "-c:v", "copy", "-c:a", "aac", "-b:a", "160k", "-shortest", "-movflags", "+faststart", tmp,
+  "-c:v", "copy", "-c:a", "aac", "-b:a", "160k", "-t", String(duration), "-movflags", "+faststart", tmp,
 ], { stdio: "inherit" });
 renameSync(tmp, video);
 
 const webm = video.replace(/\.mp4$/, ".webm");
 if (existsSync(webm)) {
   const tmpW = webm.replace(/\.webm$/, ".tmp.webm");
-  execFileSync("ffmpeg", ["-y", "-loglevel", "error", "-i", webm, "-i", video, "-map", "0:v", "-map", "1:a", "-c:v", "copy", "-c:a", "libopus", "-b:a", "128k", "-shortest", tmpW], { stdio: "inherit" });
+  execFileSync("ffmpeg", ["-y", "-loglevel", "error", "-i", webm, "-i", video, "-map", "0:v", "-map", "1:a", "-c:v", "copy", "-c:a", "libopus", "-b:a", "128k", "-t", String(duration), tmpW], { stdio: "inherit" });
   renameSync(tmpW, webm);
 }
 console.log(`audio added to ${video}${existsSync(webm) ? " and the WebM" : ""}`);
