@@ -19,7 +19,7 @@ Paste `story-elevenlabs.txt` into ElevenLabs. It contains the full narration wit
 - **Voice:** a calm, clear, warm narrator (male or female), mid pitch, no strong accent.
 - **Speed:** 1.0. The timing assumes about 2.5 words a second.
 - **Stability:** 55 to 65. **Similarity:** 75. **Style exaggeration:** 0 to 10. **Speaker boost:** on.
-- **Pronunciation:** add your preferred pronunciation of *Aselius* and *Rivine* to an ElevenLabs pronunciation dictionary before generating, so every line says them the same way. URLs are already written the way they should be read ("aselius dot beunec dot com").
+- **Pronunciation:** add your preferred pronunciation of *Aselius* and *Rivine* to an ElevenLabs pronunciation dictionary before generating, so every line says them the same way. URLs are already written the way they should be read ("aselius dot beunec dot com"). MCP and CLI should be read letter by letter; if your voice says them as words, add them to the dictionary too.
 
 ## Timed script
 
