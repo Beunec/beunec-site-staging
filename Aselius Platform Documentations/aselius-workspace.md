@@ -45,7 +45,7 @@ flowchart TB
         UI[User intent + attachments]
         INJ[Hidden context tags]
         ENG[Rivine Agentic Engine + Specialty]
-        MED[Mediator mode]
+        ENG[Engine you choose]
         RT[Rivine orchestration runtime]
         OUT[Streaming response + snapshots]
         AST[Assets store]
@@ -74,7 +74,7 @@ flowchart TB
 
 ```mermaid
 flowchart LR
-    M["Your message"] --> MED["Mediator · intent routing"]
+    M["Your message"] --> MED["Engine and specialty you chose"]
     MED --> ENG["Rivine engine · specialized agent"]
     ENG --> EX["Isolated execution environment"]
     EX --> DEL["Deliverable saved + snapshot in chat"]
@@ -83,7 +83,7 @@ flowchart LR
 
 
 
-You can **pin an engine** from the Space UI (skip automatic routing) or let the Mediator choose. You can also set a **specialty** (e.g. PDF vs spreadsheet for Research, or a legal domain for Cicero) to steer output without re-explaining context every turn.
+You **choose an engine** from the Space UI. You can also set a **specialty** (e.g. PDF vs spreadsheet for Research, or a legal domain for Cicero) to steer output without re-explaining context every turn.
 
 ## 1. Taskspace
 
@@ -154,13 +154,15 @@ We do **not** disclose specific third-party model IDs, routing tables, or intern
 | **Auto**             | Platform routes to the best engine                                                                  | -                                                               | None                      |
 | **Rivine TaskForce** | Action-oriented professional work: connected apps, diagrams, interactive docs, verified computation | Markdown, inline HTML, diagrams, spreadsheets, computed results | $2.00                     |
 | **Rivine Research**  | Source-grounded, high-reliability research across domains                                           | Markdown → PDF or spreadsheet HTML                              | $10.00                    |
-| **Rivine Code**      | Software engineering, debugging, security review, working delivered projects                        | Sandbox code + live preview                                     | $20.00                    |
+| **Rivine Code**      | Software engineering, debugging, security review, working delivered projects                        | Sandbox code + live preview (also CLI)                          | $20.00                    |
 | **Rivine Cicero**    | Legal drafting, review, and policy work                                                             | Markdown legal memo                                             | $5.00                     |
-| **Rivine Creative**  | Interactive image, video, and audio creation/editing                                                | PNG / video / audio media                                       | **Coming soon**           |
-| **Rivine FIDA**      | Financial research and quantitative analysis                                                        | Not available yet                                               | **Coming soon**           |
+| **Rivine Confluence**| Country forecasting and scenarios; models choose evidence, code computes numbers                    | Markdown + interactive dashboard                                | See plans                 |
+| **Rivine Assist**    | Surgical follow-up edits on a document already open in Preview                                      | In-place Markdown / HTML / code edits                           | Low (follow-up)           |
+| **Rivine Browse**    | Tasks in your real browser tabs and signed-in sessions                                              | Side panel + optional engine handoff                            | See Browse site           |
+| **Rivine Creative**  | Image, video and audio generation and surgical editing — seven media agents                         | PNG / video / audio media                                       | Live                      |
 
 
-> **Not available yet:** Rivine Creative, Rivine FIDA, Rivine Agentic Engines as an API, and several connector/import integrations (see below).
+> **Not available yet:** Rivine Agentic Engines as a public API, and several connector/import integrations (see below). Rivine FIDA is deprecated and removed from the product surface.
 
 
 
@@ -252,7 +254,7 @@ Most engines require a **specialty** before you send a message. Specialties acti
 | Rivine Creative *(coming soon)* | Image Generation, Image Editing, Video Generation, Video Editing, Audio Generation                                                |
 
 
-If a specialty is required and not selected, send is blocked until you choose one. Set specialty in the Space UI or describe it in your prompt, the Mediator can also infer it from context.
+If a specialty is required and not selected, send is blocked until you choose one in the Space UI.
 
 ### Grounded data (when enabled)
 
@@ -320,36 +322,14 @@ flowchart LR
 
 
 
-## 3. Mediator Modes
+## 3. Choosing an engine
 
-Mediators shape **how your intent is interpreted** before routing.
-
-
-| Mode        | Purpose                                             | When to use                                                                  | Plan availability |
-| ----------- | --------------------------------------------------- | ---------------------------------------------------------------------------- | ----------------- |
-| **Alpha**   | Optimizes intent for global regulatory compliance   | Fast routing; good for clear, single-intent requests                         | All plans         |
-| **Bravo**   | Applies the Agentic Annotation Protocol             | Default; more careful intent analysis before routing                         | Pro, Essential    |
-| **Charlie** | Optimizes intent and awaits approval before routing | Revision pass, useful when routing confidence is low or context is ambiguous | Essential         |
-
-
-```mermaid
-flowchart LR
-    I["Your intent"] --> MODE{"Mediator mode"}
-    MODE -->|"Alpha"| AL["Fast, compliance-optimized routing"]
-    MODE -->|"Bravo"| BR["Annotation Protocol · careful analysis"]
-    MODE -->|"Charlie"| CH["Optimize, then await your approval"]
-    AL --> RT["Route to engine"]
-    BR --> RT
-    CH --> OK{"You approve?"}
-    OK -->|"Yes"| RT
-    OK -->|"Revise"| I
-```
-
-
-
-> **Transparency note:** Mediator selection is available in the Taskspace UI and gated by subscription plan. Full end-to-end wiring from UI selection into every stream request should be verified against your deployment; the frontend currently stores mediator choice in the interface while the primary stream payload focuses on message, attachments, sources, and file context.
-
-If you **select an engine explicitly** in the Space, routing can skip the Mediator entirely and go straight to that engine.
+There is no automatic mediator or router standing between your request and the engine that runs
+it. You choose the Rivine engine and its specialty directly in the Taskspace input bar: TaskForce
+for connected-app work, Research for a sourced report, Code for a project, Cicero for legal work,
+Confluence for country forecasts, Creative for media, Assist for a follow-up edit on an open
+document, or Browse for your own tabs. The engine you pick is the engine that runs, every time,
+with its tool loop and specialty exactly as you set them.
 
 ## 4. Preview Panel (right side)
 
@@ -682,7 +662,6 @@ Every agent, sub-agent, and tool-facing model receives a **standardized instruct
 | Shared with me               | **No**                                                  |
 | Workspace search             | Depends on implementation; not generative chat          |
 | Voice input                  | Browser speech-to-text → your message text              |
-| Mediator UI                  | Intent shaping layer; plan-gated                        |
 
 
 
@@ -691,7 +670,6 @@ Every agent, sub-agent, and tool-facing model receives a **standardized instruct
 
 **AI-powered today**
 
-- Mediator routing
 - All Rivine agentic engines, and Research's downstream PDF/Sheets formatting step
 - Grounded research and citation assembly
 - Surgical document/code revisions via follow-up prompts
@@ -724,7 +702,7 @@ We are **not** claiming to replace your entire IDE, legal counsel, or brokerage 
 
 ## Usage tips
 
-1. **Pick the right Space engine**: or let Bravo Mediator route, then lock the engine if it chose correctly.
+1. **Pick the right Space engine** for the work, and set its specialty.
 2. **Enable only the grounded sources you need**: fewer sources, faster turns, lower cost.
 3. **Use follow-ups for surgical edits**: "patch section 3", "fix the chart labels", instead of regenerating entire documents.
 4. **Rivine Code:** describe stack (Next.js, dashboard, landing page); use preview to validate before download.
@@ -793,21 +771,19 @@ flowchart LR
 
 ## Roadmap (disclosed only)
 
-**Available now:** Rivine TaskForce, Research, Code, Cicero; Mediator modes; grounded sources; asset previews; Code sandbox preview; pay-per-token metering.
+**Available now:** Rivine TaskForce, Research, Code, Cicero, Confluence, Creative, Assist; Rivine Browse; Aselius MCP; Telegram, Discord and WhatsApp; Selius; Automation; Observability; grounded sources; asset previews; Code sandbox + CLI; pay-per-token metering.
 
 **In progress / not yet production:**
 
 
 | Item                                                  | Status              |
 | ----------------------------------------------------- | ------------------- |
-| Rivine Creative (interactive image, video, audio)     | Coming soon         |
-| Rivine FIDA (financial intelligence & backtesting)    | Coming soon         |
 | Rivine Agentic Engines as an API                      | Coming soon         |
 | Google Drive / OneDrive / Dropbox attach in Taskspace | Coming soon         |
 | Dropbox / Box Connector                               | Not yet implemented |
 
 
-Beunec will disclose additional capabilities when they are ready for production use.
+Beunec will disclose additional capabilities when they are ready for production use. Rivine FIDA is deprecated and is not on the roadmap.
 
 ## Legal & product notes
 

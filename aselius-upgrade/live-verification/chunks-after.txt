@@ -1,0 +1,13 @@
+/(authenticated)/workspace/[workspaceId]/[chatSpaceId]/page: 29 chunks, gzip total 365 KB
+   76.1 KB gz    283.7 KB raw  7742-35d5697d55eb0f75.js                 excalidraw,mermaid,prism/react-syntax-highlighter,docx
+   53.1 KB gz    169.0 KB raw  4bd1b696-100b9d70ed4e49c1.js             
+   47.8 KB gz    159.6 KB raw  4864-ef2ee8c93a69b7a5.js                 prism/react-syntax-highlighter,react-markdown/remark
+   45.2 KB gz    170.0 KB raw  1255-f5136c71efec1c37.js                 
+   13.6 KB gz     40.9 KB raw  3949-8b739f4b4c43c57b.js                 
+   12.8 KB gz     48.9 KB raw  layout-e4800e73cdeb314d.js               
+   12.5 KB gz     37.1 KB raw  6220-6412ea02e4b31c29.js                 excalidraw,mermaid,turndown/marked
+   12.4 KB gz     40.4 KB raw  9829-766183bfdbe48866.js                 socket.io
+   11.6 KB gz     34.1 KB raw  6076-0d2c216670aeaf55.js                 
+   10.4 KB gz     32.2 KB raw  809-9aed5be4efd7eddd.js                  
+    6.6 KB gz     18.7 KB raw  4830-f5e222fac9eecfd7.js                 
+    5.9 KB gz     10.5 KB raw  webpack-b031a92dbbb02b66.js              

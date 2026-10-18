@@ -1,0 +1,390 @@
+{
+  "scenarios": {
+    "ws-light": {
+      "ok": true,
+      "ms": 1748,
+      "metrics": {
+        "domContentLoaded": 53,
+        "load": 340,
+        "fcp": 348,
+        "lcp": 448,
+        "jsRequests": 36,
+        "jsTransferKB": 1347,
+        "jsDecodedKB": 4218,
+        "cssTransferKB": 49,
+        "longTasks": 1,
+        "longTaskMs": 154
+      },
+      "covered": [],
+      "invisible": [
+        "Copy request",
+        "Copy code"
+      ],
+      "errors": [],
+      "unhandled": []
+    },
+    "ws-mobile-light": {
+      "ok": true,
+      "ms": 1266,
+      "horizontalOverflowPx": 0,
+      "covered": [
+        "product briefPDF <- covered by DIV.flex items-center justify-between px-3 sm:px-4 min"
+      ],
+      "errors": [],
+      "unhandled": []
+    },
+    "ws-dark": {
+      "ok": true,
+      "ms": 1480,
+      "metrics": {
+        "domContentLoaded": 20,
+        "load": 303,
+        "fcp": 292,
+        "lcp": 388,
+        "jsRequests": 36,
+        "jsTransferKB": 1347,
+        "jsDecodedKB": 4218,
+        "cssTransferKB": 49,
+        "longTasks": 1,
+        "longTaskMs": 147
+      },
+      "covered": [],
+      "invisible": [
+        "Copy request",
+        "Copy code"
+      ],
+      "errors": [],
+      "unhandled": []
+    },
+    "ws-mobile-dark": {
+      "ok": true,
+      "ms": 1270,
+      "horizontalOverflowPx": 0,
+      "covered": [
+        "product briefPDF <- covered by DIV.flex items-center justify-between px-3 sm:px-4 min"
+      ],
+      "errors": [],
+      "unhandled": []
+    },
+    "sidebar-dark": {
+      "ok": true,
+      "ms": 3008,
+      "dropdownExpandedShowsTaskspaces": false,
+      "invisibleClickable": [
+        "Rename",
+        "Delete",
+        "Rename workspace",
+        "New taskspace",
+        "Delete workspace",
+        "Rename workspace",
+        "New taskspace",
+        "Delete workspace",
+        "Copy request",
+        "Copy code"
+      ],
+      "ariaExpandedControls": [
+        "Download Rivine Browse",
+        "LanguageEnglish"
+      ],
+      "covered": [
+        "Taskspace <- covered by SPAN.text-sm font-semibold text-gray-900 dark:text-whit",
+        "Governance <- covered by svg.[object SVGAnimatedString]",
+        "LanguageEnglish <- covered by DIV.flex items-center justify-between px-3 py-2 select"
+      ],
+      "errors": [],
+      "unhandled": []
+    },
+    "activity-light": {
+      "ok": true,
+      "ms": 1836,
+      "errors": [],
+      "unhandled": []
+    },
+    "preview-dark": {
+      "ok": true,
+      "ms": 3912,
+      "covered": [
+        "Copy code <- covered by DIV.w-full px-3 py-2 rounded-xl border border-amber-20"
+      ],
+      "errors": [
+        "Loading the stylesheet 'https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css' violates the following Content Security Policy directive: \"style-src 'self' 'unsafe-inline'\". Note that 'style-src-elem' was not explicitly set, so 'styl",
+        "Loading the stylesheet 'https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/github.min.css' violates the following Content Security Policy directive: \"style-src 'self' 'unsafe-inline'\". Note that 'style-src-elem' was not",
+        "Loading the stylesheet 'https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/github-dark.min.css' violates the following Content Security Policy directive: \"style-src 'self' 'unsafe-inline'\". Note that 'style-src-elem' wa"
+      ],
+      "unhandled": [
+        "GET /api/aselius/workspaces/ws-launch/assets/asset-launch-md/publish"
+      ]
+    },
+    "stream-dark": {
+      "ok": false,
+      "error": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator('[role=\"option\"], [role=\"menuitem\"], [role=\"menuitemradio\"]').first()\n    - locator resolved to <div role=\"menuitem\" class=\"↵                      flex items-center px-3 py-2 rounded-lg cursor-pointer↵                      transition-colors duration-150 group↵                      text-gray-700 dark:text-gray-",
+      "errors": [
+        "Loading the stylesheet 'https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap' violates the following Content Security Policy directive: \"style-src 'self' 'unsafe-inline'\". Note that 'style-src-elem' was not explicitly s"
+      ]
+    },
+    "stream-light": {
+      "ok": false,
+      "error": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator('[role=\"option\"], [role=\"menuitem\"], [role=\"menuitemradio\"]').first()\n    - locator resolved to <div role=\"menuitem\" class=\"↵                      flex items-center px-3 py-2 rounded-lg cursor-pointer↵                      transition-colors duration-150 group↵                      text-gray-700 dark:text-gray-",
+      "errors": [
+        "Loading the stylesheet 'https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap' violates the following Content Security Policy directive: \"style-src 'self' 'unsafe-inline'\". Note that 'style-src-elem' was not explicitly s"
+      ]
+    },
+    "page-settings-dark": {
+      "ok": true,
+      "ms": 4833,
+      "metrics": {
+        "domContentLoaded": 22,
+        "load": 74,
+        "fcp": 124,
+        "lcp": 1136,
+        "jsRequests": 34,
+        "jsTransferKB": 343,
+        "jsDecodedKB": 1071,
+        "cssTransferKB": 26,
+        "longTasks": 0,
+        "longTaskMs": 0
+      },
+      "errors": [],
+      "unhandled": [
+        "GET rpw5f4m994.execute-api.us-east-1.amazonaws.com/api/user-profiles/demo"
+      ]
+    },
+    "page-settings-light": {
+      "ok": true,
+      "ms": 4827,
+      "metrics": {
+        "domContentLoaded": 20,
+        "load": 73,
+        "fcp": 120,
+        "lcp": 1152,
+        "jsRequests": 34,
+        "jsTransferKB": 343,
+        "jsDecodedKB": 1071,
+        "cssTransferKB": 26,
+        "longTasks": 0,
+        "longTaskMs": 0
+      },
+      "errors": [],
+      "unhandled": [
+        "GET rpw5f4m994.execute-api.us-east-1.amazonaws.com/api/user-profiles/demo"
+      ]
+    },
+    "page-automations-dark": {
+      "ok": true,
+      "ms": 4839,
+      "metrics": {
+        "domContentLoaded": 21,
+        "load": 71,
+        "fcp": 112,
+        "lcp": 112,
+        "jsRequests": 31,
+        "jsTransferKB": 299,
+        "jsDecodedKB": 914,
+        "cssTransferKB": 26,
+        "longTasks": 0,
+        "longTaskMs": 0
+      },
+      "errors": [],
+      "unhandled": [
+        "GET /api/aselius/automations/contracts",
+        "GET /api/aselius/automations/templates",
+        "GET /api/aselius/automations"
+      ]
+    },
+    "page-automations-light": {
+      "ok": true,
+      "ms": 4825,
+      "metrics": {
+        "domContentLoaded": 19,
+        "load": 98,
+        "fcp": 108,
+        "lcp": 108,
+        "jsRequests": 31,
+        "jsTransferKB": 299,
+        "jsDecodedKB": 914,
+        "cssTransferKB": 26,
+        "longTasks": 0,
+        "longTaskMs": 0
+      },
+      "errors": [],
+      "unhandled": [
+        "GET /api/aselius/automations/contracts",
+        "GET /api/aselius/automations/templates",
+        "GET /api/aselius/automations"
+      ]
+    },
+    "page-observability-dark": {
+      "ok": true,
+      "ms": 4866,
+      "metrics": {
+        "domContentLoaded": 25,
+        "load": 83,
+        "fcp": 120,
+        "lcp": 184,
+        "jsRequests": 32,
+        "jsTransferKB": 301,
+        "jsDecodedKB": 920,
+        "cssTransferKB": 26,
+        "longTasks": 0,
+        "longTaskMs": 0
+      },
+      "errors": [],
+      "unhandled": [
+        "GET /api/aselius/observability/summary",
+        "GET /api/aselius/observability/events"
+      ]
+    },
+    "page-observability-light": {
+      "ok": true,
+      "ms": 4817,
+      "metrics": {
+        "domContentLoaded": 20,
+        "load": 70,
+        "fcp": 104,
+        "lcp": 148,
+        "jsRequests": 32,
+        "jsTransferKB": 301,
+        "jsDecodedKB": 920,
+        "cssTransferKB": 26,
+        "longTasks": 0,
+        "longTaskMs": 0
+      },
+      "errors": [],
+      "unhandled": [
+        "GET /api/aselius/observability/summary",
+        "GET /api/aselius/observability/events"
+      ]
+    },
+    "page-credits-dark": {
+      "ok": true,
+      "ms": 4820,
+      "metrics": {
+        "domContentLoaded": 19,
+        "load": 68,
+        "fcp": 108,
+        "lcp": 148,
+        "jsRequests": 33,
+        "jsTransferKB": 307,
+        "jsDecodedKB": 945,
+        "cssTransferKB": 26,
+        "longTasks": 0,
+        "longTaskMs": 0
+      },
+      "errors": [
+        "TypeError: Cannot read properties of undefined (reading 'enabled')\n    at X (http://localhost:3100/_next/static/chunks/app/(authenticated)/credits/page-87a7e978e514e97b.js:1:19455)\n    at l9 (http://localhost:3100/_next/static/chunks/4bd1b6"
+      ],
+      "unhandled": [
+        "GET /api/aselius/usage/activity",
+        "GET rpw5f4m994.execute-api.us-east-1.amazonaws.com/api/payment/subscription"
+      ]
+    },
+    "page-credits-light": {
+      "ok": true,
+      "ms": 4821,
+      "metrics": {
+        "domContentLoaded": 18,
+        "load": 67,
+        "fcp": 104,
+        "lcp": 164,
+        "jsRequests": 33,
+        "jsTransferKB": 307,
+        "jsDecodedKB": 945,
+        "cssTransferKB": 26,
+        "longTasks": 0,
+        "longTaskMs": 0
+      },
+      "errors": [
+        "TypeError: Cannot read properties of undefined (reading 'enabled')\n    at X (http://localhost:3100/_next/static/chunks/app/(authenticated)/credits/page-87a7e978e514e97b.js:1:19455)\n    at l9 (http://localhost:3100/_next/static/chunks/4bd1b6"
+      ],
+      "unhandled": [
+        "GET /api/aselius/usage/activity",
+        "GET rpw5f4m994.execute-api.us-east-1.amazonaws.com/api/payment/subscription"
+      ]
+    },
+    "page-teams-dark": {
+      "ok": true,
+      "ms": 4828,
+      "metrics": {
+        "domContentLoaded": 22,
+        "load": 76,
+        "fcp": 124,
+        "lcp": 1140,
+        "jsRequests": 38,
+        "jsTransferKB": 351,
+        "jsDecodedKB": 1085,
+        "cssTransferKB": 26,
+        "longTasks": 0,
+        "longTaskMs": 0
+      },
+      "errors": [
+        "Failed to fetch connections: {detail: harness: no fixture}"
+      ],
+      "unhandled": [
+        "GET rpw5f4m994.execute-api.us-east-1.amazonaws.com/api/teams",
+        "GET rpw5f4m994.execute-api.us-east-1.amazonaws.com/api/networks/connections",
+        "GET rpw5f4m994.execute-api.us-east-1.amazonaws.com/api/networks/connections/requests"
+      ]
+    },
+    "page-teams-light": {
+      "ok": true,
+      "ms": 4847,
+      "metrics": {
+        "domContentLoaded": 19,
+        "load": 72,
+        "fcp": 120,
+        "lcp": 1140,
+        "jsRequests": 38,
+        "jsTransferKB": 351,
+        "jsDecodedKB": 1085,
+        "cssTransferKB": 26,
+        "longTasks": 0,
+        "longTaskMs": 0
+      },
+      "errors": [
+        "Failed to fetch connections: {detail: harness: no fixture}"
+      ],
+      "unhandled": [
+        "GET rpw5f4m994.execute-api.us-east-1.amazonaws.com/api/teams",
+        "GET rpw5f4m994.execute-api.us-east-1.amazonaws.com/api/networks/connections",
+        "GET rpw5f4m994.execute-api.us-east-1.amazonaws.com/api/networks/connections/requests"
+      ]
+    },
+    "page-connector-dark": {
+      "ok": true,
+      "ms": 4836,
+      "metrics": {
+        "domContentLoaded": 22,
+        "load": 71,
+        "fcp": 100,
+        "lcp": 148,
+        "jsRequests": 34,
+        "jsTransferKB": 309,
+        "jsDecodedKB": 944,
+        "cssTransferKB": 26,
+        "longTasks": 0,
+        "longTaskMs": 0
+      },
+      "errors": [],
+      "unhandled": []
+    },
+    "page-connector-light": {
+      "ok": true,
+      "ms": 4843,
+      "metrics": {
+        "domContentLoaded": 21,
+        "load": 71,
+        "fcp": 100,
+        "lcp": 148,
+        "jsRequests": 34,
+        "jsTransferKB": 309,
+        "jsDecodedKB": 944,
+        "cssTransferKB": 26,
+        "longTasks": 0,
+        "longTaskMs": 0
+      },
+      "errors": [],
+      "unhandled": []
+    }
+  },
+  "checks": {}
+}

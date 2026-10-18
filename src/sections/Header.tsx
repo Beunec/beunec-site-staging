@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { LanguageMenu } from "@/components/i18n/LanguageMenu";
 import Link from "next/link";
 import {
 	DropdownMenu,
@@ -153,7 +154,7 @@ export function Header() {
 								href="/aselius-platform"
 								className="px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-200 rounded-lg hover:bg-secondary"
 							>
-								Aselius Platform
+								Aselius Software
 							</Link>
 
 							<Link
@@ -178,6 +179,7 @@ export function Header() {
 						</nav>
 
 						<div className="flex items-center gap-2">
+							<LanguageMenu />
 							<ThemeToggle />
 							<Button
 								size="sm"
@@ -209,6 +211,9 @@ export function Header() {
 							className="lg:hidden bg-container/95 backdrop-blur-xl border-t border-border overflow-hidden"
 						>
 							<nav className="flex flex-col p-4 space-y-1">
+								<div className="pb-2 mb-2 border-b border-border">
+									<LanguageMenu mobile />
+								</div>
 								<button
 									type="button"
 									className="flex items-center justify-between px-4 py-3 text-sm font-medium text-muted-foreground"
@@ -234,7 +239,7 @@ export function Header() {
 									className="px-4 py-3 text-sm font-medium text-muted-foreground hover:text-foreground"
 									onClick={() => setIsMobileMenuOpen(false)}
 								>
-									Aselius Platform
+									Aselius Software
 								</Link>
 								<Link
 									href="/principles"

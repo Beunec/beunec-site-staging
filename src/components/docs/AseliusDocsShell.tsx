@@ -60,22 +60,38 @@ function DocsNav({
           </p>
           <ul className="space-y-1">
             {items.map((doc) => {
-              const active = doc.slug === activeSlug;
+              const active = !doc.externalHref && doc.slug === activeSlug;
+              const className = [
+                "block rounded-lg px-3 py-2 text-sm transition-colors",
+                active
+                  ? "bg-container text-foreground font-medium border-l-2 border-accent-sage"
+                  : "text-muted-foreground hover:text-foreground hover:bg-container/60",
+              ].join(" ");
               return (
                 <li key={doc.slug}>
-                  <Link
-                    href={`/aselius-platform/docs/${doc.slug}`}
-                    onClick={onNavigate}
-                    aria-current={active ? "page" : undefined}
-                    className={[
-                      "block rounded-lg px-3 py-2 text-sm transition-colors",
-                      active
-                        ? "bg-container text-foreground font-medium border-l-2 border-accent-sage"
-                        : "text-muted-foreground hover:text-foreground hover:bg-container/60",
-                    ].join(" ")}
-                  >
-                    {doc.title}
-                  </Link>
+                  {doc.externalHref ? (
+                    <a
+                      href={doc.externalHref}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={onNavigate}
+                      className={className}
+                    >
+                      {doc.title}
+                      <span className="ml-1 text-[10px] text-accent-slate" aria-hidden="true">
+                        ↗
+                      </span>
+                    </a>
+                  ) : (
+                    <Link
+                      href={`/aselius-platform/docs/${doc.slug}`}
+                      onClick={onNavigate}
+                      aria-current={active ? "page" : undefined}
+                      className={className}
+                    >
+                      {doc.title}
+                    </Link>
+                  )}
                 </li>
               );
             })}

@@ -16,93 +16,95 @@
     --accent-sage: #6b7a6e;
     --accent-slate: #7a8b99;
 
-    /* Alias tokens (docs / non-tailwind consumers) */
-    --bg-light: #f1eee6;
-    --text-light: #141512;
-    --container-light: #eae6db;
-    --hover-light: #e0d9ca;
-    --media-light: #dfd9ce;
+    /* Alias tokens (docs / non-tailwind consumers) — canvas/charcoal neutrals,
+       matching the Aselius platform and preview.aselius.beunec.com exactly. */
+    --bg-light: #f4f4f0;
+    --text-light: #1a1a1a;
+    --container-light: #ffffff;
+    --hover-light: #ededeb;
+    --media-light: #e6e6e6;
 
-    --bg-dark: #141512;
-    --text-dark: #e6e2d8;
-    --container-dark: #1c1e1a;
-    --hover-dark: #252823;
-    --media-dark: #222420;
+    --bg-dark: #111111;
+    --text-dark: #e8eaed;
+    --container-dark: #151515;
+    --hover-dark: #202020;
+    --media-dark: #1d1d1d;
 
-    /* [THEME-STATE: LIGHT_MODE] */
-    --bg-global: #f1eee6;
-    --text-primary: #141512;
-    --bg-container: #eae6db;
-    --state-hover: #e0d9ca;
-    --media-blank: #dfd9ce;
+    /* [THEME-STATE: LIGHT_MODE] — canvas */
+    --bg-global: #f4f4f0;
+    --text-primary: #1a1a1a;
+    --bg-container: #ffffff;
+    --state-hover: #ededeb;
+    --media-blank: #e6e6e6;
 
     /* HSL bridge → shadcn / Tailwind semantic roles */
-    --background: 45 28% 92%;       /* --bg-global */
-    --foreground: 80 8% 8%;         /* --text-primary */
-    --card: 44 26% 89%;             /* --bg-container */
-    --card-foreground: 80 8% 8%;
-    --popover: 44 26% 89%;
-    --popover-foreground: 80 8% 8%;
+    --background: 60 15% 95%;       /* --bg-global (#f4f4f0 canvas) */
+    --foreground: 0 0% 10%;         /* --text-primary (#1a1a1a) */
+    --card: 0 0% 100%;              /* --bg-container (#ffffff) */
+    --card-foreground: 0 0% 10%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 10%;
     --primary: 132 7% 45%;          /* --accent-sage */
-    --primary-foreground: 45 28% 92%;
-    --secondary: 41 27% 84%;        /* --state-hover */
-    --secondary-foreground: 80 8% 8%;
-    --muted: 39 21% 84%;            /* --media-blank */
-    --muted-foreground: 80 6% 32%;
+    --primary-foreground: 60 15% 95%;
+    --secondary: 60 9% 93%;         /* --state-hover */
+    --secondary-foreground: 0 0% 10%;
+    --muted: 0 0% 90%;              /* --media-blank */
+    --muted-foreground: 217 11% 40%;
     --accent: 207 13% 54%;          /* --accent-slate */
-    --accent-foreground: 45 28% 92%;
+    --accent-foreground: 60 15% 95%;
     --destructive: 0 55% 42%;
-    --destructive-foreground: 45 28% 92%;
-    --border: 41 18% 78%;
-    --input: 41 18% 78%;
+    --destructive-foreground: 60 15% 95%;
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
     --ring: 132 7% 45%;
     --radius: 0.5rem;
 
-    --sidebar-background: 45 28% 92%;
-    --sidebar-foreground: 80 8% 8%;
+    --sidebar-background: 60 15% 95%;
+    --sidebar-foreground: 0 0% 10%;
     --sidebar-primary: 132 7% 45%;
-    --sidebar-primary-foreground: 45 28% 92%;
-    --sidebar-accent: 41 27% 84%;
-    --sidebar-accent-foreground: 80 8% 8%;
-    --sidebar-border: 41 18% 78%;
+    --sidebar-primary-foreground: 60 15% 95%;
+    --sidebar-accent: 60 9% 93%;
+    --sidebar-accent-foreground: 0 0% 10%;
+    --sidebar-border: 0 0% 90%;
     --sidebar-ring: 132 7% 45%;
   }
 
   .dark {
-    /* [THEME-STATE: DARK_MODE] */
-    --bg-global: #141512;
-    --text-primary: #e6e2d8;
-    --bg-container: #1c1e1a;
-    --state-hover: #252823;
-    --media-blank: #222420;
+    /* [THEME-STATE: DARK_MODE] — charcoal, matching the Aselius platform and
+       preview.aselius.beunec.com exactly. */
+    --bg-global: #111111;
+    --text-primary: #e8eaed;
+    --bg-container: #151515;
+    --state-hover: #202020;
+    --media-blank: #1d1d1d;
 
-    --background: 80 8% 8%;         /* --bg-global */
-    --foreground: 43 22% 87%;       /* --text-primary */
-    --card: 90 7% 11%;              /* --bg-container */
-    --card-foreground: 43 22% 87%;
-    --popover: 90 7% 11%;
-    --popover-foreground: 43 22% 87%;
+    --background: 0 0% 7%;          /* --bg-global (#111111 charcoal) */
+    --foreground: 216 12% 92%;      /* --text-primary (#e8eaed) */
+    --card: 0 0% 8%;                /* --bg-container (#151515) */
+    --card-foreground: 216 12% 92%;
+    --popover: 0 0% 8%;
+    --popover-foreground: 216 12% 92%;
     --primary: 132 7% 45%;
-    --primary-foreground: 43 22% 87%;
-    --secondary: 96 7% 15%;         /* --state-hover */
-    --secondary-foreground: 43 22% 87%;
-    --muted: 90 6% 13%;             /* --media-blank */
-    --muted-foreground: 43 12% 62%;
+    --primary-foreground: 216 12% 92%;
+    --secondary: 0 0% 13%;          /* --state-hover */
+    --secondary-foreground: 216 12% 92%;
+    --muted: 0 0% 11%;              /* --media-blank */
+    --muted-foreground: 0 0% 64%;
     --accent: 207 13% 54%;
-    --accent-foreground: 43 22% 87%;
+    --accent-foreground: 216 12% 92%;
     --destructive: 0 45% 38%;
-    --destructive-foreground: 43 22% 87%;
-    --border: 90 5% 18%;
-    --input: 90 5% 18%;
+    --destructive-foreground: 216 12% 92%;
+    --border: 0 0% 17%;
+    --input: 0 0% 17%;
     --ring: 132 7% 45%;
 
-    --sidebar-background: 80 8% 8%;
-    --sidebar-foreground: 43 22% 87%;
+    --sidebar-background: 0 0% 7%;
+    --sidebar-foreground: 216 12% 92%;
     --sidebar-primary: 132 7% 45%;
-    --sidebar-primary-foreground: 43 22% 87%;
-    --sidebar-accent: 96 7% 15%;
-    --sidebar-accent-foreground: 43 22% 87%;
-    --sidebar-border: 90 5% 18%;
+    --sidebar-primary-foreground: 216 12% 92%;
+    --sidebar-accent: 0 0% 13%;
+    --sidebar-accent-foreground: 216 12% 92%;
+    --sidebar-border: 0 0% 17%;
     --sidebar-ring: 132 7% 45%;
   }
 }

@@ -5,7 +5,7 @@ import { ASELIUS_DOCS } from "@/lib/aselius-docs";
 export const metadata: Metadata = {
   title: "Aselius Platform Documentation",
   description:
-    "Guides for the Aselius Platform: Workspace, Manage Files, Messages, Manage Teams, plans, and more.",
+    "Guides for the Aselius Platform: Workspace, Automation, Observability, Manage Teams, Selius, Rivine engines, and more.",
 };
 
 export default function AseliusDocsLayout({

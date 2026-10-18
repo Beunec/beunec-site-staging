@@ -1,0 +1,20 @@
+/                                                   107 kB    107 kB     +0%
+/automations                                        147 kB    147 kB     +0%
+/browse                                             110 kB    110 kB     +0%
+/cli                                                110 kB    110 kB     +0%
+/cli/authorize                                      110 kB    110 kB     +0%
+/credits                                            187 kB    149 kB    -20%
+/observability                                      175 kB    137 kB    -22%
+/onboarding                                         267 kB    229 kB    -14%
+/selius                                             155 kB    155 kB     +0%
+/settings                                           244 kB    203 kB    -17%
+/subscription                                       178 kB    140 kB    -21%
+/teams                                              268 kB    227 kB    -15%
+/teams/[teamId]                                     268 kB    228 kB    -15%
+/workspace                                          140 kB    140 kB     +0%
+/workspace/[workspaceId]/[chatSpaceId]             1.29 MB    301 kB    -77%
+/workspace/[workspaceId]/[chatSpaceId]/connector    194 kB    157 kB    -19%
+/workspace/[workspaceId]/[chatSpaceId]/governance   1.29 MB    301 kB    -77%
+/workspace/connector                                119 kB    120 kB     +1%
+/workspace/shared-with-me                           200 kB    161 kB    -20%
+(shared by all)                                     106 kB    107 kB     +1%

@@ -1,0 +1,568 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Define base colors for light mode */
+:root {
+  --canvas: #f4f4f0;
+  --background-color: var(--canvas);
+  --text-color: #000000;
+  --border-color: #e5e7eb;
+  --card-background: var(--canvas);
+}
+
+/* Override colors for dark mode when 'dark' class is present on html */
+html.dark {
+  --background-color: #1a202c;
+  --text-color: #ffffff;
+  --border-color: #374151;
+  --card-background: #2d3748;
+}
+
+@layer utilities {
+  /* Light mode only — never bleed into dark theme */
+  html:not(.dark) .bg-canvas {
+    background-color: var(--canvas) !important;
+  }
+
+  html:not(.dark) .surface-canvas {
+    background-color: var(--canvas) !important;
+  }
+
+  html:not(.dark) .tab-active-canvas {
+    background-color: var(--canvas) !important;
+  }
+}
+
+/* Placeholder text — readable on canvas inputs */
+html:not(.dark) input::placeholder,
+html:not(.dark) textarea::placeholder {
+  color: #64748b !important;
+  opacity: 1 !important;
+}
+
+html:not(.dark) input.surface-canvas,
+html:not(.dark) textarea.surface-canvas,
+html:not(.dark) .surface-canvas {
+  background-color: var(--canvas) !important;
+}
+
+html:not(.dark) [data-file-surface] .tab-active-canvas,
+html:not(.dark) [data-file-surface] button.tab-active-canvas {
+  background-color: var(--canvas) !important;
+}
+
+/* Global light-mode canvas — wins over stray bg-white / bg-gray-50 on page shells */
+html:not(.dark),
+html:not(.dark) body {
+  background-color: var(--canvas) !important;
+}
+
+/* Light mode: no stark white shells. Cards, inputs, panels, and leftover
+   Tailwind bg-white / bg-gray-50 map to --canvas. Do not touch dark mode,
+   text-white, or translucent white used for glass (bg-white/10–/45). */
+html:not(.dark) .bg-white,
+html:not(.dark) .bg-gray-50,
+html:not(.dark) .bg-slate-50,
+html:not(.dark) .bg-neutral-50,
+html:not(.dark) .bg-zinc-50,
+html:not(.dark) .hover\:bg-white:hover,
+html:not(.dark) .bg-white\/80,
+html:not(.dark) .bg-white\/70,
+html:not(.dark) .bg-white\/60 {
+  background-color: var(--canvas) !important;
+}
+
+html:not(.dark) .bg-card {
+  background-color: var(--canvas) !important;
+}
+
+/* External webpage previews keep a white letterbox so site chrome is honest. */
+html:not(.dark) [data-keep-white],
+html:not(.dark) [data-keep-white].bg-white,
+html:not(.dark) [data-keep-white] .bg-white {
+  background-color: #ffffff !important;
+}
+
+/* Floating sidebar chip — stay translucent; never inherit the canvas remap. */
+html:not(.dark) [data-sidebar-glass] {
+  background-color: rgb(255 255 255 / 0.1) !important;
+}
+
+html:not(.dark) [data-app-canvas] {
+  background-color: var(--canvas) !important;
+}
+
+html:not(.dark) [data-app-sidebar] {
+  background-color: var(--canvas) !important;
+}
+
+html:not(.dark) [data-messages-surface],
+html:not(.dark) [data-messages-sidebar],
+html:not(.dark) [data-messages-panel] {
+  background-color: var(--canvas) !important;
+}
+
+html:not(.dark) [data-teams-surface] {
+  background-color: var(--canvas) !important;
+}
+
+html:not(.dark) [data-teams-panel] {
+  background-color: var(--canvas) !important;
+}
+
+html:not(.dark) [data-teams-surface] input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="button"]),
+html:not(.dark) [data-teams-surface] textarea,
+html:not(.dark) [data-teams-panel] input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="button"]),
+html:not(.dark) [data-teams-panel] textarea {
+  background-color: var(--canvas) !important;
+}
+
+html:not(.dark) [data-teams-surface] .bg-card,
+html:not(.dark) [data-teams-panel] .bg-card {
+  background-color: var(--canvas) !important;
+}
+
+/* Taskspace (Rivine) conversation column — light mode canvas. Scoped to the
+   conversation column only (NOT the preview panel), so message bubbles and the
+   clickable snapshot cards read on --canvas instead of stark white. Dark mode
+   untouched. */
+html:not(.dark) [data-taskspace-surface] {
+  background-color: var(--canvas) !important;
+}
+
+html:not(.dark) [data-taskspace-surface] .bg-white,
+html:not(.dark) [data-taskspace-surface] .bg-gray-50,
+html:not(.dark) [data-taskspace-surface] .bg-gray-50\/80,
+html:not(.dark) [data-taskspace-surface] .bg-gray-50\/60 {
+  background-color: var(--canvas) !important;
+}
+
+/* File-management modals (portaled) — light mode canvas */
+html:not(.dark) [data-file-modal] {
+  background-color: var(--canvas) !important;
+}
+
+html:not(.dark) [data-file-modal] input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="button"]),
+html:not(.dark) [data-file-modal] textarea,
+html:not(.dark) [data-file-modal] select {
+  background-color: var(--canvas) !important;
+}
+
+html:not(.dark) [data-file-modal] .bg-white,
+html:not(.dark) [data-file-modal] .bg-slate-50 {
+  background-color: var(--canvas) !important;
+}
+
+/* Settings — light mode canvas */
+html:not(.dark) [data-settings-surface] {
+  background-color: var(--canvas) !important;
+}
+
+html:not(.dark) [data-settings-surface] input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="button"]),
+html:not(.dark) [data-settings-surface] textarea,
+html:not(.dark) [data-settings-surface] select {
+  background-color: var(--canvas) !important;
+}
+
+html:not(.dark) [data-settings-surface] .bg-gray-50,
+html:not(.dark) [data-settings-surface] .bg-white.rounded-xl,
+html:not(.dark) [data-settings-surface] .bg-white.rounded-lg,
+html:not(.dark) [data-settings-surface] .bg-white.border,
+html:not(.dark) [data-settings-surface] button.bg-white {
+  background-color: var(--canvas) !important;
+}
+
+html:not(.dark) [data-settings-surface] input:disabled,
+html:not(.dark) [data-settings-surface] input[readonly] {
+  background-color: color-mix(in srgb, var(--canvas) 82%, #cbd5e1 18%) !important;
+}
+
+/* Messages modals & emoji picker — light mode canvas */
+html:not(.dark) [data-messages-modal] {
+  background-color: var(--canvas) !important;
+}
+
+html:not(.dark) [data-messages-modal] input:not([type="checkbox"]):not([type="radio"]),
+html:not(.dark) [data-messages-modal] textarea,
+html:not(.dark) [data-messages-modal] select {
+  background-color: var(--canvas) !important;
+}
+
+/* Notifications panel — light mode canvas */
+html:not(.dark) [data-notifications-panel] {
+  background-color: var(--canvas) !important;
+}
+
+html:not(.dark) [data-notifications-panel] .notification-card-read,
+html:not(.dark) [data-notifications-panel] .notification-card-unread {
+  background-color: color-mix(in srgb, var(--canvas) 88%, #00477d 12%) !important;
+}
+
+html:not(.dark) [data-notifications-panel] .notification-panel-header,
+html:not(.dark) [data-notifications-panel] .notification-panel-footer {
+  background-color: var(--canvas) !important;
+}
+
+html:not(.dark) .messages-emoji-picker {
+  background-color: var(--canvas) !important;
+}
+
+html:not(.dark) .messages-emoji-picker .emoji-mart,
+html:not(.dark) [data-messages-surface] .emoji-mart {
+  --em-rgb-background: 244, 244, 240;
+  --em-rgb-input: 244, 244, 240;
+  --em-rgb-color-border: 226, 232, 240;
+}
+
+html.dark [data-messages-surface],
+html.dark [data-messages-panel] {
+  background-color: #111827 !important;
+}
+
+html.dark [data-teams-surface] {
+  background-color: #0f172a !important;
+}
+
+html.dark [data-teams-panel] {
+  background-color: #0f172a !important;
+}
+
+[data-messages-panel] .settings-panel-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, #00477d 35%, transparent) transparent;
+}
+
+[data-teams-panel] .settings-panel-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, #00477d 35%, transparent) transparent;
+}
+
+[data-messages-panel] .settings-panel-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+[data-messages-panel] .settings-panel-scroll::-webkit-scrollbar-thumb {
+  background-color: color-mix(in srgb, #00477d 35%, transparent);
+  border-radius: 9999px;
+}
+
+[data-messages-panel] .settings-panel-scroll::-webkit-scrollbar-thumb:hover {
+  background-color: color-mix(in srgb, #00477d 55%, transparent);
+}
+
+html:not(.dark) [data-messages-surface] input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="button"]),
+html:not(.dark) [data-messages-sidebar] input:not([type="checkbox"]):not([type="radio"]),
+html:not(.dark) [data-messages-surface] textarea {
+  background-color: var(--canvas) !important;
+}
+
+html:not(.dark) [data-messages-sidebar] .messages-sidebar-selected,
+html:not(.dark) [data-messages-sidebar] button.messages-sidebar-selected {
+  background-color: color-mix(in srgb, var(--canvas) 82%, #00477d 18%) !important;
+}
+
+html:not(.dark) .messages-composer-shell,
+html:not(.dark) .messages-composer-toolbar {
+  background-color: var(--canvas) !important;
+}
+
+html:not(.dark) .other-message-glassmorphism {
+  background-color: rgba(244, 244, 240, 0.92) !important;
+}
+
+html.dark [data-messages-sidebar] {
+  background-color: #1f2937 !important;
+}
+
+html.dark [data-app-sidebar] {
+  background-color: #1f2937 !important;
+}
+
+html.dark [data-app-canvas] {
+  background-color: #111827 !important;
+}
+
+/* Dark-mode placeholder readability */
+html.dark input::placeholder,
+html.dark textarea::placeholder {
+  color: #94a3b8 !important;
+  opacity: 1 !important;
+}
+
+
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  /* Ensure smooth transition for theme changes */
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
+html.dark input[type="date"],
+html.dark input[type="datetime-local"],
+html.dark input[type="month"] {
+  color-scheme: dark;
+}
+
+html:not(.dark) input[type="date"],
+html:not(.dark) input[type="datetime-local"],
+html:not(.dark) input[type="month"] {
+  color-scheme: light;
+  background-color: var(--canvas) !important;
+}
+
+/* Custom scrollbar - Global Override */
+::-webkit-scrollbar {
+  width: 6px !important;
+  height: 6px !important;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent !important;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: transparent !important;
+  /* Keep track transparent so it blends */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #00477d !important;
+  /* primaryBlue */
+  border-radius: 9999px !important;
+  border: 2px solid transparent !important;
+  background-clip: content-box !important;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background-color: #00477d !important;
+  /* primaryBlue - consistent theme color */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #00335a !important;
+  /* Darker shade for hover */
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background-color: #005f9e !important;
+  /* Lighter shade for hover in dark mode */
+}
+
+/* Chat scrollbar specific tweaks */
+.chat-scrollbar::-webkit-scrollbar {
+  width: 6px !important;
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #00477d transparent;
+}
+
+.dark * {
+  scrollbar-color: #00477d transparent;
+}
+
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-smoothing: antialiased;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+@layer utilities {
+  .animate-fade-in {
+    animation: fade-in 0.6s ease-out forwards;
+  }
+
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* Focus styles for accessibility */
+  .focus-visible {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Custom gradient background utility */
+.bg-gradient-conic {
+  background: conic-gradient(from 180deg at 50% 50%, #3b82f6 0deg, #8b5cf6 120deg, #06b6d4 240deg, #3b82f6 360deg);
+}
+
+
+.chat-background {
+  background-color: #f4f4f0 !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cg fill='%23d1d5db' fill-opacity='0.4'%3E%3Cpath fill-rule='evenodd' d='M11 0l5 20H6l5-20zm42 31a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM0 72h40v4H0v-4zm0-8h31v4H0v-4zm20-16h20v4H20v-4zM0 56h40v4H0v-4zm63-25a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm10 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm53 41a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm10 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm10 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-30 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-28-8a5 5 0 0 0-10 0h10zm10 0a5 5 0 0 1-10 0h10zM56 5a5 5 0 0 0-10 0h10zm10 0a5 5 0 0 1-10 0h10zm-3 46a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm10 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM21 0l5 20H16l5-20zm43 64v-4h-4v4h-4v4h4v4h4v-4h4v-4h-4zM36 13h4v4h-4v-4zm4 4h4v4h-4v-4zm-4 4h4v4h-4v-4zm8-8h4v4h-4v-4z'/%3E%3C/g%3E%3C/svg%3E") !important;
+  background-repeat: repeat !important;
+}
+
+.dark .chat-background,
+.dark-chat-background {
+  background-color: #111827 !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cg fill='%23374151' fill-opacity='0.4'%3E%3Cpath fill-rule='evenodd' d='M11 0l5 20H6l5-20zm42 31a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM0 72h40v4H0v-4zm0-8h31v4H0v-4zm20-16h20v4H20v-4zM0 56h40v4H0v-4zm63-25a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm10 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm53 41a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm10 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm10 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-30 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-28-8a5 5 0 0 0-10 0h10zm10 0a5 5 0 0 1-10 0h10zM56 5a5 5 0 0 0-10 0h10zm10 0a5 5 0 0 1-10 0h10zm-3 46a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm10 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM21 0l5 20H16l5-20zm43 64v-4h-4v4h-4v4h4v4h4v-4h4v-4h-4zM36 13h4v4h-4v-4zm4 4h4v4h-4v-4zm-4 4h4v4h-4v-4zm8-8h4v4h-4v-4z'/%3E%3C/g%3E%3C/svg%3E") !important;
+  background-repeat: repeat !important;
+}
+
+/* Glassmorphism for chat messages */
+.your-message-glassmorphism {
+  background-color: rgba(0, 71, 125, 0.85) !important;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.other-message-glassmorphism {
+  background-color: rgba(255, 255, 255, 0.7) !important;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+html.dark .other-message-glassmorphism {
+  background-color: rgba(31, 41, 55, 0.7) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Native <select> chevron — OS arrows sit on the right rim. Replace them with
+   an inset stroke so every dropdown (Connect Apps, Shared with Me, settings,
+   onboarding, credits, …) looks fitted inside the control. Color-only
+   background utilities (bg-canvas, bg-gray-900) still apply. */
+select:not([multiple]):not([size]),
+select[size="1"] {
+  -webkit-appearance: none;
+  appearance: none;
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 0.7rem;
+  padding-right: 2.35rem !important;
+  cursor: pointer;
+}
+
+select:not([multiple]):not([size])::-ms-expand,
+select[size="1"]::-ms-expand {
+  display: none;
+}
+
+html:not(.dark) select:not([multiple]):not([size]),
+html:not(.dark) select[size="1"] {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+}
+
+html.dark select:not([multiple]):not([size]),
+html.dark select[size="1"] {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+}
+
+html,
+body {
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+/* Empty-taskspace comet star — shards split, then rejoin. */
+@keyframes taskspace-comet-drift {
+  0%, 100% { transform: rotate(0deg) translateY(0); }
+  35% { transform: rotate(10deg) translateY(-3px); }
+  70% { transform: rotate(-8deg) translateY(2px); }
+}
+@keyframes taskspace-comet-core {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  42%, 58% { transform: scale(0.28); opacity: 0.2; }
+}
+@keyframes taskspace-comet-shard {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.95; }
+  44% { transform: translate(var(--sx), var(--sy)) scale(0.55); opacity: 0.45; }
+  56% { transform: translate(var(--sx), var(--sy)) scale(0.55); opacity: 0.45; }
+}
+@keyframes taskspace-type-blink {
+  0%, 45% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+.taskspace-comet-tile {
+  animation: taskspace-comet-drift 5.6s ease-in-out infinite;
+}
+.taskspace-comet-core {
+  animation: taskspace-comet-core 5.6s ease-in-out infinite;
+}
+.taskspace-comet-shard {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  margin: -3px 0 0 -3px;
+  border-radius: 9999px;
+  background: #fff;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.85);
+  animation: taskspace-comet-shard 5.6s ease-in-out infinite;
+  pointer-events: none;
+}
+.taskspace-comet-shard-a { --sx: 22px; --sy: -26px; animation-delay: 0s; }
+.taskspace-comet-shard-b { --sx: -24px; --sy: -18px; width: 4px; height: 4px; animation-delay: 0.08s; }
+.taskspace-comet-shard-c { --sx: 28px; --sy: 14px; width: 5px; height: 5px; animation-delay: 0.12s; }
+.taskspace-comet-shard-d { --sx: -20px; --sy: 22px; animation-delay: 0.04s; }
+.taskspace-comet-shard-e { --sx: 4px; --sy: -30px; width: 4px; height: 4px; border-radius: 1px; animation-delay: 0.16s; }
+
+.taskspace-type-caret {
+  display: inline-block;
+  width: 1.5px;
+  height: 0.95em;
+  margin-left: 2px;
+  vertical-align: -0.12em;
+  background: currentColor;
+  animation: taskspace-type-blink 0.9s step-end infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .taskspace-comet-tile,
+  .taskspace-comet-core,
+  .taskspace-comet-shard,
+  .taskspace-type-caret {
+    animation: none;
+  }
+  .taskspace-comet-shard {
+    opacity: 0;
+  }
+}

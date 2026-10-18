@@ -4,6 +4,7 @@ import Script from "next/script";
 import "@/index.css";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { ClientSideProtection } from "@/components/providers/ClientSideProtection";
+import { GoogleTranslateLoader } from "@/components/i18n/GoogleTranslateLoader";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -12,8 +13,8 @@ export const viewport: Viewport = {
     initialScale: 1,
     maximumScale: 5,
     themeColor: [
-        { media: "(prefers-color-scheme: light)", color: "#F1EEE6" },
-        { media: "(prefers-color-scheme: dark)", color: "#141512" },
+        { media: "(prefers-color-scheme: light)", color: "#f4f4f0" },
+        { media: "(prefers-color-scheme: dark)", color: "#111111" },
     ],
 };
 
@@ -138,7 +139,7 @@ export const metadata: Metadata = {
         "apple-mobile-web-app-capable": "yes",
         "mobile-web-app-capable": "yes",
         "format-detection": "telephone=no",
-        "msapplication-TileColor": "#141512",
+        "msapplication-TileColor": "#111111",
         "msapplication-config": "/browserconfig.xml",
     },
 };
@@ -223,6 +224,7 @@ export default function RootLayout({
                 <ClientSideProtection>
                     <ThemeProvider>
                         {children}
+                        <GoogleTranslateLoader />
                     </ThemeProvider>
                 </ClientSideProtection>
             </body>

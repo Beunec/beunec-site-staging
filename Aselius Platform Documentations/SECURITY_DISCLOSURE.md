@@ -282,7 +282,7 @@ Governance rules are **enforced at the runtime level**, not just a UI preference
 
 - All Rivine engine runs are logged with metadata: user, engine, start/end time, token usage, credits debited
 - Usage activity is queryable by workspace Owners (see `/credits` page)
-- Mediator routing decisions are annotated in chat (which engine was selected and why)
+- The engine and specialty you chose for a turn are shown in the taskspace alongside the result
 - No detailed agent decision-making logs are exposed to users (internal topology kept internal)
 
 

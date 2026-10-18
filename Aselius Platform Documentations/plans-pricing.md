@@ -9,8 +9,8 @@
 | Plan | Price | Best for | What you get (summary) |
 |------|-------|----------|------------------------|
 | **Base** | **Free** | Trying Aselius and light personal use | Core workspace, messaging, and limited Rivine agent access, enough to explore Taskspace, upload files, and run occasional agentic tasks. |
-| **Pro** | **$20 / month** | Specialists and daily agentic work | Full Rivine engines, more storage and uploads, sandbox runtimes, and Alpha + Bravo mediator modes for regular production use. |
-| **Essential** | **$40 / month** | Researchers and teams at higher volume | Maximum included credits, all mediator modes, largest storage, priority support, and a dedicated account manager. |
+| **Pro** | **$20 / month** | Specialists and daily agentic work | Full Rivine engines, more storage and uploads, isolated E2B sandboxes, and $10 of free credits every month. |
+| **Essential** | **$40 / month** | Researchers and teams at higher volume | Maximum included credits, largest storage, priority support, and a dedicated account manager. |
 
 ---
 
@@ -19,13 +19,12 @@
 | Feature | Base | Pro | Essential |
 |---------|------|-----|-----------|
 | **Monthly platform fee** | $0 | $20 | $40 |
-| **Free monthly credits** | 2 | 5 | 15 |
+| **Free monthly credits** | 5 | 10 | 20 |
 | **Credits never expire** | Yes | Yes | Yes |
 | **Pay-as-you-go credits** | $1 = 1 Credit | $1 = 1 Credit | $1 = 1 Credit |
-| **Rivine agentic engines** | Limited | Full access | Full access |
-| **Rivine Context Protocol** | Unlimited | Unlimited | Unlimited |
-| **Sandbox runtimes** | Limited | Included | Included |
-| **Mediator modes** | Alpha | Alpha & Bravo | Alpha, Bravo & Charlie |
+| **Rivine agentic engines** | Every engine, same start floors | Every engine, same start floors | Every engine, same start floors |
+| **Rivine Context Protocol (MCP)** | Yes | Yes | Yes |
+| **Isolated E2B sandboxes** (Rivine Code) | Yes | Yes | Yes |
 | **Agentic governance** | Yes | Yes | Yes |
 | **Preview & download code apps** | Yes | Yes | Yes |
 | **Workspace uploads / day** | 15 | 30 | 40 |
@@ -44,13 +43,13 @@
 ## Plan mini-descriptions
 
 ### Base - Free
-Start with the full platform shell: Workspace (Taskspace, Governance, Connector), file management, messaging, and teams. Agentic usage is capped, limited sandbox runtimes and Rivine engine access, with **Alpha** mediator only. Suited for evaluation and light tasks.
+Start with the full platform shell: Workspace (Taskspace, Governance, Connector), file management, messaging, and teams. Every Rivine engine is reachable at the same start floor as every other plan: the wallet, not the plan, decides what you can run. Suited for evaluation and light tasks.
 
 ### Pro - $20/month
-For users who rely on Rivine daily: **full engine access**, included sandbox runtimes, **Alpha + Bravo** mediators, **5 free credits/month**, **10 GB** storage, and **30 workspace uploads/day**. Standard priority support.
+For users who rely on Rivine daily: **every engine at the same start floors as every plan**, isolated E2B sandboxes for Rivine Code, **$10 of free credits every month**, **10 GB** storage, and **30 workspace uploads/day**. Standard priority support.
 
 ### Essential - $40/month
-For high-volume research and team workflows: **15 free credits/month**, all mediator modes (**Alpha, Bravo, Charlie**), **30 GB** storage, **40 uploads/day**, **24/7 priority support**, a **dedicated account manager**, and **CloudHandle customization**. 
+For high-volume research and team workflows: **$20 of free credits every month**, **30 GB** storage, **40 uploads/day**, **24/7 priority support**, a **dedicated account manager**, **Observability** (turn cost, latency, and retries for your own runs), and **CloudHandle customization**. 
 
 **CloudHandle customization** (Essential only): Set a custom **display name** and optional **domain alias** for your public identity across the platform. Your real CloudHandle remains the technical identity (never changes), but you can surface a readable name (`Dr. Sarah Chen` instead of `user-84729`) and a branded alias (e.g., `sarah.your-company.com` for enterprise users). This is a display-only personalization; permissions and workspace access remain anchored to your CloudHandle. You can change your display name anytime, but domain aliases have a **3-day cooldown** between changes to prevent account-takeover chaining.
 
@@ -69,18 +68,25 @@ For high-volume research and team workflows: **15 free credits/month**, all medi
 
 ---
 
-## Rivine engine minimum balance
+## Rivine engine start floors
 
-*Prepaid balance required to select an engine (Auto mode routes based on your agent note).*
+*Minimum prepaid balance to start a turn on that engine. Same on every plan: Base, Pro and Essential all draw from the same wallet.*
 
-| Engine | Minimum credits |
+| Engine | Start floor |
 |--------|-----------------|
-| Rivine TaskForce | $2.00 |
-| Rivine Cicero | $5.00 |
-| Rivine Creative | Coming soon |
-| Rivine Research | $10.00 |
-| Rivine Code | $20.00 |
+| Rivine TaskForce | $2 |
+| Rivine Research | $5 |
+| Rivine Code | $10 |
+| Rivine Creative | $3 |
+| Rivine Cicero | $3 |
+| Rivine Confluence | $5 |
+| Rivine Browse (extension + desktop) | $2 |
+| Rivine Assist | $1 |
+
+Selius needs a balance above $1 to start a conversation; the engine it hands off to then uses that engine's own floor above.
+
+Turn activity and tool calls stay visible in the Taskspace on every plan. Rivine Browse, WhatsApp, Telegram, Discord, Aselius MCP, and the Rivine Code CLI are available on every plan and spend the same wallet as the web app. None of them is a separate purchase.
 
 ---
 
-*Credits are shared across Workspace agentic usage. Share limits: 1-500 credits per transfer via CloudHandle. Usage includes a 20% Rivine Infrastructure fee on top of LLM provider cost.* 
+*Credits are shared across every surface: Workspace, Rivine Browse, the chat apps, Aselius MCP, and the Rivine Code CLI. Share limits: 1-500 credits per transfer via CloudHandle. Usage includes a 20% Rivine Infrastructure fee on top of LLM provider cost.* 

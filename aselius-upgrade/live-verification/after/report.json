@@ -1,0 +1,417 @@
+{
+  "scenarios": {
+    "ws-light": {
+      "ok": true,
+      "ms": 1646,
+      "metrics": {
+        "domContentLoaded": 113,
+        "load": 195,
+        "fcp": 260,
+        "lcp": 368,
+        "jsRequests": 35,
+        "jsTransferKB": 426,
+        "jsDecodedKB": 1362,
+        "cssTransferKB": 47,
+        "longTasks": 0,
+        "longTaskMs": 0
+      },
+      "covered": [],
+      "invisible": [
+        "Copy request",
+        "Copy code"
+      ],
+      "errors": [],
+      "unhandled": []
+    },
+    "ws-mobile-light": {
+      "ok": true,
+      "ms": 1116,
+      "horizontalOverflowPx": 0,
+      "covered": [],
+      "errors": [],
+      "unhandled": []
+    },
+    "ws-dark": {
+      "ok": true,
+      "ms": 1345,
+      "metrics": {
+        "domContentLoaded": 19,
+        "load": 77,
+        "fcp": 108,
+        "lcp": 208,
+        "jsRequests": 35,
+        "jsTransferKB": 426,
+        "jsDecodedKB": 1362,
+        "cssTransferKB": 47,
+        "longTasks": 0,
+        "longTaskMs": 0
+      },
+      "covered": [],
+      "invisible": [
+        "Copy request",
+        "Copy code"
+      ],
+      "errors": [],
+      "unhandled": []
+    },
+    "ws-mobile-dark": {
+      "ok": true,
+      "ms": 1116,
+      "horizontalOverflowPx": 0,
+      "covered": [],
+      "errors": [],
+      "unhandled": []
+    },
+    "sidebar-dark": {
+      "ok": true,
+      "ms": 2847,
+      "dropdownExpandedShowsTaskspaces": true,
+      "invisibleClickable": [
+        "Copy request",
+        "Copy code"
+      ],
+      "ariaExpandedControls": [
+        "Product launch",
+        "Research & intelligence",
+        "Engineering",
+        "Download Rivine Browse",
+        "LanguageEnglish",
+        "4 steps",
+        "Show more",
+        "Specialty *",
+        "Rivine TaskForce"
+      ],
+      "covered": [
+        "Taskspace <- covered by SPAN.text-sm font-semibold text-gray-900 dark:text-whit",
+        "Governance <- covered by svg.[object SVGAnimatedString]",
+        "LanguageEnglish <- covered by DIV.flex items-center justify-between px-3 py-2 select"
+      ],
+      "errors": [],
+      "unhandled": []
+    },
+    "activity-light": {
+      "ok": true,
+      "ms": 1764,
+      "errors": [],
+      "unhandled": []
+    },
+    "preview-dark": {
+      "ok": true,
+      "ms": 3667,
+      "covered": [
+        "Copy code <- covered by DIV.w-full px-3 py-2 rounded-xl border border-amber-20"
+      ],
+      "errors": [],
+      "unhandled": [
+        "GET /api/aselius/workspaces/ws-launch/assets/asset-launch-md/publish"
+      ]
+    },
+    "stream-dark": {
+      "ok": true,
+      "ms": 7819,
+      "shiftEnterInsertsNewline": true,
+      "streamRequests": 1,
+      "finalAnswerRendered": true,
+      "errors": [],
+      "unhandled": [
+        "GET /api/aselius/workspaces/ws-launch/chats/cs-launch-research/sandbox/files"
+      ]
+    },
+    "stream-light": {
+      "ok": true,
+      "ms": 7786,
+      "shiftEnterInsertsNewline": true,
+      "streamRequests": 1,
+      "finalAnswerRendered": true,
+      "errors": [],
+      "unhandled": [
+        "GET /api/aselius/workspaces/ws-launch/chats/cs-launch-research/sandbox/files"
+      ]
+    },
+    "interactions-dark": {
+      "ok": true,
+      "ms": 4924,
+      "specialtyMenuOpened": true,
+      "escapeClosesMenu": true,
+      "focusBackInComposer": true,
+      "engineSwitchedToCode": true,
+      "dropdownShowsOtherWorkspaceTaskspaces": true,
+      "urlUnchangedByExpand": true,
+      "keyboardOpensDropdown": true,
+      "invisibleClickable": [
+        "Copy request",
+        "Copy code"
+      ],
+      "errors": [],
+      "unhandled": [
+        "PUT /api/aselius/workspaces/ws-launch/taskforce-connectors/selection"
+      ]
+    },
+    "scroll-follow-light": {
+      "ok": true,
+      "ms": 1913,
+      "opensAtLatest": true,
+      "jumpButtonAppearsWhenScrolledUp": true,
+      "jumpReturnsToLatest": true,
+      "errors": [],
+      "unhandled": []
+    },
+    "page-settings-dark": {
+      "ok": true,
+      "ms": 4820,
+      "metrics": {
+        "domContentLoaded": 21,
+        "load": 74,
+        "fcp": 112,
+        "lcp": 1136,
+        "jsRequests": 32,
+        "jsTransferKB": 303,
+        "jsDecodedKB": 952,
+        "cssTransferKB": 25,
+        "longTasks": 0,
+        "longTaskMs": 0
+      },
+      "errors": [],
+      "unhandled": [
+        "GET rpw5f4m994.execute-api.us-east-1.amazonaws.com/api/user-profiles/demo"
+      ]
+    },
+    "page-settings-light": {
+      "ok": true,
+      "ms": 4828,
+      "metrics": {
+        "domContentLoaded": 20,
+        "load": 67,
+        "fcp": 108,
+        "lcp": 1136,
+        "jsRequests": 32,
+        "jsTransferKB": 303,
+        "jsDecodedKB": 952,
+        "cssTransferKB": 25,
+        "longTasks": 0,
+        "longTaskMs": 0
+      },
+      "errors": [],
+      "unhandled": [
+        "GET rpw5f4m994.execute-api.us-east-1.amazonaws.com/api/user-profiles/demo"
+      ]
+    },
+    "page-automations-dark": {
+      "ok": true,
+      "ms": 4832,
+      "metrics": {
+        "domContentLoaded": 18,
+        "load": 62,
+        "fcp": 104,
+        "lcp": 104,
+        "jsRequests": 30,
+        "jsTransferKB": 262,
+        "jsDecodedKB": 803,
+        "cssTransferKB": 25,
+        "longTasks": 0,
+        "longTaskMs": 0
+      },
+      "errors": [],
+      "unhandled": [
+        "GET /api/aselius/automations/contracts",
+        "GET /api/aselius/automations/templates",
+        "GET /api/aselius/automations"
+      ]
+    },
+    "page-automations-light": {
+      "ok": true,
+      "ms": 4833,
+      "metrics": {
+        "domContentLoaded": 20,
+        "load": 65,
+        "fcp": 104,
+        "lcp": 104,
+        "jsRequests": 30,
+        "jsTransferKB": 262,
+        "jsDecodedKB": 803,
+        "cssTransferKB": 25,
+        "longTasks": 0,
+        "longTaskMs": 0
+      },
+      "errors": [],
+      "unhandled": [
+        "GET /api/aselius/automations/contracts",
+        "GET /api/aselius/automations/templates",
+        "GET /api/aselius/automations"
+      ]
+    },
+    "page-observability-dark": {
+      "ok": true,
+      "ms": 4833,
+      "metrics": {
+        "domContentLoaded": 20,
+        "load": 66,
+        "fcp": 104,
+        "lcp": 164,
+        "jsRequests": 30,
+        "jsTransferKB": 262,
+        "jsDecodedKB": 805,
+        "cssTransferKB": 25,
+        "longTasks": 0,
+        "longTaskMs": 0
+      },
+      "errors": [],
+      "unhandled": [
+        "GET /api/aselius/observability/summary",
+        "GET /api/aselius/observability/events"
+      ]
+    },
+    "page-observability-light": {
+      "ok": true,
+      "ms": 4813,
+      "metrics": {
+        "domContentLoaded": 18,
+        "load": 67,
+        "fcp": 104,
+        "lcp": 148,
+        "jsRequests": 30,
+        "jsTransferKB": 262,
+        "jsDecodedKB": 805,
+        "cssTransferKB": 25,
+        "longTasks": 0,
+        "longTaskMs": 0
+      },
+      "errors": [],
+      "unhandled": [
+        "GET /api/aselius/observability/summary",
+        "GET /api/aselius/observability/events"
+      ]
+    },
+    "page-credits-dark": {
+      "ok": true,
+      "ms": 4810,
+      "metrics": {
+        "domContentLoaded": 21,
+        "load": 67,
+        "fcp": 104,
+        "lcp": 148,
+        "jsRequests": 31,
+        "jsTransferKB": 268,
+        "jsDecodedKB": 830,
+        "cssTransferKB": 25,
+        "longTasks": 0,
+        "longTaskMs": 0
+      },
+      "errors": [
+        "TypeError: Cannot read properties of undefined (reading 'enabled')\n    at q (http://localhost:3100/_next/static/chunks/app/(authenticated)/credits/page-e7d0c2d550cc67a5.js:1:21020)\n    at l9 (http://localhost:3100/_next/static/chunks/4bd1b6"
+      ],
+      "unhandled": [
+        "GET /api/aselius/usage/activity",
+        "GET rpw5f4m994.execute-api.us-east-1.amazonaws.com/api/payment/subscription"
+      ]
+    },
+    "page-credits-light": {
+      "ok": true,
+      "ms": 4799,
+      "metrics": {
+        "domContentLoaded": 30,
+        "load": 74,
+        "fcp": 116,
+        "lcp": 144,
+        "jsRequests": 31,
+        "jsTransferKB": 268,
+        "jsDecodedKB": 830,
+        "cssTransferKB": 25,
+        "longTasks": 0,
+        "longTaskMs": 0
+      },
+      "errors": [
+        "TypeError: Cannot read properties of undefined (reading 'enabled')\n    at q (http://localhost:3100/_next/static/chunks/app/(authenticated)/credits/page-e7d0c2d550cc67a5.js:1:21020)\n    at l9 (http://localhost:3100/_next/static/chunks/4bd1b6"
+      ],
+      "unhandled": [
+        "GET /api/aselius/usage/activity",
+        "GET rpw5f4m994.execute-api.us-east-1.amazonaws.com/api/payment/subscription"
+      ]
+    },
+    "page-teams-dark": {
+      "ok": true,
+      "ms": 4857,
+      "metrics": {
+        "domContentLoaded": 32,
+        "load": 91,
+        "fcp": 160,
+        "lcp": 1188,
+        "jsRequests": 36,
+        "jsTransferKB": 311,
+        "jsDecodedKB": 967,
+        "cssTransferKB": 25,
+        "longTasks": 0,
+        "longTaskMs": 0
+      },
+      "errors": [
+        "Failed to fetch connections: {detail: harness: no fixture}"
+      ],
+      "unhandled": [
+        "GET rpw5f4m994.execute-api.us-east-1.amazonaws.com/api/teams",
+        "GET rpw5f4m994.execute-api.us-east-1.amazonaws.com/api/networks/connections",
+        "GET rpw5f4m994.execute-api.us-east-1.amazonaws.com/api/networks/connections/requests"
+      ]
+    },
+    "page-teams-light": {
+      "ok": true,
+      "ms": 4825,
+      "metrics": {
+        "domContentLoaded": 20,
+        "load": 69,
+        "fcp": 120,
+        "lcp": 1136,
+        "jsRequests": 36,
+        "jsTransferKB": 311,
+        "jsDecodedKB": 967,
+        "cssTransferKB": 25,
+        "longTasks": 0,
+        "longTaskMs": 0
+      },
+      "errors": [
+        "Failed to fetch connections: {detail: harness: no fixture}"
+      ],
+      "unhandled": [
+        "GET rpw5f4m994.execute-api.us-east-1.amazonaws.com/api/teams",
+        "GET rpw5f4m994.execute-api.us-east-1.amazonaws.com/api/networks/connections",
+        "GET rpw5f4m994.execute-api.us-east-1.amazonaws.com/api/networks/connections/requests"
+      ]
+    },
+    "page-connector-dark": {
+      "ok": true,
+      "ms": 4863,
+      "metrics": {
+        "domContentLoaded": 40,
+        "load": 125,
+        "fcp": 156,
+        "lcp": 216,
+        "jsRequests": 33,
+        "jsTransferKB": 273,
+        "jsDecodedKB": 833,
+        "cssTransferKB": 25,
+        "longTasks": 0,
+        "longTaskMs": 0
+      },
+      "errors": [],
+      "unhandled": []
+    },
+    "page-connector-light": {
+      "ok": true,
+      "ms": 4817,
+      "metrics": {
+        "domContentLoaded": 20,
+        "load": 62,
+        "fcp": 88,
+        "lcp": 128,
+        "jsRequests": 33,
+        "jsTransferKB": 273,
+        "jsDecodedKB": 833,
+        "cssTransferKB": 25,
+        "longTasks": 0,
+        "longTaskMs": 0
+      },
+      "errors": [],
+      "unhandled": []
+    }
+  },
+  "checks": {}
+}
