@@ -1,10 +1,10 @@
 # Rivine TaskForce
 
-Rivine TaskForce is the action-oriented engine in Aselius. You describe the outcome you need and it does the work: pulls real data from connected apps, draws the diagram, builds the interactive page, runs the calculation, and returns something you can open, edit and use, not a text reply to read.
+Rivine TaskForce is the action-oriented engine in Aselius, the default engine and the most cost-effective one. You describe the outcome you need and it does the work: pulls real data from connected apps, draws the diagram, builds the interactive page, runs the calculation, and returns something you can open, edit and use, not a text reply to read.
 
 ## At a glance
 
-- **What it is:** The general-purpose Rivine engine for professional deliverables, and the default engine when you open a new task.
+- **What it is:** The general-purpose Rivine engine for professional deliverables. It is the default engine when you open a new task, and the most cost-effective Rivine engine.
 - **You get:** Documents, diagrams, interactive pages, dashboards, spreadsheets and computed results, saved as workspace assets.
 - **Works with:** Connected apps (email, calendars, databases, MCP apps) and grounded data sources.
 - **Cost:** Needs a prepaid balance of at least $2 to start a turn, on every plan. See [Plans and pricing](/aselius-platform/docs/plans-pricing).

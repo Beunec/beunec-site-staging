@@ -24,13 +24,14 @@ const MUSIC = {
   reel: `Minimal, seamless 18-second loop for a silent product reel of real software screens. Instrumental only. 96 BPM, A minor to C major colour. Soft muted plucks, a warm pad and a light ticking hi-hat with a gentle sidechain pulse. Even energy from start to finish with no intro, no build and no ending, so the last beat flows straight back into the first. Clean, modern, calm and quietly confident; low in the mix and never distracting.`,
 };
 
+// Start times measured from the recorded reel voiceover (explainer/measured.js).
 const REEL_LINES = [
-  { at: 0.5, text: "Your work, in one taskspace." },
-  { at: 3.5, text: "Every step, live." },
-  { at: 6.5, text: "Files, exactly as generated." },
-  { at: 9.5, text: "Publish with an access code." },
-  { at: 12.5, text: "Open it on any device." },
-  { at: 15.5, text: "Even full code projects." },
+  { at: 0.24, text: "Your work, in one taskspace." },
+  { at: 3.21, text: "Every step, live." },
+  { at: 5.66, text: "Files, exactly as generated." },
+  { at: 8.76, text: "Publish with an access code." },
+  { at: 10.99, text: "Open it on any device." },
+  { at: 13.14, text: "Even full code projects." },
 ];
 
 const ts = (s, vtt = false) => {

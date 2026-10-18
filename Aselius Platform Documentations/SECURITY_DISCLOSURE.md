@@ -7,7 +7,8 @@ This page explains how Aselius, Beunec's agentic infrastructure software, protec
 - **Best for:** Enterprise customers, security reviewers, startups and teams evaluating Aselius for production use.
 - **You get:** Role-based access, TLS 1.2+ in transit, AES-256 at rest, isolated sandboxes, scoped connectors and clear retention rules.
 - **Not offered:** End-to-end encryption. The platform can read your data in order to run engines, search and governance.
-- **Report a vulnerability:** Email [security@beunec.com](mailto:security@beunec.com). We acknowledge within 48 hours.
+- **Report a vulnerability:** Email [contact@beunec.com](mailto:contact@beunec.com) or [support@beunec.com](mailto:support@beunec.com). We acknowledge within 48 hours.
+- **Data location:** United States.
 - **Last updated:** August 2026 (version 1.0).
 
 Aselius is built for teams handling sensitive work: code, legal documents, research and proprietary data. We protect it in layers: authentication, encryption, isolation and role-based access. If a security question is not answered here, ask us (see Contact below).
@@ -16,7 +17,8 @@ Aselius is built for teams handling sensitive work: code, legal documents, resea
 
 - **Sign-in:** Through our identity provider, using an industry-standard OpenID Connect flow.
 - **Methods:** Username and password, passwordless sign-in, or social login with Google, GitHub or Microsoft.
-- **Multi-factor authentication (MFA):** Available. We recommend you turn it on.
+- **Passkey authentication and email verification:** Sign in with a passkey on your device, and new sign-ins are confirmed by email. This keeps access quick and simple while keeping security high.
+- **Multi-factor authentication (MFA):** Planned. We will add it as enterprise and corporate teams join; until then, passkeys and email verification protect every account.
 - **Sessions:** Every request and every real-time connection is checked against a signed, time-limited session. You will be asked to sign in again periodically.
 - **Signing out:** Ends your session on that device.
 - **Enterprise single sign-on:** SAML and OIDC single sign-on (SSO) is available for enterprise accounts, so access reviews can run in your own identity provider.
@@ -204,7 +206,7 @@ The platform enforces governance rules on every engine run in that workspace. Th
 
 > **Note:** Do not report a security vulnerability in a public GitHub issue or any other public place.
 
-Email **[security@beunec.com](mailto:security@beunec.com)** with:
+Email **[contact@beunec.com](mailto:contact@beunec.com)** or **[support@beunec.com](mailto:support@beunec.com)** with:
 1. The affected component (for example Workspace, Messages or Rivine Code).
 2. Steps to reproduce.
 3. The potential impact on confidentiality, integrity or availability.
@@ -230,7 +232,7 @@ When we find a security issue ourselves, or someone reports one, we fix it on th
 - **Architecture review:** Detailed security architecture, reviewed under NDA.
 - **Penetration test results:** Available with enterprise contracts.
 - **SOC 2 status:** Audit in progress, report expected Q2 2027.
-- **Data residency:** Data is in the United States today. Other locations are available for enterprise.
+- **Data residency:** Data is stored in the United States.
 - **Your own keys:** Customer-managed encryption keys are supported.
 - **Questionnaires:** Security and risk questionnaires and ISO 27001 alignment. Contact sales.
 
@@ -261,8 +263,8 @@ When we find a security issue ourselves, or someone reports one, we fix it on th
 
 | Purpose | Contact | Response time |
 | ------- | ------- | ------------- |
-| Security concerns and vulnerability reports | **[security@beunec.com](mailto:security@beunec.com)** | 48 hours |
-| Compliance and procurement security questionnaires | **[security@beunec.com](mailto:security@beunec.com)** | 5 business days |
+| Security concerns and vulnerability reports | **[contact@beunec.com](mailto:contact@beunec.com)** or **[support@beunec.com](mailto:support@beunec.com)** | 48 hours |
+| Compliance and procurement security questionnaires | **[contact@beunec.com](mailto:contact@beunec.com)** | 5 business days |
 | General product security questions | In-product chat, or **[support@beunec.com](mailto:support@beunec.com)** | |
 | Data access and privacy requests (GDPR, CCPA, LGPD subject rights) | **[privacy@beunec.com](mailto:privacy@beunec.com)** | |
 
@@ -270,7 +272,7 @@ When we find a security issue ourselves, or someone reports one, we fix it on th
 
 | Layer              | Protection                         | Details                                         |
 | ------------------ | ---------------------------------- | ----------------------------------------------- |
-| **Authentication** | Identity provider, signed sessions | Optional MFA, enterprise SSO                    |
+| **Authentication** | Identity provider, signed sessions | Passkeys, email verification, enterprise SSO    |
 | **Transit**        | HTTPS and WSS                      | TLS 1.2+, forward secrecy                       |
 | **Data at rest**   | AES-256                            | Customer-managed keys available                 |
 | **Messages**       | AES-256                            | Encrypted per workspace                         |
