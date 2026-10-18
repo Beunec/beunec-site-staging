@@ -29,3 +29,4 @@ npm run build
 
 Security and caching headers are defined in `public/_headers`; crawler and indexing
 rules live in `public/robots.txt` and `public/sitemap.xml`.
+# beunec-site-staging
