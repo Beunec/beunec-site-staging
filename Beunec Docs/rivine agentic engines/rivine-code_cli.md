@@ -10,6 +10,7 @@ The Rivine Code CLI brings Aselius's software engineering engine into your termi
 - **What it is:** Rivine Code as a terminal client that works on your local project instead of a web sandbox.
 - **Best for:** Developers who want the engine in an existing repo, in their own shell, or in CI.
 - **You get:** Real edits on disk, streamed command output, and a per-project memory between sessions.
+- **Two settings:** `mode` picks the kind of work (frontend, backend and so on); `rate` picks how changes apply, `manual` or `auto`.
 - **Safety:** Every permission decision is made on your machine, before anything runs.
 - **Cost:** Same Aselius wallet as the web app. A turn needs a balance of at least $10.
 - **Requires:** Node 20 or newer and an Aselius account. Available on every plan.
@@ -56,7 +57,7 @@ Nothing is uploaded in bulk. There is no "attach your repo" step and no sync: th
 - Asks you a question when a decision is genuinely yours to make.
 - Keeps a per-project memory in a `.rivine/` folder, so tomorrow's session knows what yesterday's did.
 
-| Mode | `-m` value |
+| Mode | `--mode` value |
 |---|---|
 | Frontend Only | `frontend` |
 | Backend Only | `backend` |
@@ -70,10 +71,9 @@ Nothing is uploaded in bulk. There is no "attach your repo" step and no sync: th
 rivine                          start a session in the current directory
 rivine "add tests for auth"     one prompt, then exit
 rivine -p "..."                 the same, explicitly
-rivine --plan                   start read-only
 rivine -C ../other-project      run against a different directory
-rivine -m backend               run in a specific Mode: frontend | backend | fullstack | simple | security
-rivine --rate bypass            how edits apply: manual (review) | bypass (apply as it works)
+rivine --mode backend           engine Mode: frontend | backend | fullstack | simple | security
+rivine --rate manual            permission: manual (asks before changes) | auto (applies as it works)
 
 rivine login                    sign in (opens your browser)
 rivine login --device           sign in on a machine with no browser
@@ -92,15 +92,14 @@ rivine --output-format json     one JSON object on stdout, for CI
 |---|---|
 | `/` then Tab | List the slash commands |
 | `/help` | Show help |
-| `/mode` | Open the permission picker |
-| `/plan`, `/accept` | Switch to plan or accept edits |
+| `/mode` | Switch the engine Mode |
+| `/rate` | Switch the permission rate: `manual` or `auto` |
 | `/status` | Show account, sign-in and balance |
 | `/diff` | Show what changed in the working tree |
 | `/pr` | Prepare a pull request through your own `gh` CLI |
 | `/mcp` | Show which MCP servers connected and which did not |
 | `/credits` | Open the credits page |
 | `/clear`, `/exit` | Clear the screen, or leave |
-| Shift+Tab | Cycle plan, default, accept edits |
 | Ctrl+C | Quit cleanly |
 
 - **`/pr` never pushes unless asked.** On a branch with no upstream it stops and tells you; `/pr push` is the form that writes to the remote. It refuses on `main`, and when `gh` is missing or signed out.
@@ -122,49 +121,41 @@ Commands run in your shell and working directory, and output streams as it is pr
 - **Fallback.** If a real terminal cannot be opened, commands still run and stream, just without one. Set `RIVINE_NO_PTY=1` to force this.
 - **Cheaper output.** Escape codes are stripped and redrawn lines collapse to their final state before output leaves your machine. A progress bar that repainted 400 times costs one line.
 
-## Permission modes
+## Permission rate
 
-Permission modes control what the CLI does **without asking you first**. They are separate from the Mode (frontend, backend and so on), which controls what kind of work runs.
+`rate` controls what the CLI does **without asking you first**. It is separate from the Mode, which controls what kind of work runs. For read-only work, choose the `simple` Mode (Plan / Ask Only).
 
-| Mode | Applies without asking | How to choose |
+| Rate | Applies without asking | How to choose |
 |---|---|---|
-| `plan` | Reads, and shell commands that only read | `1`, `/plan`, `--plan`, Shift+Tab |
-| `default` | Reads, and read-only commands. Asks before writes and other commands | `2`, Shift+Tab |
-| `acceptEdits` | Writes inside the project. Still asks before commands | `3`, `/accept`, `-m acceptEdits`, Shift+Tab |
-| `bypass` | No prompts *inside this project*. Still cannot leave the directory | `4`, `/mode`, `--bypass` |
+| `manual` | Reads, and shell commands that only read. Asks before every write and every other command | `--rate manual`, `/rate` |
+| `auto` | Writes and commands *inside this project*. Still cannot leave the directory | `--rate auto`, `/rate` |
 
-1. The first interactive session asks how Rivine should work here (`1` to `4`).
-2. Press Enter to keep **Accept edits**.
-3. `--plan`, `-m …` and `--bypass` skip the question because you already answered it.
+1. The first interactive session asks which rate to use in this project.
+2. Press Enter to keep **manual**.
+3. `--rate` skips the question because you already answered it.
 
 ```mermaid
 flowchart TD
-    A[Engine requests an action] --> B{Permission mode}
-    B -->|plan| C[Reads / read-only shell]
-    B -->|default| D[Ask before writes and other commands]
-    B -->|acceptEdits| E[Writes in project without asking]
-    B -->|bypass| F[No prompts inside this project]
-    C --> G[Decided on your machine]
-    D --> G
-    E --> G
-    F --> G
-    G --> H[Outside project / credentials / hard-to-undo still gated]
+    A[Engine requests an action] --> B{Rate}
+    B -->|manual| C[Ask before writes and other commands]
+    B -->|auto| D[Apply inside this project]
+    C --> E[Decided on your machine]
+    D --> E
+    E --> F[Outside project / credentials / hard-to-undo still gated]
 ```
 
 *Figure: the engine runs remotely; permission decisions stay on your machine, before anything runs.*
-
-Shift+Tab cycles plan, default and accept edits. **`bypass` is not in that cycle**, so you cannot land on it by pressing a key once too often. Use `/mode` to reach it mid-session.
 
 ### What stays gated
 
 | Action | Behaviour |
 |---|---|
-| **Anything outside the project** | Refused in `bypass`; other modes ask. Symlinks that point out of the directory are caught, not followed. Set `RIVINE_ALLOW_OUTSIDE_PROJECT=1` only if `bypass` should be allowed to leave it. |
-| **Credentials** (`.env`, `*.pem`, `~/.ssh`, `~/.aws`, service-account key files) | Asks in every mode except `bypass`, on *read* too, because reading one puts a live secret into a prompt. |
-| **Hard-to-undo commands** (`rm -rf`, `git push`, `--force`, `git reset --hard`, `sudo`, `npm publish`, any deploy, `terraform apply`) | Asks in every mode except `bypass`. |
-| **Batch writes** | Asks in every mode except `bypass`. Judged by the most dangerous entry, so a safe first file cannot clear a whole batch. |
+| **Anything outside the project** | Refused in `auto`; `manual` asks. Symlinks that point out of the directory are caught, not followed. Set `RIVINE_ALLOW_OUTSIDE_PROJECT=1` only if `auto` should be allowed to leave it. |
+| **Credentials** (`.env`, `*.pem`, `~/.ssh`, `~/.aws`, service-account key files) | Asks in `manual`; applies without a prompt in `auto`, on *read* too, because reading one puts a live secret into a prompt. |
+| **Hard-to-undo commands** (`rm -rf`, `git push`, `--force`, `git reset --hard`, `sudo`, `npm publish`, any deploy, `terraform apply`) | Asks in `manual`; applies without a prompt in `auto`. |
+| **Batch writes** | Asks in `manual`; applies without a prompt in `auto`. Judged by the most dangerous entry, so a safe first file cannot clear a whole batch. |
 
-The one exemption is `.rivine/`, the agent's own notebook for the project. It writes without asking (except in `plan` mode), the same way `.git/` does, and ships with its own git-ignore rule.
+The one exemption is `.rivine/`, the agent's own notebook for the project. It writes without asking (except in the `simple` Mode), the same way `.git/` does, and ships with its own git-ignore rule.
 
 ### Without a terminal
 
@@ -173,8 +164,8 @@ Piped, redirected, in CI or driven by another tool, `rivine -p "..."` switches t
 > **Note:** Anything that would prompt is **refused**, not auto-approved, and the refusal names the flag that would have allowed it.
 
 ```
-rivine -p "run the tests and fix what fails" -m acceptEdits
-rivine -p "..." --bypass    # CI, on a machine you accept changes to
+rivine -p "run the tests and fix what fails" --mode fullstack --rate auto
+rivine -p "review this branch" --mode simple    # read-only
 ```
 
 ## Sign-in
@@ -221,7 +212,7 @@ The files use the same shape as Cursor and Claude Code, so an existing `mcpServe
 ### How MCP tools are gated
 
 - **Every call asks.** An MCP tool can read a database, drive a browser or post to an API, so it is treated like a command.
-- **`plan` mode refuses MCP calls,** because a tool's description does not say whether it writes.
+- **The `simple` Mode refuses MCP calls,** because a tool's description does not say whether it writes.
 - **"Allow all this session" covers one server.** Approving Playwright never approves a database server that connects later.
 - **Failures are contained.** A broken server costs one line of text. The others still connect.
 - **Only the tools a turn needs.** An unrelated request gets no MCP tools, so fixing a typo does not hand the engine a browser. Naming a server (`use playwright to…`) always includes it, as a whole set. The session line shows which servers were used and which were skipped. This also saves cost, since every tool offered is tokens you pay for.
@@ -241,7 +232,7 @@ Your browser opens to the server's **own** sign-in page, and the token goes in y
 ## In CI
 
 ```bash
-rivine --output-format json -m bypass -p "fix the failing type errors"
+rivine --output-format json --rate auto -p "fix the failing type errors"
 ```
 
 In `json` mode **stdout carries exactly one object**. Everything else (tokens, notices, command output) goes to stderr, so stdout is safe to pipe into `jq`.
@@ -272,7 +263,7 @@ Store your pre-issued Rivine token as a repository secret named `RIVINE_TOKEN`. 
     prompt: fix the failing type errors
 ```
 
-- `mode` defaults to `bypass`, because a workflow has no terminal to approve anything and any other mode stops at the first write.
+- `rate` defaults to `auto`, because a workflow has no terminal to approve anything and `manual` stops at the first write.
 - Run it on a checkout you are willing to have changed, and review the diff before merging.
 
 > **Note:** One turn must finish within 15 minutes. Split long work across steps rather than raising the step timeout.
@@ -304,7 +295,7 @@ Nothing is required. These environment variables are for your own setup:
 |---|---|
 | `RIVINE_TOKEN` | A pre-issued token for CI. When set, no browser sign-in or keychain is used |
 | `RIVINE_NO_PTY` | Set to `1` to run commands without a real terminal |
-| `RIVINE_ALLOW_OUTSIDE_PROJECT` | Set to `1` only if `bypass` should be allowed to leave the project directory |
+| `RIVINE_ALLOW_OUTSIDE_PROJECT` | Set to `1` only if `auto` should be allowed to leave the project directory |
 | `RIVINE_ASCII` | Set to `1` for ASCII glyphs (narrow panes, no Unicode) |
 | `NO_COLOR` | Standard: turns colour off |
 

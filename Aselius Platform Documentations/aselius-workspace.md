@@ -324,7 +324,7 @@ Owners and Operators share from the Preview Panel **Share** tab, when enabled.
 - **Guardrails:** Rate limits and quotas per user and per engine, output cleaned of internal system details before it reaches your browser, and flagging of personal information on sensitive outputs.
 - **What we don't store:** Raw third-party credentials, voice input or raw media beyond what you upload, browsing history or IP logs for profiling, or long-term logs of agent decisions. Session logs are purged per your retention plan.
 
-For full details, see the [Security Disclosure](/aselius-platform/docs/security-disclosure). Report vulnerabilities to security@beunec.com.
+For full details, see the [Security Disclosure](/aselius-platform/docs/security-disclosure). Report vulnerabilities to contact@beunec.com or support@beunec.com.
 
 ## What is AI-powered vs not
 

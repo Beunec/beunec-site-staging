@@ -1,118 +1,118 @@
 {
-  "duration": 161.2,
+  "duration": 161,
   "wordsPerSecond": 2.5,
   "cues": [
     {
       "start": 0.65,
-      "end": 5.5,
+      "end": 5.58,
       "text": "Most AI gives you a reply. Aselius gives you the work.",
       "spoken": "Most AI gives you a reply. Aselius gives you the work."
     },
     {
-      "start": 6.8,
-      "end": 16.05,
+      "start": 6.76,
+      "end": 16.77,
       "text": "Aselius is agentic infrastructure software, run by specialized Rivine engines. Every result is a real file you can inspect, edit and export.",
       "spoken": "Aselius is agentic infrastructure software, run by specialized Rivine engines. Every result is a real file you can inspect, edit and export."
     },
     {
-      "start": 17.35,
-      "end": 23.8,
+      "start": 17.95,
+      "end": 27.18,
       "text": "Everything lives in one sidebar: your workspaces, Connector, Selius, Automations, Observability, Credits and Manage Teams.",
       "spoken": "Everything lives in one sidebar: your workspaces, Connector, Selius, Automations, Observability, Credits and Manage Teams."
     },
     {
-      "start": 25.1,
-      "end": 33.15,
+      "start": 28.35,
+      "end": 35.49,
       "text": "Inside a workspace, Taskspace is where work happens: the conversation on the left, the Preview Panel on the right.",
       "spoken": "Inside a workspace, Taskspace is where work happens: the conversation on the left, the Preview Panel on the right."
     },
     {
-      "start": 34.45,
-      "end": 44.9,
+      "start": 36.66,
+      "end": 48.41,
       "text": "Choose the Rivine engine for the job: TaskForce, Research, Code, Cicero, Creative, Confluence, Assist or Browse. The engine you pick is the engine that runs.",
       "spoken": "Choose the Rivine engine for the job: TaskForce, Research, Code, Cicero, Creative, Confluence, Assist or Browse. The engine you pick is the engine that runs."
     },
     {
-      "start": 46.2,
-      "end": 53.85,
+      "start": 49.58,
+      "end": 55.85,
       "text": "Set the engine and its specialty, then send. Or start from an Agent Note that already has both.",
       "spoken": "Set the engine and its specialty, then send. Or start from an Agent Note that already has both."
     },
     {
-      "start": 55.15,
-      "end": 62,
+      "start": 57.02,
+      "end": 62.67,
       "text": "Every step shows as it happens. Stop it any time; the trail stays with the thread.",
       "spoken": "Every step shows as it happens. Stop it any time; the trail stays with the thread."
     },
     {
-      "start": 63.3,
-      "end": 70.15,
+      "start": 63.84,
+      "end": 69.6,
       "text": "Before it acts in your apps, you approve the exact action. Nothing runs until you do.",
       "spoken": "Before it acts in your apps, you approve the exact action. Nothing runs until you do."
     },
     {
-      "start": 71.45,
-      "end": 75.9,
+      "start": 70.77,
+      "end": 74.27,
       "text": "If it needs you, it asks one question and waits.",
       "spoken": "If it needs you, it asks one question and waits."
     },
     {
-      "start": 77.2,
-      "end": 84.45,
+      "start": 75.45,
+      "end": 82.93,
       "text": "One turn. A whole launch kit: documents, data, media and the app, each one a real file.",
       "spoken": "One turn. A whole launch kit: documents, data, media and the app, each one a real file."
     },
     {
-      "start": 85.75,
-      "end": 93,
+      "start": 84.1,
+      "end": 91.61,
       "text": "Open any file exactly as generated: Word as pages, Excel as a grid, decks slide by slide.",
       "spoken": "Open any file exactly as generated: Word as pages, Excel as a grid, decks slide by slide."
     },
     {
-      "start": 94.3,
-      "end": 98.35,
+      "start": 92.78,
+      "end": 97.21,
       "text": "Edit with Rivine Assist. Then save, publish or export.",
       "spoken": "Edit with Rivine Assist. Then save, publish or export."
     },
     {
-      "start": 99.65,
-      "end": 106.5,
+      "start": 98.38,
+      "end": 104.28,
       "text": "Publish a snapshot with its own access code. Later edits stay private until you update it.",
       "spoken": "Publish a snapshot with its own access code. Later edits stay private until you update it."
     },
     {
-      "start": 107.8,
-      "end": 113.85,
+      "start": 105.45,
+      "end": 111.38,
       "text": "It opens on any device. No sign-in. Exactly as generated, with a Download button.",
       "spoken": "It opens on any device. No sign-in. Exactly as generated, with a Download button."
     },
     {
-      "start": 115.15,
-      "end": 119.6,
+      "start": 112.55,
+      "end": 116.4,
       "text": "Automations run on a schedule, even with your computer off.",
       "spoken": "Automations run on a schedule, even with your computer off."
     },
     {
-      "start": 120.9,
-      "end": 131.75,
+      "start": 117.57,
+      "end": 128.58,
       "text": "Use Aselius from any AI app. Connect Claude, Cursor or ChatGPT to Aselius MCP at workspace.beunec.com/mcp.",
       "spoken": "Use Aselius from any AI app. Connect Claude, Cursor or ChatGPT to Aselius M C P, at workspace dot beunec dot com slash M C P."
     },
     {
-      "start": 133.05,
-      "end": 145.1,
+      "start": 129.75,
+      "end": 142.53,
       "text": "The same engines, wherever you work: the web app, Rivine Browse, the Rivine Code CLI, Aselius MCP, your chat apps, and Selius by voice. One wallet across every surface.",
       "spoken": "The same engines, wherever you work: the web app, Rivine Browse, the Rivine Code CLI, Aselius MCP, your chat apps, and Selius by voice. One wallet across every surface."
     },
     {
-      "start": 146.4,
-      "end": 154.05,
+      "start": 143.7,
+      "end": 152.77,
       "text": "Not another Claude Cowork, ChatGPT Work or Kimi Work. Specialized engines, real deliverables, and you stay in control.",
       "spoken": "Not another Claude Cowork, ChatGPT Work or Kimi Work. Specialized engines, real deliverables, and you stay in control."
     },
     {
-      "start": 155.35,
-      "end": 159.8,
+      "start": 153.94,
+      "end": 159.92,
       "text": "Aselius. Agentic infrastructure software, at aselius.beunec.com.",
       "spoken": "Aselius. Agentic infrastructure software, at aselius dot beunec dot com."
     }

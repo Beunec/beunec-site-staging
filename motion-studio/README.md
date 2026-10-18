@@ -5,8 +5,8 @@ Source for the two videos on the site. Both are built only from real Aselius scr
 
 | Cut | Output | Length | Where it plays |
 | --- | --- | --- | --- |
-| `story` | `public/media/aselius-story.mp4` / `.webm`, `aselius-story.en.vtt`, `aselius-story-poster.webp` | 2:41, 1920x1080, 30 fps, 19 voice lines, 9 chapters | Aselius page (`#story`), docs index link |
-| `reel` | `public/media/aselius-reel.mp4` / `.webm`, `aselius-reel-poster.webp` | 18 s seamless loop, 1280x720 | Home page, Aselius gallery |
+| `story` | `public/media/aselius-story.mp4` / `.webm`, `aselius-story.en.vtt`, `aselius-story-poster.webp` | 2:41, 1920x1080, 30 fps, narrated, 19 voice lines, 9 chapters | Aselius page (`#story`), docs index link |
+| `reel` | `public/media/aselius-reel.mp4` / `.webm`, `aselius-reel-poster.webp` | 18 s narrated loop, 1280x720, plays muted with a sound toggle | Home page, Aselius gallery |
 
 ## Render
 
@@ -15,7 +15,7 @@ Needs Node, `ffmpeg` on `PATH`, the Inter font installed, and Playwright with a 
 ```bash
 npm i --no-save playwright           # once
 node motion-studio/render.mjs story  # full explainer, captions, chapters, poster
-node motion-studio/render.mjs reel   # the silent loop
+node motion-studio/render.mjs reel   # the loop
 node motion-studio/render.mjs story --stills 3,30,57   # check a few frames first (motion-studio/out)
 ```
 
@@ -36,7 +36,23 @@ node motion-studio/voiceover.mjs        # writes motion-studio/voiceover/
 - `voiceover/story-elevenlabs.txt`: the whole narration with timed `<break>` pauses, paste-ready.
 - The same files exist for the reel.
 
-When the audio is ready:
+### The recorded audio
+
+The recordings live in `motion-studio/audio/`. `explainer/measured.js` holds where each voice line
+starts and ends in them (found from the pauses in the read), and `scenes.js` times the picture to
+those numbers: every story scene lasts its real line plus an even breath, sized so the story ends
+with its music bed, and words, callouts and captions land on the measured pace of each line. Each
+reel screen cuts in just before its line.
+
+```bash
+# after rendering: cut the story read at the measured lines, then mux
+node motion-studio/mux-audio.mjs story --lines <folder of 01.wav ... 19.wav> --music motion-studio/audio/story-music.mp3
+node motion-studio/mux-audio.mjs reel --voice motion-studio/audio/reel-voiceover.mp3 --music motion-studio/audio/reel-music.mp3
+```
+
+If you record a new read, re-measure its lines into `measured.js`, re-render, and mux again.
+
+When new audio is ready:
 
 ```bash
 node motion-studio/mux-audio.mjs story --lines ./vo-story --music ./music-story.mp3

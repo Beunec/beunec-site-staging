@@ -25,12 +25,12 @@ Paste `reel-elevenlabs.txt` into ElevenLabs. It contains the full narration with
 
 | # | Starts | Ends by | Voice reads | Caption on screen |
 | --- | --- | --- | --- | --- |
-| 1 | 0:00.5 | 0:02.9 | Your work, in one taskspace. | Your work, in one taskspace. |
-| 2 | 0:03.5 | 0:05.0 | Every step, live. | Every step, live. |
-| 3 | 0:06.5 | 0:08.4 | Files, exactly as generated. | Files, exactly as generated. |
-| 4 | 0:09.5 | 0:11.8 | Publish with an access code. | Publish with an access code. |
-| 5 | 0:12.5 | 0:14.8 | Open it on any device. | Open it on any device. |
-| 6 | 0:15.5 | 0:17.4 | Even full code projects. | Even full code projects. |
+| 1 | 0:00.2 | 0:02.6 | Your work, in one taskspace. | Your work, in one taskspace. |
+| 2 | 0:03.2 | 0:04.8 | Every step, live. | Every step, live. |
+| 3 | 0:05.7 | 0:07.6 | Files, exactly as generated. | Files, exactly as generated. |
+| 4 | 0:08.8 | 0:11.1 | Publish with an access code. | Publish with an access code. |
+| 5 | 0:11.0 | 0:13.3 | Open it on any device. | Open it on any device. |
+| 6 | 0:13.1 | 0:15.1 | Even full code projects. | Even full code projects. |
 
 ## Background music prompt (ElevenLabs Music)
 

@@ -182,26 +182,38 @@
      narration, word for word. */
   const WPS = 2.5; // a natural ElevenLabs pace, about 150 words a minute
   const VO_IN = 0.75; // the voice starts this long into a scene
-  const VO_TAIL = 1.0; // a breath after the line, before the cut
   const CROSS = 0.6;
+  /* The recorded narration sets the real length of every line (measured.js).
+     The breath after each line is spread evenly so the story runs exactly as
+     long as its music bed. */
+  const MEASURED = (window.VO_MEASURED && window.VO_MEASURED[cut]) || [];
+  const STORY_TARGET = 161.04;
+  const measuredTotal = MEASURED.reduce((n, [a, b]) => n + (b - a), 0);
+  const VO_TAIL = cut === "story" && MEASURED.length
+    ? (STORY_TARGET - CROSS - measuredTotal) / MEASURED.length - VO_IN
+    : 1.0; // a breath after the line, before the cut
   const tokens = (str) => str.split(/\s+/).filter(Boolean);
   const bare = (w) => w.toLowerCase().replace(/[^a-z0-9]/g, "");
 
   /* Timing helper for one scene's voice line. `spoken` is what the voice
      reads (URLs spelled out); `say` is what the captions and screen show. */
+  let lineIndex = 0;
   function voice(say, spoken) {
     const words = tokens(spoken || say);
-    const len = words.length / WPS;
+    const m = MEASURED[lineIndex++];
+    const len = m ? m[1] - m[0] : words.length / WPS;
+    const step = len / words.length;
     return {
       len,
+      step,
       start: VO_IN,
       end: VO_IN + len,
-      at: (i) => VO_IN + i / WPS,
+      at: (i) => VO_IN + i * step,
       // local time at which a word (or the first word of a phrase) is spoken
       word(phrase, from = 0) {
         const want = tokens(phrase).map(bare);
         for (let i = from; i < words.length; i++) {
-          if (want.every((w, j) => bare(words[i + j] || "") === w)) return VO_IN + i / WPS;
+          if (want.every((w, j) => bare(words[i + j] || "") === w)) return VO_IN + i * step;
         }
         throw new Error(`"${phrase}" is not in the line: ${spoken || say}`);
       },
@@ -220,7 +232,7 @@
     const subAt = vo.at(tokens(head).length);
     return (t) => {
       fadeUp(k, t, 0.15, 0.6, 14);
-      playWords(hw, t, vo.start - 0.05, 1 / WPS, 0.55);
+      playWords(hw, t, vo.start - 0.05, vo.step, 0.55);
       if (s) fadeUp(s, t, subAt - 0.1, 0.7, 14);
     };
   }
@@ -268,8 +280,8 @@
       const kb = words(b, "Aselius gives you the work.", "the work");
       return (t) => {
         bg(t / dur);
-        playWords(ka, t, vo.start - 0.05, 1 / WPS, 0.6);
-        playWords(kb, t, vo.word("Aselius") - 0.05, 1 / WPS, 0.6);
+        playWords(ka, t, vo.start - 0.05, vo.step, 0.6);
+        playWords(kb, t, vo.word("Aselius") - 0.05, vo.step, 0.6);
       };
     });
 
@@ -290,7 +302,7 @@
         return (t) => {
           bg(t / dur);
           fadeUp(k, t, 0.15, 0.6, 14);
-          playWords(hw, t, vo.start - 0.05, 1 / WPS, 0.55);
+          playWords(hw, t, vo.start - 0.05, vo.step, 0.55);
           fadeUp(s, t, vo.word("Every") - 0.1, 0.7, 18);
         };
       });
@@ -375,7 +387,7 @@
         return (t) => {
           bg(t / dur);
           fadeUp(k, t, 0.15, 0.6, 14);
-          playWords(hw, t, vo.start - 0.05, 1 / WPS, 0.55);
+          playWords(hw, t, vo.start - 0.05, vo.step, 0.55);
           cards.forEach(({ c, at }) => fadeUp(c, t, at - 0.1, 0.6, 30));
           fadeUp(note, t, vo.word("The engine you pick") - 0.1, 0.7, 16);
         };
@@ -585,7 +597,7 @@
         return (t) => {
           bg(t / dur);
           fadeUp(k, t, 0.15, 0.6, 14);
-          playWords(hw, t, vo.start - 0.05, 1 / WPS, 0.55);
+          playWords(hw, t, vo.start - 0.05, vo.step, 0.55);
           fadeUp(s, t, vo.word("Connect") - 0.1, 0.7, 14);
           fadeUp(box, t, vo.word("Connect") - 0.2, 0.8, 30);
           fadeUp(lab, t, vo.word("Connect"), 0.6, 10);
@@ -628,7 +640,7 @@
         return (t) => {
           bg(t / dur);
           fadeUp(k, t, 0.15, 0.6, 14);
-          playWords(hw, t, vo.start - 0.05, 1 / WPS, 0.55);
+          playWords(hw, t, vo.start - 0.05, vo.step, 0.55);
           cards.forEach(({ c, at }) => fadeUp(c, t, at - 0.15, 0.6, 30));
           fadeUp(note, t, vo.word("One wallet") - 0.1, 0.7, 16);
         };
@@ -652,7 +664,7 @@
         return (t) => {
           bg(t / dur);
           fadeUp(k, t, 0.15, 0.6, 14);
-          playWords(ka, t, vo.start - 0.05, 1 / WPS, 0.6);
+          playWords(ka, t, vo.start - 0.05, vo.step, 0.6);
           fadeUp(b, t, vo.word("Specialized") - 0.1, 0.8, 18);
         };
       });
@@ -682,7 +694,7 @@
         const q = outExpo(prog(t, 0.2, 1.1));
         logo.style.opacity = String(q);
         logo.style.transform = `scale(${0.86 + 0.14 * q})`;
-        playWords(nw, t, vo.start - 0.05, 1 / WPS, 0.7);
+        playWords(nw, t, vo.start - 0.05, vo.step, 0.7);
         fadeUp(tag, t, vo.word("Agentic") - 0.1, 0.7, 16);
         fadeUp(url, t, vo.word("aselius dot") - 0.1, 0.7, 16);
         fadeUp(docs, t, vo.end + 0.2, 0.7, 16);
@@ -699,9 +711,11 @@
       ["preview-xlsx-desktop", 1280, 800, "preview.aselius.beunec.com", { x: 640, y: 400 }, { x: 600, y: 360 }],
       ["code-project-dark", 1280, 760, "Rivine Code project", { x: 640, y: 380 }, { x: 700, y: 330 }],
     ];
-    const SEG = 3;
+    // Each screen cuts in just before its voice line (measured.js) and the last runs to the loop point.
+    const STARTS = MEASURED.length ? MEASURED.map(([a], i) => (i ? Math.round((a - 0.3) * 100) / 100 : 0)) : REEL.map((_, i) => i * 3);
     REEL.forEach(([stem, iw, ih, label, a, b], i) => {
-      cursor = i * SEG;
+      cursor = STARTS[i];
+      const SEG = (STARTS[i + 1] ?? 18) - STARTS[i];
       scene({ min: SEG + CROSS }, (layer) => {
         const bg = lights(layer, [-500, -700, -200, -500], [600, 0, 300, -200]);
         const cam = camera(layer, stem, iw, ih, [

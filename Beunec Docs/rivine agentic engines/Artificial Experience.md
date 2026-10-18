@@ -9,6 +9,7 @@ Artificial Experience is the workspace memory of work under the Rivine engines i
 - **Never reused:** Live data (prices, weather, the clock) and actions such as writes, deploys, emails or messages.
 - **Scope:** Your workspace only. Another customer's work is never recalled into yours.
 - **Your control:** Say "live", "latest", "refresh" or "now" and that request skips memory and fetches fresh.
+- **Upkeep:** Managed automatically as your conversations grow. Memory you do not want is suppressed at once and deleted after 90 days, and can be brought back within that window.
 - **Where to see it:** Artificial Experience activity appears in [Observability](/aselius-platform/docs/observability).
 
 ## Why it exists
@@ -85,7 +86,11 @@ An empty section means that kind of event has not happened yet. It fills in as e
 - **Reads, not actions.** Only side-effect-free work is reused. Actions always run again.
 - **You override it.** "Live", "latest", "refresh" or "now" in a request makes that request fetch fresh instead of using memory.
 - **Bounded recall.** Only a small, ranked set of relevant memory enters a request, never your whole history.
-- **Deletion.** You can delete assets, taskspaces or a whole workspace from the UI; deleted workspaces are permanently removed within 30 days. See [Security disclosure](/aselius-platform/docs/security-disclosure).
+- **Managed for you.** Artificial Experience storage and its logs are not cleared by hand. A deterministic system maintains them as your conversations grow, so memory stays small and relevant without any housekeeping from you.
+- **Unwanted memory is suppressed, then deleted.** When context or memory you do not like is detected, it is suppressed straight away, so it no longer shapes your results, and it is permanently deleted after 90 days.
+- **Changed your mind?** Within those 90 days (on day 30 or day 60, for example), suppressed memory can be retrieved easily.
+- **Coming if you ask for it.** Per-workspace memory controls and a visual view of what is remembered may follow as more teams request them.
+- **Deleting your work.** You can delete assets, taskspaces or a whole workspace from the UI; deleted workspaces are permanently removed within 30 days. See [Security disclosure](/aselius-platform/docs/security-disclosure).
 
 ## Artificial Experience vs Context Extender
 
