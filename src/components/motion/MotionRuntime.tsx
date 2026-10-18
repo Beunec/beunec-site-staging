@@ -12,9 +12,10 @@ import { usePathname } from "next/navigation";
  * screen are never touched, so there is no flash, and with JavaScript off or
  * reduced motion requested nothing is ever hidden.
  *
- * In-view video: `<video data-inview>` loads its `data-src` only when it first
- * comes near the viewport, plays muted while visible and pauses when it leaves,
- * so an off-screen loop never costs CPU or bandwidth.
+ * In-view video: `<video data-inview>` loads its `data-src` (on the video or on
+ * its `<source>` children) only when it first comes near the viewport, plays
+ * muted while visible and pauses when it leaves, so an off-screen loop never
+ * costs CPU or bandwidth.
  */
 export function MotionRuntime() {
   const pathname = usePathname();
@@ -41,7 +42,11 @@ export function MotionRuntime() {
         for (const entry of entries) {
           const video = entry.target as HTMLVideoElement;
           if (entry.isIntersecting) {
-            if (video.dataset.src && !video.getAttribute("src")) {
+            const lazy = video.querySelectorAll<HTMLSourceElement>("source[data-src]:not([src])");
+            if (lazy.length) {
+              lazy.forEach((s) => (s.src = s.dataset.src!));
+              video.load();
+            } else if (video.dataset.src && !video.getAttribute("src")) {
               video.src = video.dataset.src;
               video.load();
             }

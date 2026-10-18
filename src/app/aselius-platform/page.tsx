@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ReelVideo } from "@/components/media/ReelVideo";
 import {
   ArrowRight,
   ArrowUpRight,
@@ -460,11 +461,14 @@ export default function AseliusPlatformPage() {
             />
             <div data-reveal="scale">
               <StoryVideo
-                src="/media/aselius-story.mp4"
+                sources={[
+                  { src: "/media/aselius-story.mp4", type: "video/mp4" },
+                  { src: "/media/aselius-story.webm", type: "video/webm" },
+                ]}
                 poster="/media/aselius-story-poster.webp"
                 captions="/media/aselius-story.en.vtt"
                 title="The Aselius story: what it is, how to use it, and where else it works"
-                duration="1:39"
+                duration="1:38"
                 chapters={CHAPTERS}
               />
             </div>
@@ -712,19 +716,7 @@ export default function AseliusPlatformPage() {
               body="Every frame below is a real screenshot of a live Aselius session. Filter by area, tilt a card, or open it full size and step through with the arrow keys."
             />
             <div className="sd-rise mb-12 overflow-hidden rounded-2xl border border-border bg-[#111111] shadow-[var(--shadow-soft)]">
-              <video
-                data-inview
-                data-src="/media/aselius-reel.mp4"
-                poster="/media/aselius-reel-poster.webp"
-                className="block aspect-video w-full"
-                muted
-                loop
-                playsInline
-                preload="none"
-                width={1280}
-                height={720}
-                aria-label="A silent loop of real Aselius screens: a taskspace, live engine steps, the Preview Panel, publishing, the Preview app and a Rivine Code project"
-              />
+              <ReelVideo />
             </div>
             <ShotGallery shots={SHOTS} filters />
           </div>

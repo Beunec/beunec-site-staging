@@ -6,7 +6,8 @@ import { Play } from "lucide-react";
 export type Chapter = { at: number; title: string };
 
 type StoryVideoProps = {
-  src: string;
+  /** Tried in order: put MP4 (H.264) first and WebM (VP9) after it. */
+  sources: { src: string; type: string }[];
   poster: string;
   captions: string;
   title: string;
@@ -20,7 +21,7 @@ type StoryVideoProps = {
  * controls and an English captions track come with it, and every word the video
  * says on screen is also in the captions file.
  */
-export function StoryVideo({ src, poster, captions, title, duration, chapters }: StoryVideoProps) {
+export function StoryVideo({ sources, poster, captions, title, duration, chapters }: StoryVideoProps) {
   const ref = useRef<HTMLVideoElement>(null);
   const [started, setStarted] = useState(false);
   const [now, setNow] = useState(0);
@@ -43,7 +44,6 @@ export function StoryVideo({ src, poster, captions, title, duration, chapters }:
         <video
           ref={ref}
           className="block aspect-video w-full"
-          src={src}
           poster={poster}
           preload="none"
           playsInline
@@ -52,6 +52,9 @@ export function StoryVideo({ src, poster, captions, title, duration, chapters }:
           onPlay={() => setStarted(true)}
           aria-label={title}
         >
+          {sources.map((s) => (
+            <source key={s.src} src={s.src} type={s.type} />
+          ))}
           <track kind="captions" src={captions} srcLang="en" label="English" default />
         </video>
         {!started && (

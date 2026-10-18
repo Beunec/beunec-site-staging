@@ -574,7 +574,7 @@
   window.CHAPTERS = CHAPTERS;
   window.CAPTIONS = scenes
     .filter((s) => s.say)
-    .map((s) => ({ start: s.start + 0.3, end: Math.min(DURATION, s.start + s.dur - 0.2), text: s.say }));
+    .map((s) => ({ start: s.start + 0.3, end: Math.min(DURATION, s.start + s.dur - 0.35), text: s.say }));
   window.ready = Promise.all([
     document.fonts.ready,
     ...images.map((i) => (i.complete ? Promise.resolve() : new Promise((r) => { i.onload = r; i.onerror = r; }))),

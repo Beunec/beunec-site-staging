@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ReelVideo } from "@/components/media/ReelVideo";
 import { ArrowRight } from "lucide-react";
 
 /** Home teaser for Aselius: a silent loop of real screens that only loads and plays while on screen. */
@@ -36,19 +37,7 @@ export function AseliusInMotion() {
 
           <div className="lg:col-span-8">
             <div className="sd-rise overflow-hidden rounded-2xl border border-border bg-[#111111] shadow-[var(--shadow-soft)]">
-              <video
-                data-inview
-                data-src="/media/aselius-reel.mp4"
-                poster="/media/aselius-reel-poster.webp"
-                className="block aspect-video w-full"
-                muted
-                loop
-                playsInline
-                preload="none"
-                width={1280}
-                height={720}
-                aria-label="A silent loop of real Aselius screens: a taskspace, live engine steps, the Preview Panel, publishing, the Preview app and a Rivine Code project"
-              />
+              <ReelVideo />
             </div>
             <p className="mt-3 text-xs text-muted-foreground">
               Every frame is a real Aselius screenshot. Loops silently while on screen.
