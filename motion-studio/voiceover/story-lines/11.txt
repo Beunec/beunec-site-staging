@@ -1,0 +1,1 @@
+Open any file exactly as generated: Word as pages, Excel as a grid, decks slide by slide.

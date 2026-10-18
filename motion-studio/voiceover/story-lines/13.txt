@@ -1,0 +1,1 @@
+Publish a snapshot with its own access code. Later edits stay private until you update it.

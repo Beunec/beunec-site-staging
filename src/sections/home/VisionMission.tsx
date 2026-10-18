@@ -35,7 +35,7 @@ export const VisionMission = () => {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20 md:py-28 space-y-20">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
           <div data-reveal className="lg:col-span-5">
-            <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-accent-slate mb-5">
+            <p className="font-mono text-sm uppercase tracking-[0.14em] text-accent-slate mb-5">
               Our definition
             </p>
             <h2 className="text-3xl sm:text-4xl font-medium tracking-tight text-foreground leading-tight">
@@ -90,7 +90,7 @@ export const VisionMission = () => {
                   <span className="text-foreground group-hover:text-accent-sage transition-colors">
                     {item.title}
                   </span>
-                  <span className="text-xs uppercase tracking-wider text-muted-foreground shrink-0">
+                  <span className="text-sm uppercase tracking-wider text-muted-foreground shrink-0">
                     {item.tag}
                   </span>
                 </Link>

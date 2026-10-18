@@ -24,7 +24,7 @@ export default function CompanyPage() {
                         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-end mb-14 md:mb-16">
                             <div className="lg:col-span-7 text-center lg:text-left">
                                 <p
-                                    className="kt-fade font-mono text-[11px] uppercase tracking-[0.18em] text-accent-slate mb-6"
+                                    className="kt-fade font-mono text-sm uppercase tracking-[0.14em] text-accent-slate mb-6"
                                     style={{ ["--d" as string]: "0s" }}
                                 >
                                     Who We Are
@@ -82,7 +82,7 @@ export default function CompanyPage() {
                         <div className="grid lg:grid-cols-2 gap-16 items-center">
                             <div data-reveal
                                 className="space-y-8">
-                                <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-accent-slate">
+                                <p className="font-mono text-sm uppercase tracking-[0.14em] text-accent-slate">
                                     Our approach
                                 </p>
                                 <p className="text-lg md:text-lg text-muted-foreground leading-relaxed">
@@ -136,7 +136,7 @@ export default function CompanyPage() {
                             </div>
                             <div data-reveal
                                 className="order-1 lg:order-2 space-y-8">
-                                <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-accent-slate">
+                                <p className="font-mono text-sm uppercase tracking-[0.14em] text-accent-slate">
                                     What guides us
                                 </p>
                                 <h2 className="text-3xl md:text-4xl font-extrabold text-foreground tracking-tight leading-[1.1]">
@@ -166,7 +166,7 @@ export default function CompanyPage() {
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div data-reveal
                             className="max-w-3xl mb-14">
-                            <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-accent-slate mb-6">
+                            <p className="font-mono text-sm uppercase tracking-[0.14em] text-accent-slate mb-6">
                                 Value
                             </p>
                             <h2 className="text-3xl md:text-4xl font-extrabold text-foreground tracking-tight leading-[1.1] mb-6">
@@ -226,7 +226,7 @@ export default function CompanyPage() {
                             <div data-reveal
                                 className="space-y-8">
                                 <div>
-                                    <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-accent-slate mb-6">
+                                    <p className="font-mono text-sm uppercase tracking-[0.14em] text-accent-slate mb-6">
                                         Commitment
                                     </p>
                                     <h2 className="text-3xl md:text-4xl font-extrabold text-foreground tracking-tight leading-[1.1] mb-6">
@@ -397,7 +397,7 @@ export default function CompanyPage() {
                                                                     : color.hex,
                                                             }}
                                                         />
-                                                        <div className="text-xs">
+                                                        <div className="text-sm">
                                                             <div className="font-bold">{color.name}</div>
                                                             <div className="text-muted-foreground">{color.hex}</div>
                                                         </div>

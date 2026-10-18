@@ -21,6 +21,16 @@ const researchLinks = [
 	{ label: "Brolostack", href: "/brolostack-project" },
 ];
 
+const aseliusLinks = [
+	{ label: "Overview", href: "/aselius-platform" },
+	{ label: "Watch the story", href: "/aselius-platform#story" },
+	{ label: "Documentation", href: "/aselius-platform/docs" },
+	{ label: "Use from any AI app (MCP)", href: "/aselius-platform/docs/aselius-mcp" },
+	{ label: "How Aselius compares", href: "/aselius-platform/docs/comparison" },
+	{ label: "Plans & pricing", href: "/aselius-platform/docs/plans-pricing" },
+	{ label: "Open Aselius ↗", href: ASELIUS_APP },
+];
+
 const companyLinks = [
 	{ label: "About", href: "/company" },
 	{ label: "Research Philosophy", href: "/research-philosophy" },
@@ -112,6 +122,7 @@ export function Header() {
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 	const [mobileResearchOpen, setMobileResearchOpen] = useState(false);
 	const [mobileCompanyOpen, setMobileCompanyOpen] = useState(false);
+	const [mobileAseliusOpen, setMobileAseliusOpen] = useState(false);
 
 	useEffect(() => {
 		const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -156,12 +167,11 @@ export function Header() {
 								contentClassName="min-w-[12rem]"
 							/>
 
-							<Link
-								href="/aselius-platform"
-								className="px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-200 rounded-lg hover:bg-secondary"
-							>
-								Aselius Software
-							</Link>
+							<HoverNavDropdown
+								label="Aselius Software"
+								links={aseliusLinks}
+								contentClassName="min-w-[16rem]"
+							/>
 
 							<Link
 								href="/principles"
@@ -199,7 +209,8 @@ export function Header() {
 								size="icon"
 								className="lg:hidden"
 								onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-								aria-label="Toggle menu"
+								aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+								aria-expanded={isMobileMenuOpen}
 							>
 								{isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
 							</Button>
@@ -228,7 +239,8 @@ export function Header() {
 								</div>
 								<button
 									type="button"
-									className="flex items-center justify-between px-4 py-3 text-sm font-medium text-muted-foreground"
+									className="flex items-center justify-between px-4 py-3 text-base font-medium text-muted-foreground"
+									aria-expanded={mobileResearchOpen}
 									onClick={() => setMobileResearchOpen(!mobileResearchOpen)}
 								>
 									Research
@@ -239,23 +251,36 @@ export function Header() {
 										<Link
 											key={l.href}
 											href={l.href}
-											className="px-8 py-2 text-sm text-muted-foreground hover:text-foreground"
+											className="px-8 py-2.5 text-base text-muted-foreground hover:text-foreground"
 											onClick={() => setIsMobileMenuOpen(false)}
 										>
 											{l.label}
 										</Link>
 									))}
 
-								<Link
-									href="/aselius-platform"
-									className="px-4 py-3 text-sm font-medium text-muted-foreground hover:text-foreground"
-									onClick={() => setIsMobileMenuOpen(false)}
+								<button
+									type="button"
+									className="flex items-center justify-between px-4 py-3 text-base font-medium text-muted-foreground"
+									aria-expanded={mobileAseliusOpen}
+									onClick={() => setMobileAseliusOpen(!mobileAseliusOpen)}
 								>
 									Aselius Software
-								</Link>
+									<ChevronDown className={`w-4 h-4 transition-transform ${mobileAseliusOpen ? "rotate-180" : ""}`} />
+								</button>
+								{mobileAseliusOpen &&
+									aseliusLinks.map((l) => (
+										<Link
+											key={l.href}
+											href={l.href}
+											className="px-8 py-2.5 text-base text-muted-foreground hover:text-foreground"
+											onClick={() => setIsMobileMenuOpen(false)}
+										>
+											{l.label}
+										</Link>
+									))}
 								<Link
 									href="/principles"
-									className="px-4 py-3 text-sm font-medium text-muted-foreground hover:text-foreground"
+									className="px-4 py-3 text-base font-medium text-muted-foreground hover:text-foreground"
 									onClick={() => setIsMobileMenuOpen(false)}
 								>
 									Principles
@@ -263,7 +288,8 @@ export function Header() {
 
 								<button
 									type="button"
-									className="flex items-center justify-between px-4 py-3 text-sm font-medium text-muted-foreground"
+									className="flex items-center justify-between px-4 py-3 text-base font-medium text-muted-foreground"
+									aria-expanded={mobileCompanyOpen}
 									onClick={() => setMobileCompanyOpen(!mobileCompanyOpen)}
 								>
 									Company
@@ -274,7 +300,7 @@ export function Header() {
 										<Link
 											key={l.href}
 											href={l.href}
-											className="px-8 py-2 text-sm text-muted-foreground hover:text-foreground"
+											className="px-8 py-2.5 text-base text-muted-foreground hover:text-foreground"
 											onClick={() => setIsMobileMenuOpen(false)}
 										>
 											{l.label}
@@ -283,7 +309,7 @@ export function Header() {
 
 								<Link
 									href="/resources"
-									className="px-4 py-3 text-sm font-medium text-muted-foreground hover:text-foreground"
+									className="px-4 py-3 text-base font-medium text-muted-foreground hover:text-foreground"
 									onClick={() => setIsMobileMenuOpen(false)}
 								>
 									Resources

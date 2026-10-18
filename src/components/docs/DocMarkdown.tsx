@@ -4,15 +4,12 @@ import Link from "next/link";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { MermaidBlock } from "@/components/docs/MermaidBlock";
+import { slugifyHeading } from "@/lib/doc-structure";
 
+// Numbered sections alternate the two brand accents, nothing outside the theme.
 const PRINCIPLE_ACCENTS = [
-  { bar: "#6b7a6e", soft: "rgba(107,122,110,0.12)", chip: "#6b7a6e" },
-  { bar: "#7a8b99", soft: "rgba(122,139,153,0.14)", chip: "#7a8b99" },
-  { bar: "#8a7a62", soft: "rgba(138,122,98,0.14)", chip: "#8a7a62" },
-  { bar: "#5f6f68", soft: "rgba(95,111,104,0.14)", chip: "#5f6f68" },
-  { bar: "#6d7f8c", soft: "rgba(109,127,140,0.14)", chip: "#6d7f8c" },
-  { bar: "#7a6f5d", soft: "rgba(122,111,93,0.14)", chip: "#7a6f5d" },
-  { bar: "#667a70", soft: "rgba(102,122,112,0.14)", chip: "#667a70" },
+  { bar: "var(--accent-sage)", soft: "color-mix(in srgb, var(--accent-sage) 12%, transparent)", chip: "var(--accent-sage)" },
+  { bar: "var(--accent-slate)", soft: "color-mix(in srgb, var(--accent-slate) 14%, transparent)", chip: "var(--accent-slate)" },
 ];
 
 function nodeText(node: ReactNode): string {
@@ -57,6 +54,8 @@ const components: Components = {
     if (accent) {
       return (
         <h2
+          id={slugifyHeading(plain)}
+          data-reveal
           className="mt-14 mb-5 scroll-mt-28 rounded-2xl border border-border px-5 py-4 text-xl sm:text-2xl font-bold tracking-tight text-foreground flex items-start gap-4"
           style={{
             background: accent.soft,
@@ -65,7 +64,7 @@ const components: Components = {
           }}
         >
           <span
-            className="shrink-0 mt-0.5 inline-flex h-8 min-w-8 items-center justify-center rounded-full text-xs font-bold px-2"
+            className="shrink-0 mt-0.5 inline-flex h-8 min-w-8 items-center justify-center rounded-full text-sm font-bold px-2"
             style={{ background: accent.chip, color: "#f4f4f0" }}
           >
             {accent.num}
@@ -75,13 +74,17 @@ const components: Components = {
       );
     }
     return (
-      <h2 className="mt-12 mb-4 text-2xl sm:text-3xl font-bold tracking-tight text-foreground border-b border-border pb-3">
+      <h2
+        id={slugifyHeading(plain)}
+        data-reveal
+        className="mt-14 mb-5 scroll-mt-28 text-2xl sm:text-3xl font-bold tracking-tight text-foreground border-b border-border pb-3"
+      >
         {children}
       </h2>
     );
   },
   h3: ({ children }) => (
-    <h3 className="mt-8 mb-3 text-xl font-semibold text-foreground tracking-tight">
+    <h3 className="mt-8 mb-3 scroll-mt-28 text-xl font-semibold text-foreground tracking-tight">
       {children}
     </h3>
   ),
@@ -93,7 +96,7 @@ const components: Components = {
   strong: ({ children }) => (
     <strong
       className="font-semibold text-foreground px-1 rounded-sm"
-      style={{ background: "rgba(107,122,110,0.14)" }}
+      style={{ background: "color-mix(in srgb, var(--accent-sage) 14%, transparent)" }}
     >
       {children}
     </strong>
@@ -103,34 +106,24 @@ const components: Components = {
   ),
   blockquote: ({ children }) => (
     <blockquote
-      className="my-8 rounded-2xl border border-border px-6 py-5 relative overflow-hidden"
+      data-reveal
+      className="doc-callout my-8 rounded-2xl border border-border border-l-4 px-6 py-5 [&_p]:mb-0 [&_p]:text-base [&_p]:text-foreground [&_p]:leading-relaxed"
       style={{
+        borderLeftColor: "var(--accent-sage)",
         background:
-          "linear-gradient(135deg, rgba(107,122,110,0.12), rgba(122,139,153,0.08))",
+          "linear-gradient(135deg, color-mix(in srgb, var(--accent-sage) 12%, transparent), color-mix(in srgb, var(--accent-slate) 8%, transparent))",
       }}
     >
-      <span
-        aria-hidden
-        className="absolute top-3 left-4 text-4xl leading-none font-serif select-none"
-        style={{ color: "rgba(107,122,110,0.35)" }}
-      >
-        “
-      </span>
-      <div className="pl-4 text-foreground [&_p]:mb-0 [&_p]:text-foreground [&_p]:leading-relaxed [&_p]:text-base sm:[&_p]:text-lg [&_p]:font-medium">
-        {children}
-      </div>
+      {children}
     </blockquote>
   ),
   ul: ({ children }) => (
     <ul className="my-5 space-y-2.5 pl-0 list-none doc-md-ul">{children}</ul>
   ),
-  ol: ({ children }) => (
-    <ol className="my-5 space-y-2.5 list-decimal pl-6 marker:font-semibold doc-md-ol [&]:marker:[color:var(--accent-sage)]">
-      {children}
-    </ol>
-  ),
+  // Numbered lists are steps: a counter in a sage disc on a vertical rail.
+  ol: ({ children }) => <ol className="doc-steps my-7 list-none pl-0 doc-md-ol">{children}</ol>,
   li: ({ children }) => (
-    <li className="text-muted-foreground leading-relaxed doc-md-li">
+    <li data-reveal="left" className="text-base text-muted-foreground leading-relaxed doc-md-li">
       <span className="doc-md-li-dot mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent-sage" aria-hidden />
       <span className="min-w-0">{children}</span>
     </li>
@@ -171,7 +164,7 @@ const components: Components = {
       );
     }
     return (
-      <code className="rounded-md bg-container border border-border px-1.5 py-0.5 font-mono text-[0.85em] text-accent-sage">
+      <code className="rounded-md bg-container border border-border px-1.5 py-0.5 font-mono text-[max(14px,0.9em)] text-accent-sage">
         {children}
       </code>
     );
@@ -179,7 +172,11 @@ const components: Components = {
   pre: ({ children }) => {
     const kid = Array.isArray(children) ? children[0] : children;
     if (isMermaidCode(kid)) {
-      return <MermaidBlock chart={nodeText(kid.props.children)} />;
+      return (
+        <div data-reveal="scale">
+          <MermaidBlock chart={nodeText(kid.props.children)} />
+        </div>
+      );
     }
     return (
       <pre className="my-6 overflow-x-auto rounded-2xl border border-border bg-[color:var(--surface-ink)] dark:bg-[color:var(--surface-ink-deep)] p-5 text-sm leading-relaxed">
@@ -188,8 +185,8 @@ const components: Components = {
     );
   },
   table: ({ children }) => (
-    <div className="my-8 overflow-x-auto rounded-2xl border border-border">
-      <table className="w-full text-sm">{children}</table>
+    <div data-reveal className="my-8 overflow-x-auto rounded-2xl border border-border">
+      <table className="w-full text-sm sm:text-[15px]">{children}</table>
     </div>
   ),
   thead: ({ children }) => (

@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Aselius Platform",
+  title: "Aselius: agentic infrastructure software",
   description:
-    "Aselius is Beunec’s software-as-a-service platform for governed agentic work, collaboration, and knowledge. Open it at aselius.beunec.com.",
+    "Aselius is Beunec's agentic infrastructure software: specialized Rivine engines run governed work and hand you real deliverables. Use it on the web, from any AI app through Aselius MCP, in your browser, terminal and chat apps. Open it at aselius.beunec.com.",
 };
 
 export default function AseliusPlatformLayout({

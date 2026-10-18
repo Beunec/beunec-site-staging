@@ -8,7 +8,7 @@ export function LatestReleases() {
     <section className="w-full border-t border-border">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20 md:py-28">
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10">
-          <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-accent-slate">
+          <p className="font-mono text-sm uppercase tracking-[0.14em] text-accent-slate">
             Latest releases
           </p>
           <Link
@@ -38,11 +38,11 @@ export function LatestReleases() {
                   {r.body}
                 </p>
                 <div className="space-y-3 border-t border-border pt-4 mb-6">
-                  <div className="flex justify-between text-xs">
+                  <div className="flex justify-between text-sm">
                     <span className="uppercase tracking-wider text-muted-foreground">Date</span>
                     <span className="text-foreground">{r.date}</span>
                   </div>
-                  <div className="flex justify-between text-xs">
+                  <div className="flex justify-between text-sm">
                     <span className="uppercase tracking-wider text-muted-foreground">Category</span>
                     <span className="text-foreground">{r.category}</span>
                   </div>

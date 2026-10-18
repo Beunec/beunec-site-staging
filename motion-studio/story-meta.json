@@ -1,0 +1,41 @@
+{
+  "duration": 161.2,
+  "chapters": [
+    {
+      "at": 0,
+      "title": "What Aselius is"
+    },
+    {
+      "at": 16.7,
+      "title": "Find your way around"
+    },
+    {
+      "at": 33.8,
+      "title": "Pick an engine"
+    },
+    {
+      "at": 54.5,
+      "title": "Watch it work"
+    },
+    {
+      "at": 76.5,
+      "title": "Deliverables, not chat"
+    },
+    {
+      "at": 99,
+      "title": "Share it anywhere"
+    },
+    {
+      "at": 114.5,
+      "title": "Beyond the browser tab"
+    },
+    {
+      "at": 145.8,
+      "title": "Why Aselius"
+    },
+    {
+      "at": 154.7,
+      "title": "Get started"
+    }
+  ]
+}

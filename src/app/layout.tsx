@@ -25,7 +25,7 @@ export const metadata: Metadata = {
         template: "%s | Beunec",
     },
     description:
-        "Beunec is a research and deployment organization building Agentic Infrastructure. Aselius, our SaaS platform, runs governed agentic work through specialized Rivine engines (research, code, documents, and creative), with every result inspectable, editable, and yours to export.",
+        "Beunec is a research and deployment organization building Agentic Infrastructure. Aselius, our agentic infrastructure software, runs governed agentic work through specialized Rivine engines (research, code, documents, and creative), with every result inspectable, editable, and yours to export.",
     keywords: [
         "Beunec",
         "Beunec Technologies",
@@ -196,7 +196,7 @@ export default function RootLayout({
                 "url": "https://beunec.co/aselius-platform",
                 "applicationCategory": "BusinessApplication",
                 "operatingSystem": "Web",
-                "description": "Aselius is Beunec's governed agentic workspace, where specialized Rivine engines research, code, draft, and create, producing inspectable, editable, and exportable deliverables.",
+                "description": "Aselius is Beunec's agentic infrastructure software: specialized Rivine engines research, code, draft, and create, producing inspectable, editable, and exportable deliverables. Use it on the web, in your browser, in your terminal, in chat apps, or from any AI app through Aselius MCP.",
                 "releaseDate": "2026-08-10",
                 "publisher": {
                     "@id": "https://beunec.co/company",

@@ -247,6 +247,51 @@
     display: none;
   }
 
+  /* Long URLs, paths and identifiers in prose wrap instead of widening the page */
+  .doc-markdown p,
+  .doc-markdown li,
+  .doc-markdown td,
+  .doc-markdown code {
+    overflow-wrap: break-word;
+  }
+
+  /* Numbered steps: a counter disc on a vertical rail */
+  .doc-markdown .doc-steps {
+    counter-reset: doc-step;
+    position: relative;
+  }
+  .doc-markdown .doc-steps > li {
+    counter-increment: doc-step;
+    position: relative;
+    display: block;
+    padding: 0.15rem 0 1.15rem 3rem;
+  }
+  .doc-markdown .doc-steps > li::before {
+    content: counter(doc-step);
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: flex;
+    width: 2rem;
+    height: 2rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    background: var(--accent-sage);
+    color: #ffffff;
+    font-size: 0.875rem;
+    font-weight: 700;
+  }
+  .doc-markdown .doc-steps > li:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    left: calc(1rem - 1px);
+    top: 2.25rem;
+    bottom: 0.2rem;
+    width: 2px;
+    background: color-mix(in srgb, var(--accent-sage) 30%, transparent);
+  }
+
   /* Code blocks are always on a charcoal surface, so give text selection
      inside them a legible highlight instead of the browser's default. */
   pre ::selection,
@@ -593,6 +638,12 @@ body.translated-rtl {
   .tour-copy {
     animation: none !important;
   }
+}
+
+/* Standalone text links (arrow links, "Read the guide") get a comfortable tap
+   height; links inside sentences keep their natural line height. */
+main a[class~="inline-flex"]:not([class*="py-"]):not([class*=" h-"]) {
+  padding-block: 0.25rem;
 }
 
 @media print {

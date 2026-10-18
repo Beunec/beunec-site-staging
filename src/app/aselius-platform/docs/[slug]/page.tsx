@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { DocMarkdown } from "@/components/docs/DocMarkdown";
+import { DocHero } from "@/components/docs/DocHero";
+import { DocToc } from "@/components/docs/DocToc";
 import { DocShots } from "@/components/docs/DocShots";
 import { shotsForDoc } from "@/lib/aselius-media";
+import { parseDoc } from "@/lib/doc-structure";
 import {
   getAseliusDoc,
   getInternalAseliusDocs,
@@ -23,7 +26,7 @@ export async function generateMetadata({
   const { slug } = await params;
   const doc = getAseliusDoc(slug);
   if (!doc || doc.externalHref) return {};
-  return { title: doc.title, description: doc.blurb };
+  return { title: `${doc.title} · Aselius docs`, description: doc.blurb };
 }
 
 export default async function AseliusDocPage({
@@ -35,27 +38,24 @@ export default async function AseliusDocPage({
   const doc = getAseliusDoc(slug);
   if (!doc || doc.externalHref || !doc.file) notFound();
 
-  const markdown = readAseliusDoc(doc);
+  const parsed = parseDoc(readAseliusDoc(doc));
   const shots = shotsForDoc(doc.slug);
-  if (shots.length === 0) return <DocMarkdown content={markdown} />;
 
-  // Screens go right after the introduction, before the first section, so a
-  // reader sees the product before the detail. Never split inside a code fence.
-  const cut = markdown.indexOf("\n## ");
-  const fencesBefore = cut > 0 ? (markdown.slice(0, cut).match(/^```/gm) ?? []).length : 1;
-  if (cut <= 0 || fencesBefore % 2 === 1) {
-    return (
-      <>
-        <DocMarkdown content={markdown} />
-        <DocShots shots={shots} />
-      </>
-    );
-  }
   return (
-    <>
-      <DocMarkdown content={markdown.slice(0, cut)} />
-      <DocShots shots={shots} />
-      <DocMarkdown content={markdown.slice(cut + 1)} />
-    </>
+    <div className="xl:grid xl:grid-cols-[minmax(0,1fr)_13rem] xl:gap-12">
+      <div className="min-w-0">
+        <DocHero
+          title={parsed.title ?? doc.title}
+          lead={parsed.lead}
+          glance={parsed.glance}
+          eyebrow={doc.group ?? "Aselius"}
+        />
+        <DocShots shots={shots} />
+        <DocMarkdown content={parsed.body} />
+      </div>
+      <aside className="hidden xl:block">
+        <DocToc sections={parsed.sections} />
+      </aside>
+    </div>
   );
 }

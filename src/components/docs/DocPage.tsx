@@ -17,7 +17,7 @@ export function DocPage({ file, eyebrow }: DocPageProps) {
       <Header />
       <main className="pt-28 md:pt-32 pb-20 md:pb-28 px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mx-auto">
-          <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-accent-slate mb-8">
+          <p className="font-mono text-sm uppercase tracking-[0.14em] text-accent-slate mb-8">
             {eyebrow}
           </p>
           <DocMarkdown content={markdown} />

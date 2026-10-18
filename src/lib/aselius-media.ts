@@ -47,7 +47,7 @@ export const SHOTS: Shot[] = [
     dark: "workspace-thread-dark",
     w: 1440,
     h: 900,
-    docs: ["workspace", "rivine-taskforce"],
+    docs: ["workspace", "rivine-taskforce", "comparison"],
   },
   {
     id: "workspace-xlsx",
@@ -129,7 +129,7 @@ export const SHOTS: Shot[] = [
     src: "engine-running-light",
     w: 1440,
     h: 900,
-    docs: ["rivine-taskforce", "workspace"],
+    docs: ["rivine-taskforce", "workspace", "comparison"],
   },
   {
     id: "engine-trail",
@@ -183,7 +183,7 @@ export const SHOTS: Shot[] = [
     dark: "hitl-app-action-dark",
     w: 768,
     h: 431,
-    docs: ["rivine-taskforce", "workspace"],
+    docs: ["rivine-taskforce", "workspace", "comparison"],
   },
   {
     id: "connectors",
@@ -215,7 +215,7 @@ export const SHOTS: Shot[] = [
     src: "publish-dialog-light",
     w: 1440,
     h: 900,
-    docs: ["preview-app", "workspace"],
+    docs: ["preview-app", "workspace", "comparison"],
   },
   {
     id: "preview-docx",

@@ -31,7 +31,7 @@ const CY = 270;
 /** Beunec Agentic Infrastructure mind-field: labels & blurbs from Beunec Docs. */
 const NODES: MapNode[] = [
   { id: "n1", kind: "text", label: "What is the Future of Work?", x: 120, y: 70, drift: 0 },
-  { id: "n2", kind: "text", label: "How does Rivine Orchestration works?", x: 880, y: 90, drift: 1 },
+  { id: "n2", kind: "text", label: "How does Rivine Orchestration work?", x: 880, y: 90, drift: 1 },
   { id: "n3", kind: "text", label: "Self-Awareness Must Precede Safety", x: 80, y: 260, drift: 2 },
   { id: "n4", kind: "text", label: "Who is accountable", x: 900, y: 280, drift: 3 },
   { id: "n5", kind: "text", label: "Solution Agent", x: 140, y: 450, drift: 4 },
@@ -105,8 +105,8 @@ function wrapLabel(text: string, maxChars: number): string[] {
 
 /** Layered abstract-art glyphs (gradient fills + organic accents) instead of flat icon outlines. */
 function Glyph({ type, hot }: { type: MapNode["glyph"]; hot: boolean }) {
-  const stroke = hot ? "var(--accent-sage)" : "rgba(230,226,216,0.55)";
-  const accent = hot ? "rgba(230,226,216,0.4)" : "rgba(230,226,216,0.14)";
+  const stroke = hot ? "var(--accent-sage)" : "rgba(232,234,237,0.55)";
+  const accent = hot ? "rgba(232,234,237,0.4)" : "rgba(232,234,237,0.14)";
 
   switch (type) {
     case "hex":
@@ -176,7 +176,7 @@ function Glyph({ type, hot }: { type: MapNode["glyph"]; hot: boolean }) {
         <g>
           <circle r="15" fill="url(#glyph-grad-c)" stroke={stroke} strokeWidth="1.15" />
           <circle r="9" fill="none" stroke={stroke} strokeOpacity="0.5" strokeWidth="0.85" />
-          <circle r="4" fill={hot ? stroke : "rgba(230,226,216,0.5)"} fillOpacity={hot ? 0.9 : 0.6} />
+          <circle r="4" fill={hot ? stroke : "rgba(232,234,237,0.5)"} fillOpacity={hot ? 0.9 : 0.6} />
         </g>
       );
   }
@@ -248,8 +248,8 @@ function BubbleNode({
             width={labelW}
             height={32}
             rx={16}
-            fill={hot ? "rgba(107,122,110,0.28)" : "rgba(28,30,26,0.92)"}
-            stroke={hot ? "var(--accent-sage)" : "rgba(230,226,216,0.18)"}
+            fill={hot ? "rgba(107,122,110,0.28)" : "rgba(29,29,29,0.92)"}
+            stroke={hot ? "var(--accent-sage)" : "rgba(232,234,237,0.18)"}
             strokeWidth={1.15}
             animate={reduceMotion ? { strokeOpacity: 0.5 } : { strokeOpacity: [0.35, 0.65, 0.35] }}
             transition={
@@ -407,13 +407,13 @@ function NodePopup({ node, onDismiss }: { node: MapNode; onDismiss: () => void }
         width={width}
         height={height}
         rx={height / 2}
-        fill="rgba(20,21,18,0.97)"
+        fill="rgba(17,17,17,0.97)"
         stroke="var(--accent-sage)"
         strokeWidth={1.2}
       />
       <path
         d={`M -5 ${height / 2 - 1} L 0 ${height / 2 + 7} L 5 ${height / 2 - 1} Z`}
-        fill="rgba(20,21,18,0.97)"
+        fill="rgba(17,17,17,0.97)"
         stroke="var(--accent-sage)"
         strokeWidth={1}
       />
@@ -509,7 +509,8 @@ export function AgenticMindMap({ title, subtitle, ctaLabel, onCta }: Props) {
   const selectedNode = selected ? NODES.find((n) => n.id === selected) ?? null : null;
 
   return (
-    // Full-bleed track so width can leave the page margin and meet the walls
+    <>
+    {/* Full-bleed track so width can leave the page margin and meet the walls */}
     <div
       ref={trackRef}
       className="relative h-[220vh] md:h-[240vh] w-screen max-w-[100vw] left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]"
@@ -616,11 +617,31 @@ export function AgenticMindMap({ title, subtitle, ctaLabel, onCta }: Props) {
             </div>
           </motion.div>
 
-          <p className="absolute bottom-4 left-1/2 -translate-x-1/2 text-[10px] uppercase tracking-[0.2em] text-[color:var(--on-ink)] opacity-35 pointer-events-none">
+          <p className="absolute bottom-4 left-1/2 -translate-x-1/2 text-sm uppercase tracking-[0.14em] text-[color:var(--on-ink)] opacity-35 pointer-events-none">
             Scroll to expand
           </p>
         </motion.div>
       </div>
     </div>
+
+    {/* On phones the map's labels are too small to read, so the same topics
+        are listed here in full; the map above stays as the visual. */}
+    <div className="md:hidden mx-auto max-w-7xl px-4 sm:px-6 mt-8">
+      <p className="mb-3 font-mono text-sm uppercase tracking-[0.14em] text-accent-slate">Explore the ideas</p>
+      <ul className="divide-y divide-border rounded-2xl border border-border bg-container">
+        {NODES.filter((n) => n.kind === "text").map((n) => (
+          <li key={n.id}>
+            <details className="group px-4 py-3">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-3 py-1 text-base font-medium text-foreground">
+                {n.label}
+                <span aria-hidden className="text-accent-sage transition-transform group-open:rotate-45">+</span>
+              </summary>
+              <p className="mt-2 text-[15px] leading-relaxed text-muted-foreground">{DESCRIPTIONS[n.id]}</p>
+            </details>
+          </li>
+        ))}
+      </ul>
+    </div>
+    </>
   );
 }

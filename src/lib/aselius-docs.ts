@@ -65,7 +65,7 @@ export const ASELIUS_DOCS: AseliusDoc[] = [
     title: "Aselius MCP",
     file: "aselius-mcp.md",
     group: "Platform",
-    blurb: "Connect Claude, Cursor, ChatGPT or any MCP client to your Rivine engines over https://workspace.beunec.com/mcp.",
+    blurb: "Use Aselius from any AI app: connect Claude, Cursor, ChatGPT or any MCP client to https://workspace.beunec.com/mcp.",
   },
   {
     slug: "messaging-channels",
@@ -83,10 +83,10 @@ export const ASELIUS_DOCS: AseliusDoc[] = [
   },
   {
     slug: "comparison",
-    title: "Platform Comparison",
+    title: "How Aselius Compares",
     file: "aselius-competitors.md",
     group: "Platform",
-    blurb: "How Aselius compares with other enterprise AI platforms.",
+    blurb: "Why Aselius is agentic infrastructure software, not another Claude Cowork, ChatGPT Work or Kimi Work.",
   },
   {
     slug: "security-disclosure",

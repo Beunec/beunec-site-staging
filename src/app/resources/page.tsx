@@ -76,7 +76,7 @@ export default function ResourcesPage() {
                     <ParticleBackground />
                     <div className="max-w-4xl mx-auto text-center relative z-10">
                         <span
-                            className="kt-fade px-3 py-1 rounded-full bg-beunec-blue/10 text-beunec-blue text-xs font-bold uppercase tracking-widest mb-4 inline-block"
+                            className="kt-fade px-3 py-1 rounded-full bg-beunec-blue/10 text-beunec-blue text-sm font-bold uppercase tracking-widest mb-4 inline-block"
                             style={{ ["--d" as string]: "0s" }}
                         >
                             The Beunec Journal
@@ -146,7 +146,7 @@ export default function ResourcesPage() {
 
                                     {/* Content */}
                                     <div className="p-6 flex flex-col flex-1">
-                                        <div className="flex items-center gap-4 text-xs text-muted-foreground mb-4">
+                                        <div className="flex items-center gap-4 text-sm text-muted-foreground mb-4">
                                             <div className="flex items-center gap-1">
                                                 <Calendar className="w-3 h-3" />
                                                 {new Date(post.pubDate).toLocaleDateString(undefined, {

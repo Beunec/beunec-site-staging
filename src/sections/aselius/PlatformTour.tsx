@@ -143,7 +143,7 @@ export function PlatformTour() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mb-10 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div className="max-w-2xl" data-reveal>
-            <p className="mb-5 font-mono text-[11px] uppercase tracking-[0.18em] text-accent-slate">
+            <p className="mb-5 font-mono text-sm uppercase tracking-[0.14em] text-accent-slate">
               Live on Aselius today
             </p>
             <h2 id="tour-title" className="mb-4 text-3xl font-extrabold leading-[1.1] tracking-tight text-foreground md:text-4xl">
@@ -183,7 +183,7 @@ export function PlatformTour() {
                   aria-selected={active}
                   aria-controls="tour-panel"
                   onClick={() => setIndex(i)}
-                  className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-left text-xs font-medium transition-colors ${
+                  className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-left text-sm font-medium transition-colors ${
                     active
                       ? "border-accent-sage bg-accent-sage/15 text-foreground"
                       : "border-border text-muted-foreground hover:bg-container/60 hover:text-foreground"
@@ -220,7 +220,7 @@ export function PlatformTour() {
                     <scene.icon className="h-5 w-5 text-accent-sage" aria-hidden />
                   </span>
                   <div>
-                    <p className="mb-1 font-mono text-[10px] uppercase tracking-[0.16em] text-accent-slate">{scene.label}</p>
+                    <p className="mb-1 font-mono text-sm uppercase tracking-[0.14em] text-accent-slate">{scene.label}</p>
                     <h3 className="text-xl font-semibold tracking-tight text-foreground">{scene.title}</h3>
                   </div>
                 </div>
@@ -266,17 +266,17 @@ function ObservabilityFrame() {
   const metrics = ["Success and failure", "Retries", "Tokens", "Cost", "Latency", "Artificial Experience"];
   return (
     <div className="flex h-full flex-col justify-between bg-global p-5">
-      <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-accent-slate">
+      <p className="font-mono text-sm uppercase tracking-[0.14em] text-accent-slate">
         What Observability records for each of your turns
       </p>
       <ul className="grid grid-cols-2 gap-2 sm:grid-cols-3">
         {metrics.map((m) => (
-          <li key={m} className="rounded-lg border border-border bg-container px-3 py-2.5 text-xs font-medium text-foreground">
+          <li key={m} className="rounded-lg border border-border bg-container px-3 py-2.5 text-sm font-medium text-foreground">
             {m}
           </li>
         ))}
       </ul>
-      <p className="text-[11px] text-muted-foreground">
+      <p className="text-sm text-muted-foreground">
         Never conversation content. Open it from the platform rail at aselius.beunec.com.
       </p>
     </div>

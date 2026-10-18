@@ -175,48 +175,90 @@
     };
   }
 
-  /* Lower-third caption: chapter kicker, kinetic headline, supporting line. */
-  function caption(layer, kicker, head, sub, emph) {
+  /* ── narration timing ───────────────────────────────────
+     The voiceover is the source of truth. Each scene lasts as long as its
+     line needs at WPS words per second, headline words appear as they are
+     said, and callouts appear on the word that names them. Captions are the
+     narration, word for word. */
+  const WPS = 2.5; // a natural ElevenLabs pace, about 150 words a minute
+  const VO_IN = 0.75; // the voice starts this long into a scene
+  const VO_TAIL = 1.0; // a breath after the line, before the cut
+  const CROSS = 0.6;
+  const tokens = (str) => str.split(/\s+/).filter(Boolean);
+  const bare = (w) => w.toLowerCase().replace(/[^a-z0-9]/g, "");
+
+  /* Timing helper for one scene's voice line. `spoken` is what the voice
+     reads (URLs spelled out); `say` is what the captions and screen show. */
+  function voice(say, spoken) {
+    const words = tokens(spoken || say);
+    const len = words.length / WPS;
+    return {
+      len,
+      start: VO_IN,
+      end: VO_IN + len,
+      at: (i) => VO_IN + i / WPS,
+      // local time at which a word (or the first word of a phrase) is spoken
+      word(phrase, from = 0) {
+        const want = tokens(phrase).map(bare);
+        for (let i = from; i < words.length; i++) {
+          if (want.every((w, j) => bare(words[i + j] || "") === w)) return VO_IN + i / WPS;
+        }
+        throw new Error(`"${phrase}" is not in the line: ${spoken || say}`);
+      },
+    };
+  }
+
+  /* Lower-third caption: the headline is the first part of the voice line
+     and builds at speaking pace; the rest of the line appears as it is read. */
+  function caption(layer, kicker, head, sub, emph, vo) {
     el("div", "band", layer);
     const box = el("div", "caption", layer);
     const k = el("div", "kicker", box, kicker);
     const h = el("div", "head", box);
     const hw = words(h, head, emph);
     const s = sub ? el("div", "sub", box, sub) : null;
+    const subAt = vo.at(tokens(head).length);
     return (t) => {
-      fadeUp(k, t, 0.25, 0.7, 14);
-      playWords(hw, t, 0.35);
-      if (s) fadeUp(s, t, 0.35 + hw.parts.length * 0.055 + 0.35, 0.8, 18);
+      fadeUp(k, t, 0.15, 0.6, 14);
+      playWords(hw, t, vo.start - 0.05, 1 / WPS, 0.55);
+      if (s) fadeUp(s, t, subAt - 0.1, 0.7, 14);
     };
   }
 
   /* ── the script ───────────────────────────────────────── */
   const scenes = [];
-  const CROSS = 0.6;
-  function scene(start, dur, build, say) {
+  const CHAPTERS = [];
+  let cursor = 0;
+  function scene({ say, spoken, chapter, min = 0 }, build) {
+    const vo = say ? voice(say, spoken) : null;
+    const dur = Math.max(min, vo ? VO_IN + vo.len + VO_TAIL + CROSS : 0);
+    const start = cursor;
+    if (chapter) CHAPTERS.push({ at: Math.round(start * 10) / 10, title: chapter });
     const layer = el("div", "layer", stage);
-    const update = build(layer, dur);
-    scenes.push({ start, dur, layer, update, say });
+    const update = build(layer, dur, vo);
+    scenes.push({ start, dur, layer, update, say, spoken: spoken || say, vo });
+    cursor = start + dur - CROSS;
   }
 
-  const shot = (stem, iw, ih, keys, opts, kicker, head, sub, emph) => (layer) => {
+  /* A real screen with a camera move, callouts and the caption. Camera keys
+     and callout times may be functions of the voice line. */
+  const shot = (stem, iw, ih, keys, opts, kicker, head, sub, emph) => (layer, dur, vo) => {
     const bg = lights(layer, [-500, -700, -200, -500], [600, 0, 300, -200]);
-    const cam = camera(layer, stem, iw, ih, keys, opts);
-    const cap = caption(layer, kicker, head, sub, emph);
-    return (t, dur) => {
+    const k = typeof keys === "function" ? keys(vo, dur) : keys;
+    const o = typeof opts === "function" ? opts(vo, dur) : opts;
+    const cam = camera(layer, stem, iw, ih, k, o);
+    const cap = caption(layer, kicker, head, sub, emph, vo);
+    return (t) => {
       bg(t / dur);
       cam(t);
       cap(t);
     };
   };
-
-  const CHAPTERS = [];
-  const chapter = (at, title) => CHAPTERS.push({ at, title });
+  const line = (head, sub) => (sub ? `${head} ${sub}` : head);
 
   if (cut === "story") {
     /* 01 What Aselius is */
-    chapter(0, "What Aselius is");
-    scene(0, 5.0, (layer) => {
+    scene({ say: "Most AI gives you a reply. Aselius gives you the work.", chapter: "What Aselius is", min: 5 }, (layer, dur, vo) => {
       const bg = lights(layer, [-600, -900, -300, -600], [500, 100, 300, -100]);
       const c = el("div", "center", layer);
       const a = el("div", "mega dim", c);
@@ -224,79 +266,83 @@
       b.style.marginTop = "18px";
       const ka = words(a, "Most AI gives you a reply.");
       const kb = words(b, "Aselius gives you the work.", "the work");
-      return (t, dur) => {
+      return (t) => {
         bg(t / dur);
-        playWords(ka, t, 0.3, 0.07, 0.9);
-        playWords(kb, t, 1.9, 0.08, 0.9);
+        playWords(ka, t, vo.start - 0.05, 1 / WPS, 0.6);
+        playWords(kb, t, vo.word("Aselius") - 0.05, 1 / WPS, 0.6);
       };
-    }, "Most AI gives you a reply. Aselius gives you the work.");
+    });
 
-    scene(4.4, 6.2, (layer) => {
-      const bg = lights(layer, [-300, -600, -100, -400], [400, 0, 100, -300]);
-      const box = el("div", "top-title", layer);
-      box.style.top = "300px";
-      const k = el("div", "kicker", box, "Aselius by Beunec");
-      const h = el("div", "head", box);
-      h.style.fontSize = "76px";
-      const hw = words(h, "An agentic workspace, run by specialized Rivine engines.", "Rivine engines");
-      const s = el("div", "sub", box, "They research, build, draft and create. Every result is a real file you can inspect, edit and export.");
-      s.style.fontSize = "34px";
-      s.style.marginTop = "28px";
-      return (t, dur) => {
-        bg(t / dur);
-        fadeUp(k, t, 0.3, 0.7, 14);
-        playWords(hw, t, 0.45, 0.06);
-        fadeUp(s, t, 1.6, 0.9, 20);
-      };
-    }, "Aselius is an agentic workspace, run by specialized Rivine engines. They research, build, draft and create. Every result is a real file you can inspect, edit and export.");
+    {
+      const head = "Aselius is agentic infrastructure software, run by specialized Rivine engines.";
+      const sub = "Every result is a real file you can inspect, edit and export.";
+      scene({ say: line(head, sub) }, (layer, dur, vo) => {
+        const bg = lights(layer, [-300, -600, -100, -400], [400, 0, 100, -300]);
+        const box = el("div", "top-title", layer);
+        box.style.top = "300px";
+        const k = el("div", "kicker", box, "Aselius by Beunec");
+        const h = el("div", "head", box);
+        h.style.fontSize = "76px";
+        const hw = words(h, head, "agentic infrastructure software");
+        const s = el("div", "sub", box, sub);
+        s.style.fontSize = "36px";
+        s.style.marginTop = "28px";
+        return (t) => {
+          bg(t / dur);
+          fadeUp(k, t, 0.15, 0.6, 14);
+          playWords(hw, t, vo.start - 0.05, 1 / WPS, 0.55);
+          fadeUp(s, t, vo.word("Every") - 0.1, 0.7, 18);
+        };
+      });
+    }
 
     /* 02 Find your way around */
-    chapter(10.0, "Find your way around");
-    scene(10.0, 8.0, shot("automations-light", 1440, 900, [
-      { t: 0, x: 720, y: 450, z: 1 },
-      { t: 1.4, x: 720, y: 450, z: 1 },
-      { t: 3.0, x: 330, y: 300, z: 1.95 },
-      { t: 8, x: 345, y: 305, z: 2.02 },
-    ], {
-      cx: 700,
-      cy: 420,
-      callouts: [
-        { x: 228, y: 91, label: "Workspaces and their taskspaces", at: 3.1, dx: 330 },
-        { x: 228, y: 316, label: "Connector: the apps you authorize", at: 3.5, dx: 330 },
-        { x: 228, y: 354, label: "Selius: voice", at: 3.9, dx: 330 },
-        { x: 228, y: 392, label: "Automations: scheduled runs", at: 4.3, dx: 330 },
-        { x: 228, y: 430, label: "Observability: cost, latency, retries", at: 4.7, dx: 330 },
-        { x: 228, y: 468, label: "Credits: one prepaid wallet", at: 5.1, dx: 330 },
-        { x: 228, y: 506, label: "Manage Teams: people and organizations", at: 5.5, dx: 330 },
-      ],
-    }, "02 · Find your way around", "Everything lives in one sidebar.", null, "one sidebar"),
-    "Everything lives in one sidebar: workspaces and their taskspaces, Connector, Selius, Automations, Observability, Credits and Manage Teams.");
+    {
+      const head = "Everything lives in one sidebar:";
+      const sub = "your workspaces, Connector, Selius, Automations, Observability, Credits and Manage Teams.";
+      scene({ say: line(head, sub), chapter: "Find your way around" }, shot("automations-light", 1440, 900,
+        (vo) => [
+          { t: 0, x: 720, y: 450, z: 1 },
+          { t: vo.start, x: 720, y: 450, z: 1 },
+          { t: vo.word("your") - 0.2, x: 330, y: 300, z: 1.95 },
+          { t: vo.end + 2, x: 345, y: 305, z: 2.02 },
+        ],
+        (vo) => ({
+          cx: 700,
+          cy: 420,
+          callouts: [
+            { x: 228, y: 91, label: "Workspaces", at: vo.word("workspaces"), dx: 330 },
+            { x: 228, y: 316, label: "Connector", at: vo.word("Connector"), dx: 330 },
+            { x: 228, y: 354, label: "Selius", at: vo.word("Selius"), dx: 330 },
+            { x: 228, y: 392, label: "Automations", at: vo.word("Automations"), dx: 330 },
+            { x: 228, y: 430, label: "Observability", at: vo.word("Observability"), dx: 330 },
+            { x: 228, y: 468, label: "Credits", at: vo.word("Credits"), dx: 330 },
+            { x: 228, y: 506, label: "Manage Teams", at: vo.word("Manage Teams"), dx: 330 },
+          ],
+        }),
+        "02 · Find your way around", head, sub, "one sidebar"));
+    }
 
-    scene(17.4, 8.0, shot("workspace-xlsx-light", 1440, 900, [
-      { t: 0, x: 720, y: 450, z: 1 },
-      { t: 8, x: 720, y: 440, z: 1.1 },
-    ], {
-      callouts: [
-        { x: 230, y: 31, label: "Taskspace, Governance, Share", at: 1.6, dx: 0, dy: 70 },
-        { x: 1300, y: 31, label: "Credits left", at: 2.2, dx: -150, dy: 0 },
-        { x: 1060, y: 70, label: "Preview Panel", at: 2.8, dx: -150, dy: 64 },
-        { x: 1256, y: 120, label: "Publish and Download", at: 3.4, dx: -30, dy: 130 },
-        { x: 320, y: 480, label: "Agent Notes: ready-made engine prompts", at: 4.0, dx: 60, dy: -70 },
-        { x: 1392, y: 756, label: "Selius", at: 4.6, dx: -70, dy: -50 },
-      ],
-    }, "02 · Find your way around", "Inside a workspace, Taskspace is where work happens.", "The conversation on the left. The Preview Panel on the right.", "Taskspace"),
-    "Inside a workspace, Taskspace is where work happens: the conversation on the left, the Preview Panel on the right.");
+    {
+      const head = "Inside a workspace, Taskspace is where work happens:";
+      const sub = "the conversation on the left, the Preview Panel on the right.";
+      scene({ say: line(head, sub) }, shot("workspace-xlsx-light", 1440, 900,
+        (vo, dur) => [
+          { t: 0, x: 720, y: 450, z: 1 },
+          { t: dur, x: 720, y: 440, z: 1.1 },
+        ],
+        (vo) => ({
+          callouts: [
+            { x: 165, y: 31, label: "Taskspace", at: vo.word("Taskspace"), dx: 0, dy: 70 },
+            { x: 470, y: 300, label: "The conversation", at: vo.word("conversation"), dx: 60, dy: -70 },
+            { x: 1060, y: 70, label: "Preview Panel", at: vo.word("Preview Panel"), dx: -150, dy: 64 },
+          ],
+        }),
+        "02 · Find your way around", head, sub, "Taskspace"));
+    }
 
     /* 03 Pick an engine */
-    chapter(24.8, "Pick an engine");
-    scene(24.8, 7.6, (layer) => {
-      const bg = lights(layer, [-400, -800, -100, -500], [500, 200, 200, -100]);
-      const top = el("div", "top-title", layer);
-      const k = el("div", "kicker", top, "03 · Pick an engine");
-      const h = el("div", "head", top);
-      const hw = words(h, "Choose the Rivine engine for the job.", "Rivine engine");
-      const grid = el("div", "grid", layer);
-      grid.style.top = "330px";
+    {
       const ENGINES = [
         ["TaskForce", "Professional work with your connected apps"],
         ["Research", "Sourced reports and spreadsheets"],
@@ -307,189 +353,318 @@
         ["Assist", "Surgical edits to an open document"],
         ["Browse", "Tasks in your own browser tabs"],
       ];
-      const cards = ENGINES.map(([n, w]) => {
-        const c = el("div", "card", grid);
-        el("span", "tag", c);
-        el("div", "name", c, "Rivine " + n);
-        el("div", "what", c, w);
-        return c;
+      const head = "Choose the Rivine engine for the job:";
+      const sub = "TaskForce, Research, Code, Cicero, Creative, Confluence, Assist or Browse. The engine you pick is the engine that runs.";
+      scene({ say: line(head, sub), chapter: "Pick an engine" }, (layer, dur, vo) => {
+        const bg = lights(layer, [-400, -800, -100, -500], [500, 200, 200, -100]);
+        const top = el("div", "top-title", layer);
+        const k = el("div", "kicker", top, "03 · Pick an engine");
+        const h = el("div", "head", top);
+        const hw = words(h, head, "Rivine engine");
+        const grid = el("div", "grid", layer);
+        grid.style.top = "330px";
+        const cards = ENGINES.map(([n, w]) => {
+          const c = el("div", "card", grid);
+          el("span", "tag", c);
+          el("div", "name", c, "Rivine " + n);
+          el("div", "what", c, w);
+          return { c, at: vo.word(n, tokens(head).length) };
+        });
+        const note = el("div", "sub", layer, "The engine you pick is the engine that runs.");
+        Object.assign(note.style, { position: "absolute", left: "140px", top: "900px", color: "#e8eaed" });
+        return (t) => {
+          bg(t / dur);
+          fadeUp(k, t, 0.15, 0.6, 14);
+          playWords(hw, t, vo.start - 0.05, 1 / WPS, 0.55);
+          cards.forEach(({ c, at }) => fadeUp(c, t, at - 0.1, 0.6, 30));
+          fadeUp(note, t, vo.word("The engine you pick") - 0.1, 0.7, 16);
+        };
       });
-      const note = el("div", "sub", layer, "The engine you pick is the engine that runs.");
-      note.style.position = "absolute";
-      note.style.left = "140px";
-      note.style.top = "900px";
-      note.style.color = "#e8eaed";
-      return (t, dur) => {
-        bg(t / dur);
-        fadeUp(k, t, 0.2, 0.7, 14);
-        playWords(hw, t, 0.3);
-        cards.forEach((c, i) => fadeUp(c, t, 1.0 + i * 0.16, 0.8, 34));
-        fadeUp(note, t, 3.0, 0.8, 16);
-      };
-    }, "Choose the Rivine engine for the job: TaskForce, Research, Code, Cicero, Creative, Confluence, Assist or Browse. The engine you pick is the engine that runs.");
+    }
 
-    scene(31.8, 5.8, shot("workspace-xlsx-light", 1440, 900, [
-      { t: 0, x: 720, y: 600, z: 1.2 },
-      { t: 2.2, x: 720, y: 790, z: 2.5 },
-      { t: 5.8, x: 724, y: 792, z: 2.6 },
-    ], {
-      callouts: [
-        { x: 612, y: 813, label: "Specialty", at: 2.3, dx: -40, dy: -110 },
-        { x: 770, y: 813, label: "Engine", at: 2.7, dx: 40, dy: -110 },
-      ],
-    }, "03 · Pick an engine", "Set the engine and its specialty, then send.", "Or start from an Agent Note that already has both.", "then send"),
-    "Set the engine and its specialty in the input bar, then send. Or start from an Agent Note that already has both.");
+    {
+      const head = "Set the engine and its specialty, then send.";
+      const sub = "Or start from an Agent Note that already has both.";
+      scene({ say: line(head, sub) }, shot("workspace-xlsx-light", 1440, 900,
+        (vo) => [
+          { t: 0, x: 720, y: 600, z: 1.2 },
+          { t: vo.start + 0.6, x: 720, y: 790, z: 2.5 },
+          { t: vo.word("Or") - 0.1, x: 724, y: 792, z: 2.6 },
+          { t: vo.word("Agent") + 0.9, x: 480, y: 470, z: 1.5 },
+          { t: vo.end + 3, x: 470, y: 475, z: 1.55 },
+        ],
+        (vo) => ({
+          callouts: [
+            { x: 770, y: 813, label: "Engine", at: vo.word("engine"), dx: 40, dy: -110, until: vo.word("Or") },
+            { x: 612, y: 813, label: "Specialty", at: vo.word("specialty"), dx: -40, dy: -110, until: vo.word("Or") },
+            { x: 320, y: 470, label: "Agent Note", at: vo.word("Agent") + 0.8, dx: 60, dy: -80 },
+          ],
+        }),
+        "03 · Pick an engine", head, sub, "then send"));
+    }
 
     /* 04 Watch it work */
-    chapter(37.0, "Watch it work");
-    scene(37.0, 6.4, shot("engine-running-light", 1440, 900, [
-      { t: 0, x: 760, y: 450, z: 1 },
-      { t: 2.6, x: 760, y: 560, z: 1.9 },
-      { t: 6.4, x: 770, y: 570, z: 1.98 },
-    ], {
-      callouts: [
-        { x: 338, y: 563, label: "Planning", at: 2.6, dx: -70, dy: 0 },
-        { x: 1163, y: 592, label: "Each step reports its result", at: 3.1, dx: -40, dy: -90 },
+    {
+      const head = "Every step shows as it happens.";
+      const sub = "Stop it any time; the trail stays with the thread.";
+      scene({ say: line(head, sub), chapter: "Watch it work" }, shot("engine-running-light", 1440, 900,
+        (vo, dur) => [
+          { t: 0, x: 760, y: 450, z: 1 },
+          { t: vo.word("step"), x: 760, y: 560, z: 1.9 },
+          { t: dur, x: 770, y: 570, z: 1.98 },
+        ],
+        (vo) => ({
+          callouts: [
+            { x: 338, y: 563, label: "Each step", at: vo.word("step"), dx: -70, dy: 0 },
+            { x: 1183, y: 810, label: "Stop", at: vo.word("Stop"), dx: -60, dy: -90 },
+          ],
+        }),
+        "04 · Watch it work", head, sub, "as it happens"));
+    }
+
+    {
+      const head = "Before it acts in your apps, you approve the exact action.";
+      const sub = "Nothing runs until you do.";
+      scene({ say: line(head, sub) }, shot("hitl-app-action-light", 768, 431,
+        (vo, dur) => [
+          { t: 0, x: 384, y: 215, z: 1 },
+          { t: dur, x: 520, y: 230, z: 1.16 },
+        ],
+        (vo) => ({
+          fitW: 1240,
+          fitH: 650,
+          callouts: [{ x: 678, y: 392, label: "Approve & run", at: vo.word("approve"), dx: -60, dy: -90 }],
+        }),
+        "04 · Watch it work", head, sub, "approve"));
+    }
+
+    scene({ say: "If it needs you, it asks one question and waits." }, shot("hitl-question-dark", 768, 372,
+      (vo, dur) => [
+        { t: 0, x: 384, y: 186, z: 1 },
+        { t: dur, x: 384, y: 190, z: 1.07 },
       ],
-    }, "04 · Watch it work", "Every step shows as it happens.", "Stop it any time. The trail stays with the thread.", "as it happens"),
-    "Every step shows as it happens. Stop it any time; the trail stays with the thread.");
-
-    scene(42.8, 5.6, shot("hitl-app-action-light", 768, 431, [
-      { t: 0, x: 384, y: 215, z: 1 },
-      { t: 5.6, x: 520, y: 230, z: 1.16 },
-    ], {
-      fitW: 1240,
-      fitH: 650,
-      callouts: [{ x: 678, y: 392, label: "Nothing runs until you approve", at: 1.8, dx: -60, dy: -90 }],
-    }, "04 · Watch it work", "Before it acts in your apps, you approve the exact action.", null, "approve"),
-    "Before it acts in your apps, you approve the exact action. Nothing runs until you do.");
-
-    scene(47.8, 5.2, shot("hitl-question-dark", 768, 372, [
-      { t: 0, x: 384, y: 186, z: 1 },
-      { t: 5.2, x: 384, y: 190, z: 1.07 },
-    ], { fitW: 1240, fitH: 620 }, "04 · Watch it work", "If it needs you, it asks one question and waits.", null, "waits"),
-    "If it needs you, it asks one question and waits for your answer.");
+      { fitW: 1240, fitH: 620 },
+      "04 · Watch it work", "If it needs you, it asks one question and waits.", null, "waits"));
 
     /* 05 Deliverables, not chat */
-    chapter(52.4, "Deliverables, not chat");
-    scene(52.4, 6.4, shot("workspace-thread-dark", 1440, 900, [
-      { t: 0, x: 760, y: 420, z: 1 },
-      { t: 6.4, x: 760, y: 400, z: 1.42 },
-    ], {}, "05 · Deliverables, not chat", "One turn. A whole launch kit.", "Documents, data, media and the app. Each one a real file.", "A whole launch kit"),
-    "One turn, a whole launch kit: documents, data, media and the app, each one a real file.");
+    {
+      const head = "One turn. A whole launch kit:";
+      const sub = "documents, data, media and the app, each one a real file.";
+      scene({ say: line(head, sub), chapter: "Deliverables, not chat" }, shot("workspace-thread-dark", 1440, 900,
+        (vo, dur) => [
+          { t: 0, x: 760, y: 420, z: 1 },
+          { t: dur, x: 760, y: 400, z: 1.42 },
+        ],
+        {},
+        "05 · Deliverables, not chat", head, sub, "A whole launch kit"));
+    }
 
-    scene(58.2, 6.0, shot("workspace-docx-light", 1440, 900, [
-      { t: 0, x: 480, y: 440, z: 1.25 },
-      { t: 1.2, x: 480, y: 440, z: 1.25 },
-      { t: 4.2, x: 1185, y: 360, z: 1.55 },
-      { t: 6.0, x: 1190, y: 360, z: 1.6 },
-    ], {}, "05 · Deliverables, not chat", "Open any file exactly as generated.", "Word as pages. Excel as a grid. Decks slide by slide.", "exactly as generated"),
-    "Open any file exactly as generated: Word as pages, Excel as a grid, decks slide by slide.");
+    {
+      const head = "Open any file exactly as generated:";
+      const sub = "Word as pages, Excel as a grid, decks slide by slide.";
+      scene({ say: line(head, sub) }, shot("workspace-docx-light", 1440, 900,
+        (vo, dur) => [
+          { t: 0, x: 480, y: 440, z: 1.25 },
+          { t: vo.start + 0.6, x: 480, y: 440, z: 1.25 },
+          { t: vo.word("Word") + 0.4, x: 1185, y: 360, z: 1.55 },
+          { t: dur, x: 1190, y: 360, z: 1.6 },
+        ],
+        {},
+        "05 · Deliverables, not chat", head, sub, "exactly as generated"));
+    }
 
-    scene(63.6, 6.0, shot("preview-panel-dark", 1440, 900, [
-      { t: 0, x: 720, y: 450, z: 1 },
-      { t: 2.0, x: 1180, y: 480, z: 1.12 },
-      { t: 6.0, x: 1185, y: 480, z: 1.16 },
-    ], {
-      callouts: [
-        { x: 1110, y: 848, label: "Rivine Assist", at: 2.3, dx: -120, dy: -70 },
-        { x: 1276, y: 113, label: "Publish", at: 2.8, dx: -330, dy: 0 },
-        { x: 1368, y: 113, label: "Export", at: 3.2, dx: 20, dy: 110 },
-      ],
-    }, "05 · Deliverables, not chat", "Edit with Rivine Assist. Save, publish or export.", null, "Rivine Assist"),
-    "Ask Rivine Assist for a follow-up edit, then save, publish or export.");
+    {
+      const head = "Edit with Rivine Assist.";
+      const sub = "Then save, publish or export.";
+      scene({ say: line(head, sub) }, shot("preview-panel-dark", 1440, 900,
+        (vo, dur) => [
+          { t: 0, x: 720, y: 450, z: 1 },
+          { t: vo.start + 0.8, x: 1180, y: 480, z: 1.12 },
+          { t: dur, x: 1185, y: 480, z: 1.16 },
+        ],
+        (vo) => ({
+          callouts: [
+            { x: 1110, y: 848, label: "Rivine Assist", at: vo.word("Rivine Assist"), dx: -120, dy: -70 },
+            { x: 1195, y: 113, label: "Save", at: vo.word("save"), dx: -330, dy: 0 },
+            { x: 1276, y: 113, label: "Publish", at: vo.word("publish"), dx: -330, dy: 60 },
+            { x: 1368, y: 113, label: "Export", at: vo.word("export"), dx: 20, dy: 110 },
+          ],
+        }),
+        "05 · Deliverables, not chat", head, sub, "Rivine Assist"));
+    }
 
     /* 06 Share it anywhere */
-    chapter(69.0, "Share it anywhere");
-    scene(69.0, 6.0, shot("publish-dialog-light", 1440, 900, [
-      { t: 0, x: 720, y: 450, z: 1 },
-      { t: 2.0, x: 720, y: 440, z: 1.45 },
-      { t: 6.0, x: 720, y: 445, z: 1.5 },
-    ], {
-      callouts: [
-        { x: 720, y: 408, label: "Code, Open or Members", at: 2.2, dx: 420, dy: -10 },
-        { x: 647, y: 542, label: "Its own access code", at: 2.8, dx: -330, dy: 0 },
-      ],
-    }, "06 · Share it anywhere", "Publish a snapshot with its own access code.", "Later edits stay private until you update it.", "its own access code"),
-    "Publish a snapshot with its own access code. Later edits stay private until you update it.");
+    {
+      const head = "Publish a snapshot with its own access code.";
+      const sub = "Later edits stay private until you update it.";
+      scene({ say: line(head, sub), chapter: "Share it anywhere" }, shot("publish-dialog-light", 1440, 900,
+        (vo, dur) => [
+          { t: 0, x: 720, y: 450, z: 1 },
+          { t: vo.start + 1, x: 720, y: 440, z: 1.45 },
+          { t: dur, x: 720, y: 445, z: 1.5 },
+        ],
+        (vo) => ({
+          callouts: [
+            { x: 720, y: 408, label: "Code, Open or Members", at: vo.word("snapshot"), dx: 420, dy: -10 },
+            { x: 647, y: 542, label: "Its own access code", at: vo.word("access"), dx: -330, dy: 0 },
+          ],
+        }),
+        "06 · Share it anywhere", head, sub, "its own access code"));
+    }
 
-    scene(74.4, 6.6, (layer) => {
-      const bg = lights(layer, [-500, -700, -200, -500], [600, 0, 300, -200]);
-      const desk = camera(layer, "preview-xlsx-desktop", 1280, 800, [{ t: 0, x: 640, y: 400, z: 1 }], { fitW: 1080, fitH: 640, cx: 690, cy: 400 });
-      const p1 = camera(layer, "preview-docx-mobile", 390, 844, [{ t: 0, x: 195, y: 422, z: 1 }], { fitW: 300, fitH: 600, cx: 1440, cy: 430, phone: true });
-      const p2 = camera(layer, "preview-access-code-mobile", 390, 844, [{ t: 0, x: 195, y: 422, z: 1 }], { fitW: 300, fitH: 600, cx: 1720, cy: 470, phone: true });
-      const cap = caption(layer, "06 · Share it anywhere", "It opens on any device. No sign-in.", "preview.aselius.beunec.com shows the file exactly as generated, with a Download button.", "any device");
-      const wins = layer.querySelectorAll(".window");
-      return (t, dur) => {
-        bg(t / dur);
-        desk(t);
-        p1(t);
-        p2(t);
-        // Arrival: desktop glides in, phones rise after it, then everything settles.
-        const qd = outExpo(prog(t, 0.1, 1.2));
-        const q1 = outExpo(prog(t, 0.6, 1.2));
-        const q2 = outExpo(prog(t, 0.9, 1.2));
-        wins[0].style.opacity = String(qd);
-        wins[0].style.translate = `${(1 - qd) * -80}px 0`;
-        wins[1].style.opacity = String(q1);
-        wins[1].style.translate = `0 ${(1 - q1) * 120 - t * 4}px`;
-        wins[2].style.opacity = String(q2);
-        wins[2].style.translate = `0 ${(1 - q2) * 140 - t * 7}px`;
-        cap(t);
-      };
-    }, "preview.aselius.beunec.com opens it on any device, with no sign-in, exactly as generated and with a Download button.");
+    {
+      const head = "It opens on any device. No sign-in.";
+      const sub = "Exactly as generated, with a Download button.";
+      scene({ say: line(head, sub) }, (layer, dur, vo) => {
+        const bg = lights(layer, [-500, -700, -200, -500], [600, 0, 300, -200]);
+        const desk = camera(layer, "preview-xlsx-desktop", 1280, 800, [{ t: 0, x: 640, y: 400, z: 1 }], { fitW: 1080, fitH: 640, cx: 690, cy: 400 });
+        const p1 = camera(layer, "preview-docx-mobile", 390, 844, [{ t: 0, x: 195, y: 422, z: 1 }], { fitW: 300, fitH: 600, cx: 1440, cy: 430, phone: true });
+        const p2 = camera(layer, "preview-access-code-mobile", 390, 844, [{ t: 0, x: 195, y: 422, z: 1 }], { fitW: 300, fitH: 600, cx: 1720, cy: 470, phone: true });
+        const cap = caption(layer, "06 · Share it anywhere", head, sub, "any device", vo);
+        const wins = layer.querySelectorAll(".window");
+        const tDesk = vo.word("opens") - 0.3;
+        const tPhone = vo.word("device") - 0.2;
+        return (t) => {
+          bg(t / dur);
+          desk(t);
+          p1(t);
+          p2(t);
+          const qd = outExpo(prog(t, tDesk, 1.2));
+          const q1 = outExpo(prog(t, tPhone, 1.2));
+          const q2 = outExpo(prog(t, tPhone + 0.3, 1.2));
+          wins[0].style.opacity = String(qd);
+          wins[0].style.translate = `${(1 - qd) * -80}px 0`;
+          wins[1].style.opacity = String(q1);
+          wins[1].style.translate = `0 ${(1 - q1) * 120 - t * 4}px`;
+          wins[2].style.opacity = String(q2);
+          wins[2].style.translate = `0 ${(1 - q2) * 140 - t * 7}px`;
+          cap(t);
+        };
+      });
+    }
 
     /* 07 Beyond the browser tab */
-    chapter(80.4, "Beyond the browser tab");
-    scene(80.4, 6.0, shot("automations-dark", 1440, 900, [
-      { t: 0, x: 720, y: 450, z: 1 },
-      { t: 2.2, x: 870, y: 330, z: 1.55 },
-      { t: 6.0, x: 875, y: 335, z: 1.6 },
-    ], {
-      callouts: [{ x: 520, y: 389, label: "Rivine Research, every day at 08:00 UTC", at: 2.4, dx: 40, dy: 110 }],
-    }, "07 · Beyond the browser tab", "Automations run on a schedule, even with your computer off.", null, "even with your computer off"),
-    "Automations run Research, TaskForce, Cicero and Confluence on a schedule, even with your computer off.");
+    scene({ say: "Automations run on a schedule, even with your computer off.", chapter: "Beyond the browser tab" }, shot("automations-dark", 1440, 900,
+      (vo, dur) => [
+        { t: 0, x: 720, y: 450, z: 1 },
+        { t: vo.word("schedule"), x: 870, y: 330, z: 1.55 },
+        { t: dur, x: 875, y: 335, z: 1.6 },
+      ],
+      (vo) => ({
+        callouts: [{ x: 520, y: 389, label: "Every day at 08:00 UTC", at: vo.word("schedule"), dx: 40, dy: 110 }],
+      }),
+      "07 · Beyond the browser tab", "Automations run on a schedule, even with your computer off.", null, "even with your computer off"));
 
-    scene(85.8, 7.0, (layer) => {
-      const bg = lights(layer, [-400, -800, -100, -500], [500, 200, 200, -100]);
-      const top = el("div", "top-title", layer);
-      const k = el("div", "kicker", top, "07 · Beyond the browser tab");
-      const h = el("div", "head", top);
-      const hw = words(h, "The same engines, wherever you work.", "wherever you work");
-      const grid = el("div", "grid three", layer);
-      grid.style.top = "330px";
-      const SURFACES = [
-        ["Aselius web app", "aselius.beunec.com"],
-        ["Rivine Browse", "Your own tabs: Mac, Windows and Chrome"],
-        ["Rivine Code CLI", "Rivine Code in your terminal"],
-        ["Aselius MCP", "From Claude, Cursor, ChatGPT and other MCP clients"],
-        ["Telegram, Discord, WhatsApp", "Start and follow a task from chat"],
-        ["Selius", "Speech to speech, and it asks before it acts"],
-      ];
-      const cards = SURFACES.map(([n, w]) => {
-        const c = el("div", "card", grid);
-        el("span", "tag", c);
-        el("div", "name", c, n);
-        el("div", "what", c, w);
-        return c;
+    {
+      const head = "Use Aselius from any AI app.";
+      const sub = "Connect Claude, Cursor or ChatGPT to Aselius MCP at workspace.beunec.com/mcp.";
+      const spokenSub = "Connect Claude, Cursor or ChatGPT to Aselius M C P, at workspace dot beunec dot com slash M C P.";
+      scene({ say: line(head, sub), spoken: line(head, spokenSub) }, (layer, dur, vo) => {
+        const bg = lights(layer, [-400, -800, -100, -500], [500, 200, 200, -100]);
+        const top = el("div", "top-title", layer);
+        const k = el("div", "kicker", top, "07 · Beyond the browser tab");
+        const h = el("div", "head", top);
+        h.style.fontSize = "76px";
+        const hw = words(h, head, "any AI app");
+        const s = el("div", "sub", top, sub);
+        s.style.marginTop = "24px";
+        const box = el("div", "card", layer);
+        Object.assign(box.style, { position: "absolute", left: "140px", right: "140px", top: "560px", padding: "40px 48px" });
+        const lab = el("div", "kicker", box, "Aselius MCP server");
+        const url = el("div", "", box, "https://workspace.beunec.com/mcp");
+        Object.assign(url.style, { fontFamily: "ui-monospace, Menlo, monospace", fontSize: "64px", fontWeight: "600", marginTop: "18px", color: "#e8eaed", letterSpacing: "-0.01em" });
+        const row = el("div", "", box);
+        Object.assign(row.style, { display: "flex", gap: "16px", marginTop: "30px" });
+        const chips = ["Claude", "Cursor", "ChatGPT"].map((n) => {
+          const c = el("div", "pill", row, n);
+          Object.assign(c.style, { position: "static" });
+          return { c, at: vo.word(n) };
+        });
+        const more = el("div", "pill", row, "Any MCP-compatible app");
+        more.style.position = "static";
+        return (t) => {
+          bg(t / dur);
+          fadeUp(k, t, 0.15, 0.6, 14);
+          playWords(hw, t, vo.start - 0.05, 1 / WPS, 0.55);
+          fadeUp(s, t, vo.word("Connect") - 0.1, 0.7, 14);
+          fadeUp(box, t, vo.word("Connect") - 0.2, 0.8, 30);
+          fadeUp(lab, t, vo.word("Connect"), 0.6, 10);
+          fadeUp(url, t, vo.word("Connect") + 0.3, 0.7, 14);
+          chips.forEach(({ c, at }) => fadeUp(c, t, at - 0.1, 0.5, 12));
+          fadeUp(more, t, vo.word("workspace") + 0.4, 0.5, 12);
+        };
       });
-      const note = el("div", "sub", layer, "One prepaid wallet across every surface.");
-      note.style.position = "absolute";
-      note.style.left = "140px";
-      note.style.top = "800px";
-      note.style.color = "#e8eaed";
-      return (t, dur) => {
-        bg(t / dur);
-        fadeUp(k, t, 0.2, 0.7, 14);
-        playWords(hw, t, 0.3);
-        cards.forEach((c, i) => fadeUp(c, t, 1.0 + i * 0.18, 0.8, 34));
-        fadeUp(note, t, 3.0, 0.8, 16);
-      };
-    }, "The same engines, wherever you work: the Aselius web app, Rivine Browse in your own tabs, the Rivine Code CLI, Aselius MCP, Telegram, Discord and WhatsApp, and Selius by voice. One prepaid wallet across every surface.");
+    }
 
-    /* 08 Get started */
-    chapter(92.2, "Get started");
-    scene(92.2, 6.3, (layer) => {
+    {
+      const SURFACES = [
+        ["Aselius web app", "aselius.beunec.com", "web"],
+        ["Rivine Browse", "Your own tabs: Mac, Windows and Chrome", "Browse"],
+        ["Rivine Code CLI", "Rivine Code in your terminal", "CLI"],
+        ["Aselius MCP", "From Claude, Cursor, ChatGPT and other MCP apps", "MCP"],
+        ["Chat apps", "Telegram, Discord and WhatsApp", "chat"],
+        ["Selius", "Speech to speech, and it asks before it acts", "Selius"],
+      ];
+      const head = "The same engines, wherever you work:";
+      const sub = "the web app, Rivine Browse, the Rivine Code CLI, Aselius MCP, your chat apps, and Selius by voice. One wallet across every surface.";
+      scene({ say: line(head, sub) }, (layer, dur, vo) => {
+        const bg = lights(layer, [-400, -800, -100, -500], [500, 200, 200, -100]);
+        const top = el("div", "top-title", layer);
+        const k = el("div", "kicker", top, "07 · Beyond the browser tab");
+        const h = el("div", "head", top);
+        const hw = words(h, head, "wherever you work");
+        const grid = el("div", "grid three", layer);
+        grid.style.top = "330px";
+        const from = tokens(head).length;
+        const cards = SURFACES.map(([n, w, key]) => {
+          const c = el("div", "card", grid);
+          el("span", "tag", c);
+          el("div", "name", c, n);
+          el("div", "what", c, w);
+          return { c, at: vo.word(key, from) };
+        });
+        const note = el("div", "sub", layer, "One wallet across every surface.");
+        Object.assign(note.style, { position: "absolute", left: "140px", top: "800px", color: "#e8eaed" });
+        return (t) => {
+          bg(t / dur);
+          fadeUp(k, t, 0.15, 0.6, 14);
+          playWords(hw, t, vo.start - 0.05, 1 / WPS, 0.55);
+          cards.forEach(({ c, at }) => fadeUp(c, t, at - 0.15, 0.6, 30));
+          fadeUp(note, t, vo.word("One wallet") - 0.1, 0.7, 16);
+        };
+      });
+    }
+
+    /* 08 Why Aselius */
+    {
+      const head = "Not another Claude Cowork, ChatGPT Work or Kimi Work.";
+      const sub = "Specialized engines, real deliverables, and you stay in control.";
+      scene({ say: line(head, sub), chapter: "Why Aselius" }, (layer, dur, vo) => {
+        const bg = lights(layer, [-600, -900, -300, -600], [500, 100, 300, -100]);
+        const c = el("div", "center", layer);
+        const k = el("div", "kicker", c, "08 · Why Aselius");
+        const a = el("div", "mega", c);
+        a.style.fontSize = "84px";
+        a.style.marginTop = "26px";
+        const ka = words(a, head, "Not another");
+        const b = el("div", "sub", c, sub);
+        Object.assign(b.style, { fontSize: "40px", marginTop: "34px", color: "#e8eaed" });
+        return (t) => {
+          bg(t / dur);
+          fadeUp(k, t, 0.15, 0.6, 14);
+          playWords(ka, t, vo.start - 0.05, 1 / WPS, 0.6);
+          fadeUp(b, t, vo.word("Specialized") - 0.1, 0.8, 18);
+        };
+      });
+    }
+
+    /* 09 Get started */
+    scene({
+      say: "Aselius. Agentic infrastructure software, at aselius.beunec.com.",
+      spoken: "Aselius. Agentic infrastructure software, at aselius dot beunec dot com.",
+      chapter: "Get started",
+      min: 6.5,
+    }, (layer, dur, vo) => {
       const bg = lights(layer, [-300, -700, -300, -500], [500, 100, 400, 0]);
       const c = el("div", "center", layer);
       const logo = el("img", "logo", c);
@@ -498,21 +673,22 @@
       const name = el("div", "mega", c);
       name.style.marginTop = "28px";
       const nw = words(name, "Aselius");
+      const tag = el("div", "url", c, "Agentic infrastructure software");
       const url = el("div", "url", c, "aselius.beunec.com");
+      Object.assign(url.style, { color: "#8fa0ae", marginTop: "12px" });
       const docs = el("div", "small", c, "Documentation at beunec.co/aselius-platform/docs");
-      return (t, dur) => {
+      return (t) => {
         bg(t / dur);
         const q = outExpo(prog(t, 0.2, 1.1));
         logo.style.opacity = String(q);
         logo.style.transform = `scale(${0.86 + 0.14 * q})`;
-        playWords(nw, t, 0.6, 0.06, 0.9);
-        fadeUp(url, t, 1.3, 0.8, 16);
-        fadeUp(docs, t, 1.7, 0.8, 16);
-        // final fade to charcoal
-        const end = prog(t, dur - 0.9, 0.9);
-        c.style.opacity = String(1 - end);
+        playWords(nw, t, vo.start - 0.05, 1 / WPS, 0.7);
+        fadeUp(tag, t, vo.word("Agentic") - 0.1, 0.7, 16);
+        fadeUp(url, t, vo.word("aselius dot") - 0.1, 0.7, 16);
+        fadeUp(docs, t, vo.end + 0.2, 0.7, 16);
+        c.style.opacity = String(1 - prog(t, dur - 0.9, 0.9));
       };
-    }, "Aselius. aselius.beunec.com. Documentation at beunec.co/aselius-platform/docs.");
+    });
   } else {
     /* Reel: six real screens, slow camera, a label each, loops seamlessly. */
     const REEL = [
@@ -525,7 +701,8 @@
     ];
     const SEG = 3;
     REEL.forEach(([stem, iw, ih, label, a, b], i) => {
-      scene(i * SEG, SEG + CROSS, (layer) => {
+      cursor = i * SEG;
+      scene({ min: SEG + CROSS }, (layer) => {
         const bg = lights(layer, [-500, -700, -200, -500], [600, 0, 300, -200]);
         const cam = camera(layer, stem, iw, ih, [
           { t: -CROSS, x: a.x, y: a.y, z: 1.02 },
@@ -541,7 +718,7 @@
     });
   }
 
-  const DURATION = cut === "story" ? 98.5 : 18;
+  const DURATION = cut === "story" ? Math.round((cursor + CROSS) * 10) / 10 : 18;
   const loop = cut !== "story";
 
   function opacityAt(sc, local) {
@@ -572,9 +749,16 @@
 
   window.DURATION = DURATION;
   window.CHAPTERS = CHAPTERS;
+  // Captions and voiceover cues come from the same lines, timed to the voice.
   window.CAPTIONS = scenes
     .filter((s) => s.say)
-    .map((s) => ({ start: s.start + 0.3, end: Math.min(DURATION, s.start + s.dur - 0.35), text: s.say }));
+    .map((s) => ({
+      start: Math.round((s.start + s.vo.start - 0.1) * 100) / 100,
+      end: Math.round((s.start + s.vo.end + 0.35) * 100) / 100,
+      text: s.say,
+      spoken: s.spoken,
+      words: tokens(s.spoken).length,
+    }));
   window.ready = Promise.all([
     document.fonts.ready,
     ...images.map((i) => (i.complete ? Promise.resolve() : new Promise((r) => { i.onload = r; i.onerror = r; }))),

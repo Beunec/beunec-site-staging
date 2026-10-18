@@ -55,7 +55,7 @@ function DocsNav({
 
       {groupDocs(docs).map(({ group, items }) => (
         <div key={group} className="mb-6 last:mb-0">
-          <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-accent-slate mb-3">
+          <p className="font-mono text-sm uppercase tracking-[0.14em] text-accent-slate mb-3">
             {group}
           </p>
           <ul className="space-y-1">
@@ -78,7 +78,7 @@ function DocsNav({
                       className={className}
                     >
                       {doc.title}
-                      <span className="ml-1 text-[10px] text-accent-slate" aria-hidden="true">
+                      <span className="ml-1 text-sm text-accent-slate" aria-hidden="true">
                         ↗
                       </span>
                     </a>

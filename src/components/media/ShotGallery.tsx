@@ -75,7 +75,7 @@ export function ShotGallery({ shots, filters = false, columns = "sm:grid-cols-2 
               type="button"
               aria-pressed={area === a}
               onClick={() => setArea(a)}
-              className={`rounded-full border px-3.5 py-1.5 text-xs font-medium transition-colors ${
+              className={`rounded-full border px-3.5 py-1.5 text-sm font-medium transition-colors ${
                 area === a
                   ? "border-accent-sage bg-accent-sage/15 text-foreground"
                   : "border-border text-muted-foreground hover:bg-secondary hover:text-foreground"
@@ -108,11 +108,11 @@ export function ShotGallery({ shots, filters = false, columns = "sm:grid-cols-2 
                   </span>
                 </span>
                 <span className="block px-4 py-3.5">
-                  <span className="block font-mono text-[10px] uppercase tracking-[0.16em] text-accent-slate">
+                  <span className="block font-mono text-sm uppercase tracking-[0.14em] text-accent-slate">
                     {shot.area}
                   </span>
                   <span className="mt-1 block text-sm font-semibold text-foreground">{shot.title}</span>
-                  <span className="mt-1 block text-xs leading-relaxed text-muted-foreground">{shot.caption}</span>
+                  <span className="mt-1 block text-sm leading-relaxed text-muted-foreground">{shot.caption}</span>
                 </span>
               </button>
             </TiltFrame>
@@ -150,7 +150,7 @@ export function ShotGallery({ shots, filters = false, columns = "sm:grid-cols-2 
             </div>
             <figcaption className="flex items-start gap-4 border-t border-border px-5 py-4">
               <div className="min-w-0 flex-1">
-                <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-accent-slate">
+                <p className="font-mono text-sm uppercase tracking-[0.14em] text-accent-slate">
                   {current.area} · {open! + 1} / {visible.length}
                 </p>
                 <p className="mt-1 text-sm font-semibold">{current.title}</p>

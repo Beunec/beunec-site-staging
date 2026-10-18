@@ -78,13 +78,13 @@ export function DocAudioPlayer({ slug, label }: DocAudioPlayerProps) {
         ) : (
           <Play className="h-5 w-5 ml-0.5" fill="currentColor" />
         )}
-        <span className="pointer-events-none absolute -top-9 left-0 whitespace-nowrap rounded-md border border-border bg-container px-2 py-1 text-[11px] text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100">
+        <span className="pointer-events-none absolute -top-9 left-0 whitespace-nowrap rounded-md border border-border bg-container px-2 py-1 text-sm text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100">
           {playing ? "Pause narration" : blocked ? "Tap to play narration" : "Play narration"}
         </span>
       </button>
       {ready && (
         <span
-          className="hidden sm:inline-flex items-center gap-1.5 rounded-full border border-border bg-container/90 px-2.5 py-1 text-[11px] text-muted-foreground backdrop-blur-sm"
+          className="hidden sm:inline-flex items-center gap-1.5 rounded-full border border-border bg-container/90 px-2.5 py-1 text-sm text-muted-foreground backdrop-blur-sm"
           aria-live="polite"
         >
           <Volume2 className="h-3.5 w-3.5 text-accent-sage" />

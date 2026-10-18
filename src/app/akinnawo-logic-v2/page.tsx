@@ -78,7 +78,7 @@ export default function AkinnawoLogicPage() {
         <section className="relative py-16 md:py-24 overflow-hidden">
           <ParticleBackground />
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-accent-slate mb-5">
+            <p className="font-mono text-sm uppercase tracking-[0.14em] text-accent-slate mb-5">
               Company · Independent research
             </p>
             <p className="text-sm font-medium text-accent-sage mb-4">Agentic Infrastructure, Unshackled.</p>
@@ -122,7 +122,7 @@ export default function AkinnawoLogicPage() {
         <section className="py-20 md:py-24">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
             <div>
-              <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-accent-slate mb-5">
+              <p className="font-mono text-sm uppercase tracking-[0.14em] text-accent-slate mb-5">
                 What you are buying
               </p>
               <h2 className="text-3xl md:text-4xl font-extrabold text-foreground tracking-tight leading-[1.1] mb-5">
@@ -175,7 +175,7 @@ export default function AkinnawoLogicPage() {
 
         <section className="py-20 md:py-24 bg-container">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-accent-slate mb-5">
+            <p className="font-mono text-sm uppercase tracking-[0.14em] text-accent-slate mb-5">
               Use of proceeds
             </p>
             <h2 className="text-3xl md:text-4xl font-extrabold text-foreground tracking-tight leading-[1.1] mb-5">
@@ -209,7 +209,7 @@ export default function AkinnawoLogicPage() {
                   style={{ width: `${Math.max(pct, raisedUsd > 0 ? 2 : 0)}%` }}
                 />
               </div>
-              <p className="mt-4 text-xs text-muted-foreground leading-relaxed">
+              <p className="mt-4 text-sm text-muted-foreground leading-relaxed">
                 Tracker figures are updated from reconciled commercial sales, not from pledges.
                 They are not a securities filing and not a crowdfunding portal.
               </p>
@@ -230,7 +230,7 @@ export default function AkinnawoLogicPage() {
               <div className="relative px-6 py-14 md:px-14 md:py-16">
                 <div className="inline-flex items-center gap-2 rounded-full border border-border bg-global/80 px-4 py-1.5 mb-6">
                   <ShieldCheck className="w-3.5 h-3.5 text-accent-sage" />
-                  <span className="text-xs font-medium text-foreground">Commercial digital sale</span>
+                  <span className="text-sm font-medium text-foreground">Commercial digital sale</span>
                 </div>
                 <h2 className="text-3xl md:text-4xl font-extrabold text-foreground tracking-tight leading-[1.1] mb-4">
                   Purchase research
@@ -274,7 +274,7 @@ export default function AkinnawoLogicPage() {
                     Purchase Research &amp; Fund Open Source
                   </button>
                 )}
-                <p className="mt-4 text-xs text-muted-foreground max-w-2xl leading-relaxed">
+                <p className="mt-4 text-sm text-muted-foreground max-w-2xl leading-relaxed">
                   Taxes may be added by Stripe Tax based on your location, including New Jersey
                   sales tax on specified digital products where applicable. Enablement of Stripe Tax
                   and post-payment file delivery is configured in Stripe Checkout, not on this page.
@@ -286,7 +286,7 @@ export default function AkinnawoLogicPage() {
 
         <section id="terms" className="py-20 md:py-24 bg-container scroll-mt-28">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-accent-slate mb-5">
+            <p className="font-mono text-sm uppercase tracking-[0.14em] text-accent-slate mb-5">
               Terms of Sale
             </p>
             <h2 className="text-3xl md:text-4xl font-extrabold text-foreground tracking-tight leading-[1.1] mb-8">

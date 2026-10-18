@@ -1,0 +1,1 @@
+Automations run on a schedule, even with your computer off.

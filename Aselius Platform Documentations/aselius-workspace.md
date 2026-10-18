@@ -1,233 +1,157 @@
 # Aselius Workspace
 
-**Part of the Aselius Platform · Created by Beunec Technologies Inc.**
+Aselius Workspace is the part of Aselius where you run real work with Rivine engines: research, drafting, coding prototypes, legal work, forecasts and media. You leave with deliverables you can preview, edit, download and share, not just chat replies.
 
-**Version:** 1.0.0   
+## At a glance
 
-Aselius Workspace is where researchers, engineers, founders, and startup teams run real-world tasks: research, drafting, coding prototypes, creative assets, and governed collaboration, with outputs you can preview, edit, download, and share. It is built for software engineering teams, research organizations, consulting firms, startup teams, university post-graduates who need production-grade deliverables, not just chat agent replies.
+- **What it is:** An agentic task environment: Taskspace, Governance, Connector, Credits and Shared with me.
+- **Best for:** Software teams, research organizations, consulting firms, startups and post-graduate researchers who need production-grade output.
+- **You get:** Documents, HTML reports, spreadsheets, code projects with live preview, and media, all saved to Assets.
+- **Where:** Aselius Platform sidebar, **Workspace**, at https://aselius.beunec.com.
+- **Cost:** Prepaid credits; each engine has a minimum balance to start a turn ($1 to $10).
+- **Control:** You pick the engine and specialty. Risky actions wait for your approval.
 
-Access it from the **Aselius Platform sidebar** under **Workspace**.
-
-## What Workspace Is
-
-Workspace is not a single chat box. It is an **agentic task environment** built around:
-
-
-| Area               | What it does                                                            |
-| ------------------ | ----------------------------------------------------------------------- |
-| **Taskspace**      | Your primary work surface, conversation, attachments, engines, previews |
-| **Governance**     | Workspace-level AI behavior and content rules                           |
-| **Connector**      | Secure OAuth connections to external apps                               |
-| **Credits**        | Prepaid balance for agentic engine usage                                |
-| **Shared with me** | Accept invitations and open workspaces shared with you                  |
-
-
-At the center is **Taskspace** (internally `ChatSpace`): one conversation thread per task, combining a **conversation area** on the left, your prompts, agent responses, and clickable snapshots of completed work, with a **right-side Preview Panel** for assets, attachments, sandbox iframe, documents, and HTML.
-
-## High-Level Architecture
-
-```mermaid
-flowchart TB
-    subgraph Platform["Aselius Platform Sidebar"]
-        WS[Workspace]
-        SWM[Shared with me]
-        CR[Credits]
-    end
-
-    subgraph WorkspaceShell["Workspace"]
-        TS[Taskspace]
-        GV[Governance]
-        CN[Connector]
-        CB[Credits balance widget]
-    end
-
-    subgraph TaskspaceFlow["Taskspace execution flow"]
-        UI[User intent + attachments]
-        INJ[Hidden context tags]
-        ENG[Rivine Agentic Engine + Specialty]
-        ENG[Engine you choose]
-        RT[Rivine orchestration runtime]
-        OUT[Streaming response + snapshots]
-        AST[Assets store]
-        PRE[Preview Panel]
-    end
-
-    WS --> TS
-    WS --> GV
-    WS --> CN
-    WS --> CB
-    SWM --> WS
-    CR --> CB
-
-    UI --> INJ --> ENG --> MED --> RT
-    RT --> OUT
-    RT --> AST
-    OUT --> PRE
-    AST --> PRE
-```
-
-
-
-**How to read this:** You work in Taskspace. Your message is enriched with hidden context (date, engine choice, agent notes, attachments). The **Rivine** orchestration runtime routes and executes the task. Deliverables land in **Assets** and as **snapshots** in the conversation. The **Preview Panel** lets you inspect and edit without leaving the browser.
-
-### Quick summary: how a turn works
+## How a turn works
 
 ```mermaid
 flowchart LR
-    M["Your message"] --> MED["Engine and specialty you chose"]
-    MED --> ENG["Rivine engine · specialized agent"]
-    ENG --> EX["Isolated execution environment"]
-    EX --> DEL["Deliverable saved + snapshot in chat"]
-    DEL --> PRE["Preview panel opens the result"]
+    M["Your message + attachments"] --> E["Engine and specialty you chose"]
+    E --> X["Isolated execution"]
+    X --> D["Deliverable saved to Assets + snapshot in chat"]
+    D --> P["Preview Panel opens the result"]
 ```
 
+| Area | What it does |
+| --- | --- |
+| **Taskspace** | Your work surface: conversation, attachments, engines and previews |
+| **Governance** | Workspace-level AI behavior and content rules |
+| **Connector** | Secure OAuth connections to external apps |
+| **Credits** | Prepaid balance for engine usage |
+| **Shared with me** | Invitations and workspaces others have shared with you |
 
+## Taskspace
 
-You **choose an engine** from the Space UI. You can also set a **specialty** (e.g. PDF vs spreadsheet for Research, or a legal domain for Cicero) to steer output without re-explaining context every turn.
-
-## 1. Taskspace
-
-Taskspace is where tasks are **executed, previewed, and continued** over time.
+Each Taskspace is one conversation thread per task. The conversation sits on the left; the **Preview Panel** sits on the right.
 
 ### What you can do
 
-- Send natural-language requests to Rivine agentic engines
-- Attach files, paste text, parse URLs, capture screenshots
-- Pick an engine and **specialty** (sub-mode) for the kind of work you need
-- Use **Agent Notes** to jump directly to a pre-configured engine + specialty
-- Stream AI responses in real time, including tool progress whenever the engine uses external data or sandbox actions
-- Open deliverables from **snapshot cards** in the conversation
-- Approve or reject high-risk actions via **Human-in-the-Loop (HITL)** when the engine pauses for your decision
-- Search across messages, taskspaces, assets, and workspaces from the workspace header
+- Send natural-language requests to a Rivine engine and its **Specialty**.
+- Attach files, paste text, parse web page or YouTube URLs, and capture screenshots.
+- Use **Agent Notes** to jump straight to a pre-configured engine and specialty.
+- Watch responses stream in real time, including tool progress when an engine uses external data or a sandbox.
+- Open deliverables from **snapshot cards** in the conversation.
+- Approve or deny actions when an engine pauses for you (see [Human in the loop](#human-in-the-loop)).
+- Search messages, taskspaces, assets and workspaces from the workspace header.
 
+### Conversation layout
 
-
-### Conversation layout (accessibility)
-
-Older messages use **flip cards** to reduce visual clutter:
-
-- **Your previous requests** collapse to *"Click to view your request"*
-- **Older AI responses** (beyond the latest two) collapse similarly until you expand them
-- Attachment and file snapshots stay visible as tappable cards on expanded messages
-
-This flip-card behavior applies to both sides of the exchange, your original prompt and the AI response, so you can review long agent output without losing your original ask.
+To reduce clutter, older messages collapse into **flip cards**. Your earlier requests show *"Click to view your request"*, and AI responses older than the latest two collapse the same way until you expand them. Attachment and file snapshots stay visible as tappable cards on expanded messages.
 
 ### Snapshots
 
-When an engine finishes meaningful work, a **snapshot card** appears in the conversation. Click it to open the deliverable in the Preview Panel.
+When an engine finishes meaningful work, a snapshot card appears in the conversation. Click it to open the deliverable in the Preview Panel.
 
+| Output | Opens as |
+| --- | --- |
+| Markdown document | Built-in editor (rendered and editable) |
+| HTML report or deck | HTML preview; export when available |
+| Image, video or audio (Creative) | Media preview |
+| Code project (Rivine Code) | Sandbox live preview |
 
-| Output type                           | Snapshot behavior                                    |
-| ------------------------------------- | ---------------------------------------------------- |
-| Markdown document                     | Opens in the built-in editor (rendered + editable)   |
-| HTML report / deck                    | Renders in the HTML preview; export when available   |
-| Image / video (Creative)              | Opens media preview from stored asset URL            |
-| Code (Rivine Code)                    | Opens sandbox preview, see Rivine Code section below |
+### Roles
 
+| Role | Access |
+| --- | --- |
+| **Owner** | Full control, share, transfer ownership |
+| **Operator** | Edit Governance, share, manage taskspaces |
+| **Member** | Create and use taskspaces |
+| **Guest** | View only; cannot edit documents or Governance |
 
+## Rivine engines
 
+Rivine is Beunec's proprietary agentic orchestration runtime. Each engine is a specialized, governed worker with its own tools, verification and sandbox rules, and it produces outputs you can inspect. Beunec does not disclose which models engines use.
 
-### Roles and permissions
+| Engine | Best for | Deliverable | Start floor (every plan) |
+| --- | --- | --- | --- |
+| **Rivine TaskForce** | Action-oriented professional work: connected apps, diagrams, interactive docs, verified computation | Markdown, inline HTML, diagrams, spreadsheets, computed results | $2.00 |
+| **Rivine Research** | Source-grounded, high-reliability research across domains | Markdown, PDF or spreadsheet HTML | $5.00 |
+| **Rivine Code** | Software engineering, debugging, security review, working projects | Sandbox code with live preview (also a CLI) | $10.00 |
+| **Rivine Cicero** | Legal drafting, review and policy work | Markdown legal memo | $3.00 |
+| **Rivine Confluence** | Country forecasting and scenarios; models choose evidence, code computes the numbers | Markdown and an interactive dashboard | $5.00 |
+| **Rivine Assist** | Surgical follow-up edits on a document already open in Preview | In-place Markdown, HTML or code edits | $1.00 |
+| **Rivine Browse** | Tasks in your real browser tabs and signed-in sessions | Side panel, with optional engine handoff | $2.00 |
+| **Rivine Creative** | Image, video and audio generation and surgical editing, in seven modes | Image, video or audio files | $3.00 |
 
+> **Note:** Rivine engines are not yet available as a public API. Rivine FIDA is deprecated and no longer in the product.
 
-| Role         | Typical access                                 |
-| ------------ | ---------------------------------------------- |
-| **Owner**    | Full control, share, transfer ownership        |
-| **Operator** | Edit governance, share, manage taskspaces      |
-| **Member**   | Create and use taskspaces                      |
-| **Guest**    | View-only, cannot edit documents or governance |
+### What each engine does
 
+**Rivine TaskForce** does the work inside the workspace rather than chatting about it. It advises critically, acts through connected apps (email, calendars, databases, MCP tools), and uses native specialties to produce diagrams, interactive documents, learning packs and verified computations saved as assets.
 
-
-
-## 2. Rivine Agentic Engines
-
-Rivine is Beunec's **proprietary agentic orchestration runtime**. Each Rivine engine is a **runtime construct**, orchestrator, tools, verification, and sandbox policy, not a single generic model call. The runtime handles planning, routing, tool use, verification, and delivery; language models operate inside that harness.
-
-We do **not** disclose specific third-party model IDs, routing tables, or internal parsing strategies. What matters for users: engines are **specialized**, **governed**, and produce **inspectable outputs**.
-
-### Available engines (today)
-
-
-| Engine               | Best for                                                                                            | Deliverable                                                     | Start floor (every plan) |
-| -------------------- | --------------------------------------------------------------------------------------------------- | --------------------------------------------------------------- | ------------------------- |
-| **Rivine TaskForce** | Action-oriented professional work: connected apps, diagrams, interactive docs, verified computation | Markdown, inline HTML, diagrams, spreadsheets, computed results | $2.00                     |
-| **Rivine Research**  | Source-grounded, high-reliability research across domains                                           | Markdown → PDF or spreadsheet HTML                              | $5.00                     |
-| **Rivine Code**      | Software engineering, debugging, security review, working delivered projects                        | Sandbox code + live preview (also CLI)                          | $10.00                    |
-| **Rivine Cicero**    | Legal drafting, review, and policy work                                                             | Markdown legal memo                                             | $3.00                     |
-| **Rivine Confluence**| Country forecasting and scenarios; models choose evidence, code computes numbers                    | Markdown + interactive dashboard                                | $5.00                     |
-| **Rivine Assist**    | Surgical follow-up edits on a document already open in Preview                                      | In-place Markdown / HTML / code edits                           | $1.00                     |
-| **Rivine Browse**    | Tasks in your real browser tabs and signed-in sessions                                              | Side panel + optional engine handoff                            | $2.00                     |
-| **Rivine Creative**  | Image, video and audio generation and surgical editing, by seven media agents                         | PNG / video / audio media                                       | $3.00                      |
-
-
-> **Not available yet:** Rivine Agentic Engines as a public API, and several connector/import integrations (see below). Rivine FIDA is deprecated and removed from the product surface.
-
-
-
-### What each engine actually does
-
-**Rivine TaskForce** is Aselius's action-oriented workspace engine, not generative chat. It turns your intent into professional work: grounded answers plus real outputs you can open in Preview. It uses connected apps (email, calendars, databases, MCP tools) and native specialties (Excalidraw, Mermaid, HTML STEM, HTML 3D, YouTube learning packs, sandboxed Code Execution) to produce diagrams, interactive documents, videos, and verified computations, then saves them as workspace assets. In short: "do the work in the workspace": advise critically, act through connected tools, and deliver production-ready artifacts.
-
-```mermaid
-flowchart LR
-    A["Your request"] --> B["Connected apps + native specialties"]
-    B --> C["Diagram / document / video / verified computation"]
-    C --> D["Saved as workspace asset"]
-    D --> E["Open in Preview"]
-```
-
-
-
-**Rivine Research** is Aselius's source-grounded research engine for high-reliability, multi-domain work. It doesn't free-summarize; it ingests uploaded documents and grounded sources first, then runs a sequenced pipeline (extract → validate → cross-check → synthesize → audit) so claims stay tied to evidence, conflicts stay visible, and gaps escalate instead of being invented. Specialties like PDF and Spreadsheet turn that into durable research Markdown or verified workbooks via a bounded sandbox, industry-adaptable research you can trust and hand off.
+**Rivine Research** grounds every claim in your uploaded documents and cited sources instead of free-summarizing. Conflicts stay visible and gaps are flagged, not invented. The PDF and Spreadsheet specialties turn findings into a durable report or a verified workbook.
 
 ```mermaid
 flowchart LR
     A["Uploaded docs + grounded sources"] --> B["Extract"] --> C["Validate"] --> D["Cross-check"] --> E["Synthesize"] --> F["Audit"]
-    F --> G["Markdown report, PDF, or verified workbook"]
+    F --> G["Markdown report, PDF or verified workbook"]
 ```
 
-
-
-**Rivine Cicero** is the legal and policy workbench for real-world drafting and review with use-case expertise (contract review, legal drafting, immigration, corporate, employment, international relations, patent compliance, M&A due diligence, policy drafting). It runs jurisdiction-first, evidence-linked workflows with conservative language: confirm governing law and facts, spot issues, draft or memo, then escalate high-risk or unclear matters to human/licensed review. It's research-and-draft support under guardrails, not a substitute for a licensed attorney or international relations diplomat.
+**Rivine Cicero** is a legal and policy workbench. It confirms governing law and facts first, spots issues, drafts in conservative language, and escalates high-risk or unclear matters to human or licensed review. It is research-and-draft support, not a substitute for a licensed attorney or diplomat.
 
 ```mermaid
 flowchart LR
-    A["Legal / policy request"] --> B["Confirm governing law + facts"]
+    A["Legal or policy request"] --> B["Confirm governing law + facts"]
     B --> C["Spot issues"]
     C --> D["Draft or memo"]
     D --> E{"High-risk or unclear?"}
-    E -->|"Yes"| F["Escalate to human / licensed review"]
+    E -->|"Yes"| F["Escalate to human or licensed review"]
     E -->|"No"| G["Deliverable in Preview"]
 ```
 
+**Rivine Code** builds working projects, not plans or command lists. It writes real files, installs and runs them when possible, verifies the result, and keeps changes surgical and reversible. You get a live preview in the browser and a project you can download into your own tooling, with no local IDE required.
 
+**Rivine Confluence** produces country forecasts and scenarios. Models choose the evidence; code computes every figure.
 
-**Rivine Code** is the build-first software engineering engine: programming, debugging, security guardrails, and delivery of working projects, not plans or command lists. Pick a **Mode**, Frontend Only, Backend Only, Full Stack, Plan/Ask Only, or Security Scan/Fix, so the engine only touches what the task actually needs, and a **Rate**, Manual to review changes as they land or Bypass to apply them as it works. It implements in real files, installs/runs when possible, verifies the result, and keeps changes surgical and reversible, with live preview/sandbox where available and downloadable projects otherwise.
+**Rivine Assist** makes targeted edits to the document open in Preview, so you do not regenerate the whole thing.
 
-```mermaid
-flowchart LR
-    A["Build / debug request"] --> B["Implement in real files"]
-    B --> C["Install & run when possible"]
-    C --> D["Verify the result"]
-    D --> E["Live preview / sandbox"]
-    E --> F["Download project"]
-```
+**Rivine Browse** works in your own browser tabs and signed-in sessions, and can hand a task to another engine.
 
+**Rivine Creative** makes and edits images, short animations, video and audio. Each of its seven modes hands you a finished file you can preview, download or publish. See [Rivine Creative](/aselius-platform/docs/rivine-creative).
 
+> **Note:** Rivine and all Rivine engines are closed-source, proprietary Beunec technology. These docs describe what each engine does and produces, not how it works internally.
 
-**Rivine Creative** is Aselius's engine for image, video, and audio creation and editing: seven modes, each its own agent, that hand you a finished media file you can preview, download, or publish. See [Rivine Creative](/aselius-platform/docs/rivine-creative).
+### Specialties
 
-> Rivine, Rivine TaskForce, Rivine Research, Rivine Cicero, Rivine Code, and Rivine Creative are **closed-source, proprietary Beunec technology**. What we disclose here is *what each engine does and produces*, not how it works internally. Workspace is where you use them, not where their internals are exposed.
+Most engines require a **Specialty** before you can send. If one is required and not selected, sending is blocked until you choose one.
 
+| Engine | Specialties |
+| --- | --- |
+| Rivine TaskForce | Chat, Excalidraw, Mermaid, HTML STEM, HTML 3D, YouTube learning packs, Code Execution |
+| Rivine Research | PDF, Spreadsheet |
+| Rivine Code | Mode: Frontend Only, Backend Only, Full Stack, Plan/Ask Only, Security Scan/Fix. Rate: Manual (review changes as they land) or Bypass (apply as it works) |
+| Rivine Cicero | Contract Review, Legal Drafting, Corporate Law, Employment Law, Immigration Law, International Relations, Patent Compliance, M&A Due Diligence, Policy and Law Drafting, General |
+| Rivine Creative | Generate Image, Surgical Edit Image, Animate / GIF / Motion, Generate Video, Surgical Edit Video, Generate Audio, Generate Music / SFX |
 
+### Grounded sources
 
-### Which engine should I pick?
+For TaskForce, Research and Cicero you can enable **grounded sources** such as finance, health literature, SEC filings, maps and web search. Engines cite these sources rather than relying on memory. Toggles are per workspace, and a disabled source is never called.
+
+### Agent Notes
+
+**Agent Notes** are pre-written instructions for each specialty: evidence rules, escalation triggers and output shape. They enforce behavior such as citing sources, never inventing spreadsheet cells, escalating legal risk to you, and blocking unsafe creative requests.
+
+- The Agent Notes list shows every specialty across engines. Picking one selects its engine and specialty for you.
+- The selected note is sent with your message but not shown in your chat bubble.
+- After a run, Agent Notes can also show which engine handled the task, verification or escalation flags, and a citation summary, so you can audit what happened.
+
+## Choosing an engine
+
+There is no automatic router or mediator. You choose the engine and its specialty in the Taskspace input bar, and the engine you pick is the engine that runs, with its specialty exactly as you set it.
 
 ```mermaid
 flowchart TD
     Q{"What do you need?"}
-    Q -->|"Get real work done with connected apps"| TF["Rivine TaskForce"]
+    Q -->|"Real work with connected apps"| TF["Rivine TaskForce"]
     Q -->|"Source-grounded research"| R["Rivine Research"]
     Q -->|"Build or debug software"| CO["Rivine Code"]
     Q -->|"Legal drafting or review"| CI["Rivine Cicero"]
@@ -237,583 +161,281 @@ flowchart TD
     Q -->|"Work in my own browser tabs"| BR["Rivine Browse"]
 ```
 
+## Human in the loop
 
+Engines stop and wait for you instead of guessing or acting on their own:
 
-
-
-### Specialty selections
-
-Most engines require a **specialty** before you send a message. Specialties activate a focused sub-agent mode with its own operating instructions.
-
-
-| Engine                          | Specialties                                                                                                                       |
-| ------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
-| Rivine TaskForce                | Chat, Excalidraw, Mermaid, HTML STEM, HTML 3D, YouTube learning packs, Code Execution                                             |
-| Rivine Research                 | PDF, Spreadsheet                                                                                                                  |
-| Rivine Code                     | Frontend Only, Backend Only, Full Stack, Plan/Ask Only, Security Scan/Fix, each paired with a Manual or Bypass rate for how changes apply |
-| Rivine Cicero                   | Contract Review, Legal Drafting, Corporate Law, Employment Law, Immigration Law, International Relations, Patent Compliance, M&A Due Diligence, Policy and Law Drafting, General |
-| Rivine Creative                 | Image Generation, Image Editing, Video Generation, Video Editing, Audio Generation                                                |
-
-
-If a specialty is required and not selected, send is blocked until you choose one in the Space UI.
-
-### Grounded data (when enabled)
-
-For TaskForce, Research, and Cicero (and Creative once available), you can enable **grounded sources**, finance, health literature, SEC filings, maps, web search, and more. Agents are instructed to **cite sources** rather than rely on memory alone. Source toggles are per-workspace; disabled sources are never called.
-
-### Agent Notes
-
-**Agent Notes** are pre-written harness instructions for each specialty, they tell the runtime *how* to execute (evidence rules, escalation triggers, output shape), not just *what* to answer.
-
-- In **Auto** mode, Agent Notes list every specialty across engines; picking one auto-selects the matching engine + specialty.
-- On send, the selected note is injected invisibly into your message (you do not see it in the chat bubble).
-- Notes enforce behaviors like: cite sources, never invent spreadsheet cells, escalate legal risk to HITL, block unsafe creative requests, etc.
-
-Separately, **Agent Notes** can also surface *after* a run as transparency metadata in the conversation: the routing decision, which engine handled the task, verification or escalation flags, and citation summaries. This is not a separate agent, it exists to help you audit *what happened*, not to replace the deliverable.
-
-### How engine execution works (simplified)
-
-```mermaid
-sequenceDiagram
-    participant U as You
-    participant TS as Taskspace
-    participant R as Rivine runtime
-    participant S as Secure sandbox
-    participant A as Assets
-
-    U->>TS: Message + engine + specialty + attachments
-    TS->>TS: Inject context tags (hidden)
-    TS->>R: Stream request
-    R->>S: Tool / multi-step execution (engine-dependent)
-    R-->>TS: Stream tokens + snapshots + HITL prompts
-    R->>A: Save deliverables (when applicable)
-    TS-->>U: Snapshot cards in conversation
-    U->>TS: Open snapshot → Preview Panel
-```
-
-
-
-**Rivine Code** is designed as an **autonomous coding runtime** build, debug, audit, and preview software without opening a local IDE. For non-technical users, that means seeing a working preview in the browser. For engineers, it means a quick prototype you can download and carry into production tooling.
-
-**Current behavior in Workspace (transparent):**
-
-- Engine outputs appear as **snapshots** in the conversation (markdown, HTML blocks, generated images).
-- **Markdown and HTML** open in the Preview Panel (editable document editor or HTML live preview).
-- **All deliverables** are saved to **Assets**.
-- **Rivine Code project file trees** run in an isolated sandbox with preview capability; the working project tree is **persisted to Assets** as a code project asset on completed turns (dependency/build folders and binaries excluded), so it survives past the live sandbox session, not only as a snapshot in the conversation.
-- The **HTML tab** provides a sandboxed iframe preview for HTML content (code editor + live render).
-
-
-
-### Human-in-the-Loop (HITL)
-
-When the runtime hits verification limits, low confidence, or high-risk actions, it can pause and show an **approval request** in Taskspace. You can approve or reject before execution continues. This is especially relevant for legal, security, and data-sensitive workflows.
+- **Before acting in a connected app**, the engine shows the exact action with **Deny** and **Approve & run**.
+- **When it needs input**, it asks one question and waits for your answer.
+- **On low confidence, verification limits or high-risk steps**, it pauses with an approval request. This matters most for legal, security and data-sensitive work.
 
 ```mermaid
 flowchart LR
-    RUN["Engine running"] --> CHK{"Verification limit or high-risk?"}
-    CHK -->|"No"| CONT["Continue execution"]
-    CHK -->|"Yes"| PAUSE["Pause · approval request in Taskspace"]
+    RUN["Engine running"] --> CHK{"High-risk, unclear or acting in an app?"}
+    CHK -->|"No"| CONT["Continue"]
+    CHK -->|"Yes"| PAUSE["Pause: request in Taskspace"]
     PAUSE --> DEC{"Your decision"}
-    DEC -->|"Approve"| CONT
-    DEC -->|"Reject"| STOP["Stop before execution"]
+    DEC -->|"Approve & run"| CONT
+    DEC -->|"Deny"| STOP["Stop before acting"]
 ```
 
+## Preview Panel
 
+The Preview Panel lets you inspect and edit results without leaving Workspace. It is resizable on desktop (width is remembered), a full-screen sheet on mobile, and has an optional fullscreen mode.
 
+| Tab | Purpose |
+| --- | --- |
+| **Assets** | All taskspace files: filter by user or AI and by type; open, download, delete |
+| **Attachments** | Items waiting to be sent with your next message |
+| **Preview** | Markdown documents, images and plain text |
+| **HTML** | HTML code editor with sandboxed live preview |
+| **Share** | Sharing workflow (when opened from a share action) |
 
+**Markdown documents**
 
-## 3. Choosing an engine
+- Rendered and editable, with a table of contents in fullscreen and a word count.
+- Export as Markdown, PDF (print) or DOCX. **Save** updates the asset; guests are read-only.
+- Ask a follow-up for a surgical revision of one section instead of regenerating the document.
 
-There is no automatic mediator or router standing between your request and the engine that runs
-it. You choose the Rivine engine and its specialty directly in the Taskspace input bar: TaskForce
-for connected-app work, Research for a sourced report, Code for a project, Cicero for legal work,
-Confluence for country forecasts, Creative for media, Assist for a follow-up edit on an open
-document, or Browse for your own tabs. The engine you pick is the engine that runs, every time,
-with its tool loop and specialty exactly as you set them.
+**HTML**
 
-## 4. Preview Panel (right side)
+- Split view: code editor and sandboxed live preview. Export as HTML or PDF (print).
+- HTML code blocks in AI responses appear as HTML snapshots that open this tab.
+- Research PDF-style reports and spreadsheet layouts preview as self-contained HTML for review, print or export.
 
-The Preview Panel is your **inspect-and-edit surface** without leaving Workspace.
+## Assets
 
-### Tabs
+Assets is the durable output library for each Taskspace. Every deliverable is saved here, versioned, and AI-created assets carry the engine that made them and citations where applicable.
 
+| Property | Details |
+| --- | --- |
+| **Types** | Document, code, image, data, other |
+| **Created by** | You (uploads, references) or AI (generated documents, HTML, code and media) |
+| **Grounding** | Your taskspace assets are available to engines on every message, so answers stay grounded in your files |
 
-| Tab             | Purpose                                                                 |
-| --------------- | ----------------------------------------------------------------------- |
-| **Assets**      | All taskspace files, filter by user vs AI, type, download, delete, open |
-| **Attachments** | Pending items before you send a message                                 |
-| **Preview**     | Markdown documents, images, plain text                                  |
-| **HTML**        | HTML code editor + sandboxed live preview                               |
-| **Share**       | Share workflow (when opened from share actions)                         |
+> **Note:** Snapshots are quick-open cards in the chat. Assets are the persisted files you manage. A Rivine Code project tree is also saved to Assets as a code project on each completed turn (dependency and build folders and binaries excluded), so it outlives the live sandbox.
 
+## Attachments and uploads
 
-
-
-### Markdown documents
-
-- Rendered and **editable** in the built-in document editor
-- Table of contents in fullscreen
-- Word count
-- **Export:** Markdown, PDF (print), DOCX
-- **Save** updates the asset (guests: read-only)
-- Follow-up prompts can request **surgical revisions** (targeted patches) instead of full regeneration, you don't need to ask the engine to redo the whole document to fix one section
-
-
-
-### HTML
-
-- Split view: code editor + **sandboxed iframe preview**
-- **Export:** HTML file, PDF (print)
-- AI responses that include HTML code blocks appear as **HTML snapshots** in the conversation, click to open the HTML tab
-- Research PDF-style reports and spreadsheet layouts preview as **self-contained HTML**, suitable for review, print, or export workflows supported by your plan
-
-
-
-### Panel behavior
-
-- Resizable on desktop (width remembered)
-- Full-screen sheet on mobile
-- Optional fullscreen mode for focused editing
-
-
-
-## 5. Assets
-
-Assets are the **durable output library** for each Taskspace.
-
-
-| Property          | Details                                                                                                        |
-| ----------------- | -------------------------------------------------------------------------------------------------------------- |
-| **Types**         | Document, code, image, data, other                                                                             |
-| **Creator**       | User or AI                                                                                                     |
-| **Typical flow**  | Upload/parse → markdown asset, or AI generates → saved asset                                                   |
-| **In AI context** | Taskspace assets are included as `current_file_context` on each message so engines stay grounded in your files |
-
-
-**By source**
-
-
-| Source  | Examples                                                                                   |
-| ------- | ------------------------------------------------------------------------------------------ |
-| **You** | Uploads (documents, images, references)                                                    |
-| **AI**  | Generated markdown, HTML, media from TaskForce, Research, Cicero (Creative once available) |
-
-
-Assets are **versioned**. AI-created assets are tagged with engine metadata and citations where applicable.
-
-**Snapshots vs Assets**
-
-- **Snapshots** in chat are quick-open cards tied to message content (pasted text, file references, HTML blocks, images).
-- **Assets** are persisted files you manage in the Assets tab.
-
-Rivine Code's sandbox project tree is persisted to Assets as a **code project asset** on completed turns, in addition to its snapshot/preview in the conversation.
-
-## 6. Attachments & file parsing
-
-
+Uploaded files are converted to Markdown so engines can reason over them. Parsing runs on Beunec's servers, not as a chat you type into.
 
 ### Supported upload types
 
-Uploaded files are converted to a **markdown-first** representation for AI grounding (exact parser engines are proprietary).
+| Category | Extensions |
+| --- | --- |
+| **Images** | jpg, jpeg, png, gif, bmp, svg, webp |
+| **Documents** | pdf, docx, xlsx, pptx, csv, txt, rtf, md |
+| **Audio** | mp3, wav, m4a, flac, ogg, mpeg |
+| **Video** | mp4, mov, avi, mkv, webm, mpeg |
+| **Code** | py, js, jsx, ts, tsx, html, css, json, xml, sql, java, tex, vue, svelte, go, rs, rb, php, c, cpp, h, cs, swift, kt, yaml, yml, scss, less, mdx |
 
-
-| Category      | Extensions                                                                                                                                     |
-| ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Images**    | jpg, jpeg, png, gif, bmp, svg, webp                                                                                                            |
-| **Documents** | pdf, docx, xlsx, pptx, csv, txt, rtf, md                                                                                                       |
-| **Audio**     | mp3, wav, m4a, flac, ogg, mpeg                                                                                                                 |
-| **Video**     | mp4, mov, avi, mkv, webm, mpeg                                                                                                                 |
-| **Code**      | py, js, jsx, ts, tsx, html, css, json, xml, sql, java, tex, vue, svelte, go, rs, rb, php, c, cpp, h, cs, swift, kt, yaml, yml, scss, less, mdx |
-
-
-
+Archives (zip, rar and similar), executables and other blocked types are not accepted, for security.
 
 ### Limits
 
+| Limit | Value |
+| --- | --- |
+| Max file size | 200 MB |
+| Max files per message | 10 |
+| Max files per batch upload | 10 |
+| Daily uploads | 15 (Base) / 30 (Pro) / 40 (Essential) |
 
-| Limit                      | Value                                |
-| -------------------------- | ------------------------------------ |
-| Max file size              | 200 MB                               |
-| Max files per message      | 10                                   |
-| Max files per batch upload | 10                                   |
-| Daily uploads              | 15 (Base) / 30 (Pro) / 40 (Essential) |
+### Ways to add content
 
+| Method | Status |
+| --- | --- |
+| File upload | Available |
+| Paste text | Available (sent as-is, not parsed) |
+| Paste or clipboard image | Available |
+| Web page or YouTube URL | Available |
+| Screenshot capture | Available |
+| Import from Manage Files | Available |
+| Google Drive, OneDrive, Dropbox | Coming soon |
 
+### What is sent with your message
 
+To give engines situational awareness without cluttering your chat, Workspace adds context to each message that you do not see in the bubble: your local date, time and timezone, your location (only if you grant browser permission), your engine and specialty, the selected Agent Note, your pasted text and file attachments, and your response language if it is not English.
 
-### Not supported
+## Governance
 
-- Archives (.zip, .rar, etc.)
-- Executables and other blocked extensions for security
+**Where:** Workspace, **Governance** tab. This is configuration, not a chat feature; saved rules shape how engines behave in the workspace.
 
+- **System instructions:** primary role, specified industry, behavioral guidelines, response format.
+- **Content restrictions:** prohibited topics, content filters.
+- **Who can edit:** Owners and Operators. Guests see read-only fields.
 
+## Connector
 
-### Import methods
+**Where:** Workspace, **Connector** page. This manages credentials and permissions so engines can reach external systems only when you authorize them.
 
+There are two kinds of connection: native **RCP** (Rivine Context Protocol) apps managed on the Connector page, and **MCP** (Model Context Protocol) apps available to Rivine TaskForce.
 
-| Method                                   | Status                      |
-| ---------------------------------------- | --------------------------- |
-| File upload                              | Available                   |
-| Paste text                               | Available (no server parse) |
-| Paste / clipboard image                  | Available                   |
-| Web page or YouTube URL parse            | Available                   |
-| Screenshot capture                       | Available                   |
-| Import from Manage Files                 | Available                   |
-| Google Drive / OneDrive / Dropbox attach | **Coming soon**             |
+### Native apps you can connect today
 
+| App | Access |
+| --- | --- |
+| Google (Gmail, Calendar) | Read and send mail; calendar |
+| Microsoft 365 | Mail and calendar |
+| Supabase | Read and edit |
+| Firebase | Read and edit |
+| MongoDB | Read and edit |
+| Stripe | Read balances and transactions |
+| GitHub | Read repositories |
 
+Dropbox and Box are not yet available on the Connector page.
 
+### MCP apps available to Rivine TaskForce
 
-### What is AI-powered here
+Slack, Excalidraw, Google Drive, v0, Notion, Asana, Docusign, Supermetrics, Zoom, Linear, monday.com, Intercom, Miro, Box, Airtable, Zapier, Trello, Sentry, ZoomInfo, Gamma, Calendly, ClickUp, Global Database, Shopify, Adobe, Cloudflare, Tableau Cloud, Spotify, Dropbox, Mixpanel, Ramp, PostHog, PlanetScale, ClickHouse, Amplitude, CoCounsel Legal, Midpage Legal Research, Legal Data Hunter, Definely, Harvey, Salesloft, Lucid, Figma and Vercel.
 
-- **Parsing** runs on Beunec's server-side pipeline (not a chat completion you type into).
-- Parsed content becomes markdown assets the engines can reason over.
+> **Note:** The **Connect Apps** toggles in the Taskspace input bar (web, maps, health and others) are currently disabled. Connect apps on the Connector page first.
 
+## Credits
 
+**Where:** the **Credits** page, linked from the balance widget in the Workspace header. Credits are prepaid usage billing, not an AI feature.
 
-## 7. Hidden context injection (agentic awareness)
+- $1 = 1 credit, and credits never expire. Plans include free monthly credits: 5 (Base), 10 (Pro, $20/month), 20 (Essential, $40/month).
+- Usage is metered per call. A **20% Rivine Infrastructure fee** is added to the underlying model provider cost; it covers orchestration, sandboxing, verification and delivery.
+- Each engine needs a minimum prepaid balance to start a turn (see the engine table). The floors are the same on every plan, from one wallet.
+- Your balance is highlighted when it drops below $5.00.
+- Credits can be shared via CloudHandle, depending on plan features.
 
-To activate the full Rivine harness without cluttering your chat, Workspace injects structured tags into outbound messages. These are **hidden from the visible conversation** but used by the runtime for classification, routing, and output quality.
+See [Plans and pricing](/aselius-platform/docs/plans-pricing).
 
+## Shared with me
 
-| Tag                  | Purpose                                                                       |
-| -------------------- | ----------------------------------------------------------------------------- |
-| `<context_identity>` | Your local date, time, timezone, and location (if browser permission granted) |
-| `<agentic_engine>`   | Explicit engine override when not using Auto                                  |
-| `<user_propritize>`  | Specialty / sub-agent mode selection                                          |
-| `<agent_note>`       | Full specialty harness instructions                                           |
-| `<pasted_text>`      | Pasted content attachments                                                    |
-| `<file_attachment>`  | References to parsed asset files                                              |
-| Language hint        | Response language preference (non-English)                                    |
+**Where:** Platform sidebar, **Shared with me**. This is collaboration and access control.
 
+- See pending invitations and active shared workspaces; accept or decline invitations.
+- Open a shared workspace (it lands in its first Taskspace).
+- Your role (Owner, Operator, Member or Guest) sets what you can do.
 
-This is how Workspace gives agents **situational awareness** (when/where you are working) and **execution discipline** (which engine, which specialty, which rules) without you managing prompts manually.
+Owners and Operators share from the Preview Panel **Share** tab, when enabled.
 
-## 8. Governance
+## Trust, isolation and security
 
-**Route:** Workspace → **Governance** tab  
-**AI-powered?** The page itself is configuration UI. Saved rules **inform** AI behavior on the backend, it is not a chat feature.
+- **Isolation:** Every engine's tool calls, code execution, research and connector calls run in isolated, temporary environments that never share state with another user's task. Each Rivine Code session gets its own sandbox, cleaned up when the session ends; only what is saved to Assets persists.
+- **Recovery:** Long tasks keep their context. If a step fails, the engine can retry or adapt without losing what already happened.
+- **Verification:** Automated checks (such as tests and linters in Rivine Code), engine self-checks, and citations for factual engines. Repeated failures or high-risk actions come to you.
+- **Cost control:** Research PDF and spreadsheet formatting works from the grounded research already done; it does not run fresh web research.
+- **Consistent rules:** Every engine is held to the same principles: be transparent about what it can do, refuse harmful requests, and never fabricate real-time data.
+- **Access:** Every request is authenticated, and workspace access is gated by role. App connections use OAuth, with credentials scoped per connector and never exposed to engines.
+- **Encryption:** All traffic is encrypted in transit (HTTPS with TLS 1.2 or later, and encrypted WebSockets for streaming). Assets, chats and file attachments are encrypted at rest; connector credentials are never stored in plain text.
+- **Guardrails:** Rate limits and quotas per user and per engine, output cleaned of internal system details before it reaches your browser, and flagging of personal information on sensitive outputs.
+- **What we don't store:** Raw third-party credentials, voice input or raw media beyond what you upload, browsing history or IP logs for profiling, or long-term logs of agent decisions. Session logs are purged per your retention plan.
 
-### What you configure
+For full details, see the [Security Disclosure](/aselius-platform/docs/security-disclosure). Report vulnerabilities to security@beunec.com.
 
-**System instructions**
+## What is AI-powered vs not
 
-- Primary role
-- Specified industry
-- Behavioral guidelines
-- Response format
-
-**Content restrictions**
-
-- Prohibited topics
-- Content filters
-
-**Who can edit:** Owners and Operators. Guests see read-only fields.
-
-## 9. Connector
-
-**Route:** Workspace → **Connector** (dedicated page)  
-**AI-powered?** No, this is **credential and permission management** so engines can access external systems when authorized.
-
-Connections come in two kinds: native **RCP** (Rivine Context Protocol) apps managed directly on the Connector page, and **MCP** (Model Context Protocol) apps available to Rivine TaskForce for broader professional/enterprise workflows.
-
-### RCP: native app connections (Connectable today)
-
-| App                     | Access                     |
-| ----------------------- | -------------------------- |
-| Google (Gmail/Calendar) | Mail/calendar read & send  |
-| Microsoft 365           | Mail/calendar              |
-| Supabase                | Read/edit                  |
-| Firebase                | Read/edit                  |
-| MongoDB                 | Read/edit                  |
-| Stripe                  | Read balances/transactions |
-| GitHub                  | Read repositories          |
-
-### MCP: app connections available to Rivine TaskForce
-
-Rivine TaskForce can reach a much larger catalog of professional and enterprise apps through MCP: Slack, Excalidraw, Google Drive, v0, Notion, Asana, Docusign, Supermetrics, Zoom, Linear, monday.com, Intercom, Miro, Box, Airtable, Zapier, Trello, Sentry, ZoomInfo, Gamma, Calendly, ClickUp, Global Database, Shopify, Adobe, Cloudflare, Tableau Cloud, Spotify, Dropbox, Mixpanel, Ramp, PostHog, PlanetScale, ClickHouse, Amplitude, CoCounsel Legal, Midpage Legal Research, Legal Data Hunter, Definely, Harvey, Salesloft, Lucid, Figma, and Vercel.
-
-### Not yet implemented (RCP Connector page)
-
-- Dropbox
-- Box
-
-**Connect Apps toggles** in the Taskspace input area list additional sources (web, maps, health, etc.) but are currently **disabled** in the UI, connecting apps is done through the Connector page first.
-
-## 10. Credits
-
-**Route:** `/credits` (linked from the balance widget in Workspace header)  
-**AI-powered?** No, this is **prepaid usage billing**.
-
-- Credits are consumed when you run agentic engines (usage-based after free monthly allocation).
-- Each Rivine engine has a **minimum balance** required to select it (see engine table above).
-- Low balance is highlighted when under $5.00.
-- Credits can be shared via CloudHandle (per plan features).
-- Pay-per-token usage is metered per call at the runtime level (see "Under the hood" below).
-- A **Rivine Infrastructure fee of 20%** is applied on top of underlying usage cost before it is debited from your credits, this covers orchestration, sandboxing, verification, and delivery infrastructure, not just raw model tokens.
-
-
-
-## 11. Shared with me
-
-**Route:** Platform sidebar → **Shared with me**  
-**AI-powered?** No, this is **collaboration and access control**.
-
-- View pending invitations and active shared workspaces
-- Accept or decline invitations
-- Open a shared workspace (lands in its first Taskspace)
-- Roles: Owner, Operator, Member, Guest
-
-Workspace owners/operators can share from the Preview Panel **Share** tab (when enabled).
-
-## Under the hood (what we share publicly)
-
-We do not publish exact model names, routing tables, or parsing strategies, that is proprietary Beunec infrastructure. Here is what matters for trust and quality.
-
-### 1. Orchestration runtime
-
-Rivine's runtime coordinates each turn from your message to a finished deliverable:
-
-- State persists across steps and supports **human-in-the-loop pauses** (approval, clarification, escalation)
-- Long tasks can resume without losing thread context
-- Pay-per-token usage is metered per call
-
-### 2. Reasoning framework (REA / REI / REAI)
-
-Engines use one of three **tool-calling reasoning patterns**, chosen by task type:
-
-| Pattern  | Orientation               | Typical engines  |
-| -------- | ------------------------- | ---------------- |
-| **REA**  | Analysis-first            | Research, Cicero |
-| **REI**  | Implementation-first      | Code             |
-| **REAI** | Analysis + implementation | TaskForce        |
-
-Each turn plans, calls the tools it needs, verifies the result, and only then terminates with a structured answer, rather than trailing off into prose once it feels roughly done.
-
-### 3. Isolation and recovery
-
-Every engine's tool calls, sandboxed code execution, scoped research and connector calls, run in isolated, ephemeral environments (dedicated per Code session), never sharing state with another user's task. If a step fails, the runtime can retry or adapt without wiping the conversation's memory of what already happened.
-
-For Research and legal work, downstream formatters (PDF/Sheets) **do not** re-run open web research, they work from the lead agent's grounded output, controlling cost and drift.
-
-### 4. Verification
-
-- **Deterministic checks** where possible (schemas, tests, linters on Rivine Code's build/verify step)
-- **Inferential self-checks** via agent instructions and escalation tags
-- **Grounded citations** for factual engines
-- Repeated failure or high-risk actions can escalate to **you** (HITL)
-
-
-
-### 5. Agentic Annotation Protocol
-
-Every agent, sub-agent, and tool-facing model receives a **standardized instruction layer**: capability boundaries, when to call tools, when to escalate, and positive/negative behavioral examples. This is the same family of ideas as the GCAP/ASPS annotation approach, consistent behavior across the stack, not ad-hoc prompts per feature.
-
-### 6. Security & data handling (summary)
-
-**Authentication & access control:**
-- Auth0 JWT-based authentication for all API calls; workspace access is role-gated (Owner, Operator, Member, Guest)
-- OAuth 2.0 with PKCE for third-party app connections (credentials scoped per connector, not exposed to agents)
-
-**Data in transit:**
-- HTTPS (TLS 1.2+) for all client-server communication
-- WSS (encrypted WebSocket) for real-time messaging and streaming
-
-**Data at rest:**
-- Workspace assets and taskspace chat stored in encrypted databases
-- File attachments in private S3 buckets with AES-256 encryption (bucket-key enabled)
-- Message content encrypted before storage in DynamoDB
-- Credentials for external connectors encrypted with Fernet key derivation (never plain-text)
-
-**Sandbox isolation:**
-- Each Rivine Code session runs in an isolated, ephemeral sandbox with no network access to other user sessions
-- Sandbox file system is cleaned up on session end; no data persists except what you explicitly persist to Assets
-
-**API guardrails:**
-- Rate limiting and quota enforcement per user and per engine
-- Agent output sanitizers remove internal system metadata, trace markers, and infrastructure details before they reach your browser
-- Personally identifiable information (PII) flagging on sensitive output paths
-
-**What we don't store:**
-- Raw third-party API credentials (we encrypt them or use refresh tokens instead)
-- Voice inputs or raw media beyond the file metadata you explicitly upload
-- Browsing history or IP logs for profiling purposes
-- Long-term audit logs of agent decision-making; session logs are purged per your retention plan
-
-**Compliance & transparency:**
-- Detailed security practices and data handling policies are available in our [Security Disclosure](/aselius-platform/docs/security-disclosure) for enterprises and security reviewers
-- Vulnerability reporting is supported via responsible disclosure (contact security@beunec.com)
-
-
-
-## What is AI-powered vs not (summary)
-
-
-| Feature                      | AI-powered?                                             |
-| ---------------------------- | ------------------------------------------------------- |
-| Taskspace chat & streaming   | **Yes**                                                 |
-| Rivine engines + specialties | **Yes**                                                 |
-| File/URL parsing to markdown | Server pipeline (proprietary; not user-facing LLM chat) |
-| Preview Panel editors        | **No** client-side edit/export                          |
-| Assets library CRUD          | **No** standard API                                     |
-| Governance                   | **Config only** shapes AI via backend                   |
-| Connector OAuth              | **No**                                                  |
-| Credits & billing            | **No**                                                  |
-| Shared with me               | **No**                                                  |
-| Workspace search             | Depends on implementation; not generative chat          |
-| Voice input                  | Browser speech-to-text → your message text              |
-
-
-
-
-### Detailed breakdown
-
-**AI-powered today**
-
-- All Rivine agentic engines, and Research's downstream PDF/Sheets formatting step
-- Grounded research and citation assembly
-- Surgical document/code revisions via follow-up prompts
-- Rivine Code sandbox execution, build, and verification
-- Rivine Creative media generation and editing
-
-**Not AI-powered today (may evolve)**
-
-1. **Built-in document editor**: Manual edits in the preview panel are **your** changes. The editor does not silently rewrite content unless you ask an engine to revise it.
-2. **Workspace administration**: Members, roles, permissions, billing, and connector OAuth setup are **standard platform controls**, not agent-driven decisions.
-
-We will disclose when additional surfaces become AI-assisted.
-
-## How Aselius Workspace compares
-
-We will not claim features we have not shipped. Here is an honest positioning lens for researchers, engineers, and founders evaluating agentic tools:
-
-
-| Dimension              | Typical copilot / workspace products | Aselius Workspace                                                                      |
-| ---------------------- | ------------------------------------ | -------------------------------------------------------------------------------------- |
-| **Architecture**       | Often a chat layer over one model    | **Rivine runtime** with specialized engines, specialties, verification, and HITL       |
-| **Output handling**    | Copy-paste from chat                 | **Assets + Preview Panel** edit markdown/HTML, export, reopen from snapshots           |
-| **Task continuity**    | Session-based chat                   | **Taskspaces** with persistent assets and governed configuration                       |
-| **Enterprise control** | Tenant policies vary                 | **Governance** per workspace + role-based sharing                                      |
-| **Coding**             | IDE assistant or codegen             | **Rivine Code** as runtime construct with in-browser preview (not "just autocomplete") |
-| **Transparency**       | Opaque routing                       | Visible engine/specialty choice, agent notes, HITL checkpoints                         |
-
-
-We are **not** claiming to replace your entire IDE, legal counsel, or brokerage stack. We **are** offering a unified place to **run governed agentic work** and **leave with deliverables**, documents, code previews, research outputs, and creative assets, without stitching together five separate tools.
+| Feature | AI-powered? |
+| --- | --- |
+| Taskspace chat and streaming | Yes |
+| Rivine engines and specialties | Yes |
+| Grounded research and citations | Yes |
+| Surgical revisions via follow-up prompts | Yes |
+| Rivine Code build, run and verify | Yes |
+| Rivine Creative generation and editing | Yes |
+| File and URL parsing to Markdown | Server pipeline, not a chat |
+| Preview Panel editing and export | No: your edits are your own; the editor never rewrites content unless you ask an engine |
+| Assets library | No |
+| Governance | Configuration that shapes engine behavior |
+| Connector, Credits, Shared with me | No: standard platform controls |
+| Workspace search | Not generative chat |
+| Voice input | Browser speech-to-text into your message |
+
+Beunec will disclose when more surfaces become AI-assisted.
+
+## How Workspace compares
+
+| Dimension | Typical copilot tools | Aselius Workspace |
+| --- | --- | --- |
+| Architecture | A chat layer over one model | Specialized engines with specialties, verification and human approval |
+| Output | Copy and paste from chat | Assets and Preview Panel: edit, export, reopen from snapshots |
+| Continuity | Session-based chat | Taskspaces with persistent assets and governed settings |
+| Control | Varies | Per-workspace Governance and role-based sharing |
+| Coding | IDE autocomplete or codegen | Rivine Code builds and previews working projects in the browser |
+| Transparency | Opaque | You choose the engine; Agent Notes and approval checkpoints are visible |
+
+Workspace does not replace your IDE, legal counsel or brokerage. It gives you one governed place to run agentic work and leave with deliverables.
 
 ## Usage tips
 
-1. **Pick the right Space engine** for the work, and set its specialty.
-2. **Enable only the grounded sources you need**: fewer sources, faster turns, lower cost.
-3. **Use follow-ups for surgical edits**: "patch section 3", "fix the chart labels", instead of regenerating entire documents.
-4. **Rivine Code:** describe stack (Next.js, dashboard, landing page); use preview to validate before download.
-5. **Rivine Research:** say PDF or spreadsheet upfront, or set the specialty toggle.
-6. **Cicero:** treat output as **legal information, not legal advice**: escalation paths exist for high-stakes matters.
-
-
+1. Pick the right engine for the job and set its specialty.
+2. Enable only the grounded sources you need: faster turns, lower cost.
+3. Use follow-ups for surgical edits ("patch section 3", "fix the chart labels") instead of regenerating.
+4. For Rivine Code, describe the stack (for example Next.js, a dashboard or a landing page) and check the preview before downloading.
+5. For Rivine Research, say PDF or spreadsheet up front, or set the specialty.
+6. Treat Cicero output as legal information, not legal advice; high-stakes matters escalate to you.
 
 ## Recommended workflows
 
-
-
-### Researcher
+**Researcher**
 
 ```mermaid
 flowchart LR
-    A["Taskspace per paper"] --> B["Upload PDFs / spreadsheets"]
-    B --> C["Rivine Research · PDF or Spreadsheet"]
-    C --> D["Review grounded output + snapshots"]
-    D --> E["Export DOCX / PDF"]
+    A["Taskspace per paper"] --> B["Upload PDFs or spreadsheets"]
+    B --> C["Rivine Research: PDF or Spreadsheet"]
+    C --> D["Review grounded output"]
+    D --> E["Export DOCX or PDF"]
 ```
 
-
-
-
-
-### Engineer / founder
+**Engineer or founder**
 
 ```mermaid
 flowchart LR
-    A["Rivine Code · pick any stack"] --> B["Describe the prototype"]
-    B --> C["Review streamed code + HTML snapshots"]
-    C --> D["Preview in-browser"]
-    D --> E["Download for production repo"]
+    A["Rivine Code: any stack"] --> B["Describe the prototype"]
+    B --> C["Review streamed code"]
+    C --> D["Preview in the browser"]
+    D --> E["Download for your repo"]
 ```
 
-
-
-
-
-### Legal / policy operator
+**Legal or policy operator**
 
 ```mermaid
 flowchart LR
-    A["Rivine Cicero + specialty"] --> B["Upload contracts / set governance"]
+    A["Rivine Cicero + specialty"] --> B["Upload contracts, set Governance"]
     B --> C["Conservative drafting"]
-    C --> D["HITL on high-risk gaps"]
+    C --> D["Your approval on high-risk gaps"]
 ```
 
-
-
-
-
-### Team lead
+**Team lead**
 
 ```mermaid
 flowchart LR
     A["Configure Governance"] --> B["Connect apps via Connector"]
-    B --> C["Share · Operator / Member roles"]
+    B --> C["Share with Operator or Member roles"]
     C --> D["Monitor Credits"]
 ```
 
+## Roadmap
 
+**Available now:** Rivine TaskForce, Research, Code, Cicero, Confluence, Creative and Assist; Rivine Browse; Aselius MCP; Telegram, Discord and WhatsApp; Selius; Automation; Observability; grounded sources; asset previews; Code sandbox and CLI; pay-per-token metering.
 
+| Coming | Status |
+| --- | --- |
+| Rivine engines as an API | Coming soon |
+| Google Drive, OneDrive and Dropbox attach in Taskspace | Coming soon |
+| Dropbox and Box on the Connector page | Not yet available |
 
+Beunec will disclose more capabilities when they are ready for production. Rivine FIDA is deprecated and not on the roadmap.
 
-## Roadmap (disclosed only)
+## Legal and product notes
 
-**Available now:** Rivine TaskForce, Research, Code, Cicero, Confluence, Creative, Assist; Rivine Browse; Aselius MCP; Telegram, Discord and WhatsApp; Selius; Automation; Observability; grounded sources; asset previews; Code sandbox + CLI; pay-per-token metering.
-
-**In progress / not yet production:**
-
-
-| Item                                                  | Status              |
-| ----------------------------------------------------- | ------------------- |
-| Rivine Agentic Engines as an API                      | Coming soon         |
-| Google Drive / OneDrive / Dropbox attach in Taskspace | Coming soon         |
-| Dropbox / Box Connector                               | Not yet implemented |
-
-
-Beunec will disclose additional capabilities when they are ready for production use. Rivine FIDA is deprecated and is not on the roadmap.
-
-## Legal & product notes
+- Aselius is created by Beunec Technologies, Inc. Workspace is one app within it, selectable from the sidebar.
+- Rivine and its orchestration are proprietary, not open source. These docs describe capabilities and outcomes, not implementation.
+- Rivine Cicero, Rivine Research and similar engines are assistive. They are not substitutes for licensed attorneys, physicians or financial advisors.
+- AI outputs need human review for high-stakes legal, medical, financial and security decisions.
 
 © 2026 Beunec Technologies, Inc. All rights reserved.
 
-- **Aselius Platform** is created by **Beunec Technologies Inc.**
-- Workspace is one application within the platform, selectable from the sidebar.
-- Rivine, Reverse Engineering of Analysis & Implementation, and related orchestrations are **proprietary**, not open source. Documentation describes *capabilities and outcomes*, not internal implementation recipes.
-- Rivine Cicero and similar engines are **not substitutes** for licensed attorneys, physicians, or financial advisors.
-- Agentic Annotation Protocol principles (capability transparency, refusal of harmful requests, no fabricated real-time data) are embedded in engine harness design.
-- AI outputs require human review for high-stakes decisions (legal, medical, financial, security). Cicero and Research outputs are assistive, not substitutes for licensed professionals.
+## Related
 
-
-
-## Quick reference diagram: one task end-to-end
-
-```mermaid
-flowchart LR
-    A[Attach PDF] --> B[Parse to markdown asset]
-    B --> C[Select Rivine Research · PDF]
-    C --> D[Add Agent Note / specialty harness]
-    D --> E[Send with hidden context tags]
-    E --> F[Rivine runtime executes]
-    F --> G[Stream response]
-    F --> H[Save to Assets]
-    G --> I[Snapshot in chat]
-    I --> J[Preview Panel · edit · export]
-    H --> J
-```
-
-
-
+- [Plans and pricing](/aselius-platform/docs/plans-pricing)
+- [Rivine TaskForce](/aselius-platform/docs/rivine-taskforce)
+- [Rivine Research](/aselius-platform/docs/rivine-research)
+- [Rivine Code](/aselius-platform/docs/rivine-code)
+- [Rivine Creative](/aselius-platform/docs/rivine-creative)
+- [Preview app](/aselius-platform/docs/preview-app)
+- [Aselius MCP](/aselius-platform/docs/aselius-mcp)
+- [Security Disclosure](/aselius-platform/docs/security-disclosure)

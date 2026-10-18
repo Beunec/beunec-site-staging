@@ -41,7 +41,7 @@ export function HotspotMap({ shot, spots }: { shot: Shot; spots: Hotspot[] }) {
               className={`absolute inset-0 rounded-full bg-accent-sage/40 ${active === i ? "animate-ping" : "opacity-0"} motion-reduce:animate-none`}
             />
             <span
-              className={`relative flex h-6 w-6 items-center justify-center rounded-full border-2 text-[11px] font-bold shadow-lg transition-transform duration-300 sm:h-7 sm:w-7 ${
+              className={`relative flex h-6 w-6 items-center justify-center rounded-full border-2 text-sm font-bold shadow-lg transition-transform duration-300 sm:h-7 sm:w-7 ${
                 active === i
                   ? "scale-110 border-white bg-accent-sage text-white"
                   : "border-white/90 bg-[#111111]/85 text-white group-hover:scale-110"
@@ -66,7 +66,7 @@ export function HotspotMap({ shot, spots }: { shot: Shot; spots: Hotspot[] }) {
               }`}
             >
               <span
-                className={`mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[11px] font-bold ${
+                className={`mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-sm font-bold ${
                   active === i ? "bg-accent-sage text-white" : "bg-secondary text-muted-foreground"
                 }`}
               >

@@ -77,7 +77,7 @@ ff.stdin.end();
 await new Promise((r, j) => ff.on("close", (code) => (code === 0 ? r() : j(new Error(`ffmpeg exited ${code}`)))));
 
 // Poster frame (WebP, small) at a moment that shows the product.
-const posterT = cut === "story" ? 56.6 : 1.4;
+const posterT = cut === "story" ? 82.5 : 1.4;
 writeFileSync(join(here, "out-poster.png"), await frameAt(posterT));
 await new Promise((r, j) =>
   spawn("ffmpeg", ["-y", "-loglevel", "error", "-i", join(here, "out-poster.png"), "-vf", "scale=1280:-2", "-quality", "80", join(mediaDir, `${name}-poster.webp`)], { stdio: "inherit" })
@@ -96,8 +96,9 @@ if (cut === "story") {
   const vtt = ["WEBVTT", ""];
   captions.forEach((c, i) => vtt.push(String(i + 1), `${ts(c.start)} --> ${ts(c.end)}`, c.text, ""));
   writeFileSync(join(mediaDir, `${name}.en.vtt`), vtt.join("\n"));
+  // The site reads duration and chapters from here, so the player always matches the video.
   const chapters = await page.evaluate(() => window.CHAPTERS);
-  writeFileSync(join(here, "chapters.json"), JSON.stringify(chapters, null, 2) + "\n");
+  writeFileSync(join(here, "story-meta.json"), JSON.stringify({ duration, chapters }, null, 2) + "\n");
 }
 
 await browser.close();

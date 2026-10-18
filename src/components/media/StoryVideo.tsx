@@ -75,7 +75,7 @@ export function StoryVideo({ sources, poster, captions, title, duration, chapter
       </div>
 
       <nav aria-label="Chapters" className="rounded-2xl border border-border bg-container p-3">
-        <p className="px-2 pb-2 pt-1 font-mono text-[10px] uppercase tracking-[0.16em] text-accent-slate">
+        <p className="px-2 pb-2 pt-1 font-mono text-sm uppercase tracking-[0.14em] text-accent-slate">
           Chapters
         </p>
         <ol className="space-y-0.5">
@@ -91,7 +91,7 @@ export function StoryVideo({ sources, poster, captions, title, duration, chapter
                     on ? "bg-accent-sage/15 text-foreground" : "text-muted-foreground hover:bg-secondary hover:text-foreground"
                   }`}
                 >
-                  <span className="w-9 shrink-0 font-mono text-[11px] tabular-nums text-accent-slate">
+                  <span className="w-9 shrink-0 font-mono text-sm tabular-nums text-accent-slate">
                     {Math.floor(c.at / 60)}:{String(Math.floor(c.at % 60)).padStart(2, "0")}
                   </span>
                   <span className="leading-snug">{c.title}</span>

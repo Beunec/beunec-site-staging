@@ -60,7 +60,7 @@ export const UPDATES: Update[] = [
   },
   {
     title: "Selius",
-    body: "Selius is the voice of Aselius and Rivine Browse: speech-to-speech on Gemini Live, and the ivory-and-jade dragon that shows what Rivine is doing. Tap to talk, or opt in to Hey Selius. It asks before it acts, and never approves risk on its own.",
+    body: "Selius is the voice of Aselius and Rivine Browse: speech-to-speech, and the ivory-and-jade dragon that shows what Rivine is doing. Tap to talk, or opt in to Hey Selius. It asks before it acts, and never approves risk on its own.",
     date: "2026",
     category: "Release",
     href: `${DOCS}/selius`,
@@ -76,7 +76,7 @@ export const UPDATES: Update[] = [
   },
   {
     title: "Aselius MCP",
-    body: "Start and follow a Rivine engine task from Claude, Cursor, ChatGPT or any MCP client at workspace.beunec.com/mcp, on your own account and wallet.",
+    body: "Use Aselius from any AI app: start and follow a Rivine engine task from Claude, Cursor, ChatGPT or any MCP-compatible client at workspace.beunec.com/mcp, on your own account and wallet.",
     date: "2026",
     category: "Release",
     href: `${DOCS}/aselius-mcp`,

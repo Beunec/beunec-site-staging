@@ -246,7 +246,7 @@ export default function NotFound() {
                             className="group flex flex-col items-center gap-2 p-4 rounded-2xl border border-border baap-interactive"
                         >
                             <Icon className="w-5 h-5 text-muted-foreground group-hover:text-accent-sage transition-colors duration-200" />
-                            <span className="text-xs font-medium text-muted-foreground group-hover:text-foreground transition-colors duration-200">{label}</span>
+                            <span className="text-sm font-medium text-muted-foreground group-hover:text-foreground transition-colors duration-200">{label}</span>
                         </Link>
                     ))}
                 </div>
@@ -266,7 +266,7 @@ export default function NotFound() {
 
             {/* Bottom branding */}
             <div className="absolute bottom-6 z-10 text-center">
-                <p className="text-[11px] text-muted-foreground">
+                <p className="text-sm text-muted-foreground">
                     © {new Date().getFullYear()} Beunec Technologies, Inc.
                 </p>
             </div>

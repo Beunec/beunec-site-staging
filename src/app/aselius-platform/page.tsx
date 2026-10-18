@@ -37,8 +37,10 @@ import { ScrollStory, type StoryStep } from "@/components/media/ScrollStory";
 import { HotspotMap, type Hotspot } from "@/components/media/HotspotMap";
 import { StoryVideo, type Chapter } from "@/components/media/StoryVideo";
 import { LiveJournal } from "@/components/media/LiveJournal";
+import { McpSection } from "@/sections/aselius/McpSection";
 import { SHOTS, getShot } from "@/lib/aselius-media";
 import { UPDATES } from "@/lib/aselius-updates";
+import storyMeta from "../../../motion-studio/story-meta.json";
 
 const ASELIUS_APP = "https://aselius.beunec.com";
 const DOCS = "/aselius-platform/docs";
@@ -212,47 +214,52 @@ const SURFACES = [
 const COMPARISON = [
   {
     dim: "Product shape",
-    them: "Claude Cowork / Code + ChatGPT Work (and Codex): agentic chat, desktop/local files, browser actions, projects, scheduled tasks",
-    us: "Full Aselius Platform: Workspace, Automation, Observability, Manage Teams, credits, connectors, Selius, plus Rivine Browse",
+    them: "One general agent in a chat or desktop app that decides which tools to use",
+    us: "Agentic infrastructure software: Workspace, Automation, Observability, Manage Teams, credits, connectors, Selius, plus Rivine Browse",
   },
   {
     dim: "Specialization",
-    them: "One general agent (plus a Code / Codex lane) that decides tools inside a shared conversation",
+    them: "One general agent, sometimes with a separate coding lane, inside a shared conversation",
     us: "Specialized Rivine engines (TaskForce, Research, Code, Cicero, Confluence, Assist, Creative, Browse), each chosen directly with its specialty. Not one model in a costume",
   },
   {
     dim: "Verification",
     them: "Model-led checks, user review of files, approval prompts for risky actions",
-    us: "Runtime verification floor + independent critic on Code; Confluence numbers from code ledgers; HITL on low-confidence steps",
+    us: "Runtime verification floor + independent critic on Code; Confluence numbers computed by code with a ledger; HITL on low-confidence steps",
   },
   {
     dim: "Long-horizon work",
-    them: "Local/desktop process or cloud session that keeps working while you step away",
-    us: "Browse-durable Lambda slices + continuation for Workspace engines; Browse steps that never hold a 15-minute server call",
+    them: "A desktop process or cloud session that keeps working while you step away",
+    us: "Durable, resumable engine turns in the cloud; Automation on a schedule whether or not your computer is on",
   },
   {
     dim: "Browser automation",
-    them: "Built-in Cowork / ChatGPT browser or Chrome side panel inside their product",
-    us: "Rivine Browse in your real tabs and signed-in sessions (extension + desktop), with server-side safety gates",
+    them: "A built-in browser or side panel inside the vendor's product",
+    us: "Rivine Browse in your real tabs and signed-in sessions (extension + desktop), with safety gates",
   },
   {
     dim: "Outputs",
-    them: "Finished docs, sheets, decks, Sites / artifacts beside chat",
-    us: "Assets + Preview Panel + export; Live Preview for Code; Assist for surgical follow-ups on the open deliverable",
+    them: "Docs, sheets, decks or artifacts beside the chat",
+    us: "Assets + Preview Panel + export; Live Preview for Code; Assist for surgical follow-ups; publish with an access code",
+  },
+  {
+    dim: "Where you use it",
+    them: "The vendor's own app",
+    us: "Web app, Rivine Browse, Rivine Code CLI, Aselius MCP from any AI app, and Telegram, Discord or WhatsApp",
   },
   {
     dim: "Memory & context",
-    them: "Projects, memory, connectors / plugins, skills",
+    them: "Projects, memory, connectors or plugins inside one product",
     us: "Artificial Experience + Context Extender under every engine, scoped to the workspace",
   },
   {
     dim: "Ops & teams",
-    them: "Org admin, usage monitoring, permission policies inside Claude / ChatGPT accounts",
+    them: "Admin and usage views inside the vendor account",
     us: "Observability app, credit gateway per engine, Automation ledger, Manage Teams with CloudHandle",
   },
   {
     dim: "Voice",
-    them: "Voice modes in the vendor app (product-specific)",
+    them: "Voice modes in the vendor app",
     us: "Selius across Aselius web and Rivine Browse; asks before acting and never self-approves risk",
   },
 ];
@@ -315,21 +322,14 @@ const SPOTS: Hotspot[] = [
   { x: 96.6, y: 84, title: "Selius", body: "Tap the dragon to talk. Selius asks before it acts." },
 ];
 
-const CHAPTERS: Chapter[] = [
-  { at: 0, title: "What Aselius is" },
-  { at: 10, title: "Find your way around" },
-  { at: 24.8, title: "Pick an engine" },
-  { at: 37, title: "Watch it work" },
-  { at: 52.4, title: "Deliverables, not chat" },
-  { at: 69, title: "Share it anywhere" },
-  { at: 80.4, title: "Beyond the browser tab" },
-  { at: 92.2, title: "Get started" },
-];
+// Written by motion-studio/render.mjs, so the chapter list always matches the video.
+const CHAPTERS: Chapter[] = storyMeta.chapters;
+const STORY_LENGTH = `${Math.floor(storyMeta.duration / 60)}:${String(Math.round(storyMeta.duration % 60)).padStart(2, "0")}`;
 
 function SectionHead({ kicker, title, body, id }: { kicker: string; title: string; body?: string; id?: string }) {
   return (
     <div data-reveal className="max-w-2xl mb-12">
-      <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-accent-slate mb-5">{kicker}</p>
+      <p className="font-mono text-sm uppercase tracking-[0.14em] text-accent-slate mb-5">{kicker}</p>
       <h2 id={id} className="text-3xl md:text-4xl font-extrabold text-foreground tracking-tight leading-[1.1]">
         {title}
       </h2>
@@ -357,7 +357,7 @@ export default function AseliusPlatformPage() {
                   style={{ ["--d" as string]: "0s" }}
                 >
                   <Calendar className="w-3.5 h-3.5 text-accent-sage" />
-                  <span className="text-xs font-medium text-foreground">Now live · aselius.beunec.com</span>
+                  <span className="text-sm font-medium text-foreground">Agentic infrastructure software · live at aselius.beunec.com</span>
                 </div>
 
                 <KineticHeadline
@@ -371,9 +371,9 @@ export default function AseliusPlatformPage() {
                   className="kt-fade mt-6 text-lg md:text-xl leading-relaxed text-muted-foreground max-w-xl"
                   style={{ fontFamily: "Georgia, 'Times New Roman', serif", ["--d" as string]: "0.55s" }}
                 >
-                  Aselius runs research, code, legal drafting, and professional work through specialized
-                  Rivine engines. Every result is previewable, editable, and yours to export: governed,
-                  and never just a chat reply.
+                  Aselius is Beunec&apos;s agentic infrastructure software. It runs research, code, legal
+                  drafting, and professional work through specialized Rivine engines, and every result is
+                  previewable, editable, and yours to export: governed, and never just a chat reply.
                 </p>
 
                 <div
@@ -433,7 +433,7 @@ export default function AseliusPlatformPage() {
             </div>
 
             <div className="kt-fade mt-20 border-t border-border pt-8" style={{ ["--d" as string]: "0.9s" }}>
-              <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-accent-slate mb-4">
+              <p className="font-mono text-sm uppercase tracking-[0.14em] text-accent-slate mb-4">
                 Built for people who ship
               </p>
               <div className="flex flex-wrap gap-2.5">
@@ -455,9 +455,9 @@ export default function AseliusPlatformPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <SectionHead
               id="story-title"
-              kicker="The whole platform in under two minutes"
+              kicker="Aselius, start to finish"
               title="Watch the Aselius story"
-              body="What Aselius is, how to find your way around, how a task runs, where the results go, and every other place the Rivine engines reach. Every screen in it is real. Captions included."
+              body="What Aselius is, where everything lives, how a task runs, where the results go, every other place the Rivine engines reach, and why it is not another general agent. Every screen in it is real, and every line is captioned."
             />
             <div data-reveal="scale">
               <StoryVideo
@@ -468,7 +468,7 @@ export default function AseliusPlatformPage() {
                 poster="/media/aselius-story-poster.webp"
                 captions="/media/aselius-story.en.vtt"
                 title="The Aselius story: what it is, how to use it, and where else it works"
-                duration="1:38"
+                duration={STORY_LENGTH}
                 chapters={CHAPTERS}
               />
             </div>
@@ -515,12 +515,18 @@ export default function AseliusPlatformPage() {
           </div>
         </section>
 
+        <McpSection />
+
         <PlatformTour />
 
         {/* Differentiators */}
         <section className="py-20 md:py-24 bg-container">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <SectionHead kicker="Why it is different" title="Not another Claude Work" />
+            <SectionHead
+              kicker="Why it is different"
+              title="Not another Claude Cowork, ChatGPT Work or Kimi Work"
+              body="Those are general agents inside one vendor's app. Aselius is agentic infrastructure software: specialized engines on shared memory, verification, approvals and billing, reachable from wherever you work."
+            />
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {DIFFERENTIATORS.map((item, i) => (
                 <div
@@ -545,7 +551,7 @@ export default function AseliusPlatformPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div data-reveal className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
               <div className="max-w-2xl">
-                <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-accent-slate mb-5">
+                <p className="font-mono text-sm uppercase tracking-[0.14em] text-accent-slate mb-5">
                   Rivine agentic engines
                 </p>
                 <h2 className="text-3xl md:text-4xl font-extrabold text-foreground tracking-tight leading-[1.1] mb-4">
@@ -598,7 +604,7 @@ export default function AseliusPlatformPage() {
                       {engine.also && (
                         <Link
                           href={engine.also.href}
-                          className="mt-3 ml-14 text-xs text-accent-sage hover:underline underline-offset-2"
+                          className="mt-2 ml-14 inline-block py-1 text-sm text-accent-sage hover:underline underline-offset-2"
                         >
                           {engine.also.label}
                         </Link>
@@ -611,7 +617,7 @@ export default function AseliusPlatformPage() {
 
             <div data-reveal className="mt-10 rounded-2xl border border-border bg-container/60 p-6 md:p-7">
               <div className="mb-5">
-                <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-accent-slate mb-2">Rivine Platform</p>
+                <p className="font-mono text-sm uppercase tracking-[0.14em] text-accent-slate mb-2">Rivine Platform</p>
                 <p className="text-sm sm:text-base text-muted-foreground leading-relaxed max-w-2xl">
                   Memory, context, the terminal client, and voice that sit under the engines.
                 </p>
@@ -627,7 +633,7 @@ export default function AseliusPlatformPage() {
                       <h3 className="text-sm font-semibold text-foreground">{item.name}</h3>
                       <ArrowUpRight className="w-3.5 h-3.5 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-accent-sage" />
                     </div>
-                    <p className="text-xs text-muted-foreground leading-relaxed mt-1">{item.blurb}</p>
+                    <p className="text-sm text-muted-foreground leading-relaxed mt-1">{item.blurb}</p>
                   </Link>
                 ))}
               </div>
@@ -654,7 +660,7 @@ export default function AseliusPlatformPage() {
                     </div>
                     <h3 className="text-lg font-semibold text-foreground mb-2">{app.title}</h3>
                     <p className="text-sm text-muted-foreground leading-relaxed">{app.body}</p>
-                    <span className="mt-4 text-xs font-medium text-accent-sage">Read the guide →</span>
+                    <span className="mt-4 text-sm font-medium text-accent-sage">Read the guide →</span>
                   </Link>
                 </div>
               ))}
@@ -682,7 +688,7 @@ export default function AseliusPlatformPage() {
                       <ArrowUpRight className="w-4 h-4 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-accent-sage" />
                     </div>
                     <h3 className="text-lg font-semibold text-foreground">{surface.title}</h3>
-                    <p className="mt-0.5 font-mono text-[11px] text-accent-slate">{surface.where}</p>
+                    <p className="mt-0.5 font-mono text-sm text-accent-slate">{surface.where}</p>
                     <p className="mt-3 text-sm text-muted-foreground leading-relaxed">{surface.body}</p>
                   </>
                 );
@@ -735,7 +741,7 @@ export default function AseliusPlatformPage() {
               {UPDATES.map((u, i) => (
                 <li key={u.title} data-reveal="left" style={{ ["--rv-i" as string]: Math.min(i, 3) }} className="pl-8 relative">
                   <span className="absolute -left-[7px] top-1.5 h-3.5 w-3.5 rounded-full border-2 border-[color:var(--bg-container)] bg-accent-sage" aria-hidden />
-                  <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-accent-slate">
+                  <p className="font-mono text-sm uppercase tracking-[0.14em] text-accent-slate">
                     {u.date} · {u.category}
                   </p>
                   <h3 className="mt-1.5 text-lg font-semibold text-foreground">{u.title}</h3>
@@ -754,7 +760,7 @@ export default function AseliusPlatformPage() {
             </ol>
 
             <div className="mt-16">
-              <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-accent-slate mb-5">
+              <p className="font-mono text-sm uppercase tracking-[0.14em] text-accent-slate mb-5">
                 Latest from the Beunec journal
               </p>
               <LiveJournal />
@@ -766,38 +772,39 @@ export default function AseliusPlatformPage() {
         <section className="py-20 md:py-24">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div data-reveal className="max-w-3xl mb-10">
-              <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-accent-slate mb-5">An honest lens</p>
+              <p className="font-mono text-sm uppercase tracking-[0.14em] text-accent-slate mb-5">An honest lens</p>
               <h2 className="text-3xl md:text-4xl font-extrabold text-foreground tracking-tight leading-[1.1] mb-4">
-                Already using Claude Work / Code or ChatGPT Work?
+                Already using Claude Cowork, ChatGPT Work or Kimi Work?
               </h2>
               <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
-                Fair comparison is Aselius Platform against those agentic workplace products, not a
-                generic autocomplete. We will not claim features we have not shipped.
+                The fair comparison is Aselius against those general agent workspaces, not a generic
+                autocomplete. We describe them only at the level of their public positioning, and we
+                never claim features we have not shipped.
               </p>
             </div>
 
             <div data-reveal className="overflow-hidden rounded-2xl border border-border bg-container">
               <div className="grid grid-cols-1 sm:grid-cols-[0.85fr_1.15fr_1.15fr] gap-px bg-border">
-                <div className="hidden sm:block bg-container px-5 py-3 text-[11px] font-mono uppercase tracking-wider text-accent-slate" />
-                <div className="hidden sm:block bg-container px-5 py-3 text-[11px] font-mono uppercase tracking-wider text-muted-foreground">
-                  Claude Work/Code &amp; ChatGPT Work
+                <div className="hidden sm:block bg-container px-5 py-3 text-sm font-mono uppercase tracking-wider text-accent-slate" />
+                <div className="hidden sm:block bg-container px-5 py-3 text-sm font-mono uppercase tracking-wider text-muted-foreground">
+                  General agent workspaces
                 </div>
-                <div className="hidden sm:block bg-container px-5 py-3 text-[11px] font-mono uppercase tracking-wider text-accent-sage">
-                  Aselius Platform
+                <div className="hidden sm:block bg-container px-5 py-3 text-sm font-mono uppercase tracking-wider text-accent-sage">
+                  Aselius
                 </div>
 
                 {COMPARISON.map((row) => (
                   <div key={row.dim} className="contents">
                     <div className="bg-container px-5 py-4 text-sm font-semibold text-foreground">{row.dim}</div>
                     <div className="bg-container px-5 py-4 text-sm text-muted-foreground">
-                      <span className="sm:hidden text-[10px] font-mono uppercase tracking-wider text-accent-slate block mb-1">
-                        Claude Work/Code &amp; ChatGPT Work
+                      <span className="sm:hidden text-sm font-mono uppercase tracking-wider text-accent-slate block mb-1">
+                        General agent workspaces
                       </span>
                       {row.them}
                     </div>
                     <div className="bg-container px-5 py-4 text-sm text-foreground">
-                      <span className="sm:hidden text-[10px] font-mono uppercase tracking-wider text-accent-sage block mb-1">
-                        Aselius Platform
+                      <span className="sm:hidden text-sm font-mono uppercase tracking-wider text-accent-sage block mb-1">
+                        Aselius
                       </span>
                       {row.us}
                     </div>
@@ -836,7 +843,7 @@ export default function AseliusPlatformPage() {
               <div className="relative px-6 py-16 md:px-16 md:py-20 text-center max-w-3xl mx-auto">
                 <div className="inline-flex items-center gap-2 rounded-full border border-border bg-global/80 backdrop-blur-sm px-4 py-1.5 mb-6">
                   <Calendar className="w-3.5 h-3.5 text-accent-sage" />
-                  <span className="text-xs font-medium text-foreground">Live at aselius.beunec.com</span>
+                  <span className="text-sm font-medium text-foreground">Live at aselius.beunec.com</span>
                 </div>
                 <h2 className="text-3xl md:text-4xl font-extrabold text-foreground tracking-tight leading-[1.1] mb-5">
                   Open Aselius

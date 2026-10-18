@@ -56,7 +56,7 @@ export function ScrollStory({ steps, label }: { steps: StoryStep[]; label: strin
           >
             <span
               aria-hidden="true"
-              className={`absolute left-0 top-8 hidden h-[23px] w-[23px] items-center justify-center rounded-full border text-[10px] font-semibold transition-colors duration-500 lg:top-1/2 lg:-mt-3 lg:flex ${
+              className={`absolute left-0 top-8 hidden h-[23px] w-[23px] items-center justify-center rounded-full border text-sm font-semibold transition-colors duration-500 lg:top-1/2 lg:-mt-3 lg:flex ${
                 i <= active
                   ? "border-accent-sage bg-accent-sage text-white"
                   : "border-border bg-global text-muted-foreground"
@@ -67,7 +67,7 @@ export function ScrollStory({ steps, label }: { steps: StoryStep[]; label: strin
             <div
               className={`transition-opacity duration-500 ${i === active ? "lg:opacity-100" : "lg:opacity-45"}`}
             >
-              <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-accent-slate">
+              <p className="font-mono text-sm uppercase tracking-[0.14em] text-accent-slate">
                 {String(i + 1).padStart(2, "0")} · {step.kicker}
               </p>
               <h3 className="mt-3 text-2xl font-semibold tracking-tight text-foreground md:text-3xl">{step.title}</h3>
@@ -75,7 +75,7 @@ export function ScrollStory({ steps, label }: { steps: StoryStep[]; label: strin
             </div>
             <figure className="mt-6 overflow-hidden rounded-xl border border-border bg-container shadow-[var(--shadow-soft)] lg:hidden">
               <ShotImage shot={step.shot} sizes="100vw" className="h-auto w-full" />
-              <figcaption className="px-4 py-3 text-xs leading-relaxed text-muted-foreground">
+              <figcaption className="px-4 py-3 text-sm leading-relaxed text-muted-foreground">
                 {step.shot.caption}
               </figcaption>
             </figure>

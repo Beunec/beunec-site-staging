@@ -1,42 +1,75 @@
-# Aselius cloud automations
+# Automation
 
-Scheduled engine runs that happen whether or not the person's computer is on. Built as a platform capability: agents do not own a scheduler; they are woken by one, inside a fixed envelope.
+Automation is the Aselius app for scheduled engine runs. A run happens in the cloud on your schedule, whether or not your computer is on, and every result is checked independently before it is marked as succeeded.
 
-## Which engines
+## At a glance
 
-| Engine | Schedulable | Unattended scope |
+- **What it is:** scheduled, unattended runs of a Rivine engine, part of Aselius.
+- **Engines:** Rivine Research, TaskForce, Cicero and Confluence. Browse, Code and Assist cannot be scheduled.
+- **Safety:** reads public sources only, never acts on your accounts, and starts only after a test run passes.
+- **You get:** a fresh taskspace per run, marked **Succeeded** or **Needs review**, with a notification.
+- **Cost:** billed to your credits at each engine's usual start floor.
+- **Where:** open **Automation** from the platform rail at [aselius.beunec.com](https://aselius.beunec.com).
+
+## Which engines can be scheduled
+
+| Engine | Can be scheduled | What an unattended run does |
 | --- | --- | --- |
-| Rivine Research | Yes | Observe, research, save cited briefs |
-| Rivine TaskForce (`rivine_chat`) | Yes | Briefings and structured deliverables |
-| Rivine Cicero | Yes | Regulatory watch, drafts for review (never files or signs) |
-| Rivine Confluence | Yes | Forecast and scenario refreshes |
-| Rivine Browse | No (runs on the device) | Needs the person's own browser and sessions |
-| Rivine Code | No | Scheduled value needs repository write access |
-| Rivine Assist | No | Edits the document on screen; interactive |
+| Rivine Research | Yes | Observes, researches and saves cited briefs |
+| Rivine TaskForce | Yes | Briefings and structured deliverables |
+| Rivine Cicero | Yes | Regulatory watch and drafts for your review. It never files or signs anything. |
+| Rivine Confluence | Yes | Refreshes forecasts and scenarios |
+| Rivine Browse | No | Needs your own browser and signed-in sessions on your device |
+| Rivine Code | No | Useful scheduled work would need write access to your repository |
+| Rivine Assist | No | Edits the document on your screen, so it is interactive by nature |
 
-Contracts live in `aselius_workspace/automations/contracts.py`.
+## Setting up an automation
+
+Each automation has an engine, a goal, a budget and a schedule. You can start from a template or write your own.
+
+1. **Create it as a draft.** Choose the engine, describe the goal, set a budget and a schedule (recurring or one time).
+2. **Run a test.** The test run uses exactly the engine, goal and budget you set.
+3. **Activate it.** An automation becomes active only after a test of this exact setup passes, or after you review and approve a test result that was held for review.
+4. **Let it run.** Scheduled runs start at each time you set.
+
+> **Note:** Changing the engine, goal or budget returns the automation to draft, and it needs a new passing test. Changing only the schedule does not.
 
 ## How a run happens
 
-1. **Tick.** The Lambda's EventBridge rule (every minute) posts to `/events`; `runner.tick()` claims due automations (`FOR UPDATE SKIP LOCKED`), inserts one run per slot (unique `logical_key` = automation + scheduled time) and advances `next_run_at`. Locally, the same tick runs every 60 s (`AUTOMATIONS_LOCAL_TICK=0` turns it off).
-2. **Dispatch.** Each run is sent to its own async self-invocation (a `rivine_automation` event, HMAC-signed with the continuation secret, valid for an hour).
-3. **Preflight.** The automation must be active and its spec (engine, goal, budget) must equal the one that passed a test run. Credits are checked with the engine's own floor.
-4. **Run.** A fresh engine turn in a new taskspace, through the platform's normal turn runner, with **no connectors bound** (the per-run capability token: observe and create in the workspace, nothing external), the unattended-run contract, and a short summary of the previous result. Long turns continue across invocations as usual.
-5. **Verify.** Mechanical checks, then an independent check that sees the contract and the result but not the executor's reasoning. Pass: `succeeded`. Otherwise: `needs_review`.
-6. **Record and notify.** The run ledger (`automation_runs`) keeps status, timing, cost, verdict and the taskspace; the automation's working state keeps the last result's digest and excerpt. A realtime event goes to the person.
+1. **Checks before starting.** The automation must be active and unchanged since its passing test, and your balance must meet the engine's [start floor](/aselius-platform/docs/plans-pricing).
+2. **A fresh taskspace.** Each run starts a new engine turn in its own taskspace, with a short summary of the previous result for continuity.
+3. **No connectors.** A run can read public sources and create work in your workspace. It never connects to or acts on your accounts or connected apps.
+4. **Independent check.** Automatic checks run first, then an independent review that sees the goal and the result but not the engine's reasoning.
+5. **Result and notification.** A run that passes is marked **Succeeded**; otherwise it is marked **Needs review**. You are notified either way, and the run's status, timing, cost and taskspace are kept in the automation's history.
 
-Failures: transient errors retry twice (2 and 4 minutes later); out of credits and policy refusals stop and pause the automation; three consecutive failures pause it.
+## Retries and pausing
+
+| Situation | What happens |
+| --- | --- |
+| Temporary error | Retried twice, a few minutes apart |
+| Out of credits | The run stops and the automation pauses |
+| Refused by policy | The run stops and the automation pauses |
+| Three consecutive failures | The automation pauses |
+
+You can pause an automation yourself at any time, and edit or delete it.
 
 ## Lifecycle
 
-`draft` → test run → `active` (only after a passing test of this exact spec, or the person's approval of a held result) → scheduled runs → `paused` / `completed` (one-time). Editing engine, goal or budget returns it to `draft`; changing only the schedule does not.
+| State | Meaning |
+| --- | --- |
+| **Draft** | Being set up or edited. Does not run on its schedule. |
+| **Active** | Passed a test of its current setup. Runs on schedule. |
+| **Paused** | Stopped by you, by a credit or policy stop, or after three consecutive failures. |
+| **Completed** | A one-time automation that has run. |
 
-## API
+## Billing
 
-Web app (`/api/automations`, workspace members): `GET /contracts`, `GET /templates`, `GET/POST /`, `GET/PUT/DELETE /{id}`, `POST /{id}/test`, `POST /{id}/activate[?approve_review=true]`, `POST /{id}/pause`.
+Each run is billed to your prepaid credits like any other engine turn, at the same per-engine start floor as the web app. See [Plans & Pricing](/aselius-platform/docs/plans-pricing).
 
-Rivine Browse panel (`/api/browse/...`, Browse token, runs in the Browse workspace): `GET /templates`, `GET/POST /automations`, `PUT/DELETE /automations/{id}`, `POST /automations/{id}/{test|activate|approve|pause}`.
+## Related
 
-## Tests
-
-`tests/test_automations.py` (schedules, contracts, the store with Postgres, retries, review approval). The live path (a real engine turn, a real tick) was exercised against the local stack; see the paper's §3.2.
+- [Aselius Workspace](/aselius-platform/docs/workspace)
+- [Rivine Research](/aselius-platform/docs/rivine-research)
+- [Rivine Confluence](/aselius-platform/docs/rivine-confluence)
+- [Observability](/aselius-platform/docs/observability)
+- [Plans & Pricing](/aselius-platform/docs/plans-pricing)

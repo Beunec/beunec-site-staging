@@ -3,9 +3,9 @@ import { AseliusDocsShell } from "@/components/docs/AseliusDocsShell";
 import { ASELIUS_DOCS } from "@/lib/aselius-docs";
 
 export const metadata: Metadata = {
-  title: "Aselius Platform Documentation",
+  title: "Aselius Documentation",
   description:
-    "Guides for the Aselius Platform: Workspace, Automation, Observability, Manage Teams, Selius, Rivine engines, and more.",
+    "Guides for Aselius, Beunec's agentic infrastructure software: Workspace, Rivine engines, Automation, Observability, Manage Teams, Aselius MCP, Selius, and more.",
 };
 
 export default function AseliusDocsLayout({

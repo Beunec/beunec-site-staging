@@ -9,7 +9,7 @@ export function AseliusInMotion() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20 md:py-28">
         <div className="grid gap-10 lg:grid-cols-12 lg:items-center">
           <div data-reveal className="lg:col-span-4">
-            <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-accent-slate mb-5">
+            <p className="font-mono text-sm uppercase tracking-[0.14em] text-accent-slate mb-5">
               Aselius, at work
             </p>
             <h2
@@ -19,8 +19,9 @@ export function AseliusInMotion() {
               Where this research becomes something you can use.
             </h2>
             <p className="mt-5 text-base leading-relaxed text-muted-foreground">
-              Aselius runs governed work through specialized Rivine engines and hands you real files:
-              documents, spreadsheets, decks and code you can preview, edit, publish and export.
+              Aselius is Beunec&apos;s agentic infrastructure software. Specialized Rivine engines run governed
+              work and hand you real files: documents, spreadsheets, decks and code you can preview, edit,
+              publish and export. Use it on the web, or from any AI app through Aselius MCP.
             </p>
             <div className="mt-7 flex flex-wrap items-center gap-4">
               <Link href="/aselius-platform#story" className="btn-ink">
@@ -32,6 +33,12 @@ export function AseliusInMotion() {
               >
                 Explore Aselius <span aria-hidden="true">→</span>
               </Link>
+              <a
+                href="https://aselius.beunec.com"
+                className="inline-flex items-center gap-1.5 text-sm font-medium text-foreground hover:text-accent-sage transition-colors"
+              >
+                Open the app <span aria-hidden="true">↗</span>
+              </a>
             </div>
           </div>
 
@@ -39,7 +46,7 @@ export function AseliusInMotion() {
             <div className="sd-rise overflow-hidden rounded-2xl border border-border bg-[#111111] shadow-[var(--shadow-soft)]">
               <ReelVideo />
             </div>
-            <p className="mt-3 text-xs text-muted-foreground">
+            <p className="mt-3 text-sm text-muted-foreground">
               Every frame is a real Aselius screenshot. Loops silently while on screen.
             </p>
           </div>

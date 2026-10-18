@@ -42,10 +42,10 @@ function readPalette(): BaapPalette {
     media: g("--media-blank", dark ? "#1d1d1d" : "#e6e6e6"),
     sage: g("--accent-sage", "#6b7a6e"),
     slate: g("--accent-slate", "#7a8b99"),
-    border: dark ? "rgba(230,226,216,0.16)" : "rgba(20,21,18,0.12)",
+    border: dark ? "rgba(232,234,237,0.16)" : "rgba(17,17,17,0.12)",
     softSage: dark ? "rgba(107,122,110,0.28)" : "rgba(107,122,110,0.18)",
     softSlate: dark ? "rgba(122,139,153,0.28)" : "rgba(122,139,153,0.18)",
-    softWarm: dark ? "rgba(138,122,98,0.28)" : "rgba(138,122,98,0.16)",
+    softWarm: dark ? "rgba(122,139,153,0.28)" : "rgba(122,139,153,0.16)",
   };
 }
 

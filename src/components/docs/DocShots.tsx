@@ -6,7 +6,7 @@ export function DocShots({ shots }: { shots: Shot[] }) {
   if (shots.length === 0) return null;
   return (
     <section aria-label="Screenshots from Aselius" className="my-12 rounded-2xl border border-border bg-container/60 p-5 sm:p-6">
-      <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-accent-slate">In the product</p>
+      <p className="font-mono text-sm uppercase tracking-[0.14em] text-accent-slate">In the product</p>
       <p className="mt-2 mb-6 text-sm leading-relaxed text-muted-foreground">
         Real screenshots of what this page describes. Open any of them full size.
       </p>
