@@ -1,0 +1,1 @@
+Every step shows as it happens. Stop it any time; the trail stays with the thread.

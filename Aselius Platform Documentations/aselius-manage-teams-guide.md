@@ -1,237 +1,188 @@
-# Manage Teams & Personal Connections
-  
-**Version:** 1.0.0   
-**Access:** Sidebar → **Manage Teams** (`/teams`)
+# Manage Teams and Personal Connections
 
----
+Manage Teams is the people and organization layer of Aselius. Create teams with roles, get a team chat set up automatically, and build a personal network you can message one to one.
 
-## 1. Overview
+## At a glance
+- **What it is:** Organizations (teams) with roles, plus Personal Connections outside any organization.
+- **Best for:** Business users, team leads and owners, and IT and security reviewers.
+- **You get:** Team membership and roles, a linked team chat with a #General channel, connection requests and direct messages.
+- **Where:** Sidebar, then **Manage Teams**.
+- **Cost:** Unlimited teams and connections on every plan.
+- **AI:** None today. Manage Teams runs on standard application rules, not AI.
 
-**Manage Teams** is the organization and people layer of the Aselius Platform. It lets professionals and enterprises:
+## What you can do
 
-- Create **organizations (teams)** with defined roles and membership
-- Open **team messaging** in the Messages app (linked automatically)
-- Build a **personal network** outside any organization via **Personal Connections**
-- Discover colleagues by **CloudHandle** and start **1:1 direct messages**
+- **Create organizations (teams)** with defined roles and membership.
+- **Message your team** in the Messages app. The team chat is linked automatically.
+- **Build a personal network** outside any organization with Personal Connections.
+- **Find colleagues** by CloudHandle and start one-to-one direct messages.
 
-Manage Teams is designed for **human-to-human collaboration** inside a broader **agentic infrastructure platform**. Aselius is not limited to person-to-AI interaction; it also supports secure, structured communication between people, teams, and (separately) AI-assisted workspaces.
+Aselius is not limited to people working with AI. Manage Teams supports structured communication between people and teams, under the same account and security model as your AI-assisted workspaces.
 
-> **Transparency, AI today:**  
-> Manage Teams and Personal Connections are **not AI-powered** in the current release. They use standard application logic: membership rules, invitations, connection requests, and real-time presence. AI capabilities on Aselius live in other areas (for example, **Aselius Workspace** and **Manage Files**). If AI is added to Teams in the future, Beunec will disclose it in product release notes.
+> **Note:** Manage Teams and Personal Connections are **not AI-powered** in the current release. They use membership rules, invitations, connection requests and real-time presence. AI on Aselius lives in other areas, such as **Aselius Workspace** and **Manage Files**. If AI comes to Teams, Beunec will say so in the release notes.
 
----
-
-## 2. Who this is for
+## Who it is for
 
 | Audience | What you get |
 |----------|----------------|
 | **Business users** | Create teams, invite members, message colleagues, manage connections |
-| **Team leads / owners** | Control membership, transfer ownership, delete organizations |
-| **IT & security reviewers** | Auth0-backed access, role-based actions, audit-friendly flows |
-| **Developers** | REST APIs under `/api/teams` and `/api/networks` with JWT authentication |
+| **Team leads and owners** | Control membership, transfer ownership, delete organizations |
+| **IT and security reviewers** | Industry-standard sign-in, role-based actions, flows that are easy to audit |
 
----
-
-## 3. Platform context
+## Where it fits
 
 ```mermaid
 flowchart TB
-    subgraph Aselius["Aselius Platform (Beunec Technologies Inc.)"]
-        Sidebar["Platform Sidebar"]
-        Teams["Manage Teams"]
-        Messages["Messages"]
-        Files["Manage Files"]
-        Workspace["Aselius Workspace"]
-    end
+    Sidebar["Aselius sidebar"]
+    Sidebar --> Teams["Manage Teams"]
+    Sidebar --> Messages["Messages"]
+    Sidebar --> Files["Manage Files"]
+    Sidebar --> Workspace["Aselius Workspace"]
 
-    Sidebar --> Teams
-    Sidebar --> Messages
-    Sidebar --> Files
-    Sidebar --> Workspace
-
-    Teams -->|"Creates linked group + #General channel"| Messages
-    Teams -->|"Personal Connections → DM"| Messages
-    Files -->|"AI document chat (separate module)"| Workspace
-
-    style Teams fill:#f4f4f0,stroke:#00477d
-    style Messages fill:#f4f4f0,stroke:#00477d
-    style Workspace fill:#e8f4fc,stroke:#00477d
+    Teams -->|"Team chat with #General"| Messages
+    Teams -->|"Personal Connections to DM"| Messages
+    Files -->|"AI document chat"| Workspace
 ```
 
-**Manage Teams** focuses on **people and organizations**. **Messages** handles conversation. **Manage Files** handles document storage and AI-assisted document interaction, a different product surface with its own rules and parsing pipeline.
+| App | Handles |
+|-----|---------|
+| **Manage Teams** | People and organizations |
+| **Messages** | Conversations: team chats and direct messages |
+| **Manage Files** | Document storage and AI-assisted document work, with its own rules |
 
----
+## Core concepts
 
-## 4. Core concepts
+### Organization (team)
 
-### 4.1 Organization (Team)
+An organization is a named group with:
+- A **name** and **description**.
+- **Members**, each with a role: **Owner**, **Admin** or **Member**.
+- A linked **messaging group** with a default **#General** channel.
 
-An **organization** is a named group with:
+You never set up the chat space yourself. Aselius creates it when you create the team.
 
-- **Name** and **description**
-- **Members** with roles: **Owner**, **Admin**, or **Member**
-- A linked **messaging group** with a default **#General** channel (created automatically)
+### Roles and permissions
 
-When you create a team, you do not need to manually set up a chat space, the platform provisions one for you.
-
-### 4.2 Roles and permissions
-
-| Role | Typical capabilities |
+| Role | What it can do |
 |------|---------------------|
-| **Owner** | Full control: edit team info, invite/remove members, change roles, **transfer ownership**, **delete organization** |
-| **Admin** | Manage members and team settings; cannot delete the organization or transfer ownership |
-| **Member** | Participate in team chat; may invite others only if the team allows member invites (server-side rule) |
+| **Owner** | Everything: edit team info, invite and remove members, change roles, **transfer ownership**, **delete organization** |
+| **Admin** | Manage members and team settings. Cannot delete the organization or transfer ownership. |
+| **Member** | Take part in team chat. Can invite others only if the team allows member invites. |
 
-Only the **owner** can permanently delete an organization. Deletion removes the team, all memberships, and the linked messaging group (including channels and messages).
+> **Note:** Only the **Owner** can delete an organization, and deletion is permanent. It removes the team, all memberships and the linked messaging group, including its channels and messages.
 
-### 4.3 Personal Connections
+### Personal Connections
 
-**Personal Connections** live on the same page as Manage Teams but are **separate from organizations**:
+Personal Connections are on the same page as Manage Teams, but they are **separate from organizations**. With them you can:
+- Find people by **CloudHandle**.
+- Send and manage **connection requests**.
+- View profiles and open **direct messages**.
+- **Disconnect** when a working relationship ends.
 
-- Discover people by **CloudHandle**
-- Send and manage **connection requests**
-- View profiles and open **direct messages**
-- **Disconnect** when a professional relationship ends
+Connections power one-to-one messaging. Team membership powers group messaging.
 
-Connections are the social graph that powers 1:1 messaging; team membership is the organizational graph that powers group messaging.
+### CloudHandle
 
-### 4.4 CloudHandle
+Your **CloudHandle** is your unique identity on Aselius (for example, `name@beunec.cloud`). You use it to:
+- Invite someone to a team.
+- Search for people to connect with.
+- Send direct messages.
 
-Your **CloudHandle** is your unique identity on the platform (for example, `name@beunec.cloud`). It is used to:
-
-- Invite someone to a team
-- Search for people to connect with
-- Route direct messages
-
----
-
-## 5. User journey (flowchart)
+## How it works
 
 ```mermaid
 flowchart TD
     A[Open Manage Teams] --> B{What do you want?}
 
-    B --> C[Create Organization]
-    B --> D[Join existing team via invite]
-    B --> E[Discover people]
+    B --> C[Create organization]
+    B --> D[Join a team by invite]
+    B --> E[Find people]
 
-    C --> C1[Enter name + description]
-    C1 --> C2[Platform creates org + messaging group + #General]
-    C2 --> C3[You are Owner]
+    C --> C1[Enter name and description]
+    C1 --> C2[Aselius creates the team, its chat and #General]
+    C2 --> C3[You are the Owner]
     C3 --> F[Open Team Chat in Messages]
 
-    D --> D1[Owner/Admin adds your CloudHandle]
-    D1 --> D2[You appear in Members list]
+    D --> D1[Owner or Admin adds your CloudHandle]
+    D1 --> D2[You appear in the Members list]
     D2 --> F
 
-    E --> E1[Search CloudHandle]
+    E --> E1[Search by CloudHandle]
     E1 --> E2{Public profile?}
     E2 -->|Yes| E3[Send connection request]
-    E2 -->|No| E4[Cannot discover, privacy protected]
-    E3 --> E5[Accept / Decline]
-    E5 --> G[Open profile → Send Message → DM]
+    E2 -->|No| E4[Not discoverable: privacy protected]
+    E3 --> E5[Accept or Decline]
+    E5 --> G[Open profile, then Send Message]
 
-    F --> H[Group messaging in Messages app]
-    G --> I[1:1 messaging in Messages app]
+    F --> H[Group messaging in Messages]
+    G --> I[One-to-one messaging in Messages]
 ```
 
----
+### Teams and Messages stay in sync
 
-## 6. Desktop vs mobile experience
+1. Create an organization, for example "Acme".
+2. Aselius creates the team, its messaging group and a **#General** channel.
+3. Click **Message** on the team card, or **Open Team Chat** in team settings.
+4. The team's group chat and channels open in Messages.
 
-| Feature | Desktop (wide screens) | Mobile / tablet |
+When an Owner or Admin adds someone to a team, Aselius also adds them to the team chat. No separate onboarding step is needed.
+
+## Desktop and mobile
+
+| Feature | Desktop (wide screens) | Mobile and tablet |
 |---------|------------------------|-----------------|
 | Team list | Full-width main area | Same, stacked layout |
-| Team settings | **Right-side panel** (list stays visible); resizable | **Full-page** team detail with back navigation |
+| Team settings | **Right-side panel**, resizable, with the list still visible | **Full-page** team detail with back navigation |
 | Connection profile | **Right-side panel** | **Modal dialog** |
-| Navigation to Messages | Opens group or DM in Messages | Same |
+| Going to Messages | Opens the group or DM in Messages | Same |
 
-This pattern keeps context on desktop (you never lose sight of your team list) while remaining fully usable on smaller screens.
+On desktop your team list stays in view while you work. Smaller screens get full-page views.
 
----
-
-## 7. How Teams connects to Messages
-
-```mermaid
-sequenceDiagram
-    participant User
-    participant Teams as Manage Teams
-    participant API as Platform API
-    participant Messages as Messages App
-
-    User->>Teams: Create organization "Acme"
-    Teams->>API: POST /api/teams
-    API->>API: Create Organization
-    API->>API: Create Group + GroupMember
-    API->>API: Create #General channel
-    API-->>Teams: org + messaging_group_id
-    User->>Teams: Click "Message" or "Open Team Chat"
-    Teams->>Messages: Navigate to /messages/group/{id}
-    Messages->>User: Group chat + channels available
-```
-
-**Member sync:** When an admin adds someone to a team, the platform also adds them to the linked messaging group so they can participate without a separate onboarding step.
-
----
-
-## 8. Security and trust (high level)
-
-Beunec does not publish internal key management or model architecture in public docs. What users and enterprises **can** rely on:
-
-| Control | Description |
-|---------|-------------|
-| **Authentication** | Industry-standard identity via **Auth0**; API requests require a valid JWT |
-| **Authorization** | Role checks on every sensitive action (invite, delete, transfer) |
-| **Input hygiene** | Team names and descriptions are sanitized server-side |
-| **Identity binding** | Actions are tied to your authenticated **CloudHandle**, not anonymous sessions |
-| **Deletion scope** | Owner-initiated org delete removes org data and linked messaging artifacts |
-
-For message content encryption and file storage details, see the **Messages** documentation. For the full platform security model, see the [Security Disclosure](/aselius-platform/docs/security-disclosure).
-
----
-
-## 9. What Manage Teams does **not** do (today)
-
-- No AI-generated team recommendations, summaries, or auto-invites  
-- No automated org chart inference  
-- No built-in video calling (use Messages for text/files; external tools for calls if needed)  
-- No public people directory browse, discovery requires knowing a **CloudHandle** and the profile being **public**  
-- No cross-tenant federation like some enterprise chat suites  
-
-These are intentional product boundaries for the current release.
-
----
-
-## 10. How this fits the Aselius philosophy
-
-Traditional collaboration tools (Slack, Microsoft Teams, etc.) are excellent **communication hubs**. Aselius is built as **agentic infrastructure**: a place where humans work with AI *and* with each other, under one account and security model.
-
-Manage Teams is **not positioned as a replacement** for those tools. It is the **organizational and relationship layer** inside Aselius so that:
-
-- Teams and connections are first-class
-- Messaging is native, not bolted on
-- AI-assisted work (files, workspace) shares the same identity and storage context
-
----
-
-## 11. Quick reference, common tasks
+## Common tasks
 
 | Task | Steps |
 |------|--------|
-| Create a team | Manage Teams → **Create Team** → name + description → create |
-| Invite a member | Open team → **Add member** → CloudHandle → role → Add |
-| Message the team | Team card → **Message** or team settings → **Open Team Chat** |
-| Connect with someone | Personal Connections → Discover → CloudHandle → **Send request** |
-| Accept a request | Connection Requests → **Accept** |
-| Start a DM | Your Connections → click person → **Send Message** |
-| Delete a team (owner only) | Team card trash icon or team settings → **Delete organization permanently** |
-| Transfer ownership | Team settings → Members → crown icon on target member → confirm |
+| Create a team | Manage Teams, then **Create Team**, then name and description, then create |
+| Invite a member | Open the team, then **Add member**, then CloudHandle and role, then Add |
+| Message the team | Team card, then **Message**; or team settings, then **Open Team Chat** |
+| Connect with someone | Personal Connections, then Discover, then CloudHandle, then **Send request** |
+| Accept a request | Connection Requests, then **Accept** |
+| Start a DM | Your Connections, then click the person, then **Send Message** |
+| Delete a team (Owner only) | Trash icon on the team card, or team settings, then **Delete organization permanently** |
+| Transfer ownership | Team settings, then Members, then the crown icon on the new owner, then confirm |
 
----
+## Security and trust
 
-## 12. Support and disclosure
+| Control | What it means for you |
+|---------|-------------|
+| **Authentication** | Industry-standard sign-in through our identity provider. Every request must come from a signed-in account. |
+| **Authorization** | Roles are checked on every sensitive action: invite, delete, transfer. |
+| **Input hygiene** | Team names and descriptions are cleaned on our servers. |
+| **Identity binding** | Every action is tied to your signed-in CloudHandle, never an anonymous session. |
+| **Deletion scope** | When an Owner deletes an organization, its data and its linked team chat are removed. |
 
-- **Product:** Aselius Platform  
-- **Company:** Beunec Technologies Inc.  
-- **AI disclosure:** Manage Teams is rule-based software today. Future AI features will be announced in release notes.  
-- **Proprietary systems:** Internal parsing engines, model providers, and infrastructure topology are not disclosed in public documentation.
+For message encryption and file storage, see the Messages documentation. For the full platform security model, see the [Security Disclosure](/aselius-platform/docs/security-disclosure).
+
+## Limits
+
+Manage Teams does not offer these in the current release. They are intentional product boundaries.
+- AI-generated team recommendations, summaries or auto-invites.
+- Automatic org chart inference.
+- Built-in video calling. Use Messages for text and files, and an external tool for calls.
+- A public people directory. To find someone you need their **CloudHandle**, and their profile must be **public**.
+- Federation across organizations on other platforms, as some enterprise chat suites offer.
+
+## How it fits Aselius
+
+Tools such as Slack and Microsoft Teams are strong communication hubs. Aselius is **agentic infrastructure**: one place where people work with AI and with each other, under one account and security model. Manage Teams does **not** replace those tools. It is the organization and relationship layer inside Aselius, so that:
+- Teams and connections are first-class.
+- Messaging is built in.
+- AI-assisted work in files and the workspace uses the same identity and storage.
+
+**Product:** Aselius, by Beunec Technologies Inc. Manage Teams runs on standard application rules today. Future AI features will be announced in release notes.
+
+## Related
+- [Workspace](/aselius-platform/docs/workspace)
+- [Messaging Channels](/aselius-platform/docs/messaging-channels)
+- [Plans & Pricing](/aselius-platform/docs/plans-pricing)
+- [Security Disclosure](/aselius-platform/docs/security-disclosure)

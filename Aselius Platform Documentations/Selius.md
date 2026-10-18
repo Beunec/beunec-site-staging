@@ -1,102 +1,87 @@
 # Selius
 
-Selius is the voice of Aselius and Rivine Browse: a speech-to-speech assistant on Gemini Live
-(`gemini-3.8-live`, Vertex AI). It is also the ivory-and-jade dragon that shows what Rivine is
-doing. It lives in three places:
+Selius is the speech-to-speech voice of Aselius and Rivine Browse. Talk to it to navigate, start and steer tasks, and answer an engine's questions hands-free, while its ivory-and-jade dragon shows what Rivine is doing.
+
+## At a glance
+
+- **What it is:** A voice assistant for Aselius and Rivine Browse, with an animated dragon companion.
+- **Where:** The Rivine Browse extension, the Rivine Browse desktop app and every signed-in page of the Aselius web app.
+- **Best for:** Starting, steering and answering tasks without typing.
+- **Safety:** Asks before acting, and never approves a sign-in, payment or send on its own.
+- **Cost:** Needs a balance above $1 to start. Usage is billed to your credits.
+- **Wake word:** "Hey Selius", off by default and opt-in on each surface.
+
+## Where it is available
 
 | Where | How it starts | What it can do |
 |---|---|---|
 | Rivine Browse extension (side panel) | Tap the dragon in the companion row, the **Selius** button, or say "Hey Selius" (opt-in) | Start, pause, resume and stop Browse tasks; answer Browse's questions and approvals with your words; save workflows; report when a task it started ends |
-| Rivine Browse desktop app | The same companion row and button, with "Hey Selius" on the computer's own speech service (opt-in) | The same |
+| Rivine Browse desktop app | The same companion row and button, with "Hey Selius" through the computer's own speech service (opt-in) | The same |
 | Aselius web app (every signed-in page) | Tap the dragon at the bottom right, or say "Hey Selius" (opt-in, on the Selius page) | Navigate; open taskspaces; choose an engine and specialty; send a task after you say yes; answer an engine's question; create and delete workspaces and taskspaces (deletes need the name said aloud); create automations |
 
-In Browse the companion row sits under the header, above Task / Workflows / History: soft dragon on the left, a short
-"Selius · Tap to talk…" line beside it. The dragon can be hidden under **Selius voice** in the menu.
+In Browse, the companion row sits under the header, above Task / Workflows / History: the dragon on the left and a short "Selius · Tap to talk…" line beside it.
 
 ## Rules it keeps
 
 - **It listens to you fully, then asks before acting.** It sends a task only after you clearly say yes.
-- **It never approves anything on its own judgement.** A sign-in, payment, send or restricted permission gets an answer from you, passed in your words. The answer takes the same path as the buttons, so it is shown, saved to the taskspace thread, and remembered for the rest of the task.
-- **It doesn't make things up.** It reads the real Browse and workspace status tools instead of guessing what Rivine is doing.
-- **It doesn't chatter.** It speaks up on its own only:
+- **It never approves anything on its own judgement.** A sign-in, payment, send or restricted permission gets an answer from you, passed on in your words. That answer works exactly like pressing the button: it is shown, saved to the taskspace thread and remembered for the rest of the task.
+- **It does not make things up.** It reads the real Browse and workspace status instead of guessing what Rivine is doing.
+- **It does not chatter.** It speaks up on its own only:
   - when Browse needs you;
   - when a task it sent finishes;
   - in the web app, for any engine, if you turn that on.
-- **Language and register.** It replies in the language you speak. In Browse, the speaking style (Everyday, Professional or Consultant) is under **Selius voice** in the menu. In the web app it keeps one register: quiet and professional.
+- **It matches your language.** It replies in the language you speak. In Browse, choose a speaking style (Everyday, Professional or Consultant) under **Selius voice** in the menu. In the web app it keeps one register: quiet and professional.
 
 ## How a conversation works
 
-```
-panel / web app ──POST /api/browse/selius/session (Browse)──► workspace backend
-                 └─POST /api/selius/session (web app)───────►   mints a short-lived ticket
-                                                                 (signed; Google credential sealed
-                                                                  server-side, never sent to the browser)
-panel ──WebSocket wss://selius-relay…/live?ticket=…──► relay (Cloudflare Worker)
-relay ──service credential──► Vertex AI Live (gemini-3.8-live)
-relay ──signed usage report──► POST /api/browse/selius/usage ──► credits
-```
+1. **Call Selius.** Tap the dragon, press the **Selius** button, or say "Hey Selius" if you turned the wake word on.
+2. **Speak.** Selius listens until you finish, then confirms what it understood.
+3. **Approve.** It acts only after you clearly say yes. Deleting a workspace or taskspace also needs its name said aloud.
+4. **Follow along.** The dragon shows whether Selius is listening, thinking or speaking. It speaks up again only when a task needs you or a task it sent finishes.
+5. **Finish.** The conversation closes when you are done or after a quiet spell.
 
-- **Why a relay.** The Live API does not issue browser-safe ephemeral tokens, so a client cannot hold a Google credential. The relay:
-  - pins the model;
-  - pipes the audio;
-  - counts tokens from the provider's own messages, so the client cannot under-report;
-  - ends a conversation at 15 minutes.
-- **No AI Studio key.** Selius uses the platform's Vertex service account, the same credential the engines use.
-- **Cost.** A session opens only when called and closes after quiet or when you're done. One conversation is capped; a short live exchange billed a few tenths of a cent.
-- **Balance.** Selius needs a balance above $1.00.
+- **Conversation length.** One conversation lasts at most 15 minutes.
+- **Cost.** A conversation opens only when you call Selius and is billed to your credits. A short live exchange costs a few tenths of a cent.
+
+> **Note:** Selius needs a balance above $1.00 to start. When it hands a task to an engine, that engine then needs its own start balance (for example $5 for Research or $10 for Code). See [Plans and pricing](/aselius-platform/docs/plans-pricing).
 
 ## The dragon
 
-- **Art** (`rivine-browse/src/sidepanel/mascot/dragon.ts`, copied to `Aselius_V1.0.0_Frontend/src/components/selius/mascot/`):
-  - soft gradient shading, no outlines or drawn lines;
-  - smooth scalloped wings;
-  - gradient ids unique per instance.
-- **States:** idle, listening (fins perk, head tilts), thinking (halo, glancing eyes), speaking, attention (waves, amber), happy (after a task finishes), paused, error, sleeping (after 3 quiet minutes).
-- **Voice sync:**
-  - The playback worklet measures the loudness of the audio as it is played, every 40 ms. The mouth follows that, opening fast and closing slowly like a jaw.
-  - Head nods follow the speech envelope; stressed syllables lift the wings.
-  - Blinks, glances and the head's drift are randomised.
-  - A frame loop runs only while there is voice. Idle motion is CSS, and reduced-motion is honoured.
-- **Settings.** In Browse, **Selius voice** has a toggle to hide the dragon.
+The dragon is a soft, ivory-and-jade companion that mirrors what Selius is doing.
 
-## Wake word
+| State | What it means |
+|---|---|
+| **Idle** | Ready; nothing in progress |
+| **Listening** | Hearing you (fins perk, head tilts) |
+| **Thinking** | Working out a reply (halo, glancing eyes) |
+| **Speaking** | Talking; its mouth, nods and wings follow the voice |
+| **Attention** | Needs you (waves, amber) |
+| **Happy** | A task just finished |
+| **Paused** | Paused, along with the task it is following |
+| **Error** | Something went wrong |
+| **Sleeping** | After 3 quiet minutes |
 
-| Surface | Engine | Notes |
+- Blinks, glances and small head movements are natural and varied.
+- Your system's reduced-motion setting is honoured.
+- In Browse, **Selius voice** in the menu has a toggle to hide the dragon.
+
+## Wake word: "Hey Selius"
+
+The wake word is **off by default**. Turn it on per surface; until then, Selius starts only when you tap or press the button.
+
+| Surface | How it listens | Privacy |
 |---|---|---|
-| Chrome extension, web app | Chrome / Edge `webkitSpeechRecognition` | Listens only for the name, and only while no conversation is open. Off by default. |
-| Desktop, macOS | `native/selius-wake` (Swift, `SFSpeechRecognizer`) | On-device where supported (Apple silicon, en-US checked): audio stays on the Mac. macOS asks once for Speech Recognition. |
-| Desktop, Windows | `native/selius-wake.ps1` (`System.Speech`) | Offline. Name grammar plus dictation, confidence ≥ 0.80. Not yet tested on a Windows machine. |
-| Desktop, Linux | none | Button only. |
+| Chrome extension, web app | The browser's built-in speech recognition (Chrome or Edge) | Listens only for the name, and only while no conversation is open |
+| Desktop, macOS | macOS speech recognition | On-device where supported (Apple silicon, US English): audio stays on the Mac. macOS asks once for Speech Recognition permission |
+| Desktop, Windows | Windows speech recognition | Offline, on your computer. Windows support is new |
+| Desktop, Linux | Not available | Use the button |
 
-Recognizers often hear the name as "Celsius", so "Hey Celsius" counts as a call. "Celsius" on its own does not. In the web app, "Beunec Voice" and "Hello Beunec" also work.
+- Speech recognizers often hear the name as "Celsius", so "Hey Celsius" also counts. "Celsius" on its own does not.
+- In the web app, "Beunec Voice" and "Hello Beunec" also work.
 
-## Running it locally
+## Related
 
-```sh
-# 1. The relay (secret generated into selius-relay/.dev.vars, never printed)
-cd selius-relay && npx wrangler dev --port 8787 --ip 127.0.0.1
-# 2. The backend (real sign-in, test identity, test database, local relay)
-RIVINE_BROWSE_LOCAL=1 Aselius-Workspace/aselius_workspace/venv/bin/python rivine-browse/e2e/server.py
-# 3. The desktop app against both
-cd rivine-browse-desktop && node scripts/dev-speech-permission.mjs && \
-  RIVINE_BROWSE_API=http://127.0.0.1:8765 RIVINE_SELIUS_RELAY=ws://127.0.0.1:8787 node scripts/build.mjs --dev && \
-  env -u ELECTRON_RUN_AS_NODE npx electron .
-```
-
-**Tests:**
-- Live voice, in the real extension with a fake microphone playing a spoken WAV: `SELIUS_WAV=<16 kHz wav> npm run e2e -- selius`. It checks that Selius:
-  - heard you;
-  - answered aloud;
-  - closed itself;
-  - had the dragon listen and speak, with its lips following the voice.
-- Unit tests:
-  - `rivine-browse/test/selius*.test.ts` and `mascot.test.ts`;
-  - `rivine-browse-desktop/test/wake.test.ts`;
-  - `Aselius-Workspace/aselius_workspace/tests/test_selius.py`;
-  - `Aselius_V1.0.0_Frontend/tests/selius-workspace.test.mjs`.
-
-## Deploying
-
-1. Deploy the relay: `cd selius-relay && npx wrangler deploy && npx wrangler secret put SELIUS_RELAY_SECRET`.
-2. Put the same secret in SSM at `/aselius/production/workspace/SELIUS_RELAY_SECRET`, through `.env.production.fordeveloper` and `./ops.sh`.
-3. Deploy the workspace backend. It already has the Vertex service account, and `SELIUS_RELAY_URL` defaults to the production relay.
+- [Aselius Workspace](/aselius-platform/docs/workspace): taskspaces, engines and specialties
+- [Rivine Browse](https://browse.aselius.beunec.com/paper): the browsing engine Selius steers
+- [Automations](/aselius-platform/docs/automations): scheduled runs you can create by voice
+- [Plans and pricing](/aselius-platform/docs/plans-pricing): credits and start balances

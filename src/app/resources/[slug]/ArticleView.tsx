@@ -273,7 +273,7 @@ export function ArticleView() {
                                 {post.categories.map((category, idx) => (
                                     <span
                                         key={idx}
-                                        className="px-3 py-1 rounded-full bg-beunec-blue/10 text-beunec-blue text-xs font-bold uppercase tracking-wider"
+                                        className="px-3 py-1 rounded-full bg-beunec-blue/10 text-beunec-blue text-sm font-bold uppercase tracking-wider"
                                     >
                                         {category}
                                     </span>

@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { motion } from "framer-motion";
 import { Header } from "@/sections/Header";
 import { Footer } from "@/sections/Footer";
 import { Button } from "@/components/ui/button";
@@ -76,29 +75,24 @@ export default function ResourcesPage() {
                 <section className="relative px-4 py-20 mb-20 overflow-hidden">
                     <ParticleBackground />
                     <div className="max-w-4xl mx-auto text-center relative z-10">
-                        <motion.span
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            className="px-3 py-1 rounded-full bg-beunec-blue/10 text-beunec-blue text-xs font-bold uppercase tracking-widest mb-4 inline-block"
+                        <span
+                            className="kt-fade px-3 py-1 rounded-full bg-beunec-blue/10 text-beunec-blue text-sm font-bold uppercase tracking-widest mb-4 inline-block"
+                            style={{ ["--d" as string]: "0s" }}
                         >
                             The Beunec Journal
-                        </motion.span>
-                        <motion.h1
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.1 }}
-                            className="text-4xl md:text-6xl font-serif mb-6"
+                        </span>
+                        <h1
+                            className="kt-fade text-4xl md:text-6xl font-serif mb-6"
+                            style={{ ["--d" as string]: "0.1s" }}
                         >
                             Latest Insights from <br /> the Frontier of Work
-                        </motion.h1>
-                        <motion.p
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.2 }}
-                            className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto"
+                        </h1>
+                        <p
+                            className="kt-fade text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto"
+                            style={{ ["--d" as string]: "0.2s" }}
                         >
                             Explore our latest research, deep dives into agentic systems, and updates on the Beunec Cloud Platform.
-                        </motion.p>
+                        </p>
                     </div>
                 </section>
 
@@ -127,12 +121,8 @@ export default function ResourcesPage() {
                     ) : (
                         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                             {posts.map((post, idx) => (
-                                <motion.article
+                                <article data-reveal style={{ ["--rv-i" as string]: Math.round((idx * 0.1) / 0.08) }}
                                     key={post.guid}
-                                    initial={{ opacity: 0, y: 20 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: true }}
-                                    transition={{ delay: idx * 0.1 }}
                                     className="group relative flex flex-col bg-card border border-border rounded-2xl overflow-hidden hover:shadow-2xl hover:shadow-beunec-blue/5 transition-all duration-300 cursor-pointer"
                                     onClick={() => router.push(`/resources/${generateSlug(post.title)}`)}
                                 >
@@ -156,7 +146,7 @@ export default function ResourcesPage() {
 
                                     {/* Content */}
                                     <div className="p-6 flex flex-col flex-1">
-                                        <div className="flex items-center gap-4 text-xs text-muted-foreground mb-4">
+                                        <div className="flex items-center gap-4 text-sm text-muted-foreground mb-4">
                                             <div className="flex items-center gap-1">
                                                 <Calendar className="w-3 h-3" />
                                                 {new Date(post.pubDate).toLocaleDateString(undefined, {
@@ -185,7 +175,7 @@ export default function ResourcesPage() {
                                             <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
                                         </div>
                                     </div>
-                                </motion.article>
+                                </article>
                             ))}
                         </div>
                     )}
@@ -193,11 +183,8 @@ export default function ResourcesPage() {
 
                 {/* Substack Call to Action */}
                 <section className="px-4 mt-32">
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        className="max-w-4xl mx-auto p-8 md:p-12 rounded-[2.5rem] baap-container text-foreground text-center relative overflow-hidden"
-                    >
+                    <div data-reveal
+                        className="max-w-4xl mx-auto p-8 md:p-12 rounded-[2.5rem] baap-container text-foreground text-center relative overflow-hidden">
                         <div className="absolute inset-0 bg-beunec-blue/10 pointer-events-none" />
                         <h2 className="text-2xl md:text-4xl font-serif mb-6 relative z-10">
                             Never miss a breakthrough.
@@ -215,7 +202,7 @@ export default function ResourcesPage() {
                                 </a>
                             </Button>
                         </div>
-                    </motion.div>
+                    </div>
                 </section>
             </main>
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { HomeParticleBackground } from "@/sections/home/HomeParticleBackground";
@@ -23,11 +23,16 @@ const footerLinks = {
       { label: "Resources Hub", href: "/resources" },
     ],
   },
-  platform: {
-    title: "Platform",
+  aselius: {
+    title: "Aselius",
     links: [
-      { label: "Aselius", href: "/aselius-platform" },
-      { label: "Principles", href: "/principles" },
+      { label: "Overview", href: "/aselius-platform" },
+      { label: "Watch the story", href: "/aselius-platform#story" },
+      { label: "Documentation", href: "/aselius-platform/docs" },
+      { label: "Use from any AI app (MCP)", href: "/aselius-platform/docs/aselius-mcp" },
+      { label: "How Aselius compares", href: "/aselius-platform/docs/comparison" },
+      { label: "Plans & pricing", href: "/aselius-platform/docs/plans-pricing" },
+      { label: "Open Aselius", href: "https://aselius.beunec.com" },
     ],
   },
   company: {
@@ -37,6 +42,7 @@ const footerLinks = {
       { label: "Research Philosophy", href: "/research-philosophy" },
       { label: "Agentic Infrastructure", href: "/agentic-infrastructure" },
       { label: "Akinnawo Logic V2", href: "/akinnawo-logic-v2" },
+      { label: "Principles", href: "/principles" },
     ],
   },
 };
@@ -55,18 +61,13 @@ export function Footer() {
       {/* Background */}
       <div className="absolute inset-0 z-0">
         <HomeParticleBackground />
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-beunec-blue/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-accent-sage/5 rounded-full blur-3xl" />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Newsletter Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="mb-16 p-8 lg:p-12 rounded-2xl baap-container"
-        >
+        <div data-reveal
+          className="mb-16 p-8 lg:p-12 rounded-2xl baap-container">
           <div className="grid lg:grid-cols-2 gap-8 items-center">
             <div>
               <h3 className="text-2xl lg:text-3xl font-bold text-foreground mb-3">
@@ -77,39 +78,58 @@ export function Footer() {
                 on the future of work.
               </p>
             </div>
-            <div className="flex flex-col sm:flex-row gap-3">
+            {/* Opens the Beunec Substack subscribe page with the email filled in */}
+            <form
+              action="https://beunec.substack.com/subscribe"
+              method="get"
+              target="_blank"
+              className="flex flex-col sm:flex-row gap-3"
+            >
               <div className="relative flex-1">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" aria-hidden />
+                <label htmlFor="footer-email" className="sr-only">
+                  Email address
+                </label>
                 <Input
+                  id="footer-email"
+                  name="email"
                   type="email"
+                  required
+                  autoComplete="email"
                   placeholder="Enter your email"
-                  className="pl-10 h-12 bg-media-blank border-border"
+                  className="pl-10 h-12 bg-media-blank border-border text-base"
                 />
               </div>
-              <Button className="h-12 px-6 bg-beunec-sage hover:opacity-90 text-primary-foreground transition-colors duration-200">
+              <Button type="submit" className="h-12 px-6 bg-beunec-sage hover:opacity-90 text-primary-foreground transition-colors duration-200">
                 Subscribe
                 <ArrowRight className="ml-2 w-4 h-4" />
               </Button>
-            </div>
+            </form>
           </div>
-        </motion.div>
+        </div>
 
         {/* Main Footer Content */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 lg:gap-12 mb-16">
           {/* Brand Column */}
           <div className="col-span-2 md:col-span-3 lg:col-span-2">
-            <a href="/" className="flex items-center gap-2 mb-6">
+            <Link href="/" className="flex items-center gap-2 mb-6">
               <img
-                src="/assets/beunec-logo-transparent-blacktext.png"
+                src="/assets/beunec-logo-black.webp"
+                width={349}
+                height={96}
+                loading="lazy"
                 alt="Beunec"
                 className="h-10 w-auto dark:hidden"
               />
               <img
-                src="/assets/beunec-logo-transparent-whitetext.png"
+                src="/assets/beunec-logo-white.webp"
+                width={341}
+                height={96}
+                loading="lazy"
                 alt="Beunec"
                 className="h-10 w-auto hidden dark:block"
               />
-            </a>
+            </Link>
             <p className="text-muted-foreground mb-6 max-w-sm">
               Beunec Technologies Inc. is a research and deployment organization focused on
               understanding, developing, and actualizing Agentic Infrastructure.
@@ -122,10 +142,10 @@ export function Footer() {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-lg bg-muted hover:bg-beunec-blue/10 flex items-center justify-center transition-colors duration-200 group"
+                  className="w-10 h-10 rounded-lg bg-muted hover:bg-accent-sage/10 flex items-center justify-center transition-colors duration-200 group"
                   aria-label={social.label}
                 >
-                  <social.icon className="w-5 h-5 text-muted-foreground group-hover:text-beunec-blue transition-colors duration-200" />
+                  <social.icon className="w-5 h-5 text-muted-foreground group-hover:text-accent-sage transition-colors duration-200" />
                 </a>
               ))}
             </div>
@@ -137,15 +157,24 @@ export function Footer() {
               <h4 className="font-semibold text-foreground mb-4">
                 {section.title}
               </h4>
-              <ul className="space-y-3">
+              <ul className="space-y-1.5">
                 {section.links.map((link) => (
                   <li key={link.label}>
-                    <a
-                      href={link.href}
-                      className="text-sm text-muted-foreground hover:text-beunec-blue transition-colors duration-200"
-                    >
-                      {link.label}
-                    </a>
+                    {link.href.startsWith("http") ? (
+                      <a
+                        href={link.href}
+                        className="inline-block py-1 text-[15px] text-muted-foreground hover:text-accent-sage transition-colors duration-200"
+                      >
+                        {link.label} <span aria-hidden="true">↗</span>
+                      </a>
+                    ) : (
+                      <Link
+                        href={link.href}
+                        className="inline-block py-1 text-[15px] text-muted-foreground hover:text-accent-sage transition-colors duration-200"
+                      >
+                        {link.label}
+                      </Link>
+                    )}
                   </li>
                 ))}
               </ul>
@@ -160,29 +189,29 @@ export function Footer() {
               &copy; 2026 Beunec and all related Marks are Trademarks of Beunec
               Technologies, Inc. or its affiliates. All rights reserved.
             </p>
-            <div className="flex items-center gap-6">
-              <a
+            <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
+              <Link
                 href="/terms-of-use"
-                className="text-sm text-muted-foreground hover:text-beunec-blue transition-colors duration-200"
+                className="py-1 text-sm text-muted-foreground hover:text-accent-sage transition-colors duration-200"
               >
                 Terms of Use
-              </a>
-              <a
+              </Link>
+              <Link
                 href="/privacy-policy"
-                className="text-sm text-muted-foreground hover:text-beunec-blue transition-colors duration-200"
+                className="py-1 text-sm text-muted-foreground hover:text-accent-sage transition-colors duration-200"
               >
                 Privacy Policy
-              </a>
-              <a
+              </Link>
+              <Link
                 href="/data-readiness-policy"
-                className="text-sm text-muted-foreground hover:text-beunec-blue transition-colors duration-200"
+                className="py-1 text-sm text-muted-foreground hover:text-accent-sage transition-colors duration-200"
               >
                 Data Readiness
-              </a>
+              </Link>
             </div>
           </div>
         </div>
       </div>
-    </footer >
+    </footer>
   );
 }

@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import {
   AnimatePresence,
   motion,
+  useInView,
   useMotionValue,
   useReducedMotion,
   useScroll,
@@ -27,10 +28,10 @@ type MapNode = {
 const CX = 500;
 const CY = 270;
 
-/** Beunec Agentic Infrastructure mind-field — labels & blurbs from Beunec Docs. */
+/** Beunec Agentic Infrastructure mind-field: labels & blurbs from Beunec Docs. */
 const NODES: MapNode[] = [
   { id: "n1", kind: "text", label: "What is the Future of Work?", x: 120, y: 70, drift: 0 },
-  { id: "n2", kind: "text", label: "How does Rivine Orchestration works?", x: 880, y: 90, drift: 1 },
+  { id: "n2", kind: "text", label: "How does Rivine Orchestration work?", x: 880, y: 90, drift: 1 },
   { id: "n3", kind: "text", label: "Self-Awareness Must Precede Safety", x: 80, y: 260, drift: 2 },
   { id: "n4", kind: "text", label: "Who is accountable", x: 900, y: 280, drift: 3 },
   { id: "n5", kind: "text", label: "Solution Agent", x: 140, y: 450, drift: 4 },
@@ -67,7 +68,7 @@ const EDGES: [string, string][] = [
   ["g4", "center"],
 ];
 
-/** Concise popup copy — verbatim or tightly excerpted from Beunec Docs. */
+/** Concise popup copy, verbatim or tightly excerpted from Beunec Docs. */
 const DESCRIPTIONS: Record<string, string> = {
   n1: "encompassing evolving practices, changing operations, and the tasks expected of us all heavily influenced by technology, artificial intelligence, finance/banking, and new modes of governance.",
   n2: "Rivine is Beunec's research direction for orchestrating agentic work, the runtime that decides how many agents a task actually needs, in what order they run, and what happens when one of them fails.",
@@ -104,8 +105,8 @@ function wrapLabel(text: string, maxChars: number): string[] {
 
 /** Layered abstract-art glyphs (gradient fills + organic accents) instead of flat icon outlines. */
 function Glyph({ type, hot }: { type: MapNode["glyph"]; hot: boolean }) {
-  const stroke = hot ? "var(--accent-sage)" : "rgba(230,226,216,0.55)";
-  const accent = hot ? "rgba(230,226,216,0.4)" : "rgba(230,226,216,0.14)";
+  const stroke = hot ? "var(--accent-sage)" : "rgba(232,234,237,0.55)";
+  const accent = hot ? "rgba(232,234,237,0.4)" : "rgba(232,234,237,0.14)";
 
   switch (type) {
     case "hex":
@@ -175,7 +176,7 @@ function Glyph({ type, hot }: { type: MapNode["glyph"]; hot: boolean }) {
         <g>
           <circle r="15" fill="url(#glyph-grad-c)" stroke={stroke} strokeWidth="1.15" />
           <circle r="9" fill="none" stroke={stroke} strokeOpacity="0.5" strokeWidth="0.85" />
-          <circle r="4" fill={hot ? stroke : "rgba(230,226,216,0.5)"} fillOpacity={hot ? 0.9 : 0.6} />
+          <circle r="4" fill={hot ? stroke : "rgba(232,234,237,0.5)"} fillOpacity={hot ? 0.9 : 0.6} />
         </g>
       );
   }
@@ -198,7 +199,7 @@ function BubbleNode({
   onClick: () => void;
   reduceMotion: boolean | null;
 }) {
-  // Position is fixed — expansion now comes from the container's width growing,
+  // Position is fixed; expansion now comes from the container's width growing,
   // not from re-deriving x/y here. Only a gentle overall scale rides on `progress`.
   const scale = useTransform(progress, [0, 1], [0.88, 1.08]);
   const fontSize = useTransform(progress, [0, 1], [9.5, 13]);
@@ -213,8 +214,10 @@ function BubbleNode({
   const rotateDeg = (node.drift ?? 0) * 6;
 
   // Wiggle lives on its own nested group so it never fights the position transform.
+  // Explicit rest values (not undefined) so a running loop actually stops
+  // when the map scrolls out of view.
   const wiggle = reduceMotion
-    ? undefined
+    ? { y: 0, x: 0, rotate: 0 }
     : {
         y: [0, -6 - ((node.drift ?? 0) % 3), 3, -4, 0],
         x: [0, 3, -2.5, 2, 0],
@@ -245,10 +248,10 @@ function BubbleNode({
             width={labelW}
             height={32}
             rx={16}
-            fill={hot ? "rgba(107,122,110,0.28)" : "rgba(28,30,26,0.92)"}
-            stroke={hot ? "var(--accent-sage)" : "rgba(230,226,216,0.18)"}
+            fill={hot ? "rgba(107,122,110,0.28)" : "rgba(29,29,29,0.92)"}
+            stroke={hot ? "var(--accent-sage)" : "rgba(232,234,237,0.18)"}
             strokeWidth={1.15}
-            animate={reduceMotion ? undefined : { strokeOpacity: [0.35, 0.65, 0.35] }}
+            animate={reduceMotion ? { strokeOpacity: 0.5 } : { strokeOpacity: [0.35, 0.65, 0.35] }}
             transition={
               reduceMotion
                 ? undefined
@@ -258,7 +261,7 @@ function BubbleNode({
           <motion.text
             textAnchor="middle"
             dominantBaseline="middle"
-            fill="#e6e2d8"
+            fill="#e8eaed"
             fillOpacity={hot ? 1 : 0.88}
             fontFamily="ui-sans-serif, system-ui, sans-serif"
             style={{ fontSize }}
@@ -345,7 +348,7 @@ function Edge({
         strokeOpacity={0.5}
         strokeLinecap="round"
         strokeDasharray="5 7"
-        animate={reduceMotion ? undefined : { strokeDashoffset: [0, -48] }}
+        animate={reduceMotion ? { strokeDashoffset: 0 } : { strokeDashoffset: [0, -48] }}
         transition={
           reduceMotion ? undefined : { duration: 6 + (i % 4), repeat: Infinity, ease: "linear" }
         }
@@ -404,20 +407,20 @@ function NodePopup({ node, onDismiss }: { node: MapNode; onDismiss: () => void }
         width={width}
         height={height}
         rx={height / 2}
-        fill="rgba(20,21,18,0.97)"
+        fill="rgba(17,17,17,0.97)"
         stroke="var(--accent-sage)"
         strokeWidth={1.2}
       />
       <path
         d={`M -5 ${height / 2 - 1} L 0 ${height / 2 + 7} L 5 ${height / 2 - 1} Z`}
-        fill="rgba(20,21,18,0.97)"
+        fill="rgba(17,17,17,0.97)"
         stroke="var(--accent-sage)"
         strokeWidth={1}
       />
       <text
         textAnchor="middle"
         dominantBaseline="middle"
-        fill="#e6e2d8"
+        fill="#e8eaed"
         fontFamily="ui-sans-serif, system-ui, sans-serif"
         fontSize={10.5}
       >
@@ -466,7 +469,7 @@ export function AgenticMindMap({ title, subtitle, ctaLabel, onCta }: Props) {
     offset: ["start 0.12", "end 0.88"],
   });
 
-  // ponytail: numeric lerp — start at fitted page width, end at 100vw (not 58%→fitted)
+  // ponytail: numeric lerp: start at fitted page width, end at 100vw (not 58%→fitted)
   const widthPx = useTransform(
     [scrollYProgress, fittedW, viewportW],
     ([p, fitted, full]) => {
@@ -475,6 +478,13 @@ export function AgenticMindMap({ title, subtitle, ctaLabel, onCta }: Props) {
     }
   );
   const containerWidth = useSpring(widthPx, { stiffness: 120, damping: 28, mass: 0.35 });
+  // Scale a full-width stage instead of animating its width: same picture, but
+  // the browser composites it instead of re-laying out the SVG every frame.
+  const stageScale = useTransform([containerWidth, viewportW], ([w, full]) =>
+    Math.min(1, (w as number) / Math.max(1, full as number)),
+  );
+  const inView = useInView(trackRef, { margin: "200px 0px" });
+  const still = !!reduceMotion || !inView;
 
   const radius = useTransform(scrollYProgress, [0, 0.65, 1], [24, 12, 0]);
   const borderColor = useTransform(
@@ -499,7 +509,8 @@ export function AgenticMindMap({ title, subtitle, ctaLabel, onCta }: Props) {
   const selectedNode = selected ? NODES.find((n) => n.id === selected) ?? null : null;
 
   return (
-    // Full-bleed track so width can leave the page margin and meet the walls
+    <>
+    {/* Full-bleed track so width can leave the page margin and meet the walls */}
     <div
       ref={trackRef}
       className="relative h-[220vh] md:h-[240vh] w-screen max-w-[100vw] left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]"
@@ -509,7 +520,9 @@ export function AgenticMindMap({ title, subtitle, ctaLabel, onCta }: Props) {
           className="relative overflow-hidden"
           style={{
             background: "var(--bg-dark)",
-            width: containerWidth,
+            width: "100vw",
+            scale: stageScale,
+            transformOrigin: "50% 0%",
             borderRadius: radius,
             borderWidth: 1,
             borderStyle: "solid",
@@ -529,8 +542,8 @@ export function AgenticMindMap({ title, subtitle, ctaLabel, onCta }: Props) {
                 <stop offset="100%" stopColor="#6b7a6e" stopOpacity="0.18" />
               </linearGradient>
               <radialGradient id="mind-glow" cx="50%" cy="50%" r="55%">
-                <stop offset="0%" stopColor="#1c1e1a" stopOpacity="1" />
-                <stop offset="100%" stopColor="#141512" stopOpacity="1" />
+                <stop offset="0%" stopColor="#1d1d1d" stopOpacity="1" />
+                <stop offset="100%" stopColor="#111111" stopOpacity="1" />
               </radialGradient>
               <linearGradient id="glyph-grad-a" x1="0%" y1="0%" x2="100%" y2="100%">
                 <stop offset="0%" stopColor="#6b7a6e" stopOpacity="0.55" />
@@ -541,9 +554,9 @@ export function AgenticMindMap({ title, subtitle, ctaLabel, onCta }: Props) {
                 <stop offset="100%" stopColor="#7a8b99" stopOpacity="0.08" />
               </linearGradient>
               <radialGradient id="glyph-grad-c" cx="35%" cy="30%" r="75%">
-                <stop offset="0%" stopColor="#e6e2d8" stopOpacity="0.22" />
-                <stop offset="60%" stopColor="#2a2c26" stopOpacity="0.65" />
-                <stop offset="100%" stopColor="#141512" stopOpacity="0.9" />
+                <stop offset="0%" stopColor="#e8eaed" stopOpacity="0.22" />
+                <stop offset="60%" stopColor="#202020" stopOpacity="0.65" />
+                <stop offset="100%" stopColor="#111111" stopOpacity="0.9" />
               </radialGradient>
             </defs>
 
@@ -557,7 +570,7 @@ export function AgenticMindMap({ title, subtitle, ctaLabel, onCta }: Props) {
                 byId={byId}
                 lit={hot === a || hot === b}
                 i={i}
-                reduceMotion={reduceMotion}
+                reduceMotion={still}
               />
             ))}
 
@@ -570,7 +583,7 @@ export function AgenticMindMap({ title, subtitle, ctaLabel, onCta }: Props) {
                 onEnter={() => setHot(n.id)}
                 onLeave={() => setHot(null)}
                 onClick={() => setSelected((s) => (s === n.id ? null : n.id))}
-                reduceMotion={reduceMotion}
+                reduceMotion={still}
               />
             ))}
 
@@ -587,16 +600,16 @@ export function AgenticMindMap({ title, subtitle, ctaLabel, onCta }: Props) {
           >
             <div className="pointer-events-auto max-w-md text-center">
               <h2
-                className="text-2xl sm:text-3xl md:text-[2.25rem] leading-snug text-[#e6e2d8] mb-4"
+                className="text-2xl sm:text-3xl md:text-[2.25rem] leading-snug text-[color:var(--on-ink)] mb-4"
                 style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
               >
                 {title}
               </h2>
-              <p className="text-sm sm:text-base leading-relaxed text-[#e6e2d8]/75 mb-7">{subtitle}</p>
+              <p className="text-sm sm:text-base leading-relaxed text-[color:var(--on-ink)] opacity-75 mb-7">{subtitle}</p>
               <button
                 type="button"
                 onClick={onCta}
-                className="inline-flex items-center gap-2 rounded-full bg-[#e6e2d8] text-[#141512] text-sm font-medium px-5 py-2.5 hover:opacity-90 transition-opacity duration-200"
+                className="inline-flex items-center gap-2 rounded-full bg-[color:var(--on-ink)] text-[#111111] text-sm font-medium px-5 py-2.5 hover:opacity-90 transition-opacity duration-200"
               >
                 {ctaLabel}
                 <span aria-hidden>→</span>
@@ -604,11 +617,31 @@ export function AgenticMindMap({ title, subtitle, ctaLabel, onCta }: Props) {
             </div>
           </motion.div>
 
-          <p className="absolute bottom-4 left-1/2 -translate-x-1/2 text-[10px] uppercase tracking-[0.2em] text-[#e6e2d8]/35 pointer-events-none">
+          <p className="absolute bottom-4 left-1/2 -translate-x-1/2 text-sm uppercase tracking-[0.14em] text-[color:var(--on-ink)] opacity-35 pointer-events-none">
             Scroll to expand
           </p>
         </motion.div>
       </div>
     </div>
+
+    {/* On phones the map's labels are too small to read, so the same topics
+        are listed here in full; the map above stays as the visual. */}
+    <div className="md:hidden mx-auto max-w-7xl px-4 sm:px-6 mt-8">
+      <p className="mb-3 font-mono text-sm uppercase tracking-[0.14em] text-accent-slate">Explore the ideas</p>
+      <ul className="divide-y divide-border rounded-2xl border border-border bg-container">
+        {NODES.filter((n) => n.kind === "text").map((n) => (
+          <li key={n.id}>
+            <details className="group px-4 py-3">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-3 py-1 text-base font-medium text-foreground">
+                {n.label}
+                <span aria-hidden className="text-accent-sage transition-transform group-open:rotate-45">+</span>
+              </summary>
+              <p className="mt-2 text-[15px] leading-relaxed text-muted-foreground">{DESCRIPTIONS[n.id]}</p>
+            </details>
+          </li>
+        ))}
+      </ul>
+    </div>
+    </>
   );
 }

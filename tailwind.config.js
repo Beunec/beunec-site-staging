@@ -55,15 +55,24 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        /* Canvas / charcoal surfaces from src/index.css. color-mix keeps the
+           opacity modifier working (bg-container/90, bg-global/80). */
+        global: "color-mix(in srgb, var(--bg-global) calc(<alpha-value> * 100%), transparent)",
+        container: "color-mix(in srgb, var(--bg-container) calc(<alpha-value> * 100%), transparent)",
+        "state-hover": "color-mix(in srgb, var(--state-hover) calc(<alpha-value> * 100%), transparent)",
+        "media-blank": "color-mix(in srgb, var(--media-blank) calc(<alpha-value> * 100%), transparent)",
+        "accent-sage": "color-mix(in srgb, var(--accent-sage) calc(<alpha-value> * 100%), transparent)",
+        "accent-slate": "color-mix(in srgb, var(--accent-slate) calc(<alpha-value> * 100%), transparent)",
+        ink: "color-mix(in srgb, var(--text-primary) calc(<alpha-value> * 100%), transparent)",
         beunec: {
-          /* ponytail: map legacy beunec-* utilities onto BAAP accents so existing classnames pick up Warm Technical without a full classname sweep */
-          blue: "#6b7a6e",
-          "blue-light": "#7a8b99",
+          /* Legacy beunec-* utilities resolve to the same tokens as everything else */
+          blue: "color-mix(in srgb, var(--accent-sage) calc(<alpha-value> * 100%), transparent)",
+          "blue-light": "color-mix(in srgb, var(--accent-slate) calc(<alpha-value> * 100%), transparent)",
           "blue-dark": "#5a685d",
-          calm: "#f1eee6",
-          "calm-dark": "#141512",
-          sage: "#6b7a6e",
-          slate: "#7a8b99",
+          calm: "color-mix(in srgb, var(--bg-global) calc(<alpha-value> * 100%), transparent)",
+          "calm-dark": "#111111",
+          sage: "color-mix(in srgb, var(--accent-sage) calc(<alpha-value> * 100%), transparent)",
+          slate: "color-mix(in srgb, var(--accent-slate) calc(<alpha-value> * 100%), transparent)",
         },
         baap: {
           global: "var(--bg-global)",
@@ -84,8 +93,8 @@ export default {
       },
       boxShadow: {
         xs: "0 1px 2px 0 rgb(0 0 0 / 0.05)",
-        calm: "0 4px 20px -2px rgb(0 71 125 / 0.1)",
-        "calm-lg": "0 10px 40px -4px rgb(0 71 125 / 0.15)",
+        calm: "0 4px 20px -2px rgb(17 17 17 / 0.08)",
+        "calm-lg": "0 10px 40px -4px rgb(17 17 17 / 0.14)",
       },
       keyframes: {
         "accordion-down": {
@@ -117,7 +126,7 @@ export default {
         "float": "float 6s ease-in-out infinite",
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+        sans: ['var(--font-inter)', 'Inter', 'system-ui', '-apple-system', 'sans-serif'],
       },
     },
   },

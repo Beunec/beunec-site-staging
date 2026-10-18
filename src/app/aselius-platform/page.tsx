@@ -1,8 +1,5 @@
-"use client";
-
-import { useEffect } from "react";
 import Link from "next/link";
-import { motion, useReducedMotion } from "framer-motion";
+import { ReelVideo } from "@/components/media/ReelVideo";
 import {
   ArrowRight,
   ArrowUpRight,
@@ -23,8 +20,8 @@ import {
   Palette,
   PenLine,
   Scale,
-  ShieldCheck,
   Sparkles,
+  Terminal,
   Users,
   Workflow,
 } from "lucide-react";
@@ -32,6 +29,18 @@ import { Header } from "@/sections/Header";
 import { Footer } from "@/sections/Footer";
 import { ParticleBackground } from "@/sections/governance/ParticleBackground";
 import { PlatformTour } from "@/sections/aselius/PlatformTour";
+import { KineticHeadline } from "@/components/motion/KineticHeadline";
+import { ShotImage } from "@/components/media/ShotImage";
+import { TiltFrame } from "@/components/media/TiltFrame";
+import { ShotGallery } from "@/components/media/ShotGallery";
+import { ScrollStory, type StoryStep } from "@/components/media/ScrollStory";
+import { HotspotMap, type Hotspot } from "@/components/media/HotspotMap";
+import { StoryVideo, type Chapter } from "@/components/media/StoryVideo";
+import { LiveJournal } from "@/components/media/LiveJournal";
+import { McpSection } from "@/sections/aselius/McpSection";
+import { SHOTS, getShot } from "@/lib/aselius-media";
+import { UPDATES } from "@/lib/aselius-updates";
+import storyMeta from "../../../motion-studio/story-meta.json";
 
 const ASELIUS_APP = "https://aselius.beunec.com";
 const DOCS = "/aselius-platform/docs";
@@ -49,7 +58,7 @@ const DIFFERENTIATORS = [
   {
     icon: Eye,
     title: "Observability you can audit",
-    body: "Tokens, cost, latency, retries, and Artificial Experience events for your own turns — without storing conversation content.",
+    body: "Tokens, cost, latency, retries, and Artificial Experience events for your own turns, without storing conversation content.",
   },
   {
     icon: Sparkles,
@@ -64,7 +73,7 @@ const DIFFERENTIATORS = [
   {
     icon: Brain,
     title: "RE-AI reasoning framework",
-    body: "Reverse-engineering of implementation: gather context, change, verify with evidence, and continue across durable time slices — not a one-shot chat reply.",
+    body: "Reverse-engineering of implementation: gather context, change, verify with evidence, and continue across durable time slices. Not a one-shot chat reply.",
   },
   {
     icon: FileDown,
@@ -84,17 +93,16 @@ type EngineCard = {
   tagline: string;
   href: string;
   external?: boolean;
-  soon?: boolean;
   also?: { label: string; href: string };
 };
 
 const ENGINES: EngineCard[] = [
   { icon: MessageSquare, name: "Rivine TaskForce", tagline: "Action-oriented professional work with connected apps and specialties", href: `${DOCS}/rivine-taskforce` },
-  { icon: Microscope, name: "Rivine Research", tagline: "Source-grounded research → Markdown, PDF, or spreadsheet", href: `${DOCS}/rivine-research` },
+  { icon: Microscope, name: "Rivine Research", tagline: "Source-grounded research delivered as Markdown, PDF, or a spreadsheet", href: `${DOCS}/rivine-research` },
   {
     icon: Code2,
     name: "Rivine Code",
-    tagline: "Build, verify, and deliver working projects — web sandbox or terminal CLI",
+    tagline: "Build, verify, and deliver working projects in a web sandbox or your terminal",
     href: `${DOCS}/rivine-code`,
     also: { label: "Also available as a terminal client", href: `${DOCS}/rivine-code-cli` },
   },
@@ -103,7 +111,7 @@ const ENGINES: EngineCard[] = [
   { icon: Globe2, name: "Rivine Confluence", tagline: "Country forecasts and scenarios: evidence from models, numbers from code", href: `${DOCS}/rivine-confluence` },
   { icon: PenLine, name: "Rivine Assist", tagline: "Surgical follow-up edits on a document already open in Preview", href: `${DOCS}/rivine-assist` },
   { icon: Compass, name: "Rivine Browse", tagline: "Tasks in your real browser tabs and signed-in sessions", href: BROWSE_URL, external: true },
-  { icon: Mic, name: "Selius", tagline: "Voice companion for Aselius and Browse — asks before it acts", href: `${DOCS}/selius` },
+  { icon: Mic, name: "Selius", tagline: "Voice companion for Aselius and Browse that asks before it acts", href: `${DOCS}/selius` },
 ];
 
 const RIVINE_PLATFORM = [
@@ -131,13 +139,13 @@ const APPS = [
   {
     icon: Workflow,
     title: "Automation",
-    body: "Scheduled engine runs that continue whether or not your computer is on — with test runs, review gates, and ledgers.",
+    body: "Scheduled engine runs that continue whether or not your computer is on, with test runs, review gates, and ledgers.",
     href: `${DOCS}/automations`,
   },
   {
     icon: Eye,
     title: "Observability",
-    body: "Cost, latency, retries, and Artificial Experience activity for your turns — without storing chat content.",
+    body: "Cost, latency, retries, and Artificial Experience activity for your turns, without storing chat content.",
     href: `${DOCS}/observability`,
   },
   {
@@ -148,227 +156,190 @@ const APPS = [
   },
 ];
 
+/** Every place a Rivine engine can be reached today, per Plans & Pricing: all plans, one wallet. */
 const SURFACES = [
+  {
+    icon: LayoutGrid,
+    title: "Aselius web app",
+    where: "aselius.beunec.com",
+    body: "The full platform: Workspace, Automation, Observability, Manage Teams, Credits and every Rivine engine.",
+    href: ASELIUS_APP,
+    external: true,
+  },
+  {
+    icon: Compass,
+    title: "Rivine Browse",
+    where: "Chrome extension, Mac and Windows",
+    body: "Tasks in your own tabs and signed-in sessions, with your approval for anything sensitive.",
+    href: BROWSE_URL,
+    external: true,
+  },
+  {
+    icon: Terminal,
+    title: "Rivine Code CLI",
+    where: "Your terminal",
+    body: "Rivine Code on the files already on your disk, in your editor and your git.",
+    href: `${DOCS}/rivine-code-cli`,
+  },
   {
     icon: Workflow,
     title: "Aselius MCP",
-    body: "Connect Claude, Cursor, ChatGPT or any MCP client at workspace.beunec.com/mcp and run a Rivine engine task without leaving it.",
+    where: "workspace.beunec.com/mcp",
+    body: "Start and follow an engine task from Claude, Cursor, ChatGPT or any MCP client.",
     href: `${DOCS}/aselius-mcp`,
   },
   {
     icon: MessageSquare,
     title: "Messaging Channels",
-    body: "Telegram, Discord and WhatsApp start and follow a real engine task — pick the engine and specialty right in the chat.",
+    where: "Telegram, Discord, WhatsApp",
+    body: "Pick the engine and specialty in the chat; results come back with a one-tap preview link.",
     href: `${DOCS}/messaging-channels`,
   },
   {
     icon: Globe2,
     title: "Aselius Preview App",
-    body: "preview.aselius.beunec.com renders a published deliverable exactly as generated, with access codes, theme and language.",
+    where: "preview.aselius.beunec.com",
+    body: "A published deliverable, exactly as generated, on any device, with access codes, theme and language.",
     href: `${DOCS}/preview-app`,
+  },
+  {
+    icon: Mic,
+    title: "Selius",
+    where: "Aselius and Rivine Browse",
+    body: "Speech to speech. Tap the dragon to talk; it asks before it acts.",
+    href: `${DOCS}/selius`,
   },
 ];
 
 const COMPARISON = [
   {
     dim: "Product shape",
-    them: "Claude Cowork / Code + ChatGPT Work (and Codex): agentic chat, desktop/local files, browser actions, projects, scheduled tasks",
-    us: "Full Aselius Platform: Workspace, Automation, Observability, Manage Teams, credits, connectors, Selius, plus Rivine Browse",
+    them: "One general agent in a chat or desktop app that decides which tools to use",
+    us: "Agentic infrastructure software: Workspace, Automation, Observability, Manage Teams, credits, connectors, Selius, plus Rivine Browse",
   },
   {
     dim: "Specialization",
-    them: "One general agent (plus a Code / Codex lane) that decides tools inside a shared conversation",
-    us: "Specialized Rivine engines (TaskForce, Research, Code, Cicero, Confluence, Assist, Creative, Browse) with Mode-level routing — not one model in a costume",
+    them: "One general agent, sometimes with a separate coding lane, inside a shared conversation",
+    us: "Specialized Rivine engines (TaskForce, Research, Code, Cicero, Confluence, Assist, Creative, Browse), each chosen directly with its specialty. Not one model in a costume",
   },
   {
     dim: "Verification",
     them: "Model-led checks, user review of files, approval prompts for risky actions",
-    us: "Runtime verification floor + independent critic on Code; Confluence numbers from code ledgers; HITL on low-confidence steps",
+    us: "Runtime verification floor + independent critic on Code; Confluence numbers computed by code with a ledger; HITL on low-confidence steps",
   },
   {
     dim: "Long-horizon work",
-    them: "Local/desktop process or cloud session that keeps working while you step away",
-    us: "Browse-durable Lambda slices + continuation for Workspace engines; Browse steps that never hold a 15-minute server call",
+    them: "A desktop process or cloud session that keeps working while you step away",
+    us: "Durable, resumable engine turns in the cloud; Automation on a schedule whether or not your computer is on",
   },
   {
     dim: "Browser automation",
-    them: "Built-in Cowork / ChatGPT browser or Chrome side panel inside their product",
-    us: "Rivine Browse in your real tabs and signed-in sessions (extension + desktop), with server-side safety gates",
+    them: "A built-in browser or side panel inside the vendor's product",
+    us: "Rivine Browse in your real tabs and signed-in sessions (extension + desktop), with safety gates",
   },
   {
     dim: "Outputs",
-    them: "Finished docs, sheets, decks, Sites / artifacts beside chat",
-    us: "Assets + Preview Panel + export; Live Preview for Code; Assist for surgical follow-ups on the open deliverable",
+    them: "Docs, sheets, decks or artifacts beside the chat",
+    us: "Assets + Preview Panel + export; Live Preview for Code; Assist for surgical follow-ups; publish with an access code",
+  },
+  {
+    dim: "Where you use it",
+    them: "The vendor's own app",
+    us: "Web app, Rivine Browse, Rivine Code CLI, Aselius MCP from any AI app, and Telegram, Discord or WhatsApp",
   },
   {
     dim: "Memory & context",
-    them: "Projects, memory, connectors / plugins, skills",
+    them: "Projects, memory, connectors or plugins inside one product",
     us: "Artificial Experience + Context Extender under every engine, scoped to the workspace",
   },
   {
     dim: "Ops & teams",
-    them: "Org admin, usage monitoring, permission policies inside Claude / ChatGPT accounts",
+    them: "Admin and usage views inside the vendor account",
     us: "Observability app, credit gateway per engine, Automation ledger, Manage Teams with CloudHandle",
   },
   {
     dim: "Voice",
-    them: "Voice modes in the vendor app (product-specific)",
-    us: "Selius across Aselius web and Rivine Browse — asks before acting; never self-approves risk",
+    them: "Voice modes in the vendor app",
+    us: "Selius across Aselius web and Rivine Browse; asks before acting and never self-approves risk",
   },
 ];
 
-function SkeletonBar({ w }: { w: string }) {
-  return <div className="h-2 rounded" style={{ width: w, background: "var(--accent-slate)", opacity: 0.22 }} />;
-}
+/** A task from start to finish, told with real frames. */
+const STORY: StoryStep[] = [
+  {
+    kicker: "Ask",
+    title: "Pick an engine and its specialty, then say what you need.",
+    body: "The engine you pick in the input bar is the engine that runs, every time. Agent Notes start you from a ready-made engine and specialty.",
+    shot: getShot("workspace-xlsx"),
+  },
+  {
+    kicker: "Watch",
+    title: "Every step shows up as it happens.",
+    body: "Planning, lookups and checks appear in the thread while the engine works. Stop it whenever you like; the trail stays.",
+    shot: getShot("engine-running"),
+  },
+  {
+    kicker: "Decide",
+    title: "Nothing risky runs without you.",
+    body: "Before an engine acts in a connected app, you see the exact action and choose Deny or Approve & run. If it needs input, it asks and waits.",
+    shot: getShot("hitl-app-action"),
+  },
+  {
+    kicker: "Receive",
+    title: "Deliverables, not a chat reply.",
+    body: "One turn can return documents, spreadsheets, decks, media and an app, each a real file in Assets.",
+    shot: getShot("workspace-thread"),
+  },
+  {
+    kicker: "Inspect",
+    title: "Open it exactly as generated.",
+    body: "Word as pages, Excel as a grid, decks slide by slide, right beside the conversation. Rivine Assist makes follow-up edits in place.",
+    shot: getShot("workspace-docx"),
+  },
+  {
+    kicker: "Publish",
+    title: "Share a snapshot with its own access code.",
+    body: "Publishing never changes your original. Code access is the default; Open and Members are one click away.",
+    shot: getShot("publish-dialog"),
+  },
+  {
+    kicker: "Open anywhere",
+    title: "Anyone opens it, on any device, without signing in.",
+    body: "preview.aselius.beunec.com renders the file exactly as generated, with a Download button for the original.",
+    shot: getShot("preview-xlsx"),
+  },
+];
 
-/** Subtle motion mock of Aselius Workspace — theme-aware, no raster image. */
-function WorkspaceArtifact() {
-  const reduceMotion = useReducedMotion();
-  const rail = [
-    { Icon: LayoutGrid, active: true },
-    { Icon: Workflow, active: false },
-    { Icon: Eye, active: false },
-    { Icon: Users, active: false },
-  ];
+/** Positions are percentages of the 1440 x 900 Workspace frame. */
+const SPOTS: Hotspot[] = [
+  { x: 2.5, y: 22, title: "Platform rail", body: "Workspaces, Connector, Selius, Automations, Observability, Credits, Manage Teams and Settings, one click each." },
+  { x: 14, y: 3.5, title: "Taskspace, Governance, Share Workspace", body: "Work in Taskspace, set the rules every engine follows in Governance, and invite people by role." },
+  { x: 92, y: 3.5, title: "Credits left", body: "Your prepaid balance. Each engine checks its start floor before a turn begins." },
+  { x: 22, y: 50, title: "Agent Notes", body: "Ready-made prompts that set the engine and specialty for you, such as Rivine Research · PDF." },
+  { x: 50.5, y: 90.3, title: "Specialty and engine", body: "Choose the Rivine engine and its specialty in the input bar. Apps connects scoped connectors; Voice starts Selius." },
+  { x: 72, y: 7.7, title: "Preview Panel", body: "Assets lists every file; Preview shows the open one exactly as generated." },
+  { x: 87, y: 13.4, title: "Publish and Download", body: "Publish a snapshot to the Preview app with an access code, or download the original file." },
+  { x: 96.6, y: 84, title: "Selius", body: "Tap the dragon to talk. Selius asks before it acts." },
+];
 
+// Written by motion-studio/render.mjs, so the chapter list always matches the video.
+const CHAPTERS: Chapter[] = storyMeta.chapters;
+const STORY_LENGTH = `${Math.floor(storyMeta.duration / 60)}:${String(Math.round(storyMeta.duration % 60)).padStart(2, "0")}`;
+
+function SectionHead({ kicker, title, body, id }: { kicker: string; title: string; body?: string; id?: string }) {
   return (
-    <div className="rounded-2xl border border-border bg-container shadow-2xl overflow-hidden select-none">
-      <div
-        className="flex items-center gap-2 px-4 py-3 border-b border-border"
-        style={{ background: "var(--bg-global)" }}
-      >
-        <span className="h-2.5 w-2.5 rounded-full" style={{ background: "var(--accent-sage)" }} />
-        <span className="h-2.5 w-2.5 rounded-full" style={{ background: "var(--accent-slate)" }} />
-        <span className="h-2.5 w-2.5 rounded-full" style={{ background: "rgba(138,122,98,0.7)" }} />
-        <span className="ml-2 text-[11px] font-medium text-muted-foreground">Aselius · Workspace · Taskspace</span>
-        <span className="ml-auto inline-flex items-center gap-1 rounded-full border border-border px-2 py-0.5 text-[10px] text-muted-foreground">
-          <Eye className="w-3 h-3" /> Preview
-        </span>
-      </div>
-
-      <div className="grid grid-cols-[auto_1fr] md:grid-cols-[auto_1fr_1fr]">
-        <div
-          className="flex flex-col items-center gap-2.5 py-4 px-2.5 border-r border-border"
-          style={{ background: "var(--bg-global)" }}
-        >
-          {rail.map((a, i) => (
-            <motion.span
-              key={i}
-              className="inline-flex h-8 w-8 items-center justify-center rounded-lg border"
-              style={
-                a.active
-                  ? { background: "rgba(107,122,110,0.18)", borderColor: "var(--accent-sage)" }
-                  : { borderColor: "transparent" }
-              }
-              animate={
-                reduceMotion || !a.active
-                  ? undefined
-                  : { boxShadow: ["0 0 0 0 rgba(107,122,110,0)", "0 0 0 4px rgba(107,122,110,0.18)", "0 0 0 0 rgba(107,122,110,0)"] }
-              }
-              transition={{ duration: 2.4, repeat: Infinity }}
-            >
-              <a.Icon className="w-4 h-4" style={{ color: a.active ? "var(--accent-sage)" : "var(--accent-slate)" }} />
-            </motion.span>
-          ))}
-        </div>
-
-        <div className="min-w-0 p-4 space-y-3 border-r border-border">
-          <motion.div
-            className="ml-auto w-fit max-w-[88%] rounded-2xl rounded-tr-sm px-3 py-2 text-[11px] leading-snug text-foreground"
-            style={{ background: "rgba(122,139,153,0.16)" }}
-            initial={false}
-            animate={reduceMotion ? undefined : { opacity: [0.85, 1, 0.85] }}
-            transition={{ duration: 3.2, repeat: Infinity }}
-          >
-            Draft a market analysis from these 3 PDFs
-          </motion.div>
-          <motion.div
-            className="inline-flex items-center gap-1.5 rounded-full border border-border px-2.5 py-1 text-[10px] font-medium text-foreground"
-            style={{ background: "rgba(107,122,110,0.14)" }}
-            animate={reduceMotion ? undefined : { y: [0, -1, 0] }}
-            transition={{ duration: 2.6, repeat: Infinity }}
-          >
-            <Microscope className="w-3 h-3 text-accent-sage" /> Rivine Research · PDF
-          </motion.div>
-          <div className="space-y-1.5 pt-0.5">
-            <SkeletonBar w="92%" />
-            <SkeletonBar w="98%" />
-            <SkeletonBar w="73%" />
-          </div>
-          <motion.div
-            className="rounded-xl border border-border p-3 flex items-center gap-3"
-            style={{ background: "var(--bg-global)" }}
-            animate={reduceMotion ? undefined : { borderColor: ["var(--border)", "rgba(107,122,110,0.45)", "var(--border)"] }}
-            transition={{ duration: 3.5, repeat: Infinity }}
-          >
-            <span
-              className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg"
-              style={{ background: "rgba(107,122,110,0.16)" }}
-            >
-              <FileText className="w-4 h-4 text-accent-sage" />
-            </span>
-            <div className="min-w-0">
-              <div className="text-[11px] font-medium text-foreground truncate">market-analysis.pdf</div>
-              <div className="text-[10px] text-muted-foreground">Snapshot · open in Preview</div>
-            </div>
-            <ArrowUpRight className="w-3.5 h-3.5 text-muted-foreground ml-auto shrink-0" />
-          </motion.div>
-          <div className="flex items-center gap-1 pt-0.5">
-            <span className="h-1.5 w-1.5 rounded-full animate-pulse" style={{ background: "var(--accent-sage)" }} />
-            <span className="h-1.5 w-1.5 rounded-full animate-pulse" style={{ background: "var(--accent-sage)", animationDelay: "0.2s" }} />
-            <span className="h-1.5 w-1.5 rounded-full animate-pulse" style={{ background: "var(--accent-sage)", animationDelay: "0.4s" }} />
-          </div>
-        </div>
-
-        <div className="hidden md:block p-4" style={{ background: "var(--bg-global)" }}>
-          <div className="flex items-center gap-3 text-[10px] font-medium mb-3">
-            <span className="text-muted-foreground">Assets</span>
-            <span className="text-foreground border-b-2 pb-0.5" style={{ borderColor: "var(--accent-sage)" }}>
-              Preview
-            </span>
-            <span className="text-muted-foreground">HTML</span>
-          </div>
-          <motion.div
-            className="rounded-lg border border-border bg-container p-3 space-y-2"
-            animate={reduceMotion ? undefined : { opacity: [0.92, 1, 0.92] }}
-            transition={{ duration: 4, repeat: Infinity }}
-          >
-            <div className="h-3 w-2/3 rounded" style={{ background: "var(--accent-slate)", opacity: 0.32 }} />
-            <div className="space-y-1.5 pt-1">
-              <SkeletonBar w="100%" />
-              <SkeletonBar w="95%" />
-              <SkeletonBar w="88%" />
-              <SkeletonBar w="93%" />
-            </div>
-            <div className="grid grid-cols-3 gap-1.5 pt-2">
-              {Array.from({ length: 9 }).map((_, i) => (
-                <motion.div
-                  key={i}
-                  className="h-3 rounded"
-                  style={{ background: "var(--accent-slate)", opacity: i < 3 ? 0.3 : 0.16 }}
-                  animate={
-                    reduceMotion
-                      ? undefined
-                      : { opacity: i < 3 ? [0.22, 0.38, 0.22] : [0.12, 0.2, 0.12] }
-                  }
-                  transition={{ duration: 2.8, repeat: Infinity, delay: i * 0.08 }}
-                />
-              ))}
-            </div>
-          </motion.div>
-          <div className="mt-3 flex items-center gap-1.5 text-[10px] text-muted-foreground">
-            <FileDown className="w-3 h-3 text-accent-sage" /> Export · PDF · DOCX · Markdown
-          </div>
-        </div>
-      </div>
+    <div data-reveal className="max-w-2xl mb-12">
+      <p className="font-mono text-sm uppercase tracking-[0.14em] text-accent-slate mb-5">{kicker}</p>
+      <h2 id={id} className="text-3xl md:text-4xl font-extrabold text-foreground tracking-tight leading-[1.1]">
+        {title}
+      </h2>
+      {body && <p className="mt-4 text-base sm:text-lg text-muted-foreground leading-relaxed">{body}</p>}
     </div>
   );
 }
 
 export default function AseliusPlatformPage() {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+  const heroShot = getShot("workspace-thread");
 
   return (
     <div className="baap-page min-h-screen">
@@ -381,51 +352,43 @@ export default function AseliusPlatformPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
               <div>
-                <motion.div
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="inline-flex items-center gap-2 rounded-full border border-border bg-global/80 backdrop-blur-sm px-4 py-1.5 mb-6"
+                <div
+                  className="kt-fade inline-flex items-center gap-2 rounded-full border border-border bg-global/80 backdrop-blur-sm px-4 py-1.5 mb-6"
+                  style={{ ["--d" as string]: "0s" }}
                 >
                   <Calendar className="w-3.5 h-3.5 text-accent-sage" />
-                  <span className="text-xs font-medium text-foreground">Now live · aselius.beunec.com</span>
-                </motion.div>
+                  <span className="text-sm font-medium text-foreground">Agentic infrastructure software · live at aselius.beunec.com</span>
+                </div>
 
-                <motion.h1
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.05 }}
+                <KineticHeadline
+                  lead="Where AI engines do real work, and you keep the"
+                  emphasis="deliverables"
+                  tail="."
                   className="text-4xl sm:text-5xl lg:text-[3.5rem] leading-[1.04] tracking-tight text-foreground font-extrabold"
-                >
-                  Where AI engines do real work, and you keep the{" "}
-                  <span className="underline underline-offset-[0.12em] decoration-2 decoration-[color:var(--accent-sage)]">
-                    deliverables
-                  </span>
-                  .
-                </motion.h1>
+                />
 
-                <motion.p
-                  initial={{ opacity: 0, y: 16 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1 }}
-                  className="mt-6 text-lg md:text-xl leading-relaxed text-muted-foreground max-w-xl"
-                  style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
+                <p
+                  className="kt-fade mt-6 text-lg md:text-xl leading-relaxed text-muted-foreground max-w-xl"
+                  style={{ fontFamily: "Georgia, 'Times New Roman', serif", ["--d" as string]: "0.55s" }}
                 >
-                  Aselius runs research, code, legal drafting, and professional work through specialized
-                  Rivine engines. Every result is previewable, editable, and yours to export: governed,
-                  and never just a chat reply.
-                </motion.p>
+                  Aselius is Beunec&apos;s agentic infrastructure software. It runs research, code, legal
+                  drafting, and professional work through specialized Rivine engines, and every result is
+                  previewable, editable, and yours to export: governed, and never just a chat reply.
+                </p>
 
-                <motion.div
-                  initial={{ opacity: 0, y: 16 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.16 }}
-                  className="mt-8 flex flex-col sm:flex-row items-start sm:items-center gap-4"
+                <div
+                  className="kt-fade mt-8 flex flex-col sm:flex-row items-start sm:items-center gap-4"
+                  style={{ ["--d" as string]: "0.7s" }}
                 >
-                  <a
-                    href={ASELIUS_APP}
-                    className="inline-flex items-center gap-2 rounded-full bg-[#141512] dark:bg-[#e6e2d8] text-[#e6e2d8] dark:text-[#141512] text-sm font-medium px-5 py-2.5 hover:opacity-90 transition-opacity"
-                  >
+                  <a href={ASELIUS_APP} className="btn-ink">
                     Open Aselius
+                    <ArrowRight className="w-4 h-4" />
+                  </a>
+                  <a
+                    href="#story"
+                    className="inline-flex items-center gap-2 text-sm font-medium text-foreground hover:text-accent-sage transition-colors"
+                  >
+                    Watch the story
                     <ArrowRight className="w-4 h-4" />
                   </a>
                   <Link
@@ -435,25 +398,42 @@ export default function AseliusPlatformPage() {
                     Read the documentation
                     <ArrowRight className="w-4 h-4" />
                   </Link>
-                </motion.div>
+                </div>
               </div>
 
-              <motion.div
-                initial={{ opacity: 0, scale: 0.97, y: 12 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                transition={{ delay: 0.12, duration: 0.6 }}
-              >
-                <WorkspaceArtifact />
-              </motion.div>
+              {/* Real frames layered in depth; they drift at different speeds as you scroll */}
+              <div className="kt-fade relative" style={{ ["--d" as string]: "0.25s" }}>
+                <TiltFrame max={5}>
+                  <div className="overflow-hidden rounded-2xl border border-border bg-container shadow-2xl">
+                    <ShotImage
+                      shot={heroShot}
+                      priority
+                      sizes="(min-width: 1024px) 46vw, 100vw"
+                      className="h-auto w-full"
+                    />
+                  </div>
+                </TiltFrame>
+                <div
+                  className="sd-drift pointer-events-none absolute -bottom-10 -left-4 w-[46%] sm:-left-8"
+                  style={{ ["--drift" as string]: "-26px" }}
+                >
+                  <div className="overflow-hidden rounded-xl border border-border bg-container shadow-2xl">
+                    <ShotImage shot={getShot("hitl-question")} sizes="22vw" className="h-auto w-full" alt="" />
+                  </div>
+                </div>
+                <div
+                  className="sd-drift pointer-events-none absolute -right-2 -top-10 hidden w-[19%] sm:block lg:-right-6"
+                  style={{ ["--drift" as string]: "34px" }}
+                >
+                  <div className="overflow-hidden rounded-[1.1rem] border-4 border-[#1d1d1d] bg-container shadow-2xl">
+                    <ShotImage shot={getShot("preview-docx-mobile")} sizes="10vw" className="h-auto w-full" alt="" />
+                  </div>
+                </div>
+              </div>
             </div>
 
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.3 }}
-              className="mt-16 border-t border-border pt-8"
-            >
-              <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-accent-slate mb-4">
+            <div className="kt-fade mt-20 border-t border-border pt-8" style={{ ["--d" as string]: "0.9s" }}>
+              <p className="font-mono text-sm uppercase tracking-[0.14em] text-accent-slate mb-4">
                 Built for people who ship
               </p>
               <div className="flex flex-wrap gap-2.5">
@@ -466,38 +446,93 @@ export default function AseliusPlatformPage() {
                   </span>
                 ))}
               </div>
-            </motion.div>
+            </div>
           </div>
         </section>
 
-        {/* New §2: platform motion tour */}
+        {/* The story video */}
+        <section id="story" className="scroll-mt-24 border-t border-border bg-container py-20 md:py-24" aria-labelledby="story-title">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <SectionHead
+              id="story-title"
+              kicker="Aselius, start to finish"
+              title="Watch the Aselius story"
+              body="What Aselius is, where everything lives, how a task runs, where the results go, every other place the Rivine engines reach, and why it is not another general agent. Every screen in it is real, and every line is captioned."
+            />
+            <div data-reveal="scale">
+              <StoryVideo
+                sources={[
+                  { src: "/media/aselius-story.mp4", type: "video/mp4" },
+                  { src: "/media/aselius-story.webm", type: "video/webm" },
+                ]}
+                poster="/media/aselius-story-poster.webp"
+                captions="/media/aselius-story.en.vtt"
+                title="The Aselius story: what it is, how to use it, and where else it works"
+                duration={STORY_LENGTH}
+                chapters={CHAPTERS}
+              />
+            </div>
+          </div>
+        </section>
+
+        {/* A task, start to finish */}
+        <section className="py-20 md:py-28" aria-labelledby="flow-title">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <SectionHead
+              id="flow-title"
+              kicker="How one task runs"
+              title="Say what you need. Review what you get."
+              body="Scroll through a real task: you describe the outcome, work runs in an isolated environment, and the deliverable lands as a snapshot you can preview, publish and export."
+            />
+            <ScrollStory steps={STORY} label="A task in Aselius, step by step" />
+
+            <div className="mt-16 flex flex-wrap items-stretch gap-3">
+              {FLOW.map((step, i) => (
+                <div key={step.label} className="flex items-center gap-3" data-reveal style={{ ["--rv-i" as string]: i }}>
+                  <div className="flex items-center gap-2.5 rounded-xl border border-border bg-container px-4 py-3">
+                    <step.icon className="w-4 h-4 text-accent-sage" />
+                    <span className="text-sm font-medium text-foreground whitespace-nowrap">{step.label}</span>
+                  </div>
+                  {i < FLOW.length - 1 && <ArrowRight className="hidden sm:block w-4 h-4 text-accent-slate/60 shrink-0" />}
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Navigation map */}
+        <section className="border-t border-border bg-container py-20 md:py-24" aria-labelledby="map-title">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <SectionHead
+              id="map-title"
+              kicker="Find your way around"
+              title="Where everything lives"
+              body="This is the Workspace you see after signing in. Hover or tap a number to see what each part does."
+            />
+            <div data-reveal>
+              <HotspotMap shot={getShot("workspace-xlsx")} spots={SPOTS} />
+            </div>
+          </div>
+        </section>
+
+        <McpSection />
+
         <PlatformTour />
 
         {/* Differentiators */}
         <section className="py-20 md:py-24 bg-container">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="max-w-2xl mb-14"
-            >
-              <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-accent-slate mb-5">
-                Why it is different
-              </p>
-              <h2 className="text-3xl md:text-4xl font-extrabold text-foreground tracking-tight leading-[1.1]">
-                Not another Claude Work
-              </h2>
-            </motion.div>
-
+            <SectionHead
+              kicker="Why it is different"
+              title="Not another Claude Cowork, ChatGPT Work or Kimi Work"
+              body="Those are general agents inside one vendor's app. Aselius is agentic infrastructure software: specialized engines on shared memory, verification, approvals and billing, reachable from wherever you work."
+            />
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {DIFFERENTIATORS.map((item, i) => (
-                <motion.div
+                <div
                   key={item.title}
-                  initial={{ opacity: 0, y: 16 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: (i % 3) * 0.06 }}
+                  data-reveal
+                  style={{ ["--rv-i" as string]: i % 3 }}
                   className="rounded-2xl border border-border bg-global p-6"
                 >
                   <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-border bg-container mb-4">
@@ -505,7 +540,7 @@ export default function AseliusPlatformPage() {
                   </span>
                   <h3 className="text-base font-semibold text-foreground mb-2">{item.title}</h3>
                   <p className="text-sm text-muted-foreground leading-relaxed">{item.body}</p>
-                </motion.div>
+                </div>
               ))}
             </div>
           </div>
@@ -514,22 +549,18 @@ export default function AseliusPlatformPage() {
         {/* Engines */}
         <section className="py-20 md:py-24">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12"
-            >
+            <div data-reveal className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
               <div className="max-w-2xl">
-                <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-accent-slate mb-5">
+                <p className="font-mono text-sm uppercase tracking-[0.14em] text-accent-slate mb-5">
                   Rivine agentic engines
                 </p>
                 <h2 className="text-3xl md:text-4xl font-extrabold text-foreground tracking-tight leading-[1.1] mb-4">
                   Pick the right specialist for the job
                 </h2>
                 <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
-                  Each engine is a governed runtime with its own specialties, tools, and verification —
-                  or pin an engine, or let Auto / the Mediator route for you.
+                  Each engine is a governed runtime with its own specialties, tools, and verification.
+                  You choose the engine and its specialty in the input bar, and that engine is the one
+                  that runs.
                 </p>
               </div>
               <Link
@@ -539,7 +570,7 @@ export default function AseliusPlatformPage() {
                 Engine documentation
                 <ArrowRight className="w-4 h-4" />
               </Link>
-            </motion.div>
+            </div>
 
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {ENGINES.map((engine, i) => {
@@ -551,11 +582,6 @@ export default function AseliusPlatformPage() {
                     <div className="min-w-0">
                       <div className="flex items-center gap-1.5 flex-wrap">
                         <h3 className="text-base font-semibold text-foreground">{engine.name}</h3>
-                        {engine.soon && (
-                          <span className="rounded-full border border-border px-2 py-0.5 text-[10px] font-medium text-muted-foreground">
-                            Coming soon
-                          </span>
-                        )}
                         <ArrowUpRight className="w-3.5 h-3.5 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-accent-sage" />
                       </div>
                       <p className="text-sm text-muted-foreground leading-relaxed mt-1">{engine.tagline}</p>
@@ -564,21 +590,10 @@ export default function AseliusPlatformPage() {
                 );
 
                 return (
-                  <motion.div
-                    key={engine.name}
-                    initial={{ opacity: 0, y: 16 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: (i % 3) * 0.06 }}
-                  >
+                  <div key={engine.name} data-reveal style={{ ["--rv-i" as string]: i % 3 }}>
                     <div className="group flex h-full flex-col rounded-2xl border border-border bg-container p-5 transition-colors hover:border-accent-sage/60">
                       {engine.external ? (
-                        <a
-                          href={engine.href}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-start gap-4 min-w-0"
-                        >
+                        <a href={engine.href} target="_blank" rel="noopener noreferrer" className="flex items-start gap-4 min-w-0">
                           {inner}
                         </a>
                       ) : (
@@ -589,27 +604,23 @@ export default function AseliusPlatformPage() {
                       {engine.also && (
                         <Link
                           href={engine.also.href}
-                          className="mt-3 ml-14 text-xs text-accent-sage hover:underline underline-offset-2"
+                          className="mt-2 ml-14 inline-block py-1 text-sm text-accent-sage hover:underline underline-offset-2"
                         >
                           {engine.also.label}
                         </Link>
                       )}
                     </div>
-                  </motion.div>
+                  </div>
                 );
               })}
             </div>
 
-            <div className="mt-10 rounded-2xl border border-border bg-container/60 p-6 md:p-7">
-              <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-5">
-                <div>
-                  <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-accent-slate mb-2">
-                    Rivine Platform
-                  </p>
-                  <p className="text-sm sm:text-base text-muted-foreground leading-relaxed max-w-2xl">
-                    Memory, context, the terminal client, and voice that sit under the engines.
-                  </p>
-                </div>
+            <div data-reveal className="mt-10 rounded-2xl border border-border bg-container/60 p-6 md:p-7">
+              <div className="mb-5">
+                <p className="font-mono text-sm uppercase tracking-[0.14em] text-accent-slate mb-2">Rivine Platform</p>
+                <p className="text-sm sm:text-base text-muted-foreground leading-relaxed max-w-2xl">
+                  Memory, context, the terminal client, and voice that sit under the engines.
+                </p>
               </div>
               <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
                 {RIVINE_PLATFORM.map((item) => (
@@ -622,7 +633,7 @@ export default function AseliusPlatformPage() {
                       <h3 className="text-sm font-semibold text-foreground">{item.name}</h3>
                       <ArrowUpRight className="w-3.5 h-3.5 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-accent-sage" />
                     </div>
-                    <p className="text-xs text-muted-foreground leading-relaxed mt-1">{item.blurb}</p>
+                    <p className="text-sm text-muted-foreground leading-relaxed mt-1">{item.blurb}</p>
                   </Link>
                 ))}
               </div>
@@ -630,75 +641,13 @@ export default function AseliusPlatformPage() {
           </div>
         </section>
 
-        {/* Task flow — unchanged intent */}
-        <section className="py-20 md:py-24 bg-container">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="max-w-2xl mb-12"
-            >
-              <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-accent-slate mb-5">
-                How one task runs
-              </p>
-              <h2 className="text-3xl md:text-4xl font-extrabold text-foreground tracking-tight leading-[1.1] mb-4">
-                Say what you need. Review what you get.
-              </h2>
-              <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
-                You describe the outcome. Work runs in an isolated environment, and a deliverable
-                lands as a snapshot you can preview and export; you stay in control the whole way.
-              </p>
-            </motion.div>
-
-            <div className="flex flex-wrap items-stretch gap-3">
-              {FLOW.map((step, i) => (
-                <div key={step.label} className="flex items-center gap-3">
-                  <motion.div
-                    initial={{ opacity: 0, y: 12 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.06 }}
-                    className="flex items-center gap-2.5 rounded-xl border border-border bg-global px-4 py-3"
-                  >
-                    <step.icon className="w-4 h-4 text-accent-sage" />
-                    <span className="text-sm font-medium text-foreground whitespace-nowrap">{step.label}</span>
-                  </motion.div>
-                  {i < FLOW.length - 1 && (
-                    <ArrowRight className="hidden sm:block w-4 h-4 text-accent-slate/60 shrink-0" />
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
         {/* Apps */}
-        <section className="py-20 md:py-24">
+        <section className="py-20 md:py-24 border-t border-border">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="max-w-2xl mb-12"
-            >
-              <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-accent-slate mb-5">
-                One platform, four apps
-              </p>
-              <h2 className="text-3xl md:text-4xl font-extrabold text-foreground tracking-tight leading-[1.1]">
-                Everything in one place, not five tabs
-              </h2>
-            </motion.div>
-
+            <SectionHead kicker="One platform, four apps" title="Everything in one place, not five tabs" />
             <div className="grid sm:grid-cols-2 gap-5">
               {APPS.map((app, i) => (
-                <motion.div
-                  key={app.title}
-                  initial={{ opacity: 0, y: 16 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: (i % 2) * 0.06 }}
-                >
+                <div key={app.title} data-reveal style={{ ["--rv-i" as string]: i % 2 }}>
                   <Link
                     href={app.href}
                     className="group flex h-full flex-col rounded-2xl border border-border bg-container p-6 transition-colors hover:border-accent-sage/60"
@@ -711,182 +660,158 @@ export default function AseliusPlatformPage() {
                     </div>
                     <h3 className="text-lg font-semibold text-foreground mb-2">{app.title}</h3>
                     <p className="text-sm text-muted-foreground leading-relaxed">{app.body}</p>
-                    <span className="mt-4 text-xs font-medium text-accent-sage">Read the guide →</span>
+                    <span className="mt-4 text-sm font-medium text-accent-sage">Read the guide →</span>
                   </Link>
-                </motion.div>
+                </div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* Surfaces — where else the engines reach */}
-        <section className="py-20 md:py-24">
+        {/* Where else the engines reach */}
+        <section className="py-20 md:py-24 bg-container" aria-labelledby="surfaces-title">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="max-w-2xl mb-12"
-            >
-              <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-accent-slate mb-5">
-                Not just the browser tab
-              </p>
-              <h2 className="text-3xl md:text-4xl font-extrabold text-foreground tracking-tight leading-[1.1]">
-                Reach the same engines from where you already work
-              </h2>
-            </motion.div>
-
-            <div className="grid sm:grid-cols-3 gap-5">
-              {SURFACES.map((surface, i) => (
-                <motion.div
-                  key={surface.title}
-                  initial={{ opacity: 0, y: 16 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.06 }}
-                >
-                  <Link
-                    href={surface.href}
-                    className="group flex h-full flex-col rounded-2xl border border-border bg-container p-6 transition-colors hover:border-accent-sage/60"
-                  >
+            <SectionHead
+              id="surfaces-title"
+              kicker="Not just the browser tab"
+              title="Use the same engines wherever you already work"
+              body="Every surface below is on every plan and spends the same prepaid wallet as the web app. None of them is a separate purchase."
+            />
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              {SURFACES.map((surface, i) => {
+                const body = (
+                  <>
                     <div className="flex items-center justify-between mb-3">
-                      <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-border bg-global">
+                      <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-border bg-container">
                         <surface.icon className="w-5 h-5 text-accent-sage" />
                       </span>
                       <ArrowUpRight className="w-4 h-4 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-accent-sage" />
                     </div>
-                    <h3 className="text-lg font-semibold text-foreground mb-2">{surface.title}</h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed">{surface.body}</p>
-                    <span className="mt-4 text-xs font-medium text-accent-sage">Read the guide →</span>
-                  </Link>
-                </motion.div>
-              ))}
+                    <h3 className="text-lg font-semibold text-foreground">{surface.title}</h3>
+                    <p className="mt-0.5 font-mono text-sm text-accent-slate">{surface.where}</p>
+                    <p className="mt-3 text-sm text-muted-foreground leading-relaxed">{surface.body}</p>
+                  </>
+                );
+                const cls =
+                  "group flex h-full flex-col rounded-2xl border border-border bg-global p-6 transition-colors hover:border-accent-sage/60";
+                return (
+                  <div key={surface.title} data-reveal style={{ ["--rv-i" as string]: i % 3 }}>
+                    {surface.external ? (
+                      <a href={surface.href} target="_blank" rel="noopener noreferrer" className={cls}>
+                        {body}
+                      </a>
+                    ) : (
+                      <Link href={surface.href} className={cls}>
+                        {body}
+                      </Link>
+                    )}
+                  </div>
+                );
+              })}
             </div>
           </div>
         </section>
 
-        {/* Real screenshots + a short motion reel, not mockups */}
-        <section className="py-20 md:py-24 bg-container">
+        {/* Real screenshots + the motion reel */}
+        <section className="py-20 md:py-24" aria-labelledby="gallery-title">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="max-w-2xl mb-10"
-            >
-              <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-accent-slate mb-5">
-                Not a rendering
-              </p>
-              <h2 className="text-3xl md:text-4xl font-extrabold text-foreground tracking-tight leading-[1.1] mb-4">
-                What the platform actually shows you
-              </h2>
-              <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
-                Every frame below is a real screenshot of a live Aselius session — an Excel workbook
-                rendered exactly as generated, a protected preview link, a published Rivine Code
-                project, and the full step trail an engine took.
-              </p>
-            </motion.div>
-
-            <motion.video
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="w-full rounded-2xl border border-border mb-8"
-              src="/showcase/aselius-motion.mp4"
-              autoPlay
-              loop
-              muted
-              playsInline
-              preload="metadata"
-              aria-label="A short, silent tour of the Aselius Workspace, Preview app and Rivine Code publishing, built from real screenshots"
+            <SectionHead
+              id="gallery-title"
+              kicker="Not a rendering"
+              title="What the platform actually shows you"
+              body="Every frame below is a real screenshot of a live Aselius session. Filter by area, tilt a card, or open it full size and step through with the arrow keys."
             />
+            <div className="sd-rise mb-12 overflow-hidden rounded-2xl border border-border bg-[#111111] shadow-[var(--shadow-soft)]">
+              <ReelVideo />
+            </div>
+            <ShotGallery shots={SHOTS} filters />
+          </div>
+        </section>
 
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              {[
-                { src: "/showcase/workspace-docx-exact.png", caption: "Workspace: Word rendered exactly as generated" },
-                { src: "/showcase/preview-xlsx-desktop.png", caption: "preview.aselius.beunec.com: the same Excel grid, public" },
-                { src: "/showcase/preview-protected-locked.png", caption: "Protected links: members-only, from outside Aselius" },
-                { src: "/showcase/code-project-viewer-dark.png", caption: "Code projects: a saved Rivine Code build, read-only" },
-                { src: "/showcase/engine-steps-live.png", caption: "Engine steps: a running turn, followed from a fresh tab" },
-                { src: "/showcase/preview-protected-code-entry.png", caption: "A plain link asks for the access code, on a phone" },
-              ].map((item) => (
-                <motion.figure
-                  key={item.src}
-                  initial={{ opacity: 0, y: 12 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  className="group overflow-hidden rounded-xl border border-border bg-global"
-                >
-                  <img
-                    src={item.src}
-                    alt={item.caption}
-                    loading="lazy"
-                    className="w-full h-40 object-cover object-top transition-transform duration-300 group-hover:scale-105"
-                  />
-                  <figcaption className="px-3 py-2 text-xs text-muted-foreground leading-snug">
-                    {item.caption}
-                  </figcaption>
-                </motion.figure>
+        {/* What's new */}
+        <section className="py-20 md:py-24 border-t border-border bg-container" aria-labelledby="updates-title">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <SectionHead
+              id="updates-title"
+              kicker="What's new"
+              title="Every release, in one place"
+              body="Shipped and live today. The journal below updates on its own as Beunec publishes."
+            />
+            <ol className="relative border-l border-border ml-2 space-y-8">
+              {UPDATES.map((u, i) => (
+                <li key={u.title} data-reveal="left" style={{ ["--rv-i" as string]: Math.min(i, 3) }} className="pl-8 relative">
+                  <span className="absolute -left-[7px] top-1.5 h-3.5 w-3.5 rounded-full border-2 border-[color:var(--bg-container)] bg-accent-sage" aria-hidden />
+                  <p className="font-mono text-sm uppercase tracking-[0.14em] text-accent-slate">
+                    {u.date} · {u.category}
+                  </p>
+                  <h3 className="mt-1.5 text-lg font-semibold text-foreground">{u.title}</h3>
+                  <p className="mt-1.5 max-w-3xl text-sm leading-relaxed text-muted-foreground">{u.body}</p>
+                  {u.external ? (
+                    <a href={u.href} target="_blank" rel="noopener noreferrer" className="mt-2 inline-flex text-sm font-medium text-accent-sage hover:text-foreground">
+                      {u.cta} →
+                    </a>
+                  ) : (
+                    <Link href={u.href} className="mt-2 inline-flex text-sm font-medium text-accent-sage hover:text-foreground">
+                      {u.cta} →
+                    </Link>
+                  )}
+                </li>
               ))}
+            </ol>
+
+            <div className="mt-16">
+              <p className="font-mono text-sm uppercase tracking-[0.14em] text-accent-slate mb-5">
+                Latest from the Beunec journal
+              </p>
+              <LiveJournal />
             </div>
           </div>
         </section>
 
         {/* Positioning */}
-        <section className="py-20 md:py-24 bg-container">
+        <section className="py-20 md:py-24">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="max-w-3xl mb-10"
-            >
-              <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-accent-slate mb-5">
-                An honest lens
-              </p>
+            <div data-reveal className="max-w-3xl mb-10">
+              <p className="font-mono text-sm uppercase tracking-[0.14em] text-accent-slate mb-5">An honest lens</p>
               <h2 className="text-3xl md:text-4xl font-extrabold text-foreground tracking-tight leading-[1.1] mb-4">
-                Already using Claude Work / Code or ChatGPT Work?
+                Already using Claude Cowork, ChatGPT Work or Kimi Work?
               </h2>
               <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
-                Fair comparison is Aselius Platform against those agentic workplace products — not a
-                generic autocomplete. We will not claim features we have not shipped.
+                The fair comparison is Aselius against those general agent workspaces, not a generic
+                autocomplete. We describe them only at the level of their public positioning, and we
+                never claim features we have not shipped.
               </p>
-            </motion.div>
+            </div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="overflow-hidden rounded-2xl border border-border bg-global"
-            >
+            <div data-reveal className="overflow-hidden rounded-2xl border border-border bg-container">
               <div className="grid grid-cols-1 sm:grid-cols-[0.85fr_1.15fr_1.15fr] gap-px bg-border">
-                <div className="hidden sm:block bg-global px-5 py-3 text-[11px] font-mono uppercase tracking-wider text-accent-slate" />
-                <div className="hidden sm:block bg-global px-5 py-3 text-[11px] font-mono uppercase tracking-wider text-muted-foreground">
-                  Claude Work/Code &amp; ChatGPT Work
+                <div className="hidden sm:block bg-container px-5 py-3 text-sm font-mono uppercase tracking-wider text-accent-slate" />
+                <div className="hidden sm:block bg-container px-5 py-3 text-sm font-mono uppercase tracking-wider text-muted-foreground">
+                  General agent workspaces
                 </div>
-                <div className="hidden sm:block bg-global px-5 py-3 text-[11px] font-mono uppercase tracking-wider text-accent-sage">
-                  Aselius Platform
+                <div className="hidden sm:block bg-container px-5 py-3 text-sm font-mono uppercase tracking-wider text-accent-sage">
+                  Aselius
                 </div>
 
                 {COMPARISON.map((row) => (
                   <div key={row.dim} className="contents">
-                    <div className="bg-global px-5 py-4 text-sm font-semibold text-foreground">{row.dim}</div>
-                    <div className="bg-global px-5 py-4 text-sm text-muted-foreground">
-                      <span className="sm:hidden text-[10px] font-mono uppercase tracking-wider text-accent-slate block mb-1">
-                        Claude Work/Code &amp; ChatGPT Work
+                    <div className="bg-container px-5 py-4 text-sm font-semibold text-foreground">{row.dim}</div>
+                    <div className="bg-container px-5 py-4 text-sm text-muted-foreground">
+                      <span className="sm:hidden text-sm font-mono uppercase tracking-wider text-accent-slate block mb-1">
+                        General agent workspaces
                       </span>
                       {row.them}
                     </div>
-                    <div className="bg-global px-5 py-4 text-sm text-foreground">
-                      <span className="sm:hidden text-[10px] font-mono uppercase tracking-wider text-accent-sage block mb-1">
-                        Aselius Platform
+                    <div className="bg-container px-5 py-4 text-sm text-foreground">
+                      <span className="sm:hidden text-sm font-mono uppercase tracking-wider text-accent-sage block mb-1">
+                        Aselius
                       </span>
                       {row.us}
                     </div>
                   </div>
                 ))}
               </div>
-            </motion.div>
+            </div>
 
             <div className="mt-8 flex flex-col sm:flex-row sm:items-center gap-3">
               <p className="text-sm text-muted-foreground">
@@ -907,44 +832,38 @@ export default function AseliusPlatformPage() {
         {/* CTA */}
         <section className="py-20 md:py-28">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="rounded-3xl border border-border overflow-hidden relative">
+            <div data-reveal="scale" className="rounded-3xl border border-border overflow-hidden relative">
               <div
                 className="absolute inset-0 pointer-events-none"
                 style={{
                   background:
-                    "linear-gradient(135deg, rgba(107,122,110,0.14), rgba(122,139,153,0.08))",
+                    "linear-gradient(135deg, color-mix(in srgb, var(--accent-sage) 14%, transparent), color-mix(in srgb, var(--accent-slate) 8%, transparent))",
                 }}
               />
               <div className="relative px-6 py-16 md:px-16 md:py-20 text-center max-w-3xl mx-auto">
                 <div className="inline-flex items-center gap-2 rounded-full border border-border bg-global/80 backdrop-blur-sm px-4 py-1.5 mb-6">
                   <Calendar className="w-3.5 h-3.5 text-accent-sage" />
-                  <span className="text-xs font-medium text-foreground">Live at aselius.beunec.com</span>
+                  <span className="text-sm font-medium text-foreground">Live at aselius.beunec.com</span>
                 </div>
                 <h2 className="text-3xl md:text-4xl font-extrabold text-foreground tracking-tight leading-[1.1] mb-5">
                   Open Aselius
                 </h2>
                 <p className="text-base sm:text-lg text-muted-foreground leading-relaxed mb-8">
-                  Base (free), Pro ($20/mo), and Essential ($40/mo) include Workspace, Automation,
-                  Observability, and teams. Base has limited Rivine access; Pro and Essential unlock
-                  full engines.
+                  Base (free), Pro ($20/mo), and Essential ($40/mo) all include Workspace, Automation,
+                  and teams. Every plan reaches every Rivine engine at the same start floor, paid from
+                  one prepaid wallet; Pro and Essential add more free monthly credits, storage, and support.
                 </p>
 
                 <div className="flex flex-wrap items-center justify-center gap-2.5 mb-8">
                   {["Base · Free", "Pro · $20/mo", "Essential · $40/mo"].map((p) => (
-                    <span
-                      key={p}
-                      className="rounded-full border border-border bg-global px-3.5 py-1.5 text-sm text-muted-foreground"
-                    >
+                    <span key={p} className="rounded-full border border-border bg-global px-3.5 py-1.5 text-sm text-muted-foreground">
                       {p}
                     </span>
                   ))}
                 </div>
 
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                  <a
-                    href={ASELIUS_APP}
-                    className="inline-flex items-center gap-2 rounded-full bg-[#141512] dark:bg-[#e6e2d8] text-[#e6e2d8] dark:text-[#141512] text-sm font-medium px-5 py-2.5 hover:opacity-90 transition-opacity"
-                  >
+                  <a href={ASELIUS_APP} className="btn-ink">
                     Try Aselius
                     <ArrowRight className="w-4 h-4" />
                   </a>

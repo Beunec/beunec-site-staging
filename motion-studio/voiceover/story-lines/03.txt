@@ -1,0 +1,1 @@
+Everything lives in one sidebar: your workspaces, Connector, Selius, Automations, Observability, Credits and Manage Teams.

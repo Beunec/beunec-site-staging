@@ -1,0 +1,42 @@
+{
+  "duration": 18,
+  "wordsPerSecond": 2.5,
+  "cues": [
+    {
+      "start": 0.5,
+      "end": 2.85,
+      "text": "Your work, in one taskspace.",
+      "spoken": "Your work, in one taskspace."
+    },
+    {
+      "start": 3.5,
+      "end": 5.05,
+      "text": "Every step, live.",
+      "spoken": "Every step, live."
+    },
+    {
+      "start": 6.5,
+      "end": 8.45,
+      "text": "Files, exactly as generated.",
+      "spoken": "Files, exactly as generated."
+    },
+    {
+      "start": 9.5,
+      "end": 11.85,
+      "text": "Publish with an access code.",
+      "spoken": "Publish with an access code."
+    },
+    {
+      "start": 12.5,
+      "end": 14.85,
+      "text": "Open it on any device.",
+      "spoken": "Open it on any device."
+    },
+    {
+      "start": 15.5,
+      "end": 17.450000000000003,
+      "text": "Even full code projects.",
+      "spoken": "Even full code projects."
+    }
+  ]
+}

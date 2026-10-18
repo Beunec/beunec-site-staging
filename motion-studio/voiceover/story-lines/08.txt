@@ -1,0 +1,1 @@
+Before it acts in your apps, you approve the exact action. Nothing runs until you do.

@@ -6,9 +6,9 @@
 
 **Creator:** Olu A · **Owner:** Beunec Technologies, Inc. · **License:** MIT
 
-Agents should read [`AGENTS.md`](./AGENTS.md) (full operational protocol) and
-[`annotations/brolostack-governance-rules.md`](./annotations/brolostack-governance-rules.md) (short escalation rules).
-Terminal command tables: [`BLSKCOMMANDS.md`](./BLSKCOMMANDS.md).
+Agents should read `AGENTS.md` (full operational protocol) and
+`annotations/brolostack-governance-rules.md` (short escalation rules).
+Terminal command tables: `BLSKCOMMANDS.md`.
 
 ---
 
@@ -83,7 +83,7 @@ blsk --check                        # verify CLI + Python venv
 
 ### MCP registration
 
-Point your IDE's MCP config at the `brolostack` binary (see [`.mcp.json`](./.mcp.json) for the canonical example):
+Point your IDE's MCP config at the `brolostack` binary (see `.mcp.json` for the canonical example):
 
 ```json
 {
@@ -123,7 +123,7 @@ A full `pull` (no file argument) restores the whole workspace and **deletes file
 
 ## CLI reference
 
-Full command tables (human vs agent): [`BLSKCOMMANDS.md`](./BLSKCOMMANDS.md).
+Full command tables (human vs agent): `BLSKCOMMANDS.md`.
 
 | Command | Effect |
 | --- | --- |
@@ -173,7 +173,7 @@ Snapshots use `filename.ext.blsk` naming. `.blsk` files are engine-written only;
 
 ## Security & privacy
 
-See [`SECURITY.md`](./SECURITY.md) for the full model.
+See `SECURITY.md` for the full model.
 
 - **No network, ever:** no sockets, ports, cloud, or peers; every operation is a local file read/write.
 - **No central auth:** no SSH, tokens, or API keys.
@@ -186,8 +186,8 @@ See [`SECURITY.md`](./SECURITY.md) for the full model.
 ## Agentic governance
 
 Mutating operations (`push`, full `pull`, `branch_delete`) require human confirmation per
-[`annotations/brolostack-governance-rules.md`](./annotations/brolostack-governance-rules.md).
-Agents must call `status` before `push` and use `has_checkpoint` + `dirty` to pick the correct prompt. See [`AGENTS.md`](./AGENTS.md) for the full protocol.
+`annotations/brolostack-governance-rules.md`.
+Agents must call `status` before `push` and use `has_checkpoint` + `dirty` to pick the correct prompt. See `AGENTS.md` for the full protocol.
 
 ---
 
@@ -202,7 +202,7 @@ Agents must call `status` before `push` and use `has_checkpoint` + `dirty` to pi
 
 ## Contributing
 
-See [`CONTRIBUTING.md`](./CONTRIBUTING.md).
+See `CONTRIBUTING.md`.
 
 ## License
 

@@ -1,12 +1,12 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
-import Script from "next/script";
 import "@/index.css";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { ClientSideProtection } from "@/components/providers/ClientSideProtection";
 import { GoogleTranslateLoader } from "@/components/i18n/GoogleTranslateLoader";
+import { MotionRuntime } from "@/components/motion/MotionRuntime";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin"], display: "swap", variable: "--font-inter" });
 
 export const viewport: Viewport = {
     width: "device-width",
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
         template: "%s | Beunec",
     },
     description:
-        "Beunec is a research and deployment organization building Agentic Infrastructure. Aselius, our SaaS platform, runs governed agentic work through specialized Rivine engines (research, code, documents, and creative), with every result inspectable, editable, and yours to export.",
+        "Beunec is a research and deployment organization building Agentic Infrastructure. Aselius, our agentic infrastructure software, runs governed agentic work through specialized Rivine engines (research, code, documents, and creative), with every result inspectable, editable, and yours to export.",
     keywords: [
         "Beunec",
         "Beunec Technologies",
@@ -196,7 +196,7 @@ export default function RootLayout({
                 "url": "https://beunec.co/aselius-platform",
                 "applicationCategory": "BusinessApplication",
                 "operatingSystem": "Web",
-                "description": "Aselius is Beunec's governed agentic workspace, where specialized Rivine engines research, code, draft, and create, producing inspectable, editable, and exportable deliverables.",
+                "description": "Aselius is Beunec's agentic infrastructure software: specialized Rivine engines research, code, draft, and create, producing inspectable, editable, and exportable deliverables. Use it on the web, in your browser, in your terminal, in chat apps, or from any AI app through Aselius MCP.",
                 "releaseDate": "2026-08-10",
                 "publisher": {
                     "@id": "https://beunec.co/company",
@@ -205,7 +205,7 @@ export default function RootLayout({
                     "@type": "AggregateOffer",
                     "priceCurrency": "USD",
                     "lowPrice": "0",
-                    "highPrice": "30",
+                    "highPrice": "40",
                     "offerCount": "3",
                 },
             },
@@ -214,17 +214,17 @@ export default function RootLayout({
 
     return (
         <html lang="en" suppressHydrationWarning>
-            <body className={inter.className} suppressHydrationWarning>
-                <Script
-                    id="json-ld-structured-data"
+            <body className={`${inter.variable} ${inter.className}`} suppressHydrationWarning>
+                {/* Plain script tag so crawlers read the structured data from the HTML itself */}
+                <script
                     type="application/ld+json"
-                    strategy="afterInteractive"
                     dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
                 />
                 <ClientSideProtection>
                     <ThemeProvider>
                         {children}
                         <GoogleTranslateLoader />
+                        <MotionRuntime />
                     </ThemeProvider>
                 </ClientSideProtection>
             </body>

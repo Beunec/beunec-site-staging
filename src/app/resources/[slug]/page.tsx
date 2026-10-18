@@ -7,17 +7,21 @@ export const dynamicParams = false;
 
 type FeedItem = { title: string };
 
+// A static export must emit at least one page for this route, so when the
+// feed is unreachable at build time a placeholder slug keeps the build green.
+// ArticleView shows "Article not found" for it; a rebuild picks up real posts.
+const OFFLINE_PLACEHOLDER = [{ slug: "unavailable" }];
+
 export async function generateStaticParams(): Promise<{ slug: string }[]> {
   try {
     const res = await fetch(SUBSTACK_API_URL);
     const data = await res.json();
-    if (data.status !== "ok" || !Array.isArray(data.items)) return [];
+    if (data.status !== "ok" || !Array.isArray(data.items) || data.items.length === 0) {
+      return OFFLINE_PLACEHOLDER;
+    }
     return data.items.map((item: FeedItem) => ({ slug: generateSlug(item.title) }));
   } catch {
-    // ponytail: offline build → no prebuilt articles; the /resources list
-    // still renders and a rebuild regenerates them. Upgrade path: pin a
-    // slug manifest committed at build time if RSS reliability becomes a problem.
-    return [];
+    return OFFLINE_PLACEHOLDER;
   }
 }
 

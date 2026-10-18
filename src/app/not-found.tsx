@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useEffect, useRef, useCallback } from "react";
+import { startVisibleLoop } from "@/lib/visible-loop";
 import Link from "next/link";
-import { motion } from "framer-motion";
 import { Home, LayoutGrid, BookOpen, Users, ArrowRight } from "lucide-react";
 import { HomeAmbientAudio } from "@/components/home/HomeAmbientAudio";
 
@@ -25,10 +25,10 @@ interface Particle {
 const COLORS = [
     "#6b7a6e",
     "#7a8b99",
-    "#e6e2d8",
-    "#252823",
-    "#dfd9ce",
-    "#141512",
+    "#e6e6e6",
+    "#202020",
+    "#c9cbc4",
+    "#111111",
 ];
 
 function createParticle(x: number, y: number, isStatic = false): Particle {
@@ -146,13 +146,10 @@ const FullscreenParticles: React.FC = () => {
             });
         };
 
-        let frameId: number;
-        const loop = () => {
+        const loop = startVisibleLoop(canvas, () => {
             update();
             render();
-            frameId = requestAnimationFrame(loop);
-        };
-        loop();
+        });
 
         const onMove = (e: MouseEvent) => {
             const x = e.clientX, y = e.clientY;
@@ -160,7 +157,7 @@ const FullscreenParticles: React.FC = () => {
             const dy = y - mouseRef.current.lastY;
             const vel = Math.sqrt(dx * dx + dy * dy);
             mouseRef.current = { x, y, active: true, velocity: vel, lastX: x, lastY: y };
-            if (vel > 2) {
+            if (vel > 2 && loop.running()) {
                 const count = Math.min(Math.floor(vel / 1), 12);
                 for (let i = 0; i < count; i++) {
                     particlesRef.current.push(createParticle(x, y, false));
@@ -174,7 +171,7 @@ const FullscreenParticles: React.FC = () => {
         window.addEventListener("mouseleave", onLeave);
 
         return () => {
-            cancelAnimationFrame(frameId);
+            loop.stop();
             window.removeEventListener("resize", resize);
             window.removeEventListener("mousemove", onMove);
             window.removeEventListener("mouseleave", onLeave);
@@ -208,49 +205,39 @@ export default function NotFound() {
             {/* Content */}
             <div className="relative z-10 w-full max-w-3xl mx-auto px-6 py-16 flex flex-col items-center text-center">
                 {/* Logo */}
-                <motion.img
+                <img
                     src="/assets/beunec-logo.png"
                     alt="Beunec"
-                    className="w-14 h-14 rounded-2xl shadow-lg mb-10"
-                    initial={{ opacity: 0, scale: 0.5 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.5, type: "spring" }}
+                    className="kt-fade w-14 h-14 rounded-2xl shadow-lg mb-10"
+                    style={{ ["--d" as string]: "0s" }}
                 />
 
                 {/* 404 number */}
-                <motion.h1
-                    className="text-[10rem] md:text-[14rem] font-black leading-none tracking-tighter text-foreground/90 select-none"
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.1 }}
+                <h1
+                    className="kt-fade text-[10rem] md:text-[14rem] font-black leading-none tracking-tighter text-foreground/90 select-none"
+                    style={{ ["--d" as string]: "0.1s" }}
                 >
                     404
-                </motion.h1>
+                </h1>
 
                 {/* Subtitle */}
-                <motion.p
-                    className="text-lg md:text-xl text-muted-foreground max-w-md mx-auto -mt-4 mb-4"
-                    initial={{ opacity: 0, y: 15 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: 0.25 }}
+                <p
+                    className="kt-fade text-lg md:text-xl text-muted-foreground max-w-md mx-auto -mt-4 mb-4"
+                    style={{ ["--d" as string]: "0.25s" }}
                 >
                     This page has drifted beyond the orchestration layer.
-                </motion.p>
-                <motion.p
-                    className="text-sm text-muted-foreground/70 mb-12"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.5, delay: 0.35 }}
+                </p>
+                <p
+                    className="kt-fade text-sm text-muted-foreground/70 mb-12"
+                    style={{ ["--d" as string]: "0.35s" }}
                 >
                     Don&apos;t worry; let&apos;s get you back on track.
-                </motion.p>
+                </p>
 
                 {/* Navigation Grid */}
-                <motion.div
-                    className="grid grid-cols-2 sm:grid-cols-4 gap-3 w-full mb-12"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: 0.4 }}
+                <div
+                    className="kt-fade grid grid-cols-2 sm:grid-cols-4 gap-3 w-full mb-12"
+                    style={{ ["--d" as string]: "0.4s" }}
                 >
                     {NAV_ITEMS.map(({ label, href, icon: Icon }) => (
                         <Link
@@ -259,17 +246,14 @@ export default function NotFound() {
                             className="group flex flex-col items-center gap-2 p-4 rounded-2xl border border-border baap-interactive"
                         >
                             <Icon className="w-5 h-5 text-muted-foreground group-hover:text-accent-sage transition-colors duration-200" />
-                            <span className="text-xs font-medium text-muted-foreground group-hover:text-foreground transition-colors duration-200">{label}</span>
+                            <span className="text-sm font-medium text-muted-foreground group-hover:text-foreground transition-colors duration-200">{label}</span>
                         </Link>
                     ))}
-                </motion.div>
+                </div>
 
                 {/* Primary CTA */}
-                <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4, delay: 0.55 }}
-                >
+                <div className="kt-fade"
+                 style={{ ["--d" as string]: "0.55s" }}>
                     <Link
                         href="/"
                         className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-beunec-sage text-primary-foreground font-semibold text-sm hover:opacity-90 transition-all duration-200"
@@ -277,12 +261,12 @@ export default function NotFound() {
                         Go to Home
                         <ArrowRight className="w-4 h-4" />
                     </Link>
-                </motion.div>
+                </div>
             </div>
 
             {/* Bottom branding */}
             <div className="absolute bottom-6 z-10 text-center">
-                <p className="text-[11px] text-muted-foreground">
+                <p className="text-sm text-muted-foreground">
                     © {new Date().getFullYear()} Beunec Technologies, Inc.
                 </p>
             </div>
