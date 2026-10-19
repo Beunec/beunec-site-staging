@@ -12,10 +12,19 @@
  * below, which also produces the captions file.
  */
 (function () {
-  const W = 1920;
-  const H = 1080;
+  const params = new URLSearchParams(location.search);
+  const cut = params.get("cut") || "story";
+  /* Two frame formats share every scene and every timing:
+       ?format=wide      1920x1080 (16:9) for the site, YouTube and LinkedIn
+       ?format=vertical  1080x1920 (9:16) for Reels, Shorts, TikTok and Stories
+     Vertical keeps text inside the social safe zone (clear of the top 250 px
+     and bottom 380 px where app buttons sit) and frames each screen tighter. */
+  const V = params.get("format") === "vertical";
+  const W = V ? 1080 : 1920;
+  const H = V ? 1920 : 1080;
+  const pick = (wide, vertical) => (V ? vertical : wide);
+  if (V) document.documentElement.classList.add("vertical");
   const MEDIA = "../../public/media/aselius/";
-  const cut = new URLSearchParams(location.search).get("cut") || "story";
 
   /* ── math ─────────────────────────────────────────────── */
   const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
@@ -115,15 +124,18 @@
      focus lands on screen point (cx, cy). Callouts are projected into screen
      space so labels stay a constant, readable size while the camera moves. */
   function camera(layer, stem, iw, ih, keys, opts = {}) {
-    const fitW = opts.fitW || 1520;
-    const fitH = opts.fitH || 720;
+    const v = (V && opts.v) || {};
+    // Vertical frames screens tighter: wide screenshots overflow the sides a
+    // little and the camera keys pick the part that matters.
+    const fitW = V ? v.fitW ?? (iw >= 1200 ? 1320 : 1000) : opts.fitW || 1520;
+    const fitH = V ? v.fitH ?? 1080 : opts.fitH || 720;
     const base = Math.min(fitW / iw, fitH / ih);
     const win = el("div", "window" + (opts.phone ? " phone" : ""), layer);
     win.style.width = iw + "px";
     win.style.height = ih + "px";
     img(stem, win);
-    const cx = opts.cx ?? W / 2;
-    const cy = opts.cy ?? 420;
+    const cx = V ? v.cx ?? W / 2 : opts.cx ?? W / 2;
+    const cy = V ? v.cy ?? 760 : opts.cy ?? 420;
     const state = { x: iw / 2, y: ih / 2, s: base };
     const callouts = (opts.callouts || []).map((c) => {
       const root = el("div", "callout", layer);
@@ -157,9 +169,17 @@
         const sy = cy + (c.y - k.y) * s;
         const q = outExpo(prog(t, c.at, 0.7));
         const out = c.until ? 1 - outExpo(prog(t, c.until, 0.4)) : 1;
-        const vis = q * out;
-        const dx = c.dx ?? 70;
-        const dy = c.dy ?? 0;
+        let dx = (V && c.v?.dx) ?? c.dx ?? 70;
+        let dy = (V && c.v?.dy) ?? c.dy ?? 0;
+        let fade = 1;
+        if (V && !c.v) {
+          // Keep leaders short and pills on screen.
+          dx = clamp(dx, -240, 240);
+          if (Math.abs(dx) > 200 && Math.abs(dy) < 40) dy = sy > cy ? -70 : 70;
+        }
+        // Hide a callout whose point the tighter vertical frame has cropped.
+        if (V) fade = sx > 24 && sx < W - 24 && sy > 120 && sy < H - 120 ? 1 : 0;
+        const vis = q * out * fade;
         c.root.style.opacity = String(vis);
         c.dot.style.transform = `translate3d(${sx}px, ${sy}px, 0) scale(${0.4 + 0.6 * q})`;
         const pulse = (t - c.at) % 1.6;
@@ -170,7 +190,12 @@
         c.leader.style.width = Math.max(0, Math.hypot(dx, dy) - 12) + "px";
         c.leader.style.transform = `translate3d(${sx}px, ${sy - 1}px, 0) rotate(${ang}rad) scaleX(${len / Math.max(1, Math.hypot(dx, dy))})`;
         const left = dx < 0;
-        c.pill.style.transform = `translate3d(${sx + dx}px, ${sy + dy}px, 0) translate(${left ? "-100%" : "0"}, -50%) translate3d(${(1 - q) * (left ? 16 : -16)}px, 0, 0)`;
+        let px = sx + dx;
+        if (V) {
+          const pw = c.pill.offsetWidth;
+          px = left ? clamp(px, pw + 40, W - 40) : clamp(px, 40, W - 40 - pw);
+        }
+        c.pill.style.transform = `translate3d(${px}px, ${sy + dy}px, 0) translate(${left ? "-100%" : "0"}, -50%) translate3d(${(1 - q) * (left ? 16 : -16)}px, 0, 0)`;
       });
     };
   }
@@ -291,13 +316,13 @@
       scene({ say: line(head, sub) }, (layer, dur, vo) => {
         const bg = lights(layer, [-300, -600, -100, -400], [400, 0, 100, -300]);
         const box = el("div", "top-title", layer);
-        box.style.top = "300px";
+        box.style.top = pick("300px", "560px");
         const k = el("div", "kicker", box, "Aselius by Beunec");
         const h = el("div", "head", box);
-        h.style.fontSize = "76px";
+        h.style.fontSize = pick("76px", "72px");
         const hw = words(h, head, "agentic infrastructure software");
         const s = el("div", "sub", box, sub);
-        s.style.fontSize = "36px";
+        s.style.fontSize = pick("36px", "40px");
         s.style.marginTop = "28px";
         return (t) => {
           bg(t / dur);
@@ -322,6 +347,7 @@
         (vo) => ({
           cx: 700,
           cy: 420,
+          v: { cx: 600 },
           callouts: [
             { x: 228, y: 91, label: "Workspaces", at: vo.word("workspaces"), dx: 330 },
             { x: 228, y: 316, label: "Connector", at: vo.word("Connector"), dx: 330 },
@@ -374,7 +400,7 @@
         const h = el("div", "head", top);
         const hw = words(h, head, "Rivine engine");
         const grid = el("div", "grid", layer);
-        grid.style.top = "330px";
+        grid.style.top = pick("330px", "560px");
         const cards = ENGINES.map(([n, w]) => {
           const c = el("div", "card", grid);
           el("span", "tag", c);
@@ -383,7 +409,7 @@
           return { c, at: vo.word(n, tokens(head).length) };
         });
         const note = el("div", "sub", layer, "The engine you pick is the engine that runs.");
-        Object.assign(note.style, { position: "absolute", left: "140px", top: "900px", color: "#e8eaed" });
+        Object.assign(note.style, { position: "absolute", left: pick("140px", "72px"), right: pick("auto", "72px"), top: pick("900px", "1420px"), color: "#e8eaed" });
         return (t) => {
           bg(t / dur);
           fadeUp(k, t, 0.15, 0.6, 14);
@@ -445,6 +471,7 @@
         (vo) => ({
           fitW: 1240,
           fitH: 650,
+          v: { fitW: 900, cy: 720 },
           callouts: [{ x: 678, y: 392, label: "Approve & run", at: vo.word("approve"), dx: -60, dy: -90 }],
         }),
         "04 · Watch it work", head, sub, "approve"));
@@ -497,8 +524,8 @@
         (vo) => ({
           callouts: [
             { x: 1110, y: 848, label: "Rivine Assist", at: vo.word("Rivine Assist"), dx: -120, dy: -70 },
-            { x: 1195, y: 113, label: "Save", at: vo.word("save"), dx: -330, dy: 0 },
-            { x: 1276, y: 113, label: "Publish", at: vo.word("publish"), dx: -330, dy: 60 },
+            { x: 1195, y: 113, label: "Save", at: vo.word("save"), dx: -330, dy: 0, v: { dx: -100, dy: -80 } },
+            { x: 1276, y: 113, label: "Publish", at: vo.word("publish"), dx: -330, dy: 60, v: { dx: -60, dy: 170 } },
             { x: 1368, y: 113, label: "Export", at: vo.word("export"), dx: 20, dy: 110 },
           ],
         }),
@@ -529,9 +556,9 @@
       const sub = "Exactly as generated, with a Download button.";
       scene({ say: line(head, sub) }, (layer, dur, vo) => {
         const bg = lights(layer, [-500, -700, -200, -500], [600, 0, 300, -200]);
-        const desk = camera(layer, "preview-xlsx-desktop", 1280, 800, [{ t: 0, x: 640, y: 400, z: 1 }], { fitW: 1080, fitH: 640, cx: 690, cy: 400 });
-        const p1 = camera(layer, "preview-docx-mobile", 390, 844, [{ t: 0, x: 195, y: 422, z: 1 }], { fitW: 300, fitH: 600, cx: 1440, cy: 430, phone: true });
-        const p2 = camera(layer, "preview-access-code-mobile", 390, 844, [{ t: 0, x: 195, y: 422, z: 1 }], { fitW: 300, fitH: 600, cx: 1720, cy: 470, phone: true });
+        const desk = camera(layer, "preview-xlsx-desktop", 1280, 800, [{ t: 0, x: 640, y: 400, z: 1 }], { fitW: 1080, fitH: 640, cx: 690, cy: 400, v: { fitW: 900, fitH: 600, cy: 470 } });
+        const p1 = camera(layer, "preview-docx-mobile", 390, 844, [{ t: 0, x: 195, y: 422, z: 1 }], { fitW: 300, fitH: 600, cx: 1440, cy: 430, phone: true, v: { fitW: 210, fitH: 440, cx: 410, cy: 1040 } });
+        const p2 = camera(layer, "preview-access-code-mobile", 390, 844, [{ t: 0, x: 195, y: 422, z: 1 }], { fitW: 300, fitH: 600, cx: 1720, cy: 470, phone: true, v: { fitW: 210, fitH: 440, cx: 670, cy: 1060 } });
         const cap = caption(layer, "06 · Share it anywhere", head, sub, "any device", vo);
         const wins = layer.querySelectorAll(".window");
         const tDesk = vo.word("opens") - 0.3;
@@ -576,17 +603,17 @@
         const top = el("div", "top-title", layer);
         const k = el("div", "kicker", top, "07 · Beyond the browser tab");
         const h = el("div", "head", top);
-        h.style.fontSize = "76px";
+        h.style.fontSize = pick("76px", "72px");
         const hw = words(h, head, "any AI app");
         const s = el("div", "sub", top, sub);
         s.style.marginTop = "24px";
         const box = el("div", "card", layer);
-        Object.assign(box.style, { position: "absolute", left: "140px", right: "140px", top: "560px", padding: "40px 48px" });
+        Object.assign(box.style, { position: "absolute", left: pick("140px", "72px"), right: pick("140px", "72px"), top: pick("560px", "900px"), padding: pick("40px 48px", "36px 36px") });
         const lab = el("div", "kicker", box, "Aselius MCP server");
         const url = el("div", "", box, "https://workspace.beunec.com/mcp");
-        Object.assign(url.style, { fontFamily: "ui-monospace, Menlo, monospace", fontSize: "64px", fontWeight: "600", marginTop: "18px", color: "#e8eaed", letterSpacing: "-0.01em" });
+        Object.assign(url.style, { fontFamily: "ui-monospace, Menlo, monospace", fontSize: pick("64px", "41px"), fontWeight: "600", marginTop: "18px", color: "#e8eaed", letterSpacing: "-0.01em" });
         const row = el("div", "", box);
-        Object.assign(row.style, { display: "flex", gap: "16px", marginTop: "30px" });
+        Object.assign(row.style, { display: "flex", flexWrap: "wrap", gap: "16px", marginTop: "30px" });
         const chips = ["Claude", "Cursor", "ChatGPT"].map((n) => {
           const c = el("div", "pill", row, n);
           Object.assign(c.style, { position: "static" });
@@ -626,7 +653,7 @@
         const h = el("div", "head", top);
         const hw = words(h, head, "wherever you work");
         const grid = el("div", "grid three", layer);
-        grid.style.top = "330px";
+        grid.style.top = pick("330px", "560px");
         const from = tokens(head).length;
         const cards = SURFACES.map(([n, w, key]) => {
           const c = el("div", "card", grid);
@@ -636,7 +663,7 @@
           return { c, at: vo.word(key, from) };
         });
         const note = el("div", "sub", layer, "One wallet across every surface.");
-        Object.assign(note.style, { position: "absolute", left: "140px", top: "800px", color: "#e8eaed" });
+        Object.assign(note.style, { position: "absolute", left: pick("140px", "72px"), right: pick("auto", "72px"), top: pick("800px", "1250px"), color: "#e8eaed" });
         return (t) => {
           bg(t / dur);
           fadeUp(k, t, 0.15, 0.6, 14);
@@ -656,11 +683,11 @@
         const c = el("div", "center", layer);
         const k = el("div", "kicker", c, "08 · Why Aselius");
         const a = el("div", "mega", c);
-        a.style.fontSize = "84px";
+        a.style.fontSize = pick("84px", "80px");
         a.style.marginTop = "26px";
         const ka = words(a, head, "Not another");
         const b = el("div", "sub", c, sub);
-        Object.assign(b.style, { fontSize: "40px", marginTop: "34px", color: "#e8eaed" });
+        Object.assign(b.style, { fontSize: pick("40px", "42px"), marginTop: "34px", color: "#e8eaed" });
         return (t) => {
           bg(t / dur);
           fadeUp(k, t, 0.15, 0.6, 14);
@@ -711,6 +738,15 @@
       ["preview-xlsx-desktop", 1280, 800, "preview.aselius.beunec.com", { x: 640, y: 400 }, { x: 600, y: 360 }],
       ["code-project-dark", 1280, 760, "Rivine Code project", { x: 640, y: 380 }, { x: 700, y: 330 }],
     ];
+    // The six reel voice lines, in order (also in voiceover.mjs).
+    const REEL_LINES = [
+      "Your work, in one taskspace.",
+      "Every step, live.",
+      "Files, exactly as generated.",
+      "Publish with an access code.",
+      "Open it on any device.",
+      "Even full code projects.",
+    ];
     // Each screen cuts in just before its voice line (measured.js) and the last runs to the loop point.
     const STARTS = MEASURED.length ? MEASURED.map(([a], i) => (i ? Math.round((a - 0.3) * 100) / 100 : 0)) : REEL.map((_, i) => i * 3);
     REEL.forEach(([stem, iw, ih, label, a, b], i) => {
@@ -721,12 +757,22 @@
         const cam = camera(layer, stem, iw, ih, [
           { t: -CROSS, x: a.x, y: a.y, z: 1.02 },
           { t: SEG + CROSS, x: b.x, y: b.y, z: 1.18 },
-        ], { fitW: 1700, fitH: 940, cy: 540 });
+        ], { fitW: 1700, fitH: 940, cy: 540, v: { fitW: 1640, fitH: 1100, cy: 800 } });
         const chip = el("div", "chip", layer, label);
+        // Vertical only: the voice line on screen, so the reel reads with the sound off.
+        let said = null;
+        if (V) {
+          el("div", "band", layer);
+          const box = el("div", "caption", layer);
+          said = words(el("div", "head", box), REEL_LINES[i]);
+        }
+        const sayAt = MEASURED[i] ? MEASURED[i][0] - STARTS[i] : 0.4;
+        const step = MEASURED[i] ? (MEASURED[i][1] - MEASURED[i][0]) / tokens(REEL_LINES[i]).length : 0.3;
         return (t, dur) => {
           bg(clamp((t + CROSS) / (dur + CROSS)));
           cam(t);
           fadeUp(chip, t, 0.15, 0.6, 10);
+          if (said) playWords(said, t, sayAt - 0.05, step, 0.55);
         };
       });
     });
