@@ -17,9 +17,9 @@ type StoryVideoProps = {
 
 /**
  * The explainer: only the poster loads with the page (preload="none"); the
- * video starts streaming when someone presses play or picks a chapter. Native
- * controls and an English captions track come with it, and every word the video
- * says on screen is also in the captions file.
+ * video starts streaming when someone presses play or picks a chapter. Every
+ * spoken line is already written on screen, so subtitles start off; the English
+ * captions track stays in the CC menu for anyone who wants it.
  */
 export function StoryVideo({ sources, poster, captions, title, duration, chapters }: StoryVideoProps) {
   const ref = useRef<HTMLVideoElement>(null);
@@ -55,7 +55,7 @@ export function StoryVideo({ sources, poster, captions, title, duration, chapter
           {sources.map((s) => (
             <source key={s.src} src={s.src} type={s.type} />
           ))}
-          <track kind="captions" src={captions} srcLang="en" label="English" default />
+          <track kind="captions" src={captions} srcLang="en" label="English" />
         </video>
         {!started && (
           <button

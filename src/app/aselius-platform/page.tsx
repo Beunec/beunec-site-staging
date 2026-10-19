@@ -457,7 +457,7 @@ export default function AseliusPlatformPage() {
               id="story-title"
               kicker="Aselius, start to finish"
               title="Watch the Aselius story"
-              body="What Aselius is, where everything lives, how a task runs, where the results go, every other place the Rivine engines reach, and why it is not another general agent. Every screen in it is real, and every line is narrated and captioned."
+              body="What Aselius is, where everything lives, how a task runs, where the results go, every other place the Rivine engines reach, and why it is not another general agent. Every screen in it is real, and every line is narrated and written on screen as it is spoken."
             />
             <div data-reveal="scale">
               <StoryVideo

@@ -15,6 +15,11 @@
  *
  * Writes public/media/aselius-<cut>.mp4 (AAC) and .webm (Opus) in place, keeping
  * the picture untouched. Needs ffmpeg and ffprobe on PATH.
+ *
+ * Exports for YouTube, LinkedIn and social (see export-social.mjs):
+ *   --video <in.mp4> --out <out.mp4>   mux onto another render instead of the site file
+ *   --master                           48 kHz AAC 320k, -14 LUFS, -1 dBTP, a gentle
+ *                                      voice clean-up (low cut, presence), no WebM
  */
 import { execFileSync } from "node:child_process";
 import { existsSync, readdirSync, readFileSync, renameSync } from "node:fs";
@@ -31,13 +36,15 @@ const arg = (name) => {
 const linesDir = arg("--lines");
 const voiceFile = arg("--voice");
 const musicFile = arg("--music");
+const master = process.argv.includes("--master");
 if (!linesDir && !voiceFile && !musicFile) {
   console.error("Give at least one of --lines <folder>, --voice <file>, --music <file>.");
   process.exit(1);
 }
 
 const { duration, cues } = JSON.parse(readFileSync(join(here, "voiceover", `${cut}-cues.json`), "utf8"));
-const video = join(root, "public/media", `aselius-${cut}.mp4`);
+const video = arg("--video") ?? join(root, "public/media", `aselius-${cut}.mp4`);
+const outFile = arg("--out") ?? video;
 const probe = (f) =>
   Number(execFileSync("ffprobe", ["-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", f]).toString().trim());
 
@@ -73,7 +80,9 @@ if (linesDir) {
 
 let voice = null;
 if (voiceLabels.length) {
-  filters.push(`${voiceLabels.join("")}amix=inputs=${voiceLabels.length}:normalize=0,apad,atrim=0:${duration},loudnorm=I=-16:TP=-1.5:LRA=11[voice]`);
+  // Master: cut rumble below 80 Hz, lift presence a little for clarity on phone speakers.
+  const clean = master ? "highpass=f=80,equalizer=f=3200:t=q:w=1.2:g=2.5,acompressor=threshold=0.1:ratio=2.5:attack=8:release=120," : "";
+  filters.push(`${voiceLabels.join("")}amix=inputs=${voiceLabels.length}:normalize=0,apad,atrim=0:${duration},${clean}loudnorm=I=-16:TP=-1.5:LRA=11[voice]`);
   voice = "[voice]";
 }
 
@@ -93,22 +102,23 @@ if (musicFile) {
   mix = "[premix]";
 }
 // The soundtrack always runs exactly as long as the picture.
-filters.push(`${mix}apad,atrim=0:${duration}[final]`);
+filters.push(`${mix}apad,atrim=0:${duration}${master ? ",loudnorm=I=-14:TP=-1:LRA=11,aresample=48000" : ""}[final]`);
 mix = "[final]";
 
-const tmp = video.replace(/\.mp4$/, ".tmp.mp4");
+const tmp = outFile.replace(/\.mp4$/, ".tmp.mp4");
 execFileSync("ffmpeg", [
   "-y", "-loglevel", "error", ...inputs,
   "-filter_complex", filters.join(";"),
   "-map", "0:v", "-map", mix,
-  "-c:v", "copy", "-c:a", "aac", "-b:a", "160k", "-t", String(duration), "-movflags", "+faststart", tmp,
+  "-c:v", "copy", "-c:a", "aac", "-b:a", master ? "320k" : "160k", ...(master ? ["-ar", "48000"] : []),
+  "-t", String(duration), "-movflags", "+faststart", tmp,
 ], { stdio: "inherit" });
-renameSync(tmp, video);
+renameSync(tmp, outFile);
 
-const webm = video.replace(/\.mp4$/, ".webm");
-if (existsSync(webm)) {
+const webm = outFile.replace(/\.mp4$/, ".webm");
+if (!master && outFile === video && existsSync(webm)) {
   const tmpW = webm.replace(/\.webm$/, ".tmp.webm");
-  execFileSync("ffmpeg", ["-y", "-loglevel", "error", "-i", webm, "-i", video, "-map", "0:v", "-map", "1:a", "-c:v", "copy", "-c:a", "libopus", "-b:a", "128k", "-t", String(duration), tmpW], { stdio: "inherit" });
+  execFileSync("ffmpeg", ["-y", "-loglevel", "error", "-i", webm, "-i", outFile, "-map", "0:v", "-map", "1:a", "-c:v", "copy", "-c:a", "libopus", "-b:a", "128k", "-t", String(duration), tmpW], { stdio: "inherit" });
   renameSync(tmpW, webm);
 }
-console.log(`audio added to ${video}${existsSync(webm) ? " and the WebM" : ""}`);
+console.log(`audio added to ${outFile}${!master && outFile === video && existsSync(webm) ? " and the WebM" : ""}`);

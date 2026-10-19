@@ -251,3 +251,86 @@ body {
   color: #8d9198;
   margin-top: 18px;
 }
+
+/* ── 9:16 vertical (?format=vertical) ─────────────────────
+   1080x1920. Text stays inside the social safe zone: nothing below 1540 px
+   (app buttons and captions) or above 250 px (profile and status rows). */
+.vertical #stage {
+  width: 1080px;
+  height: 1920px;
+}
+.vertical .light {
+  width: 2000px;
+  height: 2000px;
+}
+.vertical .band {
+  height: 900px;
+  background: linear-gradient(to top, rgba(17, 17, 17, 0.98) 62%, rgba(17, 17, 17, 0));
+}
+.vertical .caption {
+  left: 72px;
+  right: 72px;
+  bottom: 380px;
+}
+.vertical .kicker {
+  font-size: 24px;
+}
+.vertical .head {
+  font-size: 62px;
+  line-height: 1.1;
+}
+.vertical .sub {
+  font-size: 36px;
+  max-width: none;
+}
+.vertical .center {
+  padding: 0 72px;
+}
+.vertical .mega {
+  font-size: 96px;
+}
+.vertical .top-title {
+  left: 72px;
+  right: 72px;
+  top: 260px;
+}
+.vertical .grid,
+.vertical .grid.three {
+  left: 72px;
+  right: 72px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+}
+.vertical .card {
+  padding: 22px 24px 24px;
+  min-height: 0;
+}
+.vertical .card .name {
+  font-size: 32px;
+}
+.vertical .card .what {
+  font-size: 25px;
+}
+.vertical .pill {
+  font-size: 26px;
+}
+.vertical .chip {
+  left: 72px;
+  top: 260px;
+  font-size: 24px;
+}
+.vertical .url {
+  font-size: 40px;
+}
+.vertical .small {
+  font-size: 28px;
+  max-width: 900px;
+}
+.vertical .logo {
+  width: 180px;
+  height: 180px;
+}
+/* "agentic infrastructure software" is one unbroken phrase; fit it in 936 px. */
+.vertical .top-title .head[style*="72px"] {
+  font-size: 60px !important;
+}
