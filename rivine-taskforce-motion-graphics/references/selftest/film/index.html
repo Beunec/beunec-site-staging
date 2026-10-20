@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>scenes.mjs self-test</title>
+<style>
+  html,body{margin:0;background:#0d0f12}
+  #stage{font-family:system-ui,sans-serif;color:#f2efe8}
+  .big{position:absolute;left:0;right:0;top:380px;text-align:center;font-weight:800;font-size:150px;letter-spacing:-.04em}
+  .shot{position:absolute;left:310px;top:140px;width:1300px;border-radius:18px;box-shadow:0 40px 90px -30px #000}
+  .orb{position:absolute;border-radius:50%;background:radial-gradient(circle,#e85d2a88,#e85d2a00 65%)}
+  .callout-dot{width:16px;height:16px;border-radius:50%;background:#e85d2a}
+  .callout-line{height:2px;background:#f2efe8aa}
+  .callout-label{background:#0d0f12e6;border:1px solid #fff3;padding:8px 16px;border-radius:999px;font:600 24px system-ui;white-space:nowrap}
+  .vertical .big{font-size:120px;top:760px}
+</style></head>
+<body><div id="stage"></div>
+<script type="module">
+import { createFilm, camera, split, kinetic, callout, draw, along, svg, el, voiceTiming, ease, prog } from "./scenes.mjs";
+const V = new URLSearchParams(location.search).get("format") === "vertical";
+if (V) document.documentElement.classList.add("vertical");
+const W = V ? 1080 : 1920, H = V ? 1920 : 1080;
+const timing = await (await fetch("./timing.json")).json();
+const vo = voiceTiming(timing);
+const film = createFilm({ width: W, height: H, fps: 30, duration: 8, background: "#0d0f12" });
+
+film.scene({ id: "hook", start: 0, end: 3.6, rest: [2.6] }, (layer) => {
+  const world = el("div", "", layer);
+  const cam = camera(world, { width: W, height: H, keys: [
+    { t: 0, x: W/2, y: H/2, zoom: 1.25 }, { t: 3.6, x: W/2 + 60, y: H/2 - 30, zoom: 1, ease: "outCubic" } ] });
+  const far = cam.layer(el("div", "", world), 0.3);
+  const near = cam.layer(el("div", "", world), 1.4);
+  for (let i = 0; i < 5; i++) { const o = el("div", "orb", i % 2 ? near : far); Object.assign(o.style, { left: (200 + i * 360) + "px", top: (120 + (i % 3) * 300) + "px", width: "420px", height: "420px" }); }
+  const mid = cam.layer(el("div", "", world), 1);
+  const k = split(el("div", "big", mid), "Ideas move fast.", { by: "char" });
+  return (t) => {
+    cam.apply(t);
+    kinetic(k, t, { at: vo.line(0).start - 0.05, stagger: 0.035, from: { y: 110, rotate: 8, opacity: 0 }, spring: { stiffness: 210, damping: 18 } });
+  };
+});
+
+film.scene({ id: "work", start: 3.6, end: 8, enter: { type: "wipe", dur: 0.7, dir: "right" }, rest: [3.9] }, (layer) => {
+  const world = el("div", "", layer);
+  const cam = camera(world, { width: W, height: H, keys: [
+    { t: 3.6, x: W/2, y: H/2, zoom: 1 }, { t: vo.word(1, "keep") , x: 760, y: 420, zoom: 1.6 }, { t: 8, x: 770, y: 430, zoom: 1.66 } ] });
+  const plane = cam.layer(el("div", "", world), 1);
+  const img = el("img", "shot", plane); img.src = "./assets/screen.webp";
+  film.ready(img.decode());
+  const s = svg("svg", { width: W, height: H, style: "position:absolute;left:0;top:0" }, plane);
+  const path = svg("path", { d: "M 360 900 C 700 700, 1100 1000, 1560 760", fill: "none", stroke: "#e85d2a", "stroke-width": 6, "stroke-linecap": "round" }, s);
+  const dot = svg("circle", { r: 12, fill: "#f2efe8" }, s);
+  const c = callout(layer, cam, { x: 900, y: 360, label: "Live engine steps", at: vo.word(1, "work"), dx: 120, dy: -80 });
+  return (t) => {
+    cam.apply(t);
+    const q = ease.inOutCubic(prog(t, 4.0, 2.2));
+    draw(path, q);
+    const p = along(path, q); dot.setAttribute("cx", p.x); dot.setAttribute("cy", p.y);
+    c(t);
+  };
+});
+film.publish();
+</script></body></html>
