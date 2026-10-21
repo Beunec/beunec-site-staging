@@ -380,7 +380,9 @@ export function createFilm({ width = 1920, height = 1080, fps = 30, duration, st
     width, height, fps, duration, root,
     scene(opts, build) {
       const layer = el("div", "scene", root);
-      Object.assign(layer.style, { position: "absolute", inset: "0", visibility: "hidden" });
+      // display (not visibility) hides an inactive scene: a child set to visibility:visible
+      // would still show through a parent that is only visibility:hidden.
+      Object.assign(layer.style, { position: "absolute", inset: "0", display: "none" });
       layer.dataset.scene = opts.id;
       const s = { ...opts, layer, dur: opts.end - opts.start };
       s.update = build(layer, s) || (() => {});
@@ -398,8 +400,8 @@ export function createFilm({ width = 1920, height = 1080, fps = 30, duration, st
         // Exits are "cut" or "fade" (the fade runs past `end`, under the next scene's entrance).
         const outDur = exit.type === "fade" ? exit.dur ?? 0.6 : 0;
         const visible = local >= 0 && t < s.end + outDur;
-        if (!visible) { s.layer.style.visibility = "hidden"; continue; }
-        s.layer.style.visibility = "visible";
+        if (!visible) { s.layer.style.display = "none"; continue; }
+        s.layer.style.display = "block";
         const qi = inDur ? ease.inOutCubic(prog(local, 0, inDur)) : 1;
         const qo = outDur ? 1 - ease.inOutCubic(prog(t, s.end, outDur)) : 1;
         s.layer.style.opacity = enter.type === "fade" || exit.type === "fade" ? String(Math.min(enter.type === "fade" ? qi : 1, exit.type === "fade" ? qo : 1)) : "1";

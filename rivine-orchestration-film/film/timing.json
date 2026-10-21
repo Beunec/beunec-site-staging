@@ -1,0 +1,1110 @@
+{
+ "duration": 155.0,
+ "lines": [
+  {
+   "i": 0,
+   "text": "Every AI agent needs somewhere to run. Rivine is that place.",
+   "src": [
+    0.58,
+    4.51
+   ],
+   "start": 5.0,
+   "end": 8.93,
+   "words": [
+    {
+     "w": "Every",
+     "start": 5.0,
+     "end": 5.304
+    },
+    {
+     "w": "AI",
+     "start": 5.338,
+     "end": 5.495
+    },
+    {
+     "w": "agent",
+     "start": 5.512,
+     "end": 5.817
+    },
+    {
+     "w": "needs",
+     "start": 5.85,
+     "end": 6.155
+    },
+    {
+     "w": "somewhere",
+     "start": 6.188,
+     "end": 6.689
+    },
+    {
+     "w": "to",
+     "start": 6.744,
+     "end": 6.901
+    },
+    {
+     "w": "run.",
+     "start": 6.919,
+     "end": 7.125
+    },
+    {
+     "w": "Rivine",
+     "start": 7.607,
+     "end": 8.0
+    },
+    {
+     "w": "is",
+     "start": 8.044,
+     "end": 8.219
+    },
+    {
+     "w": "that",
+     "start": 8.238,
+     "end": 8.522
+    },
+    {
+     "w": "place.",
+     "start": 8.554,
+     "end": 8.892
+    }
+   ],
+   "mode": "clause-aligned",
+   "chunks": 2,
+   "clauses": 2
+  },
+  {
+   "i": 1,
+   "text": "Rivine is the orchestration runtime behind Aselius: it plans the work, runs it, and finishes it.",
+   "src": [
+    5.33,
+    11.8
+   ],
+   "start": 10.5,
+   "end": 16.97,
+   "words": [
+    {
+     "w": "Rivine",
+     "start": 10.5,
+     "end": 10.921
+    },
+    {
+     "w": "is",
+     "start": 10.967,
+     "end": 11.154
+    },
+    {
+     "w": "the",
+     "start": 11.175,
+     "end": 11.42
+    },
+    {
+     "w": "orchestration",
+     "start": 11.448,
+     "end": 12.277
+    },
+    {
+     "w": "runtime",
+     "start": 12.369,
+     "end": 12.848
+    },
+    {
+     "w": "behind",
+     "start": 12.902,
+     "end": 13.322
+    },
+    {
+     "w": "Aselius:",
+     "start": 13.369,
+     "end": 13.848
+    },
+    {
+     "w": "it",
+     "start": 14.283,
+     "end": 14.417
+    },
+    {
+     "w": "plans",
+     "start": 14.432,
+     "end": 14.692
+    },
+    {
+     "w": "the",
+     "start": 14.72,
+     "end": 14.896
+    },
+    {
+     "w": "work,",
+     "start": 14.916,
+     "end": 15.134
+    },
+    {
+     "w": "runs",
+     "start": 15.5,
+     "end": 15.713
+    },
+    {
+     "w": "it,",
+     "start": 15.736,
+     "end": 15.867
+    },
+    {
+     "w": "and",
+     "start": 16.328,
+     "end": 16.474
+    },
+    {
+     "w": "finishes",
+     "start": 16.491,
+     "end": 16.811
+    },
+    {
+     "w": "it.",
+     "start": 16.846,
+     "end": 16.958
+    }
+   ],
+   "mode": "clause-aligned",
+   "chunks": 4,
+   "clauses": 4
+  },
+  {
+   "i": 2,
+   "text": "Most teams start with a framework: LangChain, LangGraph, AutoGen, or CrewAI.",
+   "src": [
+    12.59,
+    18.77
+   ],
+   "start": 23.5,
+   "end": 29.68,
+   "words": [
+    {
+     "w": "Most",
+     "start": 23.5,
+     "end": 23.89
+    },
+    {
+     "w": "teams",
+     "start": 23.933,
+     "end": 24.398
+    },
+    {
+     "w": "start",
+     "start": 24.449,
+     "end": 24.914
+    },
+    {
+     "w": "with",
+     "start": 24.966,
+     "end": 25.356
+    },
+    {
+     "w": "a",
+     "start": 25.399,
+     "end": 25.564
+    },
+    {
+     "w": "framework:",
+     "start": 25.582,
+     "end": 26.347
+    },
+    {
+     "w": "LangChain,",
+     "start": 26.432,
+     "end": 27.196
+    },
+    {
+     "w": "LangGraph,",
+     "start": 27.281,
+     "end": 28.046
+    },
+    {
+     "w": "AutoGen,",
+     "start": 28.131,
+     "end": 28.746
+    },
+    {
+     "w": "or",
+     "start": 28.814,
+     "end": 29.054
+    },
+    {
+     "w": "CrewAI.",
+     "start": 29.08,
+     "end": 29.62
+    }
+   ],
+   "mode": "estimated",
+   "chunks": 4,
+   "clauses": 5
+  },
+  {
+   "i": 3,
+   "text": "Those are good building blocks. They give you agents, graphs, and crews.",
+   "src": [
+    19.75,
+    23.32
+   ],
+   "start": 30.6,
+   "end": 34.17,
+   "words": [
+    {
+     "w": "Those",
+     "start": 30.6,
+     "end": 30.879
+    },
+    {
+     "w": "are",
+     "start": 30.91,
+     "end": 31.099
+    },
+    {
+     "w": "good",
+     "start": 31.12,
+     "end": 31.354
+    },
+    {
+     "w": "building",
+     "start": 31.38,
+     "end": 31.794
+    },
+    {
+     "w": "blocks.",
+     "start": 31.84,
+     "end": 32.164
+    },
+    {
+     "w": "They",
+     "start": 32.2,
+     "end": 32.434
+    },
+    {
+     "w": "give",
+     "start": 32.46,
+     "end": 32.694
+    },
+    {
+     "w": "you",
+     "start": 32.72,
+     "end": 32.909
+    },
+    {
+     "w": "agents,",
+     "start": 32.93,
+     "end": 33.254
+    },
+    {
+     "w": "graphs,",
+     "start": 33.29,
+     "end": 33.614
+    },
+    {
+     "w": "and",
+     "start": 33.65,
+     "end": 33.839
+    },
+    {
+     "w": "crews.",
+     "start": 33.86,
+     "end": 34.139
+    }
+   ],
+   "mode": "estimated",
+   "chunks": 2,
+   "clauses": 4
+  },
+  {
+   "i": 4,
+   "text": "But a framework is a library inside your process. When the process stops, the work stops.",
+   "src": [
+    24.52,
+    30.01
+   ],
+   "start": 35.0,
+   "end": 40.49,
+   "words": [
+    {
+     "w": "But",
+     "start": 35.0,
+     "end": 35.23
+    },
+    {
+     "w": "a",
+     "start": 35.255,
+     "end": 35.376
+    },
+    {
+     "w": "framework",
+     "start": 35.389,
+     "end": 35.947
+    },
+    {
+     "w": "is",
+     "start": 36.009,
+     "end": 36.184
+    },
+    {
+     "w": "a",
+     "start": 36.204,
+     "end": 36.324
+    },
+    {
+     "w": "library",
+     "start": 36.338,
+     "end": 36.786
+    },
+    {
+     "w": "inside",
+     "start": 36.836,
+     "end": 37.23
+    },
+    {
+     "w": "your",
+     "start": 37.274,
+     "end": 37.559
+    },
+    {
+     "w": "process.",
+     "start": 37.59,
+     "end": 38.039
+    },
+    {
+     "w": "When",
+     "start": 38.525,
+     "end": 38.736
+    },
+    {
+     "w": "the",
+     "start": 38.759,
+     "end": 38.93
+    },
+    {
+     "w": "process",
+     "start": 38.949,
+     "end": 39.282
+    },
+    {
+     "w": "stops,",
+     "start": 39.319,
+     "end": 39.571
+    },
+    {
+     "w": "the",
+     "start": 39.791,
+     "end": 39.96
+    },
+    {
+     "w": "work",
+     "start": 39.979,
+     "end": 40.189
+    },
+    {
+     "w": "stops.",
+     "start": 40.212,
+     "end": 40.462
+    }
+   ],
+   "mode": "clause-aligned",
+   "chunks": 3,
+   "clauses": 3
+  },
+  {
+   "i": 5,
+   "text": "Rivine is a runtime. Every step is checkpointed to durable state.",
+   "src": [
+    31.09,
+    35.55
+   ],
+   "start": 45.6,
+   "end": 50.06,
+   "words": [
+    {
+     "w": "Rivine",
+     "start": 45.6,
+     "end": 46.065
+    },
+    {
+     "w": "is",
+     "start": 46.117,
+     "end": 46.324
+    },
+    {
+     "w": "a",
+     "start": 46.347,
+     "end": 46.489
+    },
+    {
+     "w": "runtime.",
+     "start": 46.505,
+     "end": 47.035
+    },
+    {
+     "w": "Every",
+     "start": 47.621,
+     "end": 47.92
+    },
+    {
+     "w": "step",
+     "start": 47.954,
+     "end": 48.205
+    },
+    {
+     "w": "is",
+     "start": 48.233,
+     "end": 48.388
+    },
+    {
+     "w": "checkpointed",
+     "start": 48.405,
+     "end": 49.043
+    },
+    {
+     "w": "to",
+     "start": 49.114,
+     "end": 49.269
+    },
+    {
+     "w": "durable",
+     "start": 49.286,
+     "end": 49.683
+    },
+    {
+     "w": "state.",
+     "start": 49.727,
+     "end": 50.027
+    }
+   ],
+   "mode": "clause-aligned",
+   "chunks": 2,
+   "clauses": 2
+  },
+  {
+   "i": 6,
+   "text": "So a run survives a restart, a crash, or a closed laptop.",
+   "src": [
+    36.47,
+    40.57
+   ],
+   "start": 51.0,
+   "end": 55.1,
+   "words": [
+    {
+     "w": "So",
+     "start": 51.0,
+     "end": 51.184
+    },
+    {
+     "w": "a",
+     "start": 51.204,
+     "end": 51.33
+    },
+    {
+     "w": "run",
+     "start": 51.344,
+     "end": 51.586
+    },
+    {
+     "w": "survives",
+     "start": 51.612,
+     "end": 52.141
+    },
+    {
+     "w": "a",
+     "start": 52.199,
+     "end": 52.326
+    },
+    {
+     "w": "restart,",
+     "start": 52.34,
+     "end": 52.81
+    },
+    {
+     "w": "a",
+     "start": 53.209,
+     "end": 53.365
+    },
+    {
+     "w": "crash,",
+     "start": 53.382,
+     "end": 53.822
+    },
+    {
+     "w": "or",
+     "start": 54.109,
+     "end": 54.253
+    },
+    {
+     "w": "a",
+     "start": 54.269,
+     "end": 54.368
+    },
+    {
+     "w": "closed",
+     "start": 54.379,
+     "end": 54.704
+    },
+    {
+     "w": "laptop.",
+     "start": 54.74,
+     "end": 55.064
+    }
+   ],
+   "mode": "clause-aligned",
+   "chunks": 3,
+   "clauses": 3
+  },
+  {
+   "i": 7,
+   "text": "When a step needs a person, Rivine pauses the run and waits for approval.",
+   "src": [
+    41.76,
+    46.0
+   ],
+   "start": 60.2,
+   "end": 64.44,
+   "words": [
+    {
+     "w": "When",
+     "start": 60.2,
+     "end": 60.703
+    },
+    {
+     "w": "a",
+     "start": 60.759,
+     "end": 60.972
+    },
+    {
+     "w": "step",
+     "start": 60.995,
+     "end": 61.498
+    },
+    {
+     "w": "needs",
+     "start": 61.554,
+     "end": 62.154
+    },
+    {
+     "w": "a",
+     "start": 62.22,
+     "end": 62.433
+    },
+    {
+     "w": "person,",
+     "start": 62.457,
+     "end": 63.153
+    },
+    {
+     "w": "Rivine",
+     "start": 63.541,
+     "end": 63.666
+    },
+    {
+     "w": "pauses",
+     "start": 63.679,
+     "end": 63.805
+    },
+    {
+     "w": "the",
+     "start": 63.818,
+     "end": 63.891
+    },
+    {
+     "w": "run",
+     "start": 63.9,
+     "end": 63.972
+    },
+    {
+     "w": "and",
+     "start": 63.981,
+     "end": 64.054
+    },
+    {
+     "w": "waits",
+     "start": 64.062,
+     "end": 64.169
+    },
+    {
+     "w": "for",
+     "start": 64.181,
+     "end": 64.254
+    },
+    {
+     "w": "approval.",
+     "start": 64.262,
+     "end": 64.422
+    }
+   ],
+   "mode": "clause-aligned(merged)",
+   "chunks": 3,
+   "clauses": 2
+  },
+  {
+   "i": 8,
+   "text": "Then it continues from the same checkpoint, with the full trail recorded.",
+   "src": [
+    47.0,
+    50.96
+   ],
+   "start": 65.4,
+   "end": 69.36,
+   "words": [
+    {
+     "w": "Then",
+     "start": 65.4,
+     "end": 65.625
+    },
+    {
+     "w": "it",
+     "start": 65.65,
+     "end": 65.788
+    },
+    {
+     "w": "continues",
+     "start": 65.803,
+     "end": 66.244
+    },
+    {
+     "w": "from",
+     "start": 66.293,
+     "end": 66.517
+    },
+    {
+     "w": "the",
+     "start": 66.542,
+     "end": 66.723
+    },
+    {
+     "w": "same",
+     "start": 66.744,
+     "end": 66.968
+    },
+    {
+     "w": "checkpoint,",
+     "start": 66.993,
+     "end": 67.477
+    },
+    {
+     "w": "with",
+     "start": 67.846,
+     "end": 68.082
+    },
+    {
+     "w": "the",
+     "start": 68.108,
+     "end": 68.299
+    },
+    {
+     "w": "full",
+     "start": 68.32,
+     "end": 68.556
+    },
+    {
+     "w": "trail",
+     "start": 68.583,
+     "end": 68.864
+    },
+    {
+     "w": "recorded.",
+     "start": 68.896,
+     "end": 69.314
+    }
+   ],
+   "mode": "clause-aligned",
+   "chunks": 2,
+   "clauses": 2
+  },
+  {
+   "i": 9,
+   "text": "With a framework, you still build the queue, the retries, the credentials and the bill.",
+   "src": [
+    52.14,
+    57.41
+   ],
+   "start": 73.2,
+   "end": 78.47,
+   "words": [
+    {
+     "w": "With",
+     "start": 73.2,
+     "end": 73.416
+    },
+    {
+     "w": "a",
+     "start": 73.44,
+     "end": 73.531
+    },
+    {
+     "w": "framework,",
+     "start": 73.541,
+     "end": 73.964
+    },
+    {
+     "w": "you",
+     "start": 74.236,
+     "end": 74.408
+    },
+    {
+     "w": "still",
+     "start": 74.428,
+     "end": 74.682
+    },
+    {
+     "w": "build",
+     "start": 74.71,
+     "end": 74.965
+    },
+    {
+     "w": "the",
+     "start": 74.993,
+     "end": 75.165
+    },
+    {
+     "w": "queue,",
+     "start": 75.184,
+     "end": 75.439
+    },
+    {
+     "w": "the",
+     "start": 75.822,
+     "end": 76.384
+    },
+    {
+     "w": "retries,",
+     "start": 76.446,
+     "end": 77.543
+    },
+    {
+     "w": "the",
+     "start": 77.942,
+     "end": 78.009
+    },
+    {
+     "w": "credentials",
+     "start": 78.016,
+     "end": 78.209
+    },
+    {
+     "w": "and",
+     "start": 78.231,
+     "end": 78.297
+    },
+    {
+     "w": "the",
+     "start": 78.305,
+     "end": 78.371
+    },
+    {
+     "w": "bill.",
+     "start": 78.379,
+     "end": 78.461
+    }
+   ],
+   "mode": "clause-aligned(merged)",
+   "chunks": 5,
+   "clauses": 4
+  },
+  {
+   "i": 10,
+   "text": "One runtime, many engines: TaskForce, Research, Code, Cicero, Creative, Confluence, Assist, Browse.",
+   "src": [
+    58.29,
+    69.5
+   ],
+   "start": 110.0,
+   "end": 121.21,
+   "words": [
+    {
+     "w": "One",
+     "start": 110.0,
+     "end": 110.351
+    },
+    {
+     "w": "runtime,",
+     "start": 110.39,
+     "end": 111.074
+    },
+    {
+     "w": "many",
+     "start": 111.524,
+     "end": 111.826
+    },
+    {
+     "w": "engines:",
+     "start": 111.86,
+     "end": 112.337
+    },
+    {
+     "w": "TaskForce,",
+     "start": 113.155,
+     "end": 113.807
+    },
+    {
+     "w": "Research,",
+     "start": 114.407,
+     "end": 114.95
+    },
+    {
+     "w": "Code,",
+     "start": 115.569,
+     "end": 115.931
+    },
+    {
+     "w": "Cicero,",
+     "start": 116.517,
+     "end": 116.941
+    },
+    {
+     "w": "Creative,",
+     "start": 117.628,
+     "end": 118.151
+    },
+    {
+     "w": "Confluence,",
+     "start": 118.697,
+     "end": 119.292
+    },
+    {
+     "w": "Assist,",
+     "start": 119.776,
+     "end": 120.182
+    },
+    {
+     "w": "Browse.",
+     "start": 120.785,
+     "end": 121.167
+    }
+   ],
+   "mode": "clause-aligned",
+   "chunks": 10,
+   "clauses": 10
+  },
+  {
+   "i": 11,
+   "text": "Each engine is a specialist. Rivine routes the work and keeps one shared state.",
+   "src": [
+    70.21,
+    75.3
+   ],
+   "start": 122.0,
+   "end": 127.09,
+   "words": [
+    {
+     "w": "Each",
+     "start": 122.0,
+     "end": 122.305
+    },
+    {
+     "w": "engine",
+     "start": 122.339,
+     "end": 122.761
+    },
+    {
+     "w": "is",
+     "start": 122.808,
+     "end": 122.996
+    },
+    {
+     "w": "a",
+     "start": 123.016,
+     "end": 123.145
+    },
+    {
+     "w": "specialist.",
+     "start": 123.16,
+     "end": 123.817
+    },
+    {
+     "w": "Rivine",
+     "start": 124.253,
+     "end": 124.608
+    },
+    {
+     "w": "routes",
+     "start": 124.648,
+     "end": 125.002
+    },
+    {
+     "w": "the",
+     "start": 125.042,
+     "end": 125.249
+    },
+    {
+     "w": "work",
+     "start": 125.272,
+     "end": 125.528
+    },
+    {
+     "w": "and",
+     "start": 125.557,
+     "end": 125.764
+    },
+    {
+     "w": "keeps",
+     "start": 125.787,
+     "end": 126.092
+    },
+    {
+     "w": "one",
+     "start": 126.126,
+     "end": 126.333
+    },
+    {
+     "w": "shared",
+     "start": 126.356,
+     "end": 126.711
+    },
+    {
+     "w": "state.",
+     "start": 126.75,
+     "end": 127.056
+    }
+   ],
+   "mode": "clause-aligned",
+   "chunks": 2,
+   "clauses": 2
+  },
+  {
+   "i": 12,
+   "text": "So the result is a deliverable, not a chat reply: documents, spreadsheets, decks, working code.",
+   "src": [
+    76.11,
+    83.26
+   ],
+   "start": 133.0,
+   "end": 140.15,
+   "words": [
+    {
+     "w": "So",
+     "start": 133.0,
+     "end": 133.178
+    },
+    {
+     "w": "the",
+     "start": 133.198,
+     "end": 133.431
+    },
+    {
+     "w": "result",
+     "start": 133.457,
+     "end": 133.858
+    },
+    {
+     "w": "is",
+     "start": 133.902,
+     "end": 134.08
+    },
+    {
+     "w": "a",
+     "start": 134.1,
+     "end": 134.222
+    },
+    {
+     "w": "deliverable,",
+     "start": 134.236,
+     "end": 134.915
+    },
+    {
+     "w": "not",
+     "start": 135.223,
+     "end": 135.412
+    },
+    {
+     "w": "a",
+     "start": 135.433,
+     "end": 135.532
+    },
+    {
+     "w": "chat",
+     "start": 135.543,
+     "end": 135.776
+    },
+    {
+     "w": "reply:",
+     "start": 135.802,
+     "end": 136.081
+    },
+    {
+     "w": "documents,",
+     "start": 136.665,
+     "end": 137.251
+    },
+    {
+     "w": "spreadsheets,",
+     "start": 137.556,
+     "end": 138.21
+    },
+    {
+     "w": "decks,",
+     "start": 138.649,
+     "end": 139.071
+    },
+    {
+     "w": "working",
+     "start": 139.508,
+     "end": 139.862
+    },
+    {
+     "w": "code.",
+     "start": 139.901,
+     "end": 140.125
+    }
+   ],
+   "mode": "clause-aligned",
+   "chunks": 6,
+   "clauses": 6
+  },
+  {
+   "i": 13,
+   "text": "That is why Aselius is built on Rivine.",
+   "src": [
+    84.44,
+    87.15
+   ],
+   "start": 147.2,
+   "end": 149.91,
+   "words": [
+    {
+     "w": "That",
+     "start": 147.2,
+     "end": 147.512
+    },
+    {
+     "w": "is",
+     "start": 147.547,
+     "end": 147.739
+    },
+    {
+     "w": "why",
+     "start": 147.761,
+     "end": 148.013
+    },
+    {
+     "w": "Aselius",
+     "start": 148.041,
+     "end": 148.534
+    },
+    {
+     "w": "is",
+     "start": 148.588,
+     "end": 148.781
+    },
+    {
+     "w": "built",
+     "start": 148.802,
+     "end": 149.174
+    },
+    {
+     "w": "on",
+     "start": 149.216,
+     "end": 149.408
+    },
+    {
+     "w": "Rivine.",
+     "start": 149.429,
+     "end": 149.862
+    }
+   ],
+   "mode": "clause-aligned",
+   "chunks": 1,
+   "clauses": 1
+  }
+ ]
+}
