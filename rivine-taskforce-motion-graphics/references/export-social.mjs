@@ -68,7 +68,7 @@ if (!labels.length) {
   labels.push("[silence]");
 }
 const silent = labels[0] === "[silence]";
-graph.push(`${labels.join("")}amix=inputs=${labels.length}:normalize=0,${pad}${silent ? "" : ",loudnorm=I=-14:TP=-1.5:LRA=11,alimiter=limit=0.89"}[out]`);
+graph.push(`${labels.join("")}amix=inputs=${labels.length}:normalize=0,${pad}${silent ? "" : ",loudnorm=I=-14:TP=-2:LRA=11,alimiter=limit=0.79:level=disabled"}[out]`);
 ff([...inputs, "-filter_complex", graph.join(";"), "-map", "[out]", "-ar", "48000", "-c:a", "pcm_s16le", "-t", String(D), mix]);
 
 // 2. Mux onto each format, picture untouched.
