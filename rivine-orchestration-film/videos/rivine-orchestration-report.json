@@ -1,0 +1,42 @@
+[
+  {
+    "format": "16x9-1440p",
+    "file": "/home/user/beunec-site-staging/rivine-orchestration-film/videos/rivine-orchestration-16x9-1440p.mp4",
+    "width": 2560,
+    "height": 1440,
+    "fps": "30/1",
+    "duration": 155,
+    "lufs": -14.2,
+    "true_peak_dbfs": -1.9,
+    "bytes": 30049650,
+    "checks": {
+      "h264_yuv420p": true,
+      "aac_48k": true,
+      "duration": true,
+      "decodes": true,
+      "loudness": true,
+      "true_peak": true
+    },
+    "ok": true
+  },
+  {
+    "format": "9x16",
+    "file": "/home/user/beunec-site-staging/rivine-orchestration-film/videos/rivine-orchestration-9x16.mp4",
+    "width": 1080,
+    "height": 1920,
+    "fps": "30/1",
+    "duration": 155,
+    "lufs": -14.2,
+    "true_peak_dbfs": -1.9,
+    "bytes": 19831340,
+    "checks": {
+      "h264_yuv420p": true,
+      "aac_48k": true,
+      "duration": true,
+      "decodes": true,
+      "loudness": true,
+      "true_peak": true
+    },
+    "ok": true
+  }
+]
